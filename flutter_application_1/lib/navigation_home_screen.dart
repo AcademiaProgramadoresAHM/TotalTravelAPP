@@ -1,3 +1,4 @@
+import 'package:flutter_application_1/Account_screen.dart';
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter_application_1/custom_drawer/drawer_user_controller.dart';
 import 'package:flutter_application_1/custom_drawer/home_drawer.dart';
@@ -69,6 +70,11 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
         case DrawerIndex.Invite:
           setState(() {
             screenView = InviteFriend();
+          });
+          break;
+        case DrawerIndex.Account:
+          setState(() {
+            screenView = AccountInfo();
           });
           break;
         default:

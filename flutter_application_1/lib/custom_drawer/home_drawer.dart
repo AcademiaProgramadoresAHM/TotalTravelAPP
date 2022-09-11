@@ -59,6 +59,11 @@ class _HomeDrawerState extends State<HomeDrawer> {
         labelName: 'Opción 5',
         icon: Icon(Icons.info),
       ),
+       DrawerList(
+        index: DrawerIndex.Account,
+        labelName: 'Mi Cuenta',
+        icon: Icon(Icons.person),
+      ),
     ];
   }
 
@@ -110,7 +115,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                             child: ClipRRect(
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(60.0)),
-                              child: Image.asset('assets/images/userImage.png'),
+                              child: Image.asset('assets/images/userImage2.jpg'),
                             ),
                           ),
                         ),
@@ -120,7 +125,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8, left: 4),
                     child: Text(
-                      'Chris Hemsworth',
+                      'Silvia Stephen',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: HexColor('#652D90'),
@@ -303,6 +308,7 @@ enum DrawerIndex {
   About,
   Invite,
   Testing,
+  Account,
 }
 
 class DrawerList {
