@@ -82,7 +82,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                                   EdgeInsets.only(top: 25, left: 25, right: 35),
                               child: TextFormField(
                                 decoration: InputDecoration(
-                                  labelText: 'Silvia Stephen',
+                                  labelText: 'Chris Hemsworth',
                                   enabled: false,
                                   fillColor: Colors.transparent,
                                   filled: true,
@@ -102,7 +102,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                                   EdgeInsets.only(top: 25, left: 25, right: 35),
                               child: TextFormField(
                                 decoration: InputDecoration(
-                                  labelText: 'Stephen@examples.com',
+                                  labelText: 'chrishemsworth@examples.com',
                                   enabled: false,
                                   fillColor: Colors.transparent,
                                   filled: true,
@@ -596,7 +596,7 @@ class ProfilePic extends StatelessWidget {
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(60.0)),
         child: Image.asset(
-          'assets/images/userImage2.jpg',
+          'assets/images/userImage.png',
         ),
       ),
     );
