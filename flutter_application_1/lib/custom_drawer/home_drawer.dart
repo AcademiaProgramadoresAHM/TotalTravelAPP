@@ -35,30 +35,29 @@ class _HomeDrawerState extends State<HomeDrawer> {
       ),
       DrawerList(
         index: DrawerIndex.Help,
-        labelName: 'Opción 1',
-        isAssetsImage: true,
-        imageName: 'assets/images/supportIcon.png',
+        labelName: 'Historial de compra',
+        icon: Icon(Icons.history)
       ),
       DrawerList(
         index: DrawerIndex.FeedBack,
-        labelName: 'Opción 2',
-        icon: Icon(Icons.help),
+        labelName: 'Ofertas de viaje',
+        icon: Icon(Icons.loyalty),
       ),
       DrawerList(
         index: DrawerIndex.Invite,
-        labelName: 'Opción 3',
-        icon: Icon(Icons.group),
+        labelName: 'Haz tu propio paquete',
+        icon: Icon(Icons.new_label),
       ),
       DrawerList(
         index: DrawerIndex.Share,
-        labelName: 'Opción 4',
-        icon: Icon(Icons.share),
+        labelName: 'Historial de transacciones',
+        icon: Icon(Icons.history),
       ),
-      DrawerList(
+      /*DrawerList(
         index: DrawerIndex.About,
         labelName: 'Opción 5',
         icon: Icon(Icons.info),
-      ),
+      ),*/
        DrawerList(
         index: DrawerIndex.Account,
         labelName: 'Mi Cuenta',
