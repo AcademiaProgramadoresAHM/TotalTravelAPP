@@ -55,8 +55,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
         icon: Icon(Icons.share),
       ),
       DrawerList(
-        index: DrawerIndex.About,
-        labelName: 'Opción 5',
+        index: DrawerIndex.Compras,
+        labelName: 'Compras',
         icon: Icon(Icons.info),
       ),
        DrawerList(
@@ -305,7 +305,7 @@ enum DrawerIndex {
   FeedBack,
   Help,
   Share,
-  About,
+  Compras,
   Invite,
   Testing,
   Account,

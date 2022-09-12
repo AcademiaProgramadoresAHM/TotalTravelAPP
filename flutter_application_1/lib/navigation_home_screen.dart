@@ -1,4 +1,5 @@
 import 'package:flutter_application_1/Account_screen.dart';
+import 'package:flutter_application_1/Screens/Compras.dart';
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter_application_1/custom_drawer/drawer_user_controller.dart';
 import 'package:flutter_application_1/custom_drawer/home_drawer.dart';
@@ -65,6 +66,11 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
         case DrawerIndex.FeedBack:
           setState(() {
             screenView = FeedbackScreen();
+          });
+          break;
+          case DrawerIndex.Compras:
+          setState(() {
+            screenView = Compras();
           });
           break;
         case DrawerIndex.Invite:
