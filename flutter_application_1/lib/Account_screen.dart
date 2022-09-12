@@ -9,16 +9,16 @@ import 'package:intl/intl.dart';
 import 'hotel_booking/filters_screen.dart';
 import 'hotel_booking/hotel_app_theme.dart';
 import 'main.dart';
+import 'package:flutter/src/rendering/box.dart';
 
 class AccountInfo extends StatefulWidget {
-
   @override
   State<AccountInfo> createState() => _AccountInfo();
 }
 
-class _AccountInfo extends State<AccountInfo>
-    with TickerProviderStateMixin {
+class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
   AnimationController? animationController;
+  var _sexo;
   List<HotelListData> hotelList = HotelListData.hotelList;
   final ScrollController _scrollController = ScrollController();
 
@@ -49,7 +49,7 @@ class _AccountInfo extends State<AccountInfo>
       data: HotelAppTheme.buildLightTheme(),
       child: Container(
         child: Scaffold(
-          body: Stack(
+            body: Stack(
             children: <Widget>[
               InkWell(
                 splashColor: Colors.transparent,
@@ -73,125 +73,154 @@ class _AccountInfo extends State<AccountInfo>
                                   (BuildContext context, int index) {
                                 return Column(
                                   children: <Widget>[
-                                   
+                                    Form(
+                          /*Contenido*/
+                          child: Column(children: <Widget>[
+                            ProfilePic(),
+                            Padding(
+                              padding:
+                                  EdgeInsets.only(top: 25, left: 25, right: 35),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  labelText: 'Silvia Stephen',
+                                  enabled: false,
+                                  fillColor: Colors.transparent,
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.white,
+                                        width: 20,
+                                        style: BorderStyle.solid),
+                                  ),
+                                  contentPadding: const EdgeInsets.all(25),
+                                  isDense: true,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsets.only(top: 25, left: 25, right: 35),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  labelText: 'Stephen@examples.com',
+                                  enabled: false,
+                                  fillColor: Colors.transparent,
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.white,
+                                        width: 20,
+                                        style: BorderStyle.solid),
+                                  ),
+                                  contentPadding: const EdgeInsets.all(25),
+                                  isDense: true,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsets.only(top: 25, left: 25, right: 35),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  labelText: '+504 89332227',
+                                  enabled: false,
+                                  fillColor: Colors.transparent,
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.white,
+                                        width: 20,
+                                        style: BorderStyle.solid),
+                                  ),
+                                  contentPadding: const EdgeInsets.all(25),
+                                  isDense: true,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsets.only(top: 25, left: 25, right: 35),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  labelText: '0501-2004-10339',
+                                  enabled: false,
+                                  fillColor: Colors.transparent,
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.white,
+                                        width: 20,
+                                        style: BorderStyle.solid),
+                                  ),
+                                  contentPadding: const EdgeInsets.all(25),
+                                  isDense: true,
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsets.only(top: 25, left: 25, right: 35),
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  labelText: '21-02-2021',
+                                  enabled: false,
+                                  fillColor: Colors.transparent,
+                                  filled: true,
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.white,
+                                        width: 20,
+                                        style: BorderStyle.solid),
+                                  ),
+                                  contentPadding: const EdgeInsets.all(25),
+                                  isDense: true,
+                                ),
+                              ),
+                            ),
+                            RadioListTile(
+                                title: Text("Masculino"),
+                                value: "M", 
+                                groupValue: _sexo, 
+                                onChanged: (value){
+                                  setState(() {
+                                      _sexo = value.toString();
+                                  });
+                                },
+                            ),
+                          RadioListTile(
+                                title: Text("Femenino"),
+                                value: "F", 
+                                groupValue: _sexo, 
+                                onChanged: (value){
+                                  setState(() {
+                                      _sexo = value.toString();
+                                  });
+                                  
+                                },
+                            ),
+                          ]),
+                        ),
                                   ],
                                 );
                               }, childCount: 1),
                             ),
-                            
                           ];
                         },
-                        body: Form(
-                          /*Contenido*/ 
-                          child: Column(
-                            children: <Widget>[
-                              ProfilePic(),
-                              Padding(
-                      padding: EdgeInsets.only(top: 25, left: 25, right: 35), 
-                    child: TextFormField(
-                    decoration: InputDecoration(
-                          labelText: 'Silvia Stephen',
-                          enabled: false,
-                          fillColor: Colors.transparent,
-                          filled: true,
-                          border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Colors.white,
-                            width: 20,
-                            style: BorderStyle.solid),
+                        body: Container(
+                        )
                       ),
-                          contentPadding: const EdgeInsets.all(25), isDense: true,
-                        ),
-                    ), 
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 25, left: 25, right: 35), 
-                    child: TextFormField(
-                    decoration: InputDecoration(
-                          labelText: 'Stephen@examples.com',
-                          enabled: false,
-                          fillColor: Colors.transparent,
-                          filled: true,
-                          border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Colors.white,
-                            width: 20,
-                            style: BorderStyle.solid),
-                      ),
-                          contentPadding: const EdgeInsets.all(25), isDense: true,
-                        ),
-                    ), 
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 25, left: 25, right: 35), 
-                    child: TextFormField(
-                    decoration: InputDecoration(
-                          labelText: '+504 89332227',
-                          enabled: false,
-                          fillColor: Colors.transparent,
-                          filled: true,
-                          border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Colors.white,
-                            width: 20,
-                            style: BorderStyle.solid),
-                      ),
-                          contentPadding: const EdgeInsets.all(25), isDense: true,
-                        ),
-                    ), 
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 25, left: 25, right: 35), 
-                    child: TextFormField(
-                    decoration: InputDecoration(
-                          labelText: '0501-2004-10339',
-                          enabled: false,
-                          fillColor: Colors.transparent,
-                          filled: true,
-                          border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Colors.white,
-                            width: 20,
-                            style: BorderStyle.solid),
-                      ),
-                          contentPadding: const EdgeInsets.all(25), isDense: true,
-                        ),
-                    ), 
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 25, left: 25, right: 35), 
-                    child: TextFormField(
-                    decoration: InputDecoration(
-                          labelText: '21-02-2021',
-                          enabled: false,
-                          fillColor: Colors.transparent,
-                          filled: true,
-                          border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            color: Colors.white,
-                            width: 20,
-                            style: BorderStyle.solid),
-                      ),
-                          contentPadding: const EdgeInsets.all(25), isDense: true,
-                        ),
-                    ), 
-                    ),
-                         
-
-                          ]),
-                          ),
-                        ),
-                      ),
                   ],
                 ),
               ),
+              
             ],
           ),
-        ),
+          
+            ),
       ),
     );
   }
-
 
   Widget getTimeDateUI() {
     return Padding(
@@ -246,6 +275,13 @@ class _AccountInfo extends State<AccountInfo>
                     ),
                   ),
                 ),
+                Positioned(
+                    top: 100,
+                    left: 100,
+                    width: 1000,
+                    height: 1000,
+                    child: Container(color: Colors.red),
+                  )
               ],
             ),
           ),
@@ -481,7 +517,6 @@ class _AccountInfo extends State<AccountInfo>
     );
   }
 
-
   void showDemoDialog({BuildContext? context}) {
     showDialog<dynamic>(
       context: context!,
@@ -536,7 +571,6 @@ class _AccountInfo extends State<AccountInfo>
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.end,
-
               ),
             )
           ],
@@ -547,25 +581,24 @@ class _AccountInfo extends State<AccountInfo>
 }
 
 class ProfilePic extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
-   return                 Container(
-                            margin: const EdgeInsets.only(top: 70.0),
-                            height: 150,
-                            width: 150,
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              boxShadow: <BoxShadow>[
-                                BoxShadow(
-                                    blurRadius: 8),
-                              ],
-                            ),
-                             child: ClipRRect(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(60.0)),
-                              child: Image.asset('assets/images/userImage2.jpg',),
-                            ),   
-                          );
+    return Container(
+      margin: const EdgeInsets.only(top: 70.0),
+      height: 150,
+      width: 150,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        boxShadow: <BoxShadow>[
+          BoxShadow(blurRadius: 8),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: const BorderRadius.all(Radius.circular(60.0)),
+        child: Image.asset(
+          'assets/images/userImage2.jpg',
+        ),
+      ),
+    );
   }
 }
