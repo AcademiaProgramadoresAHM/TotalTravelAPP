@@ -9,6 +9,7 @@ import 'package:flutter_application_1/help_screen.dart';
 import 'package:flutter_application_1/home_screen.dart';
 import 'package:flutter_application_1/invite_friend_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/historial_transacciones.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
   @override
@@ -82,6 +83,11 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
         case DrawerIndex.Account:
           setState(() {
             screenView = AccountInfo();
+          });
+          break;
+        case DrawerIndex.Historial:
+          setState(() {
+            screenView = HistorialScreen();
           });
           break;
         case DrawerIndex.Support:

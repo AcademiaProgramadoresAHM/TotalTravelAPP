@@ -49,7 +49,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
         icon: Icon(Icons.new_label),
       ),
       DrawerList(
-        index: DrawerIndex.Share,
+        index: DrawerIndex.Historial,
         labelName: 'Historial de transacciones',
         icon: Icon(Icons.history),
       ),
@@ -316,6 +316,7 @@ enum DrawerIndex {
   Invite,
   Testing,
   Account,
+  Historial,
   Support
 }
 
