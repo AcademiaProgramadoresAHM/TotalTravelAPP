@@ -64,10 +64,15 @@ class _HomeDrawerState extends State<HomeDrawer> {
         icon: Icon(Icons.person),
       ),
       DrawerList(
+      index: DrawerIndex.Personalization,
+      labelName: 'Reservaciones',
+      icon: Icon(Icons.list),
+     ),
+      DrawerList(
         index: DrawerIndex.Support,
         labelName: 'Contactanos',
         icon: Icon(Icons.info),
-      ),
+      ),     
     ];
   }
 
@@ -317,6 +322,7 @@ enum DrawerIndex {
   Testing,
   Account,
   Historial,
+  Personalization,  
   Support
 }
 

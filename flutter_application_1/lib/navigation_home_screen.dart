@@ -12,6 +12,8 @@ import 'package:flutter_application_1/invite_friend_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/historial_transacciones.dart';
 
+import 'Screens/Personalizados.dart';
+
 class NavigationHomeScreen extends StatefulWidget {
   @override
   _NavigationHomeScreenState createState() => _NavigationHomeScreenState();
@@ -86,6 +88,11 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
             screenView = AccountInfo();
           });
           break;
+        case DrawerIndex.Personalization:
+        setState(() {
+          screenView = PersonaliScreen();
+        });
+        break;
         case DrawerIndex.Historial:
           setState(() {
             screenView = HistorialScreen();
@@ -95,7 +102,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
           setState(() {
             screenView = SupportScreen();
           });
-          break;
+          break;        
         default:
           break;
       }
