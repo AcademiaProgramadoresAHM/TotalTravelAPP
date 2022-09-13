@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Screens/recoverPass.dart';
+import 'package:flutter_application_1/Screens/signIn_screen.dart';
 
 import 'package:get/get.dart';
 import 'package:flutter_application_1/Screens/prueba.dart';
@@ -235,7 +237,7 @@ class _LoginViewState extends State<Login> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const Prueba()),
+                      MaterialPageRoute(builder: (context) => const recoverPassScreen()),
                     );
                   },
                   child: RichText(

@@ -35,10 +35,9 @@ class _HomeDrawerState extends State<HomeDrawer> {
         icon: Icon(Icons.home),
       ),
       DrawerList(
-        index: DrawerIndex.Help,
-        labelName: 'Historial de compra',
-        icon: Icon(Icons.history)
-      ),
+          index: DrawerIndex.Help,
+          labelName: 'Historial de compra',
+          icon: Icon(Icons.history)),
       DrawerList(
         index: DrawerIndex.FeedBack,
         labelName: 'Ofertas de viaje',
@@ -59,10 +58,15 @@ class _HomeDrawerState extends State<HomeDrawer> {
         labelName: 'Compras',
         icon: Icon(Icons.shopping_cart),
       ),
-       DrawerList(
+      DrawerList(
         index: DrawerIndex.Account,
         labelName: 'Mi Cuenta',
         icon: Icon(Icons.person),
+      ),
+      DrawerList(
+        index: DrawerIndex.Support,
+        labelName: 'Contactanos',
+        icon: Icon(Icons.info),
       ),
     ];
   }
@@ -176,10 +180,10 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   color: Colors.red,
                 ),
                 onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Login()),
-          );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Login()),
+                  );
                 },
               ),
               SizedBox(
@@ -312,6 +316,7 @@ enum DrawerIndex {
   Invite,
   Testing,
   Account,
+  Support
 }
 
 class DrawerList {

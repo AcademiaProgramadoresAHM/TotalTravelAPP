@@ -26,34 +26,318 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
           backgroundColor: Color.fromRGBO(101,45,143,1),
         ),
         body: ListView(
-          children: [
-                   ClipRect(
-                        child: Container(
-                          width: double.infinity,
-                          height: 100,
-                          decoration: BoxDecoration(
-                            color: Color(0xFF262D34),
-                            image: DecorationImage(
-                              fit: BoxFit.cover,
-                              image: Image.asset(
-                                'assets/images/userImage2.jpg',
-                              ).image,
-                            ),
-                          ),
-                        ),  
+      children: <Widget>[
+        Container(
+          margin:EdgeInsets.all(8.0),
+          child: Card(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            child: InkWell(
+              onTap: () => print("ciao"),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,  // add this
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8.0),
+                      topRight: Radius.circular(8.0),
                     ),
-                    Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(children: [
-              Text('Honduras'),
-              Text('Incluye: Tres tiempos de alimentacion, 3 Noches de alojamiento en un hotel ,Entradas a areas Protegidas, Rafting, Charla de introduccion,Traslado hasta lugar del rafting,Guias capacitados para las actividades.'),
-            ],) 
-            )   
-          ],
+                    child: Image.asset(
+                                'assets/images/Honduras.png',
+                              )
+                  ),
+                  ListTile(
+                    title: Text('Honduras'),
+                    subtitle: Text('Incluye: Tres tiempos de alimentacion, 3 Noches de alojamiento en un hotel ,Entradas a areas Protegidas, Rafting, Charla de introduccion,Traslado hasta lugar del rafting,Guias capacitados para las actividades.'),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
+        Container(
+          margin:EdgeInsets.all(8.0),
+          child: Card(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            child: InkWell(
+              onTap: () => print("ciao"),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8.0),
+                      topRight: Radius.circular(8.0),
+                    ),
+                    child: Image.network(
+                        'https://placeimg.com/640/480/any',
+                        // width: 300,
+                        height: 150,
+                        fit:BoxFit.fill
+
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('Inglaterra'),
+                    subtitle: Text('Incluye: Tres tiempos de alimentacion, 3 Noches de alojamiento en un hotel ,Entradas a areas Protegidas, Rafting, Charla de introduccion,Traslado hasta lugar del rafting,Guias capacitados para las actividades'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Container(
+          margin:EdgeInsets.all(8.0),
+          child: Card(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            child: InkWell(
+              onTap: () => print("ciao"),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8.0),
+                      topRight: Radius.circular(8.0),
+                    ),
+                    child: Image.network(
+                        'https://placeimg.com/640/480/any',
+                        // width: 300,
+                        height: 150,
+                        fit:BoxFit.fill
+
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('El Salvador'),
+                    subtitle: Text('Incluye: Tres noches de alojamiento en hotel,Desayuno,Almuerzo, Cena estilo buffet incluido,Bebidas de la casa ilimitadas,Actividades de animacion en el dia y noche,Uso de las instalaciones.'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Container(
+          margin:EdgeInsets.all(8.0),
+          child: Card(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            child: InkWell(
+              onTap: () => print("ciao"),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8.0),
+                      topRight: Radius.circular(8.0),
+                    ),
+                    child: Image.network(
+                        'https://placeimg.com/640/480/any',
+                        // width: 300,
+                        height: 150,
+                        fit:BoxFit.fill
+
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('Zambia'),
+                    subtitle: Text('Incluye: Tres noches de alojamiento en hotel,Desayuno,Almuerzo, Cena estilo buffet incluido,Bebidas de la casa ilimitadas,Actividades de animacion en el dia y noche,Uso de las instalaciones.'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Container(
+          margin:EdgeInsets.all(8.0),
+          child: Card(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            child: InkWell(
+              onTap: () => print("ciao"),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8.0),
+                      topRight: Radius.circular(8.0),
+                    ),
+                    child: Image.network(
+                        'https://placeimg.com/640/480/any',
+                        // width: 300,
+                        height: 150,
+                        fit:BoxFit.fill
+
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('Guatemala'),
+                    subtitle: Text('Incluye: Alojamiento 4 dias y tres noches,Alimentacion completa tipo buffet, Bebidas ilimitadas de todas las marcas,Fiesta en la playa y show de noche, Actividades de animacion de dia y de noche.'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Container(
+          margin:EdgeInsets.all(8.0),
+          child: Card(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            child: InkWell(
+              onTap: () => print("ciao"),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8.0),
+                      topRight: Radius.circular(8.0),
+                    ),
+                    child: Image.network(
+                        'https://placeimg.com/640/480/any',
+                        // width: 300,
+                        height: 150,
+                        fit:BoxFit.fill
+
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('Jamaica'),
+                    subtitle: Text('Incluye: Alojamiento 4 dias y tres noches,Alimentacion completa tipo buffet, Bebidas ilimitadas de todas las marcas,Fiesta en la playa y show de noche, Actividades de animacion de dia y de noche.'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Container(
+          margin:EdgeInsets.all(8.0),
+          child: Card(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            child: InkWell(
+              onTap: () => print("ciao"),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8.0),
+                      topRight: Radius.circular(8.0),
+                    ),
+                    child: Image.network(
+                        'https://placeimg.com/640/480/any',
+                        // width: 300,
+                        height: 150,
+                        fit:BoxFit.fill
+
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('Mexico'),
+                    subtitle: Text('Incluye: Tres noches y cautro dias de hospedaje,Coctel de bienvenidad, Desayuno gratuito diario,Caminata guiada por senderos,Visita guiada reserva natural, Uso libre de las instalaciones.'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Container(
+          margin:EdgeInsets.all(8.0),
+          child: Card(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            child: InkWell(
+              onTap: () => print("ciao"),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8.0),
+                      topRight: Radius.circular(8.0),
+                    ),
+                    child: Image.network(
+                        'https://placeimg.com/640/480/any',
+                        // width: 300,
+                        height: 150,
+                        fit:BoxFit.fill
+
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('Marruecos'),
+                    subtitle: Text('Incluye: Tres noches y cautro dias de hospedaje,Coctel de bienvenidad, Desayuno gratuito diario,Caminata guiada por senderos,Visita guiada reserva natural, Uso libre de las instalaciones.'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Container(
+          margin:EdgeInsets.all(8.0),
+          child: Card(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            child: InkWell(
+              onTap: () => print("ciao"),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8.0),
+                      topRight: Radius.circular(8.0),
+                    ),
+                    child: Image.network(
+                        'https://placeimg.com/640/480/any',
+                        // width: 300,
+                        height: 150,
+                        fit:BoxFit.fill
+
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('Argentina'),
+                    subtitle: Text('Incluye: Hospedaje maximo de 4 personas,Desayuno tipico, Coctel de bienvenidad,Caminata guiada,Dos noches de espectaculo Uso libre de las instalaciones,Uso libre del bar.'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        Container(
+          margin:EdgeInsets.all(8.0),
+          child: Card(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0))),
+            child: InkWell(
+              onTap: () => print("ciao"),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(8.0),
+                      topRight: Radius.circular(8.0),
+                    ),
+                    child: Image.network(
+                        'https://placeimg.com/640/480/any',
+                        // width: 300,
+                        height: 150,
+                        fit:BoxFit.fill
+
+                    ),
+                  ),
+                  ListTile(
+                    title: Text('Pakistan'),
+                    subtitle: Text('Incluye: Hospedaje maximo de 4 personas,Desayuno tipico, Coctel de bienvenidad,Caminata guiada,Dos noches de espectaculo Uso libre de las instalaciones,Uso libre del bar'),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
       ),
     );
-             
+     
      
   }
 
