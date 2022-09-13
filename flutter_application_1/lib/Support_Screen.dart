@@ -32,6 +32,7 @@ class _HomePageWidgetState extends State<SupportScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Info. Contacto'),
+        automaticallyImplyLeading: false,
       ),
       key: scaffoldKey,
       backgroundColor: Color.fromARGB(255, 224, 221, 221),
