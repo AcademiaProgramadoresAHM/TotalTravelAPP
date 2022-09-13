@@ -1,3 +1,4 @@
+import 'package:flutter/rendering.dart';
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/hotel_booking/calendar_popup_view.dart';
@@ -18,7 +19,7 @@ class AccountInfo extends StatefulWidget {
 
 class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
   AnimationController? animationController;
-  var _sexo;
+  var _sexo = "M";
   List<HotelListData> hotelList = HotelListData.hotelList;
   final ScrollController _scrollController = ScrollController();
 
@@ -42,7 +43,6 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
     animationController?.dispose();
     super.dispose();
   }
-
   @override
   Widget build(BuildContext context) {
     return Theme(
@@ -82,7 +82,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                                   EdgeInsets.only(top: 25, left: 25, right: 35),
                               child: TextFormField(
                                 decoration: InputDecoration(
-                                  labelText: 'Silvia Stephen',
+                                  labelText: 'Chris Hemsworth',
                                   enabled: false,
                                   fillColor: Colors.transparent,
                                   filled: true,
@@ -102,7 +102,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                                   EdgeInsets.only(top: 25, left: 25, right: 35),
                               child: TextFormField(
                                 decoration: InputDecoration(
-                                  labelText: 'Stephen@examples.com',
+                                  labelText: 'chrishemsworth@examples.com',
                                   enabled: false,
                                   fillColor: Colors.transparent,
                                   filled: true,
@@ -176,18 +176,19 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                                   isDense: true,
                                 ),
                               ),
-                            ),
+                            ), 
                             RadioListTile(
                                 title: Text("Masculino"),
                                 value: "M", 
                                 groupValue: _sexo, 
                                 onChanged: (value){
                                   setState(() {
+                                      softWrap: true;
                                       _sexo = value.toString();
                                   });
                                 },
                             ),
-                          RadioListTile(
+                            RadioListTile(
                                 title: Text("Femenino"),
                                 value: "F", 
                                 groupValue: _sexo, 
@@ -198,7 +199,8 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                                   
                                 },
                             ),
-                          ]),
+                          ],
+                          ),
                         ),
                                   ],
                                 );
@@ -596,7 +598,7 @@ class ProfilePic extends StatelessWidget {
       child: ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(60.0)),
         child: Image.asset(
-          'assets/images/userImage2.jpg',
+          'assets/images/userImage.png',
         ),
       ),
     );

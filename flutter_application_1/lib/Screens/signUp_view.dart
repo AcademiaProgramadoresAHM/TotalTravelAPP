@@ -18,8 +18,10 @@ class _SignUpViewState extends State<SignUpView> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+ TextEditingController password2Controller = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+  var validation;
 
   @override
   void dispose() {
@@ -92,20 +94,14 @@ class _SignUpViewState extends State<SignUpView> {
         SizedBox(
           height: size.height * 0.03,
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 20.0),
-          child: Text(
-            'Sign Up',
-            style: kLoginTitleStyle(size),
-          ),
-        ),
-        const SizedBox(
-          height: 10,
+         Padding(
+          padding: const EdgeInsets.only(left: 20.0, top: 10.0),
+          child: Image.asset('assets/images/AHM-Fondo-Nombre-inverso-3.png'),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 20.0),
           child: Text(
-            'Create Account',
+            'Crea tu cuenta',
             style: kLoginSubtitleStyle(size),
           ),
         ),
@@ -123,7 +119,7 @@ class _SignUpViewState extends State<SignUpView> {
                   style: kTextFormFieldStyle(),
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.person),
-                    hintText: 'Username',
+                    hintText: 'Usuario',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
@@ -133,11 +129,11 @@ class _SignUpViewState extends State<SignUpView> {
                   // The validator receives the text that the user has entered.
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter username';
+                      return 'Rellene este campo';
                     } else if (value.length < 4) {
-                      return 'at least enter 4 characters';
-                    } else if (value.length > 13) {
-                      return 'maximum character is 13';
+                      return 'Ingrese como mínimo 4 carácteres';
+                    } else if (value.length > 15) {
+                      return 'Ingrese como máximo 15 carácteres';
                     }
                     return null;
                   },
@@ -152,7 +148,7 @@ class _SignUpViewState extends State<SignUpView> {
                   controller: emailController,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.email_rounded),
-                    hintText: 'gmail',
+                    hintText: 'Email',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
@@ -160,9 +156,9 @@ class _SignUpViewState extends State<SignUpView> {
                   // The validator receives the text that the user has entered.
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter gmail';
+                      return 'Rellene este campo';
                     } else if (!value.endsWith('@gmail.com')) {
-                      return 'please enter valid gmail';
+                      return 'Ingrese una dirección válida';
                     }
                     return null;
                   },
@@ -172,7 +168,7 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
 
                 /// password
-                Obx(
+                     Obx(
                   () => TextFormField(
                     style: kTextFormFieldStyle(),
                     controller: passwordController,
@@ -189,7 +185,7 @@ class _SignUpViewState extends State<SignUpView> {
                           simpleUIController.isObscureActive();
                         },
                       ),
-                      hintText: 'Password',
+                      hintText: 'Contraseña',
                       border: const OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(15)),
                       ),
@@ -197,11 +193,50 @@ class _SignUpViewState extends State<SignUpView> {
                     // The validator receives the text that the user has entered.
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
+                        return 'Rellene este campo';
+                      } else{
+                        validation = value;
+                      } 
+                      return null;
+                    },
+  
+                  ),
+                ),
+                Padding(
+          padding: const EdgeInsets.only(bottom: 10.0),
+                ),
+                Obx(
+                  () => TextFormField(
+                    style: kTextFormFieldStyle(),
+                    controller: password2Controller,
+                    obscureText: simpleUIController.isObscure.value,
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Icons.lock_open),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          simpleUIController.isObscure.value
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                        onPressed: () {
+                          simpleUIController.isObscureActive();
+                        },
+                      ),
+                      hintText: 'Repetir contraseña',
+                      border: const OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                      ),
+                    ),
+                    // The validator receives the text that the user has entered.
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Rellene este campo';
                       } else if (value.length < 7) {
-                        return 'at least enter 6 characters';
+                        return 'Ingrese como mínimo 6 carácteres';
                       } else if (value.length > 13) {
-                        return 'maximum character is 13';
+                        return 'Ingrese como máximo 13 carácteres';
+                      } else if (value != validation){
+                        return 'Las contraseñas no coinciden.';
                       }
                       return null;
                     },
@@ -210,11 +245,7 @@ class _SignUpViewState extends State<SignUpView> {
                 SizedBox(
                   height: size.height * 0.01,
                 ),
-                Text(
-                  'Creating an account means you\'re okay with our Terms of Services and our Privacy Policy',
-                  style: kLoginTermsAndPrivacyStyle(size),
-                  textAlign: TextAlign.center,
-                ),
+                
                 SizedBox(
                   height: size.height * 0.02,
                 ),
@@ -239,11 +270,11 @@ class _SignUpViewState extends State<SignUpView> {
                   },
                   child: RichText(
                     text: TextSpan(
-                      text: 'Already have an account?',
+                      text: '¿Ya tienes una cuenta?',
                       style: kHaveAnAccountStyle(size),
                       children: [
                         TextSpan(
-                            text: " Login",
+                            text: " Inicia Sesión",
                             style: kLoginOrSignUpTextStyle(size)),
                       ],
                     ),
@@ -264,7 +295,7 @@ class _SignUpViewState extends State<SignUpView> {
       height: 55,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.deepPurpleAccent),
+          backgroundColor: MaterialStateProperty.all(Colors.deepPurple),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
@@ -275,10 +306,14 @@ class _SignUpViewState extends State<SignUpView> {
           // Validate returns true if the form is valid, or false otherwise.
           if (_formKey.currentState!.validate()) {
             // ... Navigate To your Home Page
+             Navigator.push(context,
+                        CupertinoPageRoute(builder: (ctx) => const Login()));
           }
         },
-        child: const Text('Sign up'),
+        child: const Text('Enviar'),
       ),
     );
   }
 }
+
+
