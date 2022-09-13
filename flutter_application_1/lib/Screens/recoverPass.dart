@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/codeVerification.dart';
+import 'package:flutter_application_1/Screens/signUp_view.dart';
 
 import 'package:get/get.dart';
 
@@ -87,21 +88,14 @@ class _recoverPassViewState extends State<recoverPassScreen> {
           height: size.height * 0.03,
         ),
         Padding(
-          padding: const EdgeInsets.only(left: 20.0),
+          padding: const EdgeInsets.only(left: 20.0, top: 50.0),
           child: Text(
-            'Sign Up',
+            'Recuperar contraseña',
             style: kLoginTitleStyle(size),
           ),
         ),
         const SizedBox(
           height: 10,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 20.0),
-          child: Text(
-            'Create Account',
-            style: kLoginSubtitleStyle(size),
-          ),
         ),
         SizedBox(
           height: size.height * 0.03,
@@ -157,7 +151,7 @@ class _recoverPassViewState extends State<recoverPassScreen> {
                 GestureDetector(
                   onTap: () {
                     Navigator.push(context,
-                        CupertinoPageRoute(builder: (ctx) => const Login()));
+                        CupertinoPageRoute(builder: (ctx) => const SignUpView()));
                     emailController.clear();
                     _formKey.currentState?.reset();
 
@@ -165,12 +159,15 @@ class _recoverPassViewState extends State<recoverPassScreen> {
                   },
                   child: RichText(
                     text: TextSpan(
-                      text: 'Ya tiene una cuenta?',
+                      text: '¿No tienes cuenta?',
                       style: kHaveAnAccountStyle(size),
                       children: [
                         TextSpan(
-                            text: " Inicie Sesion",
-                            style: kLoginOrSignUpTextStyle(size)),
+                          text: " Regístrese",
+                          style: kLoginOrSignUpTextStyle(
+                            size,
+                          ),
+                        ),
                       ],
                     ),
                   ),

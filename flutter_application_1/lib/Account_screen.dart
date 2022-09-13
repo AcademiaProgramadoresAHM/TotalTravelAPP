@@ -20,6 +20,7 @@ class AccountInfo extends StatefulWidget {
 class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
   AnimationController? animationController;
   var _sexo = "M";
+  bool evaluate = false;
   List<HotelListData> hotelList = HotelListData.hotelList;
   final ScrollController _scrollController = ScrollController();
 
@@ -177,28 +178,27 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                                 ),
                               ),
                             ), 
-                            RadioListTile(
-                                title: Text("Masculino"),
-                                value: "M", 
-                                groupValue: _sexo, 
-                                onChanged: (value){
-                                  setState(() {
-                                      softWrap: true;
-                                      _sexo = value.toString();
-                                  });
-                                },
+                            Padding(
+                              padding: const EdgeInsets.only(top: 25.0, right: 40.0),
+                              child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Row(
+                                  children: [
+                                    Radio(value: 'M', groupValue: _sexo, onChanged: (value) => evaluate ? null : value = 0,),
+                                    Text('Masculino', style: TextStyle( fontSize: 16,),)
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    Radio(value: 'F', groupValue: _sexo, onChanged: (value) => evaluate ? null : value = 0,),
+                                    Text('Femenino', style: TextStyle( fontSize: 16,),)
+                                  ],
+                                ),
+                              ],
                             ),
-                            RadioListTile(
-                                title: Text("Femenino"),
-                                value: "F", 
-                                groupValue: _sexo, 
-                                onChanged: (value){
-                                  setState(() {
-                                      _sexo = value.toString();
-                                  });
-                                  
-                                },
                             ),
+                                
                           ],
                           ),
                         ),
