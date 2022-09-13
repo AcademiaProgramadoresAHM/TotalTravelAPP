@@ -68,13 +68,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       topLeft: Radius.circular(8.0),
                       topRight: Radius.circular(8.0),
                     ),
-                    child: Image.network(
-                        'https://placeimg.com/640/480/any',
-                        // width: 300,
-                        height: 150,
-                        fit:BoxFit.fill
-
-                    ),
+                    child: Image.asset(
+                                'assets/images/Inglaterra.jpg',
+                              )
                   ),
                   ListTile(
                     title: Text('Inglaterra'),
@@ -99,13 +95,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       topLeft: Radius.circular(8.0),
                       topRight: Radius.circular(8.0),
                     ),
-                    child: Image.network(
-                        'https://placeimg.com/640/480/any',
-                        // width: 300,
-                        height: 150,
-                        fit:BoxFit.fill
-
-                    ),
+                    child: Image.asset(
+                                'assets/images/ElSalvador.jpg',
+                              )
                   ),
                   ListTile(
                     title: Text('El Salvador'),
@@ -130,13 +122,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       topLeft: Radius.circular(8.0),
                       topRight: Radius.circular(8.0),
                     ),
-                    child: Image.network(
-                        'https://placeimg.com/640/480/any',
-                        // width: 300,
-                        height: 150,
-                        fit:BoxFit.fill
-
-                    ),
+                    child: Image.asset(
+                                'assets/images/Zambia.jpg',
+                              )
                   ),
                   ListTile(
                     title: Text('Zambia'),
@@ -161,13 +149,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       topLeft: Radius.circular(8.0),
                       topRight: Radius.circular(8.0),
                     ),
-                    child: Image.network(
-                        'https://placeimg.com/640/480/any',
-                        // width: 300,
-                        height: 150,
-                        fit:BoxFit.fill
-
-                    ),
+                    child: Image.asset(
+                                'assets/images/Guatemala.jpg',
+                              )
                   ),
                   ListTile(
                     title: Text('Guatemala'),
@@ -192,13 +176,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       topLeft: Radius.circular(8.0),
                       topRight: Radius.circular(8.0),
                     ),
-                    child: Image.network(
-                        'https://placeimg.com/640/480/any',
-                        // width: 300,
-                        height: 150,
-                        fit:BoxFit.fill
-
-                    ),
+                    child:Image.asset(
+                                'assets/images/Jamaica.jpg',
+                              )
                   ),
                   ListTile(
                     title: Text('Jamaica'),
@@ -223,13 +203,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       topLeft: Radius.circular(8.0),
                       topRight: Radius.circular(8.0),
                     ),
-                    child: Image.network(
-                        'https://placeimg.com/640/480/any',
-                        // width: 300,
-                        height: 150,
-                        fit:BoxFit.fill
-
-                    ),
+                    child: Image.asset(
+                                'assets/images/Mexico4.jpg',
+                              )
                   ),
                   ListTile(
                     title: Text('Mexico'),
@@ -254,13 +230,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       topLeft: Radius.circular(8.0),
                       topRight: Radius.circular(8.0),
                     ),
-                    child: Image.network(
-                        'https://placeimg.com/640/480/any',
-                        // width: 300,
-                        height: 150,
-                        fit:BoxFit.fill
-
-                    ),
+                    child:  Image.asset(
+                                'assets/images/Marruecos.jpg',
+                              )
                   ),
                   ListTile(
                     title: Text('Marruecos'),
@@ -285,13 +257,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       topLeft: Radius.circular(8.0),
                       topRight: Radius.circular(8.0),
                     ),
-                    child: Image.network(
-                        'https://placeimg.com/640/480/any',
-                        // width: 300,
-                        height: 150,
-                        fit:BoxFit.fill
-
-                    ),
+                    child:Image.asset(
+                                'assets/images/Argentina.jpg',
+                              )
                   ),
                   ListTile(
                     title: Text('Argentina'),
@@ -316,13 +284,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       topLeft: Radius.circular(8.0),
                       topRight: Radius.circular(8.0),
                     ),
-                    child: Image.network(
-                        'https://placeimg.com/640/480/any',
-                        // width: 300,
-                        height: 150,
-                        fit:BoxFit.fill
-
-                    ),
+                    child: Image.asset(
+                                'assets/images/Pakistan.jpg',
+                              )
                   ),
                   ListTile(
                     title: Text('Pakistan'),
