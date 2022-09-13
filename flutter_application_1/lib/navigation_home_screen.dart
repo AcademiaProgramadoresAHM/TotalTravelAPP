@@ -1,5 +1,6 @@
 import 'package:flutter_application_1/Account_screen.dart';
 import 'package:flutter_application_1/Screens/Compras.dart';
+import 'package:flutter_application_1/Screens/historialcompras.dart';
 import 'package:flutter_application_1/Support_Screen.dart';
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter_application_1/custom_drawer/drawer_user_controller.dart';
@@ -61,7 +62,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
           break;
         case DrawerIndex.Help:
           setState(() {
-            screenView = HelpScreen();
+            screenView = Comprashistorial();
           });
           break;
         case DrawerIndex.FeedBack:
