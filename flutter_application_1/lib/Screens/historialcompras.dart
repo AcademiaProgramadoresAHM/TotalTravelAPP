@@ -1,48 +1,37 @@
+import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:flutter_application_1/Screens/prueba.dart';
-import 'package:flutter_application_1/Screens/signUp_view.dart';
-import 'package:flutter_application_1/navigation_home_screen.dart';
 
 class Comprashistorial extends StatefulWidget {
-  const Comprashistorial({Key? key}) : super(key: key);
-
   @override
-  State<Comprashistorial> createState() => _Comprashistorial();
+  _ComprashistorialState createState() => _ComprashistorialState();
 }
 
-class _Comprashistorial extends State<Comprashistorial> {
-  String? radioButtonValue;
-  TextEditingController? textController1;
-  TextEditingController? textController2;
-  TextEditingController? textController3;
-  final scaffoldKey = GlobalKey<ScaffoldState>();
-
+class _ComprashistorialState extends State<Comprashistorial> {
   @override
   void initState() {
     super.initState();
-    textController1 = TextEditingController();
-    textController2 = TextEditingController();
-    textController3 = TextEditingController();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: Color(0xFFFFFFFF),
-        appBar: AppBar(
-          title: Text('Historial de Compras'),
-        ),
-        body: ListView(
-          children: <Widget>[
-            miCard(),
-            miCardImage(),
-            miCardDesign(),
-            miCardImage2(),
-            miCardDesignn(),
-            miCardImage3(),
-          ],
-        ));
+    return MaterialApp(
+        title: 'Flutter layout demo',
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+            appBar: AppBar(
+              title: Text('          Historial de Compras'),
+              backgroundColor: Color.fromRGBO(101, 45, 143, 1),
+            ),
+            body: ListView(
+              children: <Widget>[
+                miCard(),
+                miCardImage(),
+                miCardDesign(),
+                miCardImage2(),
+                miCardDesignn(),
+                miCardImage3(),
+              ],
+            )));
   }
 
   Card miCard() {
