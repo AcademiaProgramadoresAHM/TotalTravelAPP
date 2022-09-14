@@ -1,5 +1,6 @@
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Screens/detallesdehistorial.dart';
 
 class Comprashistorial extends StatefulWidget {
   @override
@@ -15,154 +16,215 @@ class _ComprashistorialState extends State<Comprashistorial> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter layout demo',
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-            appBar: AppBar(
-              title: Text('          Historial de Compras'),
-              backgroundColor: Color.fromRGBO(101, 45, 143, 1),
+      title: 'Flutter layout demo',
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('           Historial de Compras'),
+          backgroundColor: Color.fromRGBO(101, 45, 143, 1),
+        ),
+        body: ListView(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.all(8.0),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8.0))),
+                child: InkWell(
+                  onTap: () => print("ciao"),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch, // add this
+                    children: <Widget>[
+                      ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8.0),
+                            topRight: Radius.circular(8.0),
+                          ),
+                          child: Image.asset(
+                            'assets/images/Inglaterra.jpg',
+                          )),
+                      ListTile(
+                        title: Text('Paquete Inglaterra'),
+                        subtitle: Text('Hotel: Hilton Princess '),
+                        trailing: Text('L.45900.00',
+                            style:
+                                TextStyle(color: Colors.green, fontSize: 20)),
+                      ),
+                      TextButton(
+                        style: ButtonStyle(
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.blue),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => detalleshistorial()),
+                          );
+                        },
+                        child: Text('Ver Detalles'),
+                      )
+                    ],
+                  ),
+                ),
+              ),
             ),
-            body: ListView(
-              children: <Widget>[
-                miCard(),
-                miCardImage(),
-                miCardDesign(),
-                miCardImage2(),
-                miCardDesignn(),
-                miCardImage3(),
-              ],
-            )));
-  }
-
-  Card miCard() {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      margin: EdgeInsets.all(15),
-      elevation: 10,
-      color: Color(0xFFE6EE9C),
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            contentPadding: EdgeInsets.fromLTRB(15, 10, 25, 0),
-            title: Text('Hotel La Encenada'),
-            subtitle: Text(
-                ' Cuatro dias y tres noches con todo incluido y con uso libre de las instalaciones ademas de barra libre. L0.00'),
-            leading: Icon(Icons.home),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[],
-          )
-        ],
-      ),
-    );
-  }
-
-  Card miCardImage() {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      margin: EdgeInsets.all(15),
-      elevation: 10,
-      child: Column(
-        children: <Widget>[
-          Image(
-            image: NetworkImage(
-                'https://media-cdn.tripadvisor.com/media/photo-s/15/19/a9/67/disfruta-de-nuestra-piscina.jpg'),
-          ),
-          Container(
-            padding: EdgeInsets.all(10),
-            child: Text('Detalles'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Card miCardDesign() {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      margin: EdgeInsets.all(15),
-      elevation: 10,
-      color: Color(0xFFE6EE9C),
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            contentPadding: EdgeInsets.fromLTRB(15, 10, 25, 0),
-            title: Text('Paquete Inglaterra'),
-            subtitle: Text(
-                'Con hospedaje en el  Hotel Hilton Princess, uso libre de todas  sus intalaciones y diversas actividades. L0.00 '),
-            leading: Icon(Icons.home),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[],
-          )
-        ],
-      ),
-    );
-  }
-
-  Card miCardImage2() {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      margin: EdgeInsets.all(15),
-      elevation: 10,
-      child: Column(
-        children: <Widget>[
-          Image(
-            image: NetworkImage(
-                'https://www.caracteristicas.co/wp-content/uploads/2018/09/Inglaterra-1-e1579225426978-800x416.jpg'),
-          ),
-          Container(
-            padding: EdgeInsets.all(10),
-            child: Text('Detalles'),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-Card miCardDesignn() {
-  return Card(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-    margin: EdgeInsets.all(15),
-    elevation: 10,
-    color: Color(0xFFE6EE9C),
-    child: Column(
-      children: <Widget>[
-        ListTile(
-          contentPadding: EdgeInsets.fromLTRB(15, 10, 25, 0),
-          title: Text('Nadar con tiburones'),
-          subtitle: Text(
-              'VivE una experiencia inolvidable nadando entre tiburones ballena, los peces más grandes del mundo. Practicaremos snorkel en el Caribe y disfrutaremos de una comida en las aguas de Playa Norte. L.0.00'),
-          leading: Icon(Icons.home),
+            Container(
+              margin: EdgeInsets.all(8.0),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8.0))),
+                child: InkWell(
+                  onTap: () => print("ciao"),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch, // add this
+                    children: <Widget>[
+                      ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8.0),
+                            topRight: Radius.circular(8.0),
+                          ),
+                          child: Image.asset(
+                            'assets/images/Jamaica.jpg',
+                          )),
+                      ListTile(
+                        title: Text('Paquete Jamaica'),
+                        subtitle: Text('Hotel: Hilton Princess'),
+                        trailing: Text('L.15000.00',
+                            style:
+                                TextStyle(color: Colors.green, fontSize: 20)),
+                      ),
+                      TextButton(
+                        style: ButtonStyle(
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.blue),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => detalleshistorial()),
+                          );
+                        },
+                        child: Text('Ver Detalles'),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.all(8.0),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8.0))),
+                child: InkWell(
+                  onTap: () => print("ciao"),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch, // add this
+                    children: <Widget>[
+                      ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8.0),
+                            topRight: Radius.circular(8.0),
+                          ),
+                          child: Image.asset(
+                            'assets/images/hotel.jpg',
+                          )),
+                      ListTile(
+                        title: Text('La Ensenada'),
+                        subtitle: Text('Hotel: La Ensenada  4dias/3noches'),
+                        trailing: Text('L.4900.00',
+                            style:
+                                TextStyle(color: Colors.green, fontSize: 20)),
+                      ),
+                      TextButton(
+                        style: ButtonStyle(
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.blue),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => detalleshistorial()),
+                          );
+                        },
+                        child: Text('Ver Detalles'),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              margin: EdgeInsets.all(8.0),
+              child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(8.0))),
+                child: InkWell(
+                  onTap: () => print("ciao"),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch, // add this
+                    children: <Widget>[
+                      ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(8.0),
+                            topRight: Radius.circular(8.0),
+                          ),
+                          child: Image.asset(
+                            'assets/images/Zambia.jpg',
+                          )),
+                      ListTile(
+                        title: Text('Paquete Zambia'),
+                        subtitle: Text('Hotel: Pepitos Intercontinental '),
+                        trailing: Text('L.50900.00',
+                            style:
+                                TextStyle(color: Colors.green, fontSize: 20)),
+                      ),
+                      TextButton(
+                        style: ButtonStyle(
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.blue),
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => detalleshistorial()),
+                          );
+                        },
+                        child: Text('Ver Detalles'),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[],
-        )
-      ],
-    ),
-  );
-}
+      ),
+    );
+  }
 
-Card miCardImage3() {
-  return Card(
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-    margin: EdgeInsets.all(15),
-    elevation: 10,
-    child: Column(
-      children: <Widget>[
-        Image(
-          image: NetworkImage(
-              'https://topbuceo.net/wp-content/uploads/2020/03/consejos-bucear-con-tiburones.jpg'),
-        ),
+  Column _buildButtonColumn(Color color, IconData icon, String label) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(icon, color: color),
         Container(
-          padding: EdgeInsets.all(10),
-          child: Text('Detalles'),
+          margin: const EdgeInsets.only(top: 8),
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+              color: color,
+            ),
+          ),
         ),
       ],
-    ),
-  );
+    );
+  }
 }
