@@ -31,9 +31,9 @@ class _HomePageWidgetState extends State<SupportScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Info. Contacto'),
-        automaticallyImplyLeading: false,
-      ),
+          title: Text('Info. Contacto', style: TextStyle(fontSize: 22)),
+          automaticallyImplyLeading: false,
+          backgroundColor: Color.fromRGBO(101, 45, 143, 1)),
       key: scaffoldKey,
       backgroundColor: Color.fromARGB(255, 224, 221, 221),
       body: SingleChildScrollView(
@@ -135,7 +135,7 @@ class _HomePageWidgetState extends State<SupportScreen> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 4, 0, 0),
                                             child: Text(
-                                              'A description of your lesson goes here...',
+                                              'C. Hacia Armenta, San Pedro Sula 21102',
                                               style: TextStyle(
                                                 fontFamily: 'Outfit',
                                                 color: Color(0xFF57636C),
@@ -219,7 +219,7 @@ class _HomePageWidgetState extends State<SupportScreen> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 4, 0, 0),
                                             child: Text(
-                                              'A description of your lesson goes here...',
+                                              '+504 9478-6523 || +504 9647-5812',
                                               style: TextStyle(
                                                 fontFamily: 'Outfit',
                                                 color: Color(0xFF57636C),
@@ -303,7 +303,7 @@ class _HomePageWidgetState extends State<SupportScreen> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     0, 4, 0, 0),
                                             child: Text(
-                                              'A description of your lesson goes here...',
+                                              'Habla directamente con nuestros agente en linea desde la comodidad de tu casa',
                                               style: TextStyle(
                                                 fontFamily: 'Outfit',
                                                 color: Color(0xFF57636C),
@@ -490,39 +490,47 @@ class _HomePageWidgetState extends State<SupportScreen> {
                                 keyboardType: TextInputType.multiline,
                               ),
                             ),
-                            // Row(
-                            //   mainAxisSize: MainAxisSize.max,
-                            //   mainAxisAlignment: MainAxisAlignment.center,
-                            //   crossAxisAlignment: CrossAxisAlignment.end,
-                            //   children: [
-                            //     Padding(
-                            //       padding: EdgeInsetsDirectional.fromSTEB(
-                            //           0, 24, 0, 44),
-                            //       child: FFButtonWidget(
-                            //         onPressed: () async {
-                            //           context.pop();
-                            //         },
-                            //         text: 'Enviar',
-                            //         options: FFButtonOptions(
-                            //           width: 270,
-                            //           height: 50,
-                            //           color: Color(0xFF4B39EF),
-                            //           textStyle: TextStyle(
-                            //             fontFamily: 'Outfit',
-                            //             color: Colors.white,
-                            //             fontSize: 18,
-                            //             fontWeight: FontWeight.w500,
-                            //           ),
-                            //           elevation: 3,
-                            //           borderSide: BorderSide(
-                            //             color: Colors.transparent,
-                            //             width: 1,
-                            //           ),
-                            //         ),
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 24, 0, 44),
+                                  child: ElevatedButton(
+                                    child: Text('Enviar',
+                                        style: TextStyle(fontSize: 20)),
+                                    style: ElevatedButton.styleFrom(
+                                      primary: Color.fromRGBO(101, 45, 143, 1),
+                                    ),
+                                    onPressed: () {},
+                                  ),
+                                  // child: FFButtonWidget(
+                                  //   onPressed: () async {
+                                  //     context.pop();
+                                  //   },
+                                  //   text: 'Enviar',
+                                  //   options: FFButtonOptions(
+                                  //     width: 270,
+                                  //     height: 50,
+                                  //     color: Color(0xFF4B39EF),
+                                  //     textStyle: TextStyle(
+                                  //       fontFamily: 'Outfit',
+                                  //       color: Colors.white,
+                                  //       fontSize: 18,
+                                  //       fontWeight: FontWeight.w500,
+                                  //     ),
+                                  //     elevation: 3,
+                                  //     borderSide: BorderSide(
+                                  //       color: Colors.transparent,
+                                  //       width: 1,
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
