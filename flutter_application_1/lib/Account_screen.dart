@@ -78,108 +78,75 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           /*Contenido*/
                           child: Column(children: <Widget>[
                             ProfilePic(),
-                            Padding(
-                              padding:
-                                  EdgeInsets.only(top: 25, left: 25, right: 35),
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: 'Chris Hemsworth',
-                                  enabled: false,
-                                  fillColor: Colors.transparent,
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.white,
-                                        width: 20,
-                                        style: BorderStyle.solid),
-                                  ),
-                                  contentPadding: const EdgeInsets.all(25),
-                                  isDense: true,
-                                ),
+                          
+                           Padding(
+                              padding: const EdgeInsets.only(right: 240.0, top: 70.0),
+                              child: Text(
+                                'Nombre',
+                                style: TextStyle(fontFamily: 'Roboto', fontSize: 17.0),
                               ),
                             ),
                             Padding(
                               padding:
-                                  EdgeInsets.only(top: 25, left: 25, right: 35),
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: 'chrishemsworth@examples.com',
-                                  enabled: false,
-                                  fillColor: Colors.transparent,
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.white,
-                                        width: 20,
-                                        style: BorderStyle.solid),
-                                  ),
-                                  contentPadding: const EdgeInsets.all(25),
-                                  isDense: true,
-                                ),
+                                  EdgeInsets.only(top: 25.0, right: 140.0),
+                              child: Text('Chris Hemsworth', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
+                              
+                            ),
+                            Divider(color: Color.fromRGBO(101, 45, 143, 1),thickness: 02.0, indent: 40.0, endIndent: 40.0,),
+                             Padding(
+                              padding: const EdgeInsets.only(right: 170.0, top: 20.0),
+                              child: Text(
+                                'Correo electrónico',
+                                style: TextStyle(fontFamily: 'Roboto', fontSize: 17.0),
                               ),
                             ),
                             Padding(
                               padding:
-                                  EdgeInsets.only(top: 25, left: 25, right: 35),
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: '+504 89332227',
-                                  enabled: false,
-                                  fillColor: Colors.transparent,
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.white,
-                                        width: 20,
-                                        style: BorderStyle.solid),
-                                  ),
-                                  contentPadding: const EdgeInsets.all(25),
-                                  isDense: true,
-                                ),
+                                  EdgeInsets.only(top: 25.0),
+                              child: Text('chrishemsworth@examples.com', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
+                              
+                            ),
+                            Divider(color: Color.fromRGBO(101, 45, 143, 1),thickness: 02.0, indent: 40.0, endIndent: 40.0,),
+                             Padding(
+                              padding: const EdgeInsets.only(right: 240.0, top: 20.0),
+                              child: Text(
+                                'Teléfono',
+                                style: TextStyle(fontFamily: 'Roboto', fontSize: 17.0),
                               ),
                             ),
                             Padding(
                               padding:
-                                  EdgeInsets.only(top: 25, left: 25, right: 35),
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: '0501-2004-10339',
-                                  enabled: false,
-                                  fillColor: Colors.transparent,
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.white,
-                                        width: 20,
-                                        style: BorderStyle.solid),
-                                  ),
-                                  contentPadding: const EdgeInsets.all(25),
-                                  isDense: true,
-                                ),
+                                  EdgeInsets.only(top: 25.0, right: 150.0),
+                              child: Text('+504 89332227', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
+                              
+                            ),
+                            Divider(color: Color.fromRGBO(101, 45, 143, 1),thickness: 02.0, indent: 40.0, endIndent: 40.0,),
+                          
+                             Padding(
+                              padding: const EdgeInsets.only(right: 270.0, top: 20.0),
+                              child: Text(
+                                'DNI',
+                                style: TextStyle(fontFamily: 'Roboto', fontSize: 17.0),
                               ),
                             ),
                             Padding(
                               padding:
-                                  EdgeInsets.only(top: 25, left: 25, right: 35),
-                              child: TextFormField(
-                                decoration: InputDecoration(
-                                  labelText: '21-02-2021',
-                                  enabled: false,
-                                  fillColor: Colors.transparent,
-                                  filled: true,
-                                  border: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.white,
-                                        width: 20,
-                                        style: BorderStyle.solid),
-                                  ),
-                                  contentPadding: const EdgeInsets.all(25),
-                                  isDense: true,
-                                ),
+                                  EdgeInsets.only(top: 25.0, right: 140.0),
+                              child: Text('0501200410339', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
+                              
+                            ),
+                            Divider(color: Color.fromRGBO(101, 45, 143, 1),thickness: 02.0, indent: 40.0, endIndent: 40.0,),
+                            
+                            
+                              Padding(
+                              padding: const EdgeInsets.only(right: 250.0, top: 20.0),
+                              child: Text(
+                                'Sexo',
+                                style: TextStyle(fontFamily: 'Roboto', fontSize: 17.0),
                               ),
-                            ), 
+                            ),
                             Padding(
-                              padding: const EdgeInsets.only(top: 25.0, right: 40.0),
+                              padding: const EdgeInsets.only(top: 25.0, right: 15.0),
                               child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
