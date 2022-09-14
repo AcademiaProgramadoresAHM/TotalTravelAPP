@@ -88,10 +88,17 @@ class _recoverPassViewState extends State<recoverPassScreen> {
           height: size.height * 0.03,
         ),
         Padding(
+          padding: const EdgeInsets.only(left: 20.0),
+          child: Image.asset('assets/images/AHM-Fondo-Nombre-inverso-3.png'),
+        ),
+        SizedBox(
+          height: size.height * 0.03,
+        ),
+        Padding(
           padding: const EdgeInsets.only(left: 20.0, top: 50.0),
           child: Text(
             'Recuperar contraseña',
-            style: kLoginTitleStyle(size),
+            style: kLoginSubtitleStyle(size),
           ),
         ),
         const SizedBox(
@@ -150,8 +157,10 @@ class _recoverPassViewState extends State<recoverPassScreen> {
                 /// Navigate To Login Screen
                 GestureDetector(
                   onTap: () {
-                    Navigator.push(context,
-                        CupertinoPageRoute(builder: (ctx) => const SignUpView()));
+                    Navigator.push(
+                        context,
+                        CupertinoPageRoute(
+                            builder: (ctx) => const SignUpView()));
                     emailController.clear();
                     _formKey.currentState?.reset();
 
@@ -187,7 +196,8 @@ class _recoverPassViewState extends State<recoverPassScreen> {
       height: 55,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Color.fromRGBO(101,45,143,1)),
+          backgroundColor:
+              MaterialStateProperty.all(Color.fromRGBO(101, 45, 143, 1)),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),

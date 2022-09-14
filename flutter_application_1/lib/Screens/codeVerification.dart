@@ -87,9 +87,16 @@ class _codeVerificationScreenState extends State<codeVerificationScreen> {
         ),
         Padding(
           padding: const EdgeInsets.only(left: 20.0),
+          child: Image.asset('assets/images/AHM-Fondo-Nombre-inverso-3.png'),
+        ),
+        SizedBox(
+          height: size.height * 0.03,
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 20.0),
           child: Text(
             'Verificando Codigo',
-            style: kLoginTitleStyle(size),
+            style: kLoginSubtitleStyle(size),
           ),
         ),
         const SizedBox(
@@ -166,7 +173,8 @@ class _codeVerificationScreenState extends State<codeVerificationScreen> {
       height: 55,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Colors.deepPurpleAccent),
+          backgroundColor:
+              MaterialStateProperty.all(Color.fromRGBO(101, 45, 143, 1)),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
