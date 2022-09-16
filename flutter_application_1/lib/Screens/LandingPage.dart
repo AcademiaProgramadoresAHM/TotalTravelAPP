@@ -2,6 +2,10 @@ import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
+import 'package:flutter_application_1/Screens/Login.dart';
+import 'package:flutter_application_1/Screens/signUp_view.dart';
+
+
 
 class LandingPage extends StatefulWidget {
   @override
@@ -29,10 +33,10 @@ class _LandingPageState extends State<LandingPage> {
         ),
         body: ListView(
       children: <Widget>[
-        Text('\n\n\n\n\n'),
+        Text('\n'),
         CarouselSlider(
               options: CarouselOptions(
-                height: 550.0,
+                height: 650.0,
                 autoPlay: true,
                 autoPlayInterval: Duration(seconds: 3),
                 autoPlayAnimationDuration: Duration(milliseconds: 800),
@@ -73,16 +77,70 @@ class _LandingPageState extends State<LandingPage> {
        ),
      );
    }),
- ),
-
-        
-      ],
-    ),
+ ), 
+   Padding( padding:EdgeInsets.all(16.0), child: SizedBox(
+      width: double.infinity,
+      height: 45,
+     
+      child: ElevatedButton(
+        style: ButtonStyle(
+          //backgroundColor: MaterialStateProperty.all(Colors.red),
+          backgroundColor: MaterialStateProperty.all(Color.fromRGBO(101,45,143,1)),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+        ),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Login()),
+          );
+          /* Validate returns true if the form is valid, or false otherwise.
+          if (_formKey.currentState!.validate()) {
+             ... Navigate To your Home Page
+          }*/
+        },
+        child: const Text('Login'),
       ),
-    );
+    ),),
+   Padding( padding:EdgeInsets.all(16.0), child: SizedBox(
+      width: double.infinity,
+      height: 45,
+      child: ElevatedButton(
+        style: ButtonStyle(
+          //backgroundColor: MaterialStateProperty.all(Colors.red),
+          backgroundColor: MaterialStateProperty.all(Color.fromARGB(255, 111, 106, 115)),
+          shape: MaterialStateProperty.all(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+        ),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SignUpView()),
+          );
+          /* Validate returns true if the form is valid, or false otherwise.
+          if (_formKey.currentState!.validate()) {
+             ... Navigate To your Home Page
+          }*/
+        },
+        child: const Text('Registrarse'),
+      ),
+    ),)
+
      
-     
+    
+    
+    ],
+    ),
+      ),  
+    );    
   }
+
 
   Column _buildButtonColumn(Color color, IconData icon, String label) {
     return Column(
@@ -104,6 +162,7 @@ class _LandingPageState extends State<LandingPage> {
       ],
     );
   }
+  
 }
 
 Widget _Card1(){
@@ -197,3 +256,4 @@ List<T> map<T>(List list, Function handler) {
     }
     return result;
   }
+
