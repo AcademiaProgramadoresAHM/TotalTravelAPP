@@ -29,9 +29,13 @@ class _Compras extends State<Compras> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-     
+      appBar: AppBar(
+              title: Text('          Realizar pago'),
+              backgroundColor: Color.fromRGBO(101, 45, 143, 1),
+            ),
       backgroundColor: Color(0xFFF1F4F8),
-      body: Column(
+      body: 
+      Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -607,29 +611,14 @@ class _Compras extends State<Compras> {
           Container(
             width: double.infinity,
             height: 90,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 4,
-                  color: Color(0x430F1113),
-                  offset: Offset(0, -2),
-                )
-              ],
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(0),
-                bottomRight: Radius.circular(0),
-                topLeft: Radius.circular(8),
-                topRight: Radius.circular(8),
-              ),
-            ),
+            
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 34),
+              padding: EdgeInsetsDirectional.fromSTEB(0, 34,0 ,0 ),
               child: ElevatedButton(
                 onPressed: () {
                   print('Button pressed ...');
                 },
-                   child: Text('Proceed to Checkout' ,
+                   child: Text('Enviar' ,
                style: TextStyle(
                                                     fontFamily: 'Lexend Deca',
                                                     color: Colors.white,
@@ -638,7 +627,7 @@ class _Compras extends State<Compras> {
                                                   ),),
                                           style: ButtonStyle( 
                                             fixedSize: MaterialStateProperty.all(const Size(double.infinity, 50)),
-                                            backgroundColor: MaterialStateProperty.all(const  Color(0xFF4B39EF)),
+                                            backgroundColor: MaterialStateProperty.all(const  Color.fromRGBO(101, 45, 143, 1)),
 
                                           ),            
                 ),
