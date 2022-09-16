@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:flutter_application_1/Screens/LandingPage.dart';
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
         textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
       ),
-      home: Login(),
+      home: LandingPage(),
     );
   }
 }

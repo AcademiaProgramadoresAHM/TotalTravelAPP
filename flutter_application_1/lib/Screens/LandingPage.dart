@@ -1,5 +1,6 @@
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 
 class LandingPage extends StatefulWidget {
@@ -12,6 +13,7 @@ class _LandingPageState extends State<LandingPage> {
   void initState() {
     super.initState();
   }
+
 
 
   @override
@@ -27,66 +29,53 @@ class _LandingPageState extends State<LandingPage> {
         ),
         body: ListView(
       children: <Widget>[
-        Container(
-          margin:EdgeInsets.all(8.0),
-          child: Card(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0)),side:  BorderSide(color: Colors.black,width: 3),),
-            child: InkWell(
-              onTap: () => print("ciao"),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,  // add this
-                children: <Widget>[
-                    Text('\n'),
-                    Icon(Icons.airplane_ticket),
-                  ListTile(
-                    title: Text('                                                 BÁSICO\n              ______________________________________________'),
-                    subtitle: Text('                                                   Hotel 3 estrellas\n      ______________________________________________________________\n                                        Desayuno | Almuerzo | Cena\n      ______________________________________________________________\n                                 Realización de actividades básicas\n      ______________________________________________________________\n                                           Atención al dormitorio\n '),
-                  ),
-                ],
+        Text('\n\n\n\n\n'),
+        CarouselSlider(
+              options: CarouselOptions(
+                height: 550.0,
+                autoPlay: true,
+                autoPlayInterval: Duration(seconds: 3),
+                autoPlayAnimationDuration: Duration(milliseconds: 800),
+                autoPlayCurve: Curves.fastOutSlowIn,
+                pauseAutoPlayOnTouch: true,
+                aspectRatio: 2.0,
+                onPageChanged: (index, reason) {
+                  setState(() {
+                    _currentIndex = index;
+                  });
+                },
               ),
+              items: cardList.map((card){
+                return Builder(
+                  builder:(BuildContext context){
+                    return Container(
+                      height: MediaQuery.of(context).size.height*0.30,
+                      width: MediaQuery.of(context).size.width,
+                      child: Card(
+                        color: Color.fromRGBO(101,45,143,1),
+                        child: card,
+                      ),
+                    );
+                  }
+                );
+              }).toList(),
             ),
-          ),
-        ),
-        Container(
-          margin:EdgeInsets.all(8.0),
-          child: Card(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0)),side:  BorderSide(color: Colors.black,width: 3),),
-            child: InkWell(
-              onTap: () => print("ciao"),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                   Text('\n'),
-                    Icon(Icons.downhill_skiing ),
-                  ListTile(
-                    title: Text('                                                   PLUS\n              ______________________________________________'),
-                    subtitle: Text('                                                   Hotel 4 estrellas\n      ______________________________________________________________\n                                        Desayuno | Almuerzo | Cena\n      ______________________________________________________________\n                                 Realización de actividades Turísticas\n      ______________________________________________________________\n                                           Atención al dormitorio\n      ______________________________________________________________\n                              Acceso a piscina | Uso del gimnasio \n      ______________________________________________________________\n                                                          Surfear\n '),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-        Container(
-          margin:EdgeInsets.all(8.0),
-          child: Card(
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0)),side:  BorderSide(color: Colors.black,width: 3),),
-            child: InkWell(
-              onTap: () => print("ciao"),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Text('\n'),
-                    Icon(Icons.diamond),
-                  ListTile(
-                    title: Text('                                                    PRO\n              ______________________________________________'),
-                    subtitle: Text('                                                   Hotel 5 estrellas\n      ______________________________________________________________\n                                        Desayuno | Almuerzo | Cena\n      ______________________________________________________________\n                                 Realización de actividades Turísticas\n      ______________________________________________________________\n                                           Atención al dormitorio\n      ______________________________________________________________\n                     Acceso a piscina | Uso del gimnasio | Uso del Spa\n      ______________________________________________________________\n                                                          Surfear\n '),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
+            Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: map<Widget>(cardList, (index, url) {
+    return Container(
+      width: 10.0,
+      height: 10.0,
+      margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: _currentIndex == index ? Color.fromRGBO(101,45,143,1) : Colors.grey,
+       ),
+     );
+   }),
+ ),
+
+        
       ],
     ),
       ),
@@ -117,4 +106,94 @@ class _LandingPageState extends State<LandingPage> {
   }
 }
 
-  
+Widget _Card1(){
+
+  return Card(
+     child:  Container(
+          margin:EdgeInsets.all(8.0),
+          child: Card(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0)),side:  BorderSide(color: Colors.black,width: 3),),
+            child: InkWell(
+              onTap: () => print("ciao"),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,  // add this
+                children: <Widget>[
+                    Text('\n'),
+                    Icon(Icons.airplane_ticket),
+                  ListTile(
+                    title: Text('BÁSICO\n              _____________________________________________',textAlign: TextAlign.center,),
+                    subtitle: Text('\n\nHotel 3 estrellas\n\n___________________________________________________\n\nDesayuno | Almuerzo | Cena\n\n___________________________________________________\n\nRealización de actividades básicas\n\n___________________________________________________\n\nAtención al dormitorio\n ',textAlign: TextAlign.center,),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+    );
+}
+Widget _Card2(){
+
+  return Card(
+     child:  Container(
+          margin:EdgeInsets.all(8.0),
+          child: Card(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0)),side:  BorderSide(color: Colors.black,width: 3),),
+            child: InkWell(
+              onTap: () => print("ciao"),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                   Text('\n'),
+                    Icon(Icons.downhill_skiing ),
+                  ListTile(
+                    title: Text('PLUS\n              ___________________________________________',textAlign: TextAlign.center,),
+                    subtitle: Text('\n\nHotel 4 estrellas\n\n___________________________________________________\n\nDesayuno | Almuerzo | Cena\n\n___________________________________________________\n\nRealización de actividades Turísticas\n\n___________________________________________________\n\nAtención al dormitorio\n\n___________________________________________________\n\nAcceso a piscina | Uso del gimnasio\n\n___________________________________________________\n\nSurfear\n',textAlign: TextAlign.center,),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+    );
+}
+Widget _Card3(){
+
+  return Card(
+     child:  Container(
+          margin:EdgeInsets.all(8.0),
+          child: Card(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8.0)),side:  BorderSide(color: Colors.black,width: 3),),
+            child: InkWell(
+              onTap: () => print("ciao"),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Text('\n'),
+                    Icon(Icons.diamond),
+                  ListTile(
+                    title: Text('PRO\n              ___________________________________________',textAlign: TextAlign.center,),
+                    subtitle: Text('\n\nHotel 5 estrellas\n\n___________________________________________________\n\nDesayuno | Almuerzo | Cena\n\n___________________________________________________\n\nRealización de actividades Turísticas\n\n___________________________________________________\n\nAtención al dormitorio\n\n___________________________________________________\n\nAcceso a piscina | Uso del gimnasio | Uso del Spa\n\n___________________________________________________\n\nSurfear\n',textAlign: TextAlign.center,),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+    );
+}
+
+int _currentIndex=0;
+
+List cardList=[
+    _Card1(),
+    _Card2(),
+    _Card3()
+
+  ];
+List<T> map<T>(List list, Function handler) {
+    List<T> result = [];
+    for (var i = 0; i < list.length; i++) {
+      result.add(handler(i, list[i]));
+    }
+    return result;
+  }
