@@ -134,13 +134,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //title: Image.asset('../assets/images/AHM-Fondo-Nombre.png', width: 200,),
-        
-      ),
+          //title: Image.asset('../assets/images/AHM-Fondo-Nombre.png', width: 200,),
+
+          ),
       body: Column(
         children: [
           // Controls the stepper orientation
-         
+
           const Divider(
             thickness: 2,
             height: 20,
@@ -167,7 +167,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         child: ElevatedButton(
-                          child: Text('                 Seleccionar hotel                 ',
+                          child: Text(
+                              '                 Seleccionar hotel                 ',
                               style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
                             primary: Color.fromARGB(255, 101, 45, 143),
@@ -175,7 +176,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => hoteles()),
+                              MaterialPageRoute(
+                                  builder: (context) => hoteles()),
                             );
                           },
                         ),
@@ -195,7 +197,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         child: ElevatedButton(
-                          child: Text('             Seleccionar actividades             ',
+                          child: Text(
+                              '             Seleccionar actividades             ',
                               style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
                             primary: Color.fromARGB(255, 101, 45, 143),
@@ -203,7 +206,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => actividades()),
+                              MaterialPageRoute(
+                                  builder: (context) => actividades()),
                             );
                           },
                         ),
@@ -223,7 +227,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         child: ElevatedButton(
-                          child: Text('                 Seleccionar transporte                 ',
+                          child: Text(
+                              '                 Seleccionar transporte                 ',
                               style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
                             primary: Color.fromARGB(255, 101, 45, 143),
@@ -231,7 +236,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => Transportes()),
+                              MaterialPageRoute(
+                                  builder: (context) => transporte()),
                             );
                           },
                         ),
@@ -250,7 +256,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         child: ElevatedButton(
-                          child: Text('                 Seleccionar restaurante                 ',
+                          child: Text(
+                              '                 Seleccionar restaurante                 ',
                               style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
                             primary: Color.fromARGB(255, 101, 45, 143),
@@ -258,7 +265,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => restaurante()),
+                              MaterialPageRoute(
+                                  builder: (context) => restaurante()),
                             );
                           },
                         ),
@@ -277,7 +285,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         child: ElevatedButton(
-                          child: Text('                 Realizar pago                 ',
+                          child: Text(
+                              '                 Realizar pago                 ',
                               style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
                             primary: Color.fromARGB(255, 101, 45, 143),
@@ -285,7 +294,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => hoteles()),
+                              MaterialPageRoute(
+                                  builder: (context) => hoteles()),
                             );
                           },
                         ),
@@ -297,7 +307,6 @@ class _HomeScreenState extends State<HomeScreen> {
                       ? StepState.complete
                       : StepState.disabled,
                 ),
-                
               ],
             ),
           ),
@@ -306,7 +315,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-   void showDemoDialog({BuildContext? context}) {
+  void showDemoDialog({BuildContext? context}) {
     showDialog<dynamic>(
       context: context!,
       builder: (BuildContext context) => CalendarPopupView(
@@ -325,5 +334,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-
 }
