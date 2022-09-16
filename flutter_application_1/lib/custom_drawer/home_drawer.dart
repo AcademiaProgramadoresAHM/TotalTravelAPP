@@ -44,7 +44,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
         icon: Icon(Icons.loyalty),
       ),
       DrawerList(
-        index: DrawerIndex.Invite,
+        index: DrawerIndex.CrearPaquete,
         labelName: 'Haz tu propio paquete',
         icon: Icon(Icons.new_label),
       ),
@@ -318,7 +318,7 @@ enum DrawerIndex {
   Help,
   Share,
   Compras,
-  Invite,
+  CrearPaquete,
   Testing,
   Account,
   Historial,
