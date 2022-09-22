@@ -62,6 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget getTimeDateUI() {
     return Padding(
+      
       padding: const EdgeInsets.only(left: 18, bottom: 16),
       child: Row(
         children: <Widget>[
@@ -86,6 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       showDemoDialog(context: context);
                     },
                     child: Padding(
+                      
                       padding: const EdgeInsets.only(
                           left: 8, right: 8, top: 4, bottom: 4),
                       child: Column(
@@ -133,10 +135,39 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          //title: Image.asset('../assets/images/AHM-Fondo-Nombre.png', width: 200,),
-
-          ),
+       appBar: AppBar(
+          backgroundColor: Color.fromRGBO(101, 45, 143, 1),
+         title: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: Text(
+                '           ',
+              ),
+            ),
+            Expanded(
+              flex: 5,
+              child: Center(
+                child: Text(
+                  'Crear Paquete',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 25,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Image.asset('assets/images/logo-AHM-Fondo-Morao.png', height: 50,),
+              ),
+            ),
+          ],
+        ),
+        ),
       body: Column(
         children: [
           // Controls the stepper orientation
@@ -171,7 +202,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               '                 Seleccionar hotel                 ',
                               style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
-                            primary: Color.fromARGB(255, 101, 45, 143),
+                            primary: Color.fromRGBO(101, 45, 143, 1),
                           ),
                           onPressed: () {
                             Navigator.push(
@@ -260,7 +291,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               '                 Seleccionar restaurante                 ',
                               style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
-                            primary: Color.fromARGB(255, 101, 45, 143),
+                            primary: Color.fromRGBO(101, 45, 143, 1),
                           ),
                           onPressed: () {
                             Navigator.push(

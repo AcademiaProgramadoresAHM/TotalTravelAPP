@@ -22,8 +22,37 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('           Paquetes predeterminados'),
-          backgroundColor: Color.fromRGBO(101,45,143,1),
+           backgroundColor: Color.fromRGBO(101, 45, 143, 1),
+         title: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: Text(
+                '  ',
+              ),
+            ),
+            Expanded(
+              flex: 5,
+              child: Center(
+                child: Text(
+                  'Paquetes Predeterminados',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Image.asset('assets/images/logo-AHM-Fondo-Morao.png', height: 50,),
+              ),
+            ),
+          ],
+        ),
         ),
         body: ListView(
       children: <Widget>[

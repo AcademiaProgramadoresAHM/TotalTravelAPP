@@ -1,6 +1,10 @@
+
+
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/detallesdehistorial.dart';
+
+import '../hotel_booking/hotel_app_theme.dart';
 
 class Comprashistorial extends StatefulWidget {
   @override
@@ -20,8 +24,37 @@ class _ComprashistorialState extends State<Comprashistorial> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('           Historial de Compras'),
           backgroundColor: Color.fromRGBO(101, 45, 143, 1),
+         title: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: Text(
+                '           ',
+              ),
+            ),
+            Expanded(
+              flex: 5,
+              child: Center(
+                child: Text(
+                  'Historial de Compras',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 25,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Image.asset('assets/images/logo-AHM-Fondo-Morao.png', height: 50,),
+              ),
+            ),
+          ],
+        ),
         ),
         body: ListView(
           children: <Widget>[

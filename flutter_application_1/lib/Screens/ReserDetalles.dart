@@ -28,6 +28,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
       home: Scaffold(     
         appBar: AppBar
         (   
+          
           leading: TextButton(
               style: TextButton.styleFrom(
                 primary: Color.fromARGB(255, 255, 255, 255),

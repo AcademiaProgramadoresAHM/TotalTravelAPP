@@ -520,28 +520,34 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
       child: Padding(
         padding: EdgeInsets.only(
             top: MediaQuery.of(context).padding.top, left: 8, right: 8),
-        child: Row(
+       child: Row(
           children: <Widget>[
             Expanded(
+              flex: 1,
+              child: Text(
+                '           ',
+              ),
+            ),
+            Expanded(
+              flex: 5,
               child: Center(
                 child: Text(
-                  'Mi cuenta',
+                  'Mi Cuenta',
                   style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    fontSize: 22,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 25,
                     color: Colors.white,
                   ),
                 ),
               ),
             ),
-            Container(
-              width: AppBar().preferredSize.height + 40,
-              height: AppBar().preferredSize.height,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.end,
+            Expanded(
+              flex: 1,
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Image.asset('assets/images/logo-AHM-Fondo-Morao.png', height: 50,),
               ),
-            )
+            ),
           ],
         ),
       ),

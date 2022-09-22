@@ -30,8 +30,37 @@ class _Compras extends State<Compras> {
     return Scaffold(
       key: scaffoldKey,
       appBar: AppBar(
-              title: Text('          Realizar pago'),
-              backgroundColor: Color.fromRGBO(101, 45, 143, 1),
+               backgroundColor: Color.fromRGBO(101, 45, 143, 1),
+         title: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: Text(
+                '       ',
+              ),
+            ),
+            Expanded(
+              flex: 5,
+              child: Center(
+                child: Text(
+                  'Realizar Pagos',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 25,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Image.asset('assets/images/logo-AHM-Fondo-Morao.png', height: 50,),
+              ),
+            ),
+          ],
+        ),
             ),
       backgroundColor: Color(0xFFF1F4F8),
       body: 
