@@ -6,6 +6,9 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'hotel_booking/filters_screen.dart';
 import 'hotel_booking/hotel_app_theme.dart';
+import 'package:flutter_application_1/Components/Packages.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter_application_1/Components/Packages.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -87,32 +90,34 @@ class _HotelHomeScreenState extends State<MyHomePage>
                           ];
                         },
                         body: Container(
-                          color:
-                              HotelAppTheme.buildLightTheme().backgroundColor,
-                          child: ListView.builder(
-                            itemCount: hotelList.length,
-                            padding: const EdgeInsets.only(top: 8),
-                            scrollDirection: Axis.vertical,
-                            itemBuilder: (BuildContext context, int index) {
-                              final int count =
-                                  hotelList.length > 10 ? 10 : hotelList.length;
-                              final Animation<double> animation =
-                                  Tween<double>(begin: 0.0, end: 1.0).animate(
-                                      CurvedAnimation(
-                                          parent: animationController!,
-                                          curve: Interval(
-                                              (1 / count) * index, 1.0,
-                                              curve: Curves.fastOutSlowIn)));
-                              animationController?.forward();
-                              return HotelListView(
-                                callback: () {},
-                                hotelData: hotelList[index],
-                                animation: animation,
-                                animationController: animationController!,
-                              );
-                            },
-                          ),
-                        ),
+                            color:
+                                HotelAppTheme.buildLightTheme().backgroundColor,
+                            child: Column(
+                              children: [
+                                FutureBuilder<dynamic>(
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      return Wrap(
+                                          spacing: 8,
+                                          runSpacing: 4,
+                                          alignment: WrapAlignment.start,
+                                          crossAxisAlignment:
+                                              WrapCrossAlignment.start,
+                                          direction: Axis.horizontal,
+                                          runAlignment: WrapAlignment.start,
+                                          verticalDirection:
+                                              VerticalDirection.down,
+                                          clipBehavior: Clip.none,
+                                          children: ListDefaultPackages(
+                                              snapshot.data, context));
+                                    } else {
+                                      return Text("No data");
+                                    }
+                                  },
+                                  future: GetListadoPackages(),
+                                ),
+                              ],
+                            )),
                       ),
                     )
                   ],
@@ -526,7 +531,7 @@ class _HotelHomeScreenState extends State<MyHomePage>
       child: Padding(
         padding: EdgeInsets.only(
             top: MediaQuery.of(context).padding.top, left: 8, right: 8),
-       child: Row(
+        child: Row(
           children: <Widget>[
             Expanded(
               flex: 1,
@@ -551,7 +556,10 @@ class _HotelHomeScreenState extends State<MyHomePage>
               flex: 1,
               child: Align(
                 alignment: Alignment.topRight,
-                child: Image.asset('assets/images/logo-AHM-Fondo-Morao.png', height: 50,),
+                child: Image.asset(
+                  'assets/images/logo-AHM-Fondo-Morao.png',
+                  height: 50,
+                ),
               ),
             ),
           ],
