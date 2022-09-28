@@ -10,6 +10,7 @@ import 'package:flutter_application_1/navigation_home_screen.dart';
 import '../ComponentsLogin/constants.dart';
 import '../ComponentsLogin/controller/simple_ui_controller.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:flutter_application_1/ComponentsLogin/Login.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -19,7 +20,6 @@ class Login extends StatefulWidget {
 }
 
 class _LoginViewState extends State<Login> {
-  TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
@@ -27,7 +27,6 @@ class _LoginViewState extends State<Login> {
 
   @override
   void dispose() {
-    nameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
@@ -147,7 +146,7 @@ class _LoginViewState extends State<Login> {
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
                   ),
-                  controller: nameController,
+                  controller: emailController,
                   // The validator receives the text that the user has entered.
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -296,10 +295,8 @@ class _LoginViewState extends State<Login> {
           ),
         ),
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => NavigationHomeScreen()),
-          );
+
+          PostLogin(emailController.text,passwordController.text,context);
           /* Validate returns true if the form is valid, or false otherwise.
           if (_formKey.currentState!.validate()) {
              ... Navigate To your Home Page
