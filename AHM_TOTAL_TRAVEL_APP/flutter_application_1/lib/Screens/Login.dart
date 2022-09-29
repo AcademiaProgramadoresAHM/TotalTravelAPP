@@ -142,17 +142,24 @@ class _LoginViewState extends State<Login> {
                   style: kTextFormFieldStyle(),
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.person),
-                    hintText: 'Email',
+                    hintText: 'Correo Electronico',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
                   ),
                   controller: emailController,
                   // The validator receives the text that the user has entered.
-                  validator: (value) {
+                  validator: (String? value) {
                     if (value == null || value.isEmpty) {
                       return 'Ingrese su correo';
                     }
+                    if(!value.isEmail){
+                      return 'Ingrese un correo valido';
+                    }
+                    if(!value.isEmpty){
+                      return ' ';
+                    }
+                  
                     return null;
                   },
                 ),
@@ -210,6 +217,9 @@ class _LoginViewState extends State<Login> {
                       if (value == null || value.isEmpty) {
                         return 'Ingrese su contraseña';
                       }
+                      if(!value.isEmpty){
+                      return 'El Correo y/o Contraseña es incorrecta';
+                    }
                       return null;
                     },
                   ),
@@ -296,6 +306,7 @@ class _LoginViewState extends State<Login> {
         ),
         onPressed: () {
           // Validate returns true if the form is valid, or false otherwise.
+          PostLogin(emailController.text,passwordController.text,context);
           if (_formKey.currentState!.validate()) {
             // ... Navigate To your Home Page
            Navigator.push(
