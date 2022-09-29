@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/ComponentsLogin/Register.dart';
 import 'package:flutter_application_1/Screens/recoverPass.dart';
 import 'package:flutter_application_1/Screens/signIn_screen.dart';
 
@@ -226,7 +227,7 @@ class _LoginViewState extends State<Login> {
                 ),
 
                 /// Login Button
-                loginButton(),
+                _loginButton(),
                 SizedBox(
                   height: size.height * 0.03,
                 ),
@@ -280,14 +281,13 @@ class _LoginViewState extends State<Login> {
   }
 
   // Login Button
-  Widget loginButton() {
+   Widget _loginButton() {
     return SizedBox(
       width: double.infinity,
       height: 55,
       child: ElevatedButton(
         style: ButtonStyle(
-          //backgroundColor: MaterialStateProperty.all(Colors.red),
-          backgroundColor: MaterialStateProperty.all(HexColor('#652D90')),
+          backgroundColor: MaterialStateProperty.all(Color.fromRGBO(101,45,143,1)),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
@@ -295,12 +295,16 @@ class _LoginViewState extends State<Login> {
           ),
         ),
         onPressed: () {
-
-          PostLogin(emailController.text,passwordController.text,context);
-          /* Validate returns true if the form is valid, or false otherwise.
+          // Validate returns true if the form is valid, or false otherwise.
           if (_formKey.currentState!.validate()) {
-             ... Navigate To your Home Page
-          }*/
+            // ... Navigate To your Home Page
+           Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => NavigationHomeScreen(),
+        ),
+      );
+          }
         },
         child: const Text('Ingresar'),
       ),
