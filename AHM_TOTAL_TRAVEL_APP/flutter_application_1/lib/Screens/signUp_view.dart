@@ -8,6 +8,7 @@ import '../hotel_booking/hotel_app_theme.dart';
 import 'package:flutter_application_1/Screens/Login.dart';
 import '../ComponentsLogin/constants.dart';
 import '../ComponentsLogin/controller/simple_ui_controller.dart';
+import 'package:flutter_application_1/ComponentsLogin/Register.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({Key? key}) : super(key: key);
@@ -280,6 +281,37 @@ class _SignUpViewState extends State<SignUpView> {
                                               SizedBox(
                                                 height: size.height * 0.02,
                                               ),
+                                                         /// Gmail
+                                              TextFormField(
+                                                style: kTextFormFieldStyle(),
+                                                controller: emailController,
+                                                decoration:
+                                                    const InputDecoration(
+                                                  prefixIcon:
+                                                      Icon(Icons.email_rounded),
+                                                  hintText: 'Email',
+                                                  border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                15)),
+                                                  ),
+                                                ),
+                                                // The validator receives the text that the user has entered.
+                                                validator: (value) {
+                                                  if (value == null ||
+                                                      value.isEmpty) {
+                                                    return 'Rellene este campo';
+                                                  } else if (!value
+                                                      .endsWith('@gmail.com')) {
+                                                    return 'Ingrese una dirección válida';
+                                                  }
+                                                  return null;
+                                                },
+                                              ),
+                                              SizedBox(
+                                                height: size.height * 0.02,
+                                              ),
                                               //Birth
                                                 TextFormField(
                     style: kTextFormFieldStyle(),
@@ -391,37 +423,7 @@ class _SignUpViewState extends State<SignUpView> {
                                                 SizedBox(
                                                 height: size.height * 0.02,
                                               ),
-                                              /// Gmail
-                                              TextFormField(
-                                                style: kTextFormFieldStyle(),
-                                                controller: emailController,
-                                                decoration:
-                                                    const InputDecoration(
-                                                  prefixIcon:
-                                                      Icon(Icons.email_rounded),
-                                                  hintText: 'Email',
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                15)),
-                                                  ),
-                                                ),
-                                                // The validator receives the text that the user has entered.
-                                                validator: (value) {
-                                                  if (value == null ||
-                                                      value.isEmpty) {
-                                                    return 'Rellene este campo';
-                                                  } else if (!value
-                                                      .endsWith('@gmail.com')) {
-                                                    return 'Ingrese una dirección válida';
-                                                  }
-                                                  return null;
-                                                },
-                                              ),
-                                              SizedBox(
-                                                height: size.height * 0.02,
-                                              ),
+                                   
 
                                               /// password
                                               Obx(
@@ -668,8 +670,16 @@ class _SignUpViewState extends State<SignUpView> {
           // Validate returns true if the form is valid, or false otherwise.
           if (_formKey.currentState!.validate()) {
             // ... Navigate To your Home Page
-            Navigator.push(
-                context, CupertinoPageRoute(builder: (ctx) => const Login()));
+           PostRegister(dniController.text,
+                        nameController.text,
+                        lastnameController.text,
+                        emailController.text,
+                        dateOfBirthController.text,
+                        phoneController.text,
+                        _sexo,
+                        password2Controller.text,
+                        context
+                        );
           }
         },
         child: const Text('Enviar'),
