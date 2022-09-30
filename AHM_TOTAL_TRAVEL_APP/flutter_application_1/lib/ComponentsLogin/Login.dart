@@ -10,8 +10,7 @@ import 'package:http/http.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'package:flutter_application_1/navigation_home_screen.dart';
 
-Future<void> PostLogin(
-    String email, String password, BuildContext context) async {
+Future<void> PostLogin(String email, String password, BuildContext context) async {
   UserLoginModel loginData = new UserLoginModel();
   loginData.Email = email;
   loginData.Password = password;
@@ -23,7 +22,7 @@ Future<void> PostLogin(
 
   if (response.body != " ") {
     Map<String, dynamic> userMap = jsonDecode(response.body);
-    var data = Decoder.fromJson(userMap);
+    var data = DecoderAPI.fromJson(userMap);
 
     if (data.data != null) {
       var userLogin = UserLoggedModel.fromJson(data.data);
