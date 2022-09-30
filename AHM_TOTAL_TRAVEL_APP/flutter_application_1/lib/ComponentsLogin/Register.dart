@@ -16,6 +16,7 @@ Future<void> PostRegister(String DNI,
                           String Telefono,
                           String Sexo,
                           String Password, 
+                          int adressId,
                           BuildContext context) async {
 
  UserRegisterModel registerData = new UserRegisterModel();
@@ -26,6 +27,7 @@ Future<void> PostRegister(String DNI,
   registerData.Usua_FechaNaci = FechaNacimiento;
   registerData.Usua_Telefono = Telefono;
   registerData.Usua_Sexo = Sexo;
+  registerData.Dire_ID = adressId;
   registerData.Usua_Password = Password;
 
   final url = Uri.parse("https://totaltravel.somee.com/API/Users/Insert");

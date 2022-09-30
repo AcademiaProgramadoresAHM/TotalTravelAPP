@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Models/AdressesViewModel.dart';
+import 'package:flutter_application_1/Models/RequestsViewModel.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
@@ -11,7 +13,8 @@ import '../ComponentsLogin/controller/simple_ui_controller.dart';
 import 'package:flutter_application_1/ComponentsLogin/Register.dart';
 import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/CitiesViewModel.dart';
-
+import 'package:http/http.dart';
+import 'package:flutter_application_1/Models/RequestsViewModel.dart';
 class SignUpView extends StatefulWidget {
   const SignUpView({Key? key}) : super(key: key);
 
@@ -126,15 +129,15 @@ class _SignUpViewState extends State<SignUpView> {
 
   int? CitiesDropDownValue;
   String defaultDetalles = '';
-  int? planId;
-  int cantidad = 1;
-  int precio = 0;
-  int total = 0;
+  int? adressId;
   CiudadesViewModel? planDetalles;
-var data;
+  AdressesViewModel? adressData;
+
+
   Map<int?, String> CitiesDictionary = Map();
 
   Future<dynamic> GetCities() async {
+    var data;
     String url_list =
         "https://totaltravel.somee.com/API/Cities/List";
     final respuesta = await http.get(Uri.parse(url_list));
@@ -154,6 +157,43 @@ var data;
       print("Error: " + respuesta.statusCode.toString());
     }
   }
+
+
+Future<void> PostAdress(int id, String adress, BuildContext context) async {
+  AdressesViewModel adressView = new AdressesViewModel();
+  adressView.Ciud_ID = id;
+  adressView.Dire_Descripcion = adress as String?;
+  adressView.Dire_UsuarioCreacion = 1;
+
+
+  final url = Uri.parse("https://totaltravel.somee.com/API/Address/Insert");
+  final headers = {"Content-type": "application/json", "Accept": "text/plain"};
+  final json = jsonEncode(adressView);
+  final response = await post(url, headers: headers, body: json);
+
+  if (response.body != " ") {
+    Map<String, dynamic> decoderMap = jsonDecode(response.body);
+    var data = DecoderAPI.fromJson(decoderMap);
+    if (data.data != null) {
+      RequestStatus requestStatus = RequestStatus.fromJson(data.data);
+      if(requestStatus.CodeStatus! >= 0){
+          adressId = requestStatus.CodeStatus;
+          PostRegister(dniController.text,
+                                  nameController.text,
+                                  lastnameController.text,
+                                  emailController.text,
+                                  dateOfBirthController.text,
+                                  phoneController.text,
+                                  _sexo,
+                                  password2Controller.text,
+                                  adressId!,
+                                  context
+                                  );
+      }
+
+    }
+  } 
+}
 
 
   @override
@@ -584,8 +624,10 @@ var data;
                                                             onChanged: (int? newValue) {
                                                               setState(() {
                                                                 CitiesDropDownValue = newValue;
+                                                                
                                                               });
                                                             },
+                                                            
                                                           ),
                                                           width: MediaQuery.of(context).size.width * 3.5,
                                                           height: 60,
@@ -628,7 +670,9 @@ var data;
                                                   if (value == null ||
                                                       value.isEmpty) {
                                                     return 'Rellene este campo';
-                                                  } 
+                                                  }else{
+                                                    adressData!.Dire_Descripcion = value;
+                                                  }
                                                   return null;
                                                 },
                                               ),
@@ -771,19 +815,10 @@ var data;
         ),
         onPressed: () {
           // Validate returns true if the form is valid, or false otherwise.
-          if (_formKey.currentState!.validate()) {
             // ... Navigate To your Home Page
-           PostRegister(dniController.text,
-                        nameController.text,
-                        lastnameController.text,
-                        emailController.text,
-                        dateOfBirthController.text,
-                        phoneController.text,
-                        _sexo,
-                        password2Controller.text,
-                        context
-                        );
-          }
+
+          PostAdress(CitiesDropDownValue!,direController.text, context);
+
         },
         child: const Text('Enviar'),
       ),
