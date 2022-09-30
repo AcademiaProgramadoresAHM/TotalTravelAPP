@@ -89,35 +89,34 @@ class _HotelHomeScreenState extends State<MyHomePage>
                             ),
                           ];
                         },
-                        body: Container(
-                            color:
-                                HotelAppTheme.buildLightTheme().backgroundColor,
+                        body: SingleChildScrollView(
+                            // color:
+                            //     HotelAppTheme.buildLightTheme().backgroundColor,
                             child: Column(
-                              children: [
-                                FutureBuilder<dynamic>(
-                                  builder: (context, snapshot) {
-                                    if (snapshot.hasData) {
-                                      return Wrap(
-                                          spacing: 8,
-                                          runSpacing: 4,
-                                          alignment: WrapAlignment.start,
-                                          crossAxisAlignment:
-                                              WrapCrossAlignment.start,
-                                          direction: Axis.horizontal,
-                                          runAlignment: WrapAlignment.start,
-                                          verticalDirection:
-                                              VerticalDirection.down,
-                                          clipBehavior: Clip.none,
-                                          children: ListDefaultPackages(
-                                              snapshot.data, context));
-                                    } else {
-                                      return Text("No data");
-                                    }
-                                  },
-                                  future: GetListadoPackages(),
-                                ),
-                              ],
-                            )),
+                          children: [
+                            FutureBuilder<dynamic>(
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return Wrap(
+                                      spacing: 8,
+                                      runSpacing: 4,
+                                      alignment: WrapAlignment.start,
+                                      crossAxisAlignment:
+                                          WrapCrossAlignment.start,
+                                      direction: Axis.horizontal,
+                                      runAlignment: WrapAlignment.start,
+                                      verticalDirection: VerticalDirection.down,
+                                      clipBehavior: Clip.none,
+                                      children: ListDefaultPackages(
+                                          snapshot.data, context));
+                                } else {
+                                  return Text("No data");
+                                }
+                              },
+                              future: GetListadoPackages(),
+                            ),
+                          ],
+                        )),
                       ),
                     )
                   ],
