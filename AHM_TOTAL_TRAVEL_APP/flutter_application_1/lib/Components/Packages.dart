@@ -152,7 +152,7 @@ List<Padding> ListDefaultPackages(List<dynamic> data, BuildContext context) {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(130, 0, 0, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(80, 0, 0, 0),
                       child: ElevatedButton(
                         onPressed: () {},
                         child: const Text('Ver Detalles'),

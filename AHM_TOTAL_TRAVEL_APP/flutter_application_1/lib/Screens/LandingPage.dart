@@ -5,6 +5,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_application_1/Components/Packages.dart';
+import 'package:flutter_application_1/Components/Decodificador.dart';
 import 'package:intl/intl.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_application_1/hotel_booking/hotel_app_theme.dart';
@@ -35,7 +36,7 @@ class LandingPageState extends State<LandingPage> {
           image: 'assets/images/Argentina.jpg',
           title: element['nombre'],
           subTitle: element['descripcion_Paquete'],
-          price: element['precio'].toString(),
+          price: '\$' + element['precio'].toString(),
           planPriceSubTitle: 'per user/month',
           optionList: [
             PlanModal(title: element['hotel']),
@@ -78,7 +79,7 @@ class LandingPageState extends State<LandingPage> {
                         Text(element['descripcion_Paquete'],
                             style: secondaryTextStyle()),
                         24.height,
-                        Text("L. " + element['precio'].toString(),
+                        Text('\$' + element['precio'].toString(),
                             style: boldTextStyle(
                                 size: 45, color: blueButtonAndTextColor)),
                         Text('per user/month', style: secondaryTextStyle()),
