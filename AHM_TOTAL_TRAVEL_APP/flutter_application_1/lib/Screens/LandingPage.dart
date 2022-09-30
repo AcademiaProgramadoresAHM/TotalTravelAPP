@@ -35,7 +35,7 @@ class LandingPageState extends State<LandingPage> {
           image: 'assets/images/Argentina.jpg',
           title: element['nombre'],
           subTitle: element['descripcion_Paquete'],
-          price: '\$0',
+          price: '\$' + element['Precio'],
           planPriceSubTitle: 'per user/month',
           optionList: [
             PlanModal(title: element['hotel']),
