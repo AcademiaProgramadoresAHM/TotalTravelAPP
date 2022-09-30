@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/utils/AppWidget.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -207,14 +208,26 @@ class LandingPageState extends State<LandingPage> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
+            Container(
+              width: double.infinity,
+              height: 100,
+              margin: EdgeInsets.fromLTRB(0.0, 35.0, 1.0, 0.0),
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 101, 45, 144),
+              ),
+              child: Image.asset(
+                'assets/images/AHM-Fondo-Nombre.png',
+                fit: BoxFit.contain,
+              ),
+            ),
             FutureBuilder<dynamic>(
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
                   return Container(
-                    height: 650,
+                    height: 550,
                     child: CarouselSlider(
                       options: CarouselOptions(
-                        height: 550,
+                        height: 530,
                         // aspectRatio: 1.0,
                         enlargeCenterPage: true,
                         scrollDirection: Axis.horizontal,

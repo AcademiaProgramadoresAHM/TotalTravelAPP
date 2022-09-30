@@ -44,149 +44,182 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
     animationController?.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Theme(
       data: HotelAppTheme.buildLightTheme(),
-      child: Container(
-        child: Scaffold(
-            body: Stack(
-            children: <Widget>[
-              InkWell(
-                splashColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                onTap: () {
-                  FocusScope.of(context).requestFocus(FocusNode());
-                },
-                child: Column(
-                  children: <Widget>[
-                    getAppBarUI(),
-                    Expanded(
-                      child: NestedScrollView(
-                        controller: _scrollController,
-                        headerSliverBuilder:
-                            (BuildContext context, bool innerBoxIsScrolled) {
-                          return <Widget>[
-                            SliverList(
-                              delegate: SliverChildBuilderDelegate(
-                                  (BuildContext context, int index) {
-                                return Column(
-                                  children: <Widget>[
-                                    Form(
-                          /*Contenido*/
-                          child: Column(children: <Widget>[
-                            ProfilePic(),
-                          
-                           Padding(
-                              padding: const EdgeInsets.only(right: 240.0, top: 70.0),
-                              child: Text(
-                                'Nombre',
-                                style: TextStyle(fontFamily: 'Roboto', fontSize: 17.0),
-                              ),
+      child: SingleChildScrollView(
+        child: Container(
+          child: Column(children: <Widget>[
+            InkWell(
+              splashColor: Colors.transparent,
+              focusColor: Colors.transparent,
+              highlightColor: Colors.transparent,
+              hoverColor: Colors.transparent,
+              onTap: () {
+                FocusScope.of(context).requestFocus(FocusNode());
+              },
+              child: Column(
+                children: <Widget>[
+                  getAppBarUI(),
+                  Container(
+                    child: Form(
+                      /*Contenido*/
+                      child: Column(
+                        children: <Widget>[
+                          ProfilePic(),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(right: 240.0, top: 70.0),
+                            child: Text(
+                              'Nombre',
+                              style: TextStyle(
+                                  fontFamily: 'Roboto', fontSize: 17.0),
                             ),
-                            Padding(
-                              padding:
-                                  EdgeInsets.only(top: 25.0, right: 140.0),
-                              child: Text('Chris Hemsworth', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
-                              
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 25.0, right: 140.0),
+                            child: Text(
+                              'Chris Hemsworth',
+                              style: TextStyle(
+                                  fontSize: 20.0, fontWeight: FontWeight.bold),
                             ),
-                            Divider(color: Color.fromRGBO(101, 45, 143, 1),thickness: 02.0, indent: 40.0, endIndent: 40.0,),
-                             Padding(
-                              padding: const EdgeInsets.only(right: 170.0, top: 20.0),
-                              child: Text(
-                                'Correo electrónico',
-                                style: TextStyle(fontFamily: 'Roboto', fontSize: 17.0),
-                              ),
+                          ),
+                          Divider(
+                            color: Color.fromRGBO(101, 45, 143, 1),
+                            thickness: 02.0,
+                            indent: 40.0,
+                            endIndent: 40.0,
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(right: 170.0, top: 20.0),
+                            child: Text(
+                              'Correo electrónico',
+                              style: TextStyle(
+                                  fontFamily: 'Roboto', fontSize: 17.0),
                             ),
-                            Padding(
-                              padding:
-                                  EdgeInsets.only(top: 25.0),
-                              child: Text('chrishemsworth@examples.com', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
-                              
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 25.0),
+                            child: Text(
+                              'chrishemsworth@examples.com',
+                              style: TextStyle(
+                                  fontSize: 20.0, fontWeight: FontWeight.bold),
                             ),
-                            Divider(color: Color.fromRGBO(101, 45, 143, 1),thickness: 02.0, indent: 40.0, endIndent: 40.0,),
-                             Padding(
-                              padding: const EdgeInsets.only(right: 240.0, top: 20.0),
-                              child: Text(
-                                'Teléfono',
-                                style: TextStyle(fontFamily: 'Roboto', fontSize: 17.0),
-                              ),
+                          ),
+                          Divider(
+                            color: Color.fromRGBO(101, 45, 143, 1),
+                            thickness: 02.0,
+                            indent: 40.0,
+                            endIndent: 40.0,
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(right: 240.0, top: 20.0),
+                            child: Text(
+                              'Teléfono',
+                              style: TextStyle(
+                                  fontFamily: 'Roboto', fontSize: 17.0),
                             ),
-                            Padding(
-                              padding:
-                                  EdgeInsets.only(top: 25.0, right: 150.0),
-                              child: Text('+504 89332227', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
-                              
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 25.0, right: 150.0),
+                            child: Text(
+                              '+504 89332227',
+                              style: TextStyle(
+                                  fontSize: 20.0, fontWeight: FontWeight.bold),
                             ),
-                            Divider(color: Color.fromRGBO(101, 45, 143, 1),thickness: 02.0, indent: 40.0, endIndent: 40.0,),
-                          
-                             Padding(
-                              padding: const EdgeInsets.only(right: 270.0, top: 20.0),
-                              child: Text(
-                                'DNI',
-                                style: TextStyle(fontFamily: 'Roboto', fontSize: 17.0),
-                              ),
+                          ),
+                          Divider(
+                            color: Color.fromRGBO(101, 45, 143, 1),
+                            thickness: 02.0,
+                            indent: 40.0,
+                            endIndent: 40.0,
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(right: 270.0, top: 20.0),
+                            child: Text(
+                              'DNI',
+                              style: TextStyle(
+                                  fontFamily: 'Roboto', fontSize: 17.0),
                             ),
-                            Padding(
-                              padding:
-                                  EdgeInsets.only(top: 25.0, right: 140.0),
-                              child: Text('0501200410339', style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold),),
-                              
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 25.0, right: 140.0),
+                            child: Text(
+                              '0501200410339',
+                              style: TextStyle(
+                                  fontSize: 20.0, fontWeight: FontWeight.bold),
                             ),
-                            Divider(color: Color.fromRGBO(101, 45, 143, 1),thickness: 02.0, indent: 40.0, endIndent: 40.0,),
-                            
-                            
-                              Padding(
-                              padding: const EdgeInsets.only(right: 250.0, top: 20.0),
-                              child: Text(
-                                'Sexo',
-                                style: TextStyle(fontFamily: 'Roboto', fontSize: 17.0),
-                              ),
+                          ),
+                          Divider(
+                            color: Color.fromRGBO(101, 45, 143, 1),
+                            thickness: 02.0,
+                            indent: 40.0,
+                            endIndent: 40.0,
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(right: 250.0, top: 20.0),
+                            child: Text(
+                              'Sexo',
+                              style: TextStyle(
+                                  fontFamily: 'Roboto', fontSize: 17.0),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 25.0, right: 15.0),
-                              child: Row(
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(top: 25.0, right: 15.0),
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Row(
                                   children: [
-                                    Radio(value: 'M', groupValue: _sexo, onChanged: (value) => evaluate ? null : value = 0,),
-                                    Text('Masculino', style: TextStyle( fontSize: 16,),)
+                                    Radio(
+                                      value: 'M',
+                                      groupValue: _sexo,
+                                      onChanged: (value) =>
+                                          evaluate ? null : value = 0,
+                                    ),
+                                    Text(
+                                      'Masculino',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    )
                                   ],
                                 ),
                                 Row(
                                   children: [
-                                    Radio(value: 'F', groupValue: _sexo, onChanged: (value) => evaluate ? null : value = 0,),
-                                    Text('Femenino', style: TextStyle( fontSize: 16,),)
+                                    Radio(
+                                      value: 'F',
+                                      groupValue: _sexo,
+                                      onChanged: (value) =>
+                                          evaluate ? null : value = 0,
+                                    ),
+                                    Text(
+                                      'Femenino',
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                      ),
+                                    )
                                   ],
                                 ),
                               ],
                             ),
-                            ),
-                                
-                          ],
                           ),
-                        ),
-                                  ],
-                                );
-                              }, childCount: 1),
-                            ),
-                          ];
-                        },
-                        body: Container(
-                        )
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              
-            ],
-          ),
-          
             ),
+          ]),
+        ),
       ),
     );
   }
@@ -245,12 +278,12 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                   ),
                 ),
                 Positioned(
-                    top: 100,
-                    left: 100,
-                    width: 1000,
-                    height: 1000,
-                    child: Container(color: Colors.red),
-                  )
+                  top: 100,
+                  left: 100,
+                  width: 1000,
+                  height: 1000,
+                  child: Container(color: Colors.red),
+                )
               ],
             ),
           ),
@@ -520,7 +553,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
       child: Padding(
         padding: EdgeInsets.only(
             top: MediaQuery.of(context).padding.top, left: 8, right: 8),
-       child: Row(
+        child: Row(
           children: <Widget>[
             Expanded(
               flex: 1,
@@ -545,7 +578,10 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
               flex: 1,
               child: Align(
                 alignment: Alignment.topRight,
-                child: Image.asset('assets/images/logo-AHM-Fondo-Morao.png', height: 50,),
+                child: Image.asset(
+                  'assets/images/logo-AHM-Fondo-Morao.png',
+                  height: 50,
+                ),
               ),
             ),
           ],
