@@ -156,8 +156,8 @@ class _LoginViewState extends State<Login> {
                     if(!value.isEmail){
                       return 'Ingrese un correo valido';
                     }
-                    if(!value.isEmpty){
-                      return ' ';
+                    if(value.isEmpty){
+                      return null;
                     }
                   
                     return null;
@@ -216,10 +216,11 @@ class _LoginViewState extends State<Login> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Ingrese su contraseña';
-                      }
-                      if(!value.isEmpty){
+                      }else if(value.isEmpty){
+                      {
                       return 'El Correo y/o Contraseña es incorrecta';
-                    }
+                      }  
+                      }
                       return null;
                     },
                   ),
