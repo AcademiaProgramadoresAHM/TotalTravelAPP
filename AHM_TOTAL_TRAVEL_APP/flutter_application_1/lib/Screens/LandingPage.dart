@@ -35,7 +35,7 @@ class LandingPageState extends State<LandingPage> {
           image: 'assets/images/Argentina.jpg',
           title: element['nombre'],
           subTitle: element['descripcion_Paquete'],
-          price: '\$' + element['Precio'],
+          price: element['precio'].toString(),
           planPriceSubTitle: 'per user/month',
           optionList: [
             PlanModal(title: element['hotel']),
@@ -78,7 +78,7 @@ class LandingPageState extends State<LandingPage> {
                         Text(element['descripcion_Paquete'],
                             style: secondaryTextStyle()),
                         24.height,
-                        Text('\$0',
+                        Text("L. " + element['precio'].toString(),
                             style: boldTextStyle(
                                 size: 45, color: blueButtonAndTextColor)),
                         Text('per user/month', style: secondaryTextStyle()),

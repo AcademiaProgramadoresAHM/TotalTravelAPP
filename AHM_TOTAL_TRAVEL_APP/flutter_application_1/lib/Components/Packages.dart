@@ -9,7 +9,8 @@ import 'package:flutter_application_1/hotel_booking/model/PlanModal.dart';
 //-------------LISTADO DE PAQUETES PREDETERMINADOS--------------
 
 Future<dynamic> GetListadoPackages() async {
-  String url_list = "https://totaltravel.somee.com/API/DefaultPackages/List";
+  String url_list =
+      "https://totaltravelapi.azurewebsites.net/API/DefaultPackages/List";
   final response = await http.get(Uri.parse(url_list));
   if (response.statusCode == 200) {
     Map<String, dynamic> userMap = jsonDecode(response.body);
