@@ -1,12 +1,12 @@
-class Decoder {
+class DecoderAPI {
   final int code;
   final bool success;
   final String message;
   final dynamic data;
 
-  Decoder(this.code, this.success, this.message, this.data);
+  DecoderAPI(this.code, this.success, this.message, this.data);
 
-  Decoder.fromJson(Map<String, dynamic> json)
+  DecoderAPI.fromJson(Map<String, dynamic> json)
       : code = json['code'],
         success = json['success'],
         message = json['message'],

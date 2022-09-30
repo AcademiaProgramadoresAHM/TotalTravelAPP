@@ -1,14 +1,16 @@
+import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-
+import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import '../hotel_booking/hotel_app_theme.dart';
 import 'package:flutter_application_1/Screens/Login.dart';
 import '../ComponentsLogin/constants.dart';
 import '../ComponentsLogin/controller/simple_ui_controller.dart';
 import 'package:flutter_application_1/ComponentsLogin/Register.dart';
+import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
+import 'package:flutter_application_1/Models/CitiesViewModel.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({Key? key}) : super(key: key);
@@ -40,11 +42,7 @@ class _SignUpViewState extends State<SignUpView> {
   String? time;
   String? date;
 
-  @override
-  void initState() {
-    super.initState();
-    init();
-  }
+
 
   init() async {
     time = 'Please Select Time';
@@ -122,6 +120,47 @@ class _SignUpViewState extends State<SignUpView> {
     return Center(
       child: buildBody(size, simpleUIController, theme),
     );
+  }
+
+//Dropdown cities
+
+  int? CitiesDropDownValue;
+  String defaultDetalles = '';
+  int? planId;
+  int cantidad = 1;
+  int precio = 0;
+  int total = 0;
+  CiudadesViewModel? planDetalles;
+var data;
+  Map<int?, String> CitiesDictionary = Map();
+
+  Future<dynamic> GetCities() async {
+    String url_list =
+        "https://totaltravel.somee.com/API/Cities/List";
+    final respuesta = await http.get(Uri.parse(url_list));
+    if (respuesta.statusCode == 200) {
+      Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
+      var Json = DecoderAPI.fromJson(ServerResponse);
+      data = Json.data;
+      // rellena diccionario de datos
+      data.forEach((x) {
+        CiudadesViewModel element = CiudadesViewModel.fromJson(x);
+        var descripcion = element.Ciudad! + ", " + element.Pais.toString();
+        CitiesDictionary[element.ID] = descripcion;
+      });
+
+      return Json.data;
+    } else {
+      print("Error: " + respuesta.statusCode.toString());
+    }
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+    GetCities();
+    init();
   }
 
   @override
@@ -528,14 +567,76 @@ class _SignUpViewState extends State<SignUpView> {
                                                   },
                                                 ),
                                               ),
+
+                                              Padding(
+                                                padding: const EdgeInsets.only(top: 20.0,right: 30.0, left: 20.0),
+                                                      child: Container(
+                                                          child: DropdownButton(
+                                                            hint: Text("Elige una ciudad"),
+                                                            icon: const Icon(Icons.keyboard_arrow_down),
+                                                            value: CitiesDropDownValue,
+                                                            items: CitiesDictionary.keys.map((id) {
+                                                              return DropdownMenuItem(
+                                                                value: id,
+                                                                child: Text(CitiesDictionary[id].toString()),
+                                                              );
+                                                            }).toList(),
+                                                            onChanged: (int? newValue) {
+                                                              setState(() {
+                                                                CitiesDropDownValue = newValue;
+                                                              });
+                                                            },
+                                                          ),
+                                                          width: MediaQuery.of(context).size.width * 3.5,
+                                                          height: 60,
+                                                          decoration: BoxDecoration(
+                                                            color: Colors.transparent,
+                                                            borderRadius: BorderRadius.circular(8),
+                                                            border: Border.all(
+                                                              color: Colors.transparent,
+                                                              width: 1,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                ),
+
                                               SizedBox(
                                                 height: size.height * 0.01,
+                                              ),
+
+                                              
+                                               TextFormField(
+                                                style: kTextFormFieldStyle(),
+                                                keyboardType: TextInputType.text,
+                                                maxLines: 3,
+                                                decoration:
+                                                    const InputDecoration(
+                                                  prefixIcon:
+                                                      Icon(Icons.article),
+                                                  hintText: '\nDirección',
+                                                  border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                15)),
+                                                  ),
+                                                ),
+
+                                                controller: direController,
+                                                // The validator receives the text that the user has entered.
+                                                validator: (value) {
+                                                  if (value == null ||
+                                                      value.isEmpty) {
+                                                    return 'Rellene este campo';
+                                                  } 
+                                                  return null;
+                                                },
                                               ),
 
                                               SizedBox(
                                                 height: size.height * 0.02,
                                               ),
-
+                                                
                                               /// SignUp Button
                                               signUpButton(theme),
                                               SizedBox(
@@ -597,6 +698,8 @@ class _SignUpViewState extends State<SignUpView> {
       ),
     );
   }
+
+
 
  Future<void> dateBottomSheet(context) async {
     var now = DateTime.now();
@@ -686,7 +789,10 @@ class _SignUpViewState extends State<SignUpView> {
       ),
     );
   }
+
 }
+
+
 
 
 
@@ -747,4 +853,8 @@ class ExampleItemWidget extends StatelessWidget {
       ),
     );
   }
+
+  
 }
+
+  
