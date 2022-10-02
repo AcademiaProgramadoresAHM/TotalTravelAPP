@@ -153,10 +153,7 @@ class _LoginViewState extends State<Login> {
                     if (value == null || value.isEmpty) {
                       return 'Ingrese su correo';
                     }
-                    if(!value.isEmail){
-                      return 'Ingrese un correo valido';
-                    }
-                    if(value.isEmpty){
+                    else{
                       return null;
                     }
                   
@@ -307,15 +304,10 @@ class _LoginViewState extends State<Login> {
         ),
         onPressed: () {
           // Validate returns true if the form is valid, or false otherwise.
-          PostLogin(emailController.text,passwordController.text,context);
+          
           if (_formKey.currentState!.validate()) {
             // ... Navigate To your Home Page
-           Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => NavigationHomeScreen(),
-        ),
-      );
+          PostLogin(emailController.text,passwordController.text,context);
           }
         },
         child: const Text('Ingresar'),

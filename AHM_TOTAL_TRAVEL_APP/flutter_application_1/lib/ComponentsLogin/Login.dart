@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'package:flutter_application_1/navigation_home_screen.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 Future<void> PostLogin(String email, String password, BuildContext context) async {
   UserLoginModel loginData = new UserLoginModel();
@@ -32,14 +33,17 @@ Future<void> PostLogin(String email, String password, BuildContext context) asyn
           builder: (context) => NavigationHomeScreen(),
         ),
       );
-    }
-  } else {
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+    }else{
+       ScaffoldMessenger.of(context).showSnackBar(
+      
+        const SnackBar(
+          backgroundColor: white,
       content: Text(
         textAlign: TextAlign.center,
         'La contraseña o usuario son incorrectos.',
-        style: TextStyle(color: Colors.red, fontSize: 16),
+        style: TextStyle(color: redColor, fontSize: 16),
       ),
     ));
-  }
+    }
+  } 
 }
