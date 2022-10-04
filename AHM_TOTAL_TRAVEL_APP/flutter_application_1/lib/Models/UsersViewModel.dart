@@ -51,7 +51,7 @@ class UserRegisterModel {
 
   Map<String, dynamic> toJson() => 
   {
-  "usua_ID": 0,
+  "usua_ID": Usua_ID,
   "usua_DNI": Usua_DNI,
   "usua_Url": Usua_Url,
   "usua_Nombre": Usua_Nombre,

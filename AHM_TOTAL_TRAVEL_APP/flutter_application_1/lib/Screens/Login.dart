@@ -149,14 +149,12 @@ class _LoginViewState extends State<Login> {
                   ),
                   controller: emailController,
                   // The validator receives the text that the user has entered.
-                  validator: (String? value) {
+                  validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Ingrese su correo';
+                      return 'Rellene este campo';
+                    } else if (!value.endsWith('@gmail.com')) {
+                      return 'Ingrese una dirección válida';
                     }
-                    else{
-                      return null;
-                    }
-                  
                     return null;
                   },
                 ),
@@ -213,10 +211,10 @@ class _LoginViewState extends State<Login> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Ingrese su contraseña';
-                      }else if(value.isEmpty){
-                      {
-                      return 'El Correo y/o Contraseña es incorrecta';
-                      }  
+                      } else if (value.isEmpty) {
+                        {
+                          return 'El Correo y/o Contraseña es incorrecta';
+                        }
                       }
                       return null;
                     },
@@ -245,7 +243,8 @@ class _LoginViewState extends State<Login> {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const recoverPassScreen()),
+                      MaterialPageRoute(
+                          builder: (context) => const recoverPassScreen()),
                     );
                   },
                   child: RichText(
@@ -289,13 +288,14 @@ class _LoginViewState extends State<Login> {
   }
 
   // Login Button
-   Widget _loginButton() {
+  Widget _loginButton() {
     return SizedBox(
       width: double.infinity,
       height: 55,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Color.fromRGBO(101,45,143,1)),
+          backgroundColor:
+              MaterialStateProperty.all(Color.fromRGBO(101, 45, 143, 1)),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
@@ -304,10 +304,10 @@ class _LoginViewState extends State<Login> {
         ),
         onPressed: () {
           // Validate returns true if the form is valid, or false otherwise.
-          
+
           if (_formKey.currentState!.validate()) {
             // ... Navigate To your Home Page
-          PostLogin(emailController.text,passwordController.text,context);
+            PostLogin(emailController.text, passwordController.text, context);
           }
         },
         child: const Text('Ingresar'),

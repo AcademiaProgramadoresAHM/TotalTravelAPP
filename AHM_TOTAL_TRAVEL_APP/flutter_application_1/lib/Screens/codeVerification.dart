@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/ComponentsLogin/Recover.dart';
 
 import 'package:get/get.dart';
 
@@ -8,7 +9,9 @@ import '../ComponentsLogin/constants.dart';
 import '../ComponentsLogin/controller/simple_ui_controller.dart';
 
 class codeVerificationScreen extends StatefulWidget {
-  const codeVerificationScreen({Key? key}) : super(key: key);
+  final int? code;
+  final int? id;
+  const codeVerificationScreen(this.code,this.id, {Key? key}) : super(key: key);
 
   @override
   State<codeVerificationScreen> createState() => _codeVerificationScreenState();
@@ -82,22 +85,12 @@ class _codeVerificationScreenState extends State<codeVerificationScreen> {
       mainAxisAlignment:
           size.width > 600 ? MainAxisAlignment.center : MainAxisAlignment.start,
       children: [
-        SizedBox(
-          height: size.height * 0.03,
+        Text(
+          '\n\n\n\n\n\n',
         ),
         Padding(
           padding: const EdgeInsets.only(left: 20.0),
           child: Image.asset('assets/images/AHM-Fondo-Nombre-inverso-3.png'),
-        ),
-        SizedBox(
-          height: size.height * 0.03,
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 20.0),
-          child: Text(
-            'Verificando Codigo',
-            style: kLoginSubtitleStyle(size),
-          ),
         ),
         const SizedBox(
           height: 10,
@@ -105,8 +98,8 @@ class _codeVerificationScreenState extends State<codeVerificationScreen> {
         Padding(
           padding: const EdgeInsets.only(left: 20.0),
           child: Text(
-            'Codigo de Verificacion',
-            style: kLoginSubtitleStyle(size),
+            'Recuperación de contraseña',
+            style: TextStyle(fontSize: 20.0)
           ),
         ),
         SizedBox(
@@ -120,10 +113,11 @@ class _codeVerificationScreenState extends State<codeVerificationScreen> {
               children: [
                 TextFormField(
                   style: kTextFormFieldStyle(),
+                   keyboardType: TextInputType.phone,
                   controller: codeController,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.numbers),
-                    hintText: 'Codigo',
+                    hintText: 'Código de verificación',
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
@@ -131,10 +125,8 @@ class _codeVerificationScreenState extends State<codeVerificationScreen> {
                   // The validator receives the text that the user has entered.
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Por favor ingrese un codigo de verificacion';
-                    } else if (value.length < 6) {
-                      return 'El codigo consta de 6 digitos';
-                    }
+                      return 'Ingrese un valor válido.';
+                    } 
                     return null;
                   },
                 ),
@@ -145,7 +137,7 @@ class _codeVerificationScreenState extends State<codeVerificationScreen> {
                   height: size.height * 0.01,
                 ),
                 Text(
-                  'Comprobaremos el codigo ingresado',
+                  'Comprobaremos el código ingresado.',
                   style: kLoginTermsAndPrivacyStyle(size),
                   textAlign: TextAlign.center,
                 ),
@@ -168,30 +160,30 @@ class _codeVerificationScreenState extends State<codeVerificationScreen> {
 
   // SignUp Button
   Widget codeVerificationButton(ThemeData theme) {
-    return SizedBox(
-      width: double.infinity,
-      height: 55,
-      child: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor:
-              MaterialStateProperty.all(Color.fromRGBO(101, 45, 143, 1)),
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
+    return Padding(
+      padding: const EdgeInsets.only(top: 115.0),
+      child: SizedBox(
+        width: double.infinity,
+        height: 55,
+        child: ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor:
+                MaterialStateProperty.all(Color.fromRGBO(101, 45, 143, 1)),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
             ),
           ),
+          onPressed: () {
+            if (_formKey.currentState!.validate()) {
+
+                  verificationCode(int.parse(codeController.text),widget.code, context, widget.id);
+
+             }
+          },
+          child: const Text('Verificar'),
         ),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => Login()),
-          );
-          // // Validate returns true if the form is valid, or false otherwise.
-          // if (_formKey.currentState!.validate()) {
-          //   // ... Navigate To your Home Page
-          // }
-        },
-        child: const Text('Verificar'),
       ),
     );
   }

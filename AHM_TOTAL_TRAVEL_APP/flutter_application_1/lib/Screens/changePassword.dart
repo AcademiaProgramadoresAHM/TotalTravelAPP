@@ -1,30 +1,28 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ComponentsLogin/Recover.dart';
-import 'package:flutter_application_1/Screens/codeVerification.dart';
-import 'package:flutter_application_1/Screens/signUp_view.dart';
-
 import 'package:get/get.dart';
-
-import 'package:flutter_application_1/Screens/Login.dart';
 import '../ComponentsLogin/constants.dart';
 import '../ComponentsLogin/controller/simple_ui_controller.dart';
 
-class recoverPassScreen extends StatefulWidget {
-  const recoverPassScreen({Key? key}) : super(key: key);
+class changePasswordScreen extends StatefulWidget {
+  final int? id;
+  const changePasswordScreen(this.id, {Key? key}) : super(key: key);
 
   @override
-  State<recoverPassScreen> createState() => _recoverPassViewState();
+  State<changePasswordScreen> createState() => _changePasswordScreen();
 }
 
-class _recoverPassViewState extends State<recoverPassScreen> {
-  TextEditingController emailController = TextEditingController();
+class _changePasswordScreen extends State<changePasswordScreen> {
+  TextEditingController cpasswordController = TextEditingController();
+  TextEditingController cpassword2Controller = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
 
+  var validation;
   @override
   void dispose() {
-    emailController.dispose();
+    cpasswordController.dispose();
+    cpassword2Controller.dispose();
     super.dispose();
   }
 
@@ -80,7 +78,7 @@ class _recoverPassViewState extends State<recoverPassScreen> {
 
   Widget _buildMainBody(
       Size size, SimpleUIController simpleUIController, ThemeData theme) {
-     return Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment:
           size.width > 600 ? MainAxisAlignment.center : MainAxisAlignment.start,
@@ -97,10 +95,7 @@ class _recoverPassViewState extends State<recoverPassScreen> {
         ),
         Padding(
           padding: const EdgeInsets.only(left: 20.0),
-          child: Text(
-            'Recuperación de contraseña',
-            style: TextStyle(fontSize: 20.0)
-          ),
+          child: Text('Cambiar contraseña', style: TextStyle(fontSize: 20.0)),
         ),
         SizedBox(
           height: size.height * 0.03,
@@ -113,20 +108,31 @@ class _recoverPassViewState extends State<recoverPassScreen> {
               children: [
                 TextFormField(
                   style: kTextFormFieldStyle(),
-                  controller: emailController,
-                  decoration: const InputDecoration(
-                    prefixIcon: Icon(Icons.email_rounded),
-                    hintText: 'Correo electrónico',
-                    border: OutlineInputBorder(
+                  controller: cpasswordController,
+                  obscureText: simpleUIController.isObscure.value,
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.lock_open),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        simpleUIController.isObscure.value
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        simpleUIController.isObscureActive();
+                      },
+                    ),
+                    hintText: 'Contraseña',
+                    border: const OutlineInputBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15)),
                     ),
                   ),
                   // The validator receives the text that the user has entered.
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Ingrese un correo electrónico';
-                    } else if (!value.endsWith('@gmail.com')) {
-                      return 'Ingrese una dirección válida';
+                      return 'Rellene este campo';
+                    } else {
+                      validation = value;
                     }
                     return null;
                   },
@@ -134,8 +140,46 @@ class _recoverPassViewState extends State<recoverPassScreen> {
                 SizedBox(
                   height: size.height * 0.02,
                 ),
+                SizedBox(
+                  height: size.height * 0.01,
+                ),
+                TextFormField(
+                  style: kTextFormFieldStyle(),
+                  controller: cpassword2Controller,
+                  obscureText: simpleUIController.isObscure.value,
+                  decoration: InputDecoration(
+                    prefixIcon: const Icon(Icons.lock_open),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        simpleUIController.isObscure.value
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        simpleUIController.isObscureActive();
+                      },
+                    ),
+                    hintText: 'Repetir contraseña',
+                    border: const OutlineInputBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15)),
+                    ),
+                  ),
+                  // The validator receives the text that the user has entered.
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Rellene este campo';
+                    } else if (value.length < 7) {
+                      return 'Ingrese como mínimo 6 carácteres';
+                    } else if (value.length > 13) {
+                      return 'Ingrese como máximo 13 carácteres';
+                    } else if (value != validation) {
+                      return 'Las contraseñas no coinciden.';
+                    }
+                    return null;
+                  },
+                ),
                 Text(
-                  'Se enviará un código de verificación a su correo',
+                  'Comprobaremos el código ingresado.',
                   style: kLoginTermsAndPrivacyStyle(size),
                   textAlign: TextAlign.center,
                 ),
@@ -144,37 +188,9 @@ class _recoverPassViewState extends State<recoverPassScreen> {
                 ),
 
                 /// SignUp Button
-                verificationButton(theme),
+                codeVerificationButton(theme),
                 SizedBox(
                   height: size.height * 0.03,
-                ),
-
-                /// Navigate To Login Screen
-                GestureDetector(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        CupertinoPageRoute(
-                            builder: (ctx) => const SignUpView()));
-                    emailController.clear();
-                    _formKey.currentState?.reset();
-
-                    simpleUIController.isObscure.value = true;
-                  },
-                  child: RichText(
-                    text: TextSpan(
-                      text: '¿No tienes cuenta?',
-                      style: kHaveAnAccountStyle(size),
-                      children: [
-                        TextSpan(
-                          text: " Regístrese",
-                          style: kLoginOrSignUpTextStyle(
-                            size,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
                 ),
               ],
             ),
@@ -185,9 +201,9 @@ class _recoverPassViewState extends State<recoverPassScreen> {
   }
 
   // SignUp Button
-  Widget verificationButton(ThemeData theme) {
+  Widget codeVerificationButton(ThemeData theme) {
     return Padding(
-      padding: const EdgeInsets.only(top: 115.0),
+      padding: const EdgeInsets.only(top: 115.0, left: 20, right: 20),
       child: SizedBox(
         width: double.infinity,
         height: 55,
@@ -203,11 +219,10 @@ class _recoverPassViewState extends State<recoverPassScreen> {
           ),
           onPressed: () {
             if (_formKey.currentState!.validate()) {
-            PostEmailVerification(emailController.text,context);
+              changePassword(widget.id, cpassword2Controller.text, context);
             }
-
           },
-          child: const Text('Enviar código de verificación'),
+          child: const Text('Aceptar'),
         ),
       ),
     );

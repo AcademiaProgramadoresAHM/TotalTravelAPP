@@ -179,16 +179,17 @@ Future<void> PostAdress(int id, String adress, BuildContext context) async {
       if(requestStatus.CodeStatus! >= 0){
           adressId = requestStatus.CodeStatus;
           PostRegister(dniController.text,
-                                  nameController.text,
-                                  lastnameController.text,
-                                  emailController.text,
-                                  dateOfBirthController.text,
-                                  phoneController.text,
-                                  _sexo,
-                                  password2Controller.text,
-                                  adressId!,
-                                  context
+                            nameController.text,
+                            lastnameController.text,
+                            emailController.text,
+                            dateOfBirthController.text,
+                            phoneController.text,
+                            _sexo,
+                            password2Controller.text,
+                            adressId!,
+                            context
                                   );
+
       }
 
     }
@@ -368,7 +369,7 @@ Future<void> PostAdress(int id, String adress, BuildContext context) async {
                                                     const InputDecoration(
                                                   prefixIcon:
                                                       Icon(Icons.email_rounded),
-                                                  hintText: 'Email',
+                                                  hintText: 'Correo Electrónico',
                                                   border: OutlineInputBorder(
                                                     borderRadius:
                                                         BorderRadius.all(
@@ -816,9 +817,9 @@ Future<void> PostAdress(int id, String adress, BuildContext context) async {
         onPressed: () {
           // Validate returns true if the form is valid, or false otherwise.
             // ... Navigate To your Home Page
-
-          PostAdress(CitiesDropDownValue!,direController.text, context);
-
+              if (_formKey.currentState!.validate()) {
+                      PostAdress(CitiesDropDownValue!,direController.text, context);
+              }
         },
         child: const Text('Enviar'),
       ),
