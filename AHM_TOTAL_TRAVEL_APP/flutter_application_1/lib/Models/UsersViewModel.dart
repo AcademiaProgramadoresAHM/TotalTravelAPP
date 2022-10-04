@@ -50,21 +50,24 @@ class UserRegisterModel {
   bool? Usua_Estado;
 
   Map<String, dynamic> toJson() => 
-  {
+{
   "usua_ID": Usua_ID,
   "usua_DNI": Usua_DNI,
-  "usua_Url": Usua_Url,
   "usua_Nombre": Usua_Nombre,
   "usua_Apellido": Usua_Apellido,
   "usua_FechaNaci": Usua_FechaNaci,
   "usua_Email": Usua_Email,
   "usua_Sexo": Usua_Sexo,
   "usua_Telefono": Usua_Telefono,
+  "usua_Url": "string",
   "usua_Password": Usua_Password,
-  "usua_esAdmin": 0,
-  "role_ID": 2,
-  "dire_ID": 1,
-  "usua_UsuarioCreacion": 1,
+  "usua_esAdmin": Usua_esAdmin,
+  "usua_Salt": "string",
+  "role_ID": Role_ID,
+  "dire_ID": Dire_ID,
+  "part_ID": 0,
+  "usua_UsuarioCreacion": Usua_UsuarioCreacion,
+  "usua_UsuarioModifica": 0
 };
 
 

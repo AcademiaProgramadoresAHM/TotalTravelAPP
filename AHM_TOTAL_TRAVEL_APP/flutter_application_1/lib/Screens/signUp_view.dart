@@ -6,6 +6,7 @@ import 'package:flutter_application_1/Models/RequestsViewModel.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:nb_utils/nb_utils.dart';
 import '../hotel_booking/hotel_app_theme.dart';
 import 'package:flutter_application_1/Screens/Login.dart';
 import '../ComponentsLogin/constants.dart';
@@ -15,13 +16,13 @@ import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/CitiesViewModel.dart';
 import 'package:http/http.dart';
 import 'package:flutter_application_1/Models/RequestsViewModel.dart';
+
 class SignUpView extends StatefulWidget {
   const SignUpView({Key? key}) : super(key: key);
 
   @override
   State<SignUpView> createState() => _SignUpViewState();
 }
-
 
 class _SignUpViewState extends State<SignUpView> {
   TextEditingController dniController = TextEditingController();
@@ -30,12 +31,15 @@ class _SignUpViewState extends State<SignUpView> {
   TextEditingController dateOfBirthController = TextEditingController();
   TextEditingController sexController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
+  TextEditingController coloniaController = TextEditingController();
+  TextEditingController calleController = TextEditingController();
+  TextEditingController avenidaController = TextEditingController();
   TextEditingController direController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController password2Controller = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-    List<ListModel> example = [
+  List<ListModel> example = [
     ListModel(name: 'Cupertino Date Picker'),
     //ListModel(name: 'Cupertino Time Picker'),
     //ListModel(name: 'Cupertino Picker'),
@@ -44,8 +48,6 @@ class _SignUpViewState extends State<SignUpView> {
   String? selectedValue;
   String? time;
   String? date;
-
-
 
   init() async {
     time = 'Please Select Time';
@@ -128,18 +130,28 @@ class _SignUpViewState extends State<SignUpView> {
 //Dropdown cities
 
   int? CitiesDropDownValue;
+  bool _isVisible1 = false;
+  bool _isVisible2 = false;
   String defaultDetalles = '';
   int? adressId;
   CiudadesViewModel? planDetalles;
   AdressesViewModel? adressData;
 
-
+  void showToast1(bool result) {
+    setState(() {
+      _isVisible1 = result;
+    });
+  }
+   void showToast2(bool result2) {
+    setState(() {
+      _isVisible2 = result2;
+    });
+  }
   Map<int?, String> CitiesDictionary = Map();
 
   Future<dynamic> GetCities() async {
     var data;
-    String url_list =
-        "https://totaltravel.somee.com/API/Cities/List";
+    String url_list = "https://totaltravel.somee.com/API/Cities/List";
     final respuesta = await http.get(Uri.parse(url_list));
     if (respuesta.statusCode == 200) {
       Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
@@ -158,44 +170,42 @@ class _SignUpViewState extends State<SignUpView> {
     }
   }
 
+  Future<void> PostAdress(int id, String adress, BuildContext context) async {
+    AdressesViewModel adressView = new AdressesViewModel();
+    adressView.Ciud_ID = id;
+    adressView.Dire_Descripcion = adress as String?;
+    adressView.Dire_UsuarioCreacion = 1;
 
-Future<void> PostAdress(int id, String adress, BuildContext context) async {
-  AdressesViewModel adressView = new AdressesViewModel();
-  adressView.Ciud_ID = id;
-  adressView.Dire_Descripcion = adress as String?;
-  adressView.Dire_UsuarioCreacion = 1;
+    final url = Uri.parse("https://totaltravel.somee.com/API/Address/Insert");
+    final headers = {
+      "Content-type": "application/json",
+      "Accept": "text/plain"
+    };
+    final json = jsonEncode(adressView);
+    final response = await post(url, headers: headers, body: json);
 
-
-  final url = Uri.parse("https://totaltravel.somee.com/API/Address/Insert");
-  final headers = {"Content-type": "application/json", "Accept": "text/plain"};
-  final json = jsonEncode(adressView);
-  final response = await post(url, headers: headers, body: json);
-
-  if (response.body != " ") {
-    Map<String, dynamic> decoderMap = jsonDecode(response.body);
-    var data = DecoderAPI.fromJson(decoderMap);
-    if (data.data != null) {
-      RequestStatus requestStatus = RequestStatus.fromJson(data.data);
-      if(requestStatus.CodeStatus! >= 0){
+    if (response.body != " ") {
+      Map<String, dynamic> decoderMap = jsonDecode(response.body);
+      var data = DecoderAPI.fromJson(decoderMap);
+      if (data.data != null) {
+        RequestStatus requestStatus = RequestStatus.fromJson(data.data);
+        if (requestStatus.CodeStatus! >= 0) {
           adressId = requestStatus.CodeStatus;
-          PostRegister(dniController.text,
-                            nameController.text,
-                            lastnameController.text,
-                            emailController.text,
-                            dateOfBirthController.text,
-                            phoneController.text,
-                            _sexo,
-                            password2Controller.text,
-                            adressId!,
-                            context
-                                  );
-
+          PostRegister(
+              dniController.text,
+              nameController.text,
+              lastnameController.text,
+              emailController.text,
+              dateOfBirthController.text,
+              phoneController.text,
+              _sexo,
+              password2Controller.text,
+              adressId!,
+              context);
+        }
       }
-
     }
-  } 
-}
-
+  }
 
   @override
   void initState() {
@@ -266,41 +276,15 @@ Future<void> PostAdress(int id, String adress, BuildContext context) async {
                                           key: _formKey,
                                           child: Column(
                                             children: [
-                                              /// DNI
-                                              TextFormField(
-                                                style: kTextFormFieldStyle(),
-                                                keyboardType: TextInputType.number,
-                                                decoration:
-                                                    const InputDecoration(
-                                                  prefixIcon:
-                                                      Icon(Icons.badge),
-                                                  hintText: 'DNI',
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                15)),
-                                                  ),
-                                                ),
-
-                                                controller: dniController,
-                                                // The validator receives the text that the user has entered.
-                                                validator: (value) {
-                                                  if (value == null ||
-                                                      value.isEmpty) {
-                                                    return 'Rellene este campo';
-                                                  } else if (value.length <
-                                                      13) {
-                                                    return 'Ingrese como mínimo 13 carácteres';
-                                                  } else if (value.length >
-                                                      13) {
-                                                    return 'Ingrese como máximo 13 carácteres';
-                                                  }
-                                                  return null;
-                                                },
-                                              ),
-                                              SizedBox(
-                                                height: size.height * 0.02,
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 200.0,
+                                                    top: 10.0,
+                                                    bottom: 30.0),
+                                                child: Text(
+                                                    'Información general',
+                                                    style: TextStyle(
+                                                        fontSize: 16.0)),
                                               ),
 
                                               /// username
@@ -361,7 +345,8 @@ Future<void> PostAdress(int id, String adress, BuildContext context) async {
                                               SizedBox(
                                                 height: size.height * 0.02,
                                               ),
-                                                         /// Gmail
+
+                                              /// Gmail
                                               TextFormField(
                                                 style: kTextFormFieldStyle(),
                                                 controller: emailController,
@@ -369,7 +354,8 @@ Future<void> PostAdress(int id, String adress, BuildContext context) async {
                                                     const InputDecoration(
                                                   prefixIcon:
                                                       Icon(Icons.email_rounded),
-                                                  hintText: 'Correo Electrónico',
+                                                  hintText:
+                                                      'Correo Electrónico',
                                                   border: OutlineInputBorder(
                                                     borderRadius:
                                                         BorderRadius.all(
@@ -392,57 +378,120 @@ Future<void> PostAdress(int id, String adress, BuildContext context) async {
                                               SizedBox(
                                                 height: size.height * 0.02,
                                               ),
-                                              //Birth
-                                                TextFormField(
-                    style: kTextFormFieldStyle(),
-                    controller: dateOfBirthController,
-                    decoration: const InputDecoration(
-                      prefixIcon: Icon(Icons.calendar_today),
-                      hintText: 'Fecha de Nacimiento',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(15)),
-                      ),
-                    ),
-                    readOnly: true,
-                    onTap: () async {
-                      DateTime? pickedDate = await showDatePicker(
-                          context: context,
-                          initialDate: DateTime.now(),
-                          firstDate: DateTime(1901),
-                          lastDate: DateTime(2101));
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 190.0,
+                                                    top: 10.0,
+                                                    bottom: 20.0),
+                                                child: Text(
+                                                    'Información personal',
+                                                    style: TextStyle(
+                                                        fontSize: 16.0)),
+                                              ),
 
-                      if (pickedDate != null) {
-                        print(pickedDate);
-                        String formattedDate =
-                            DateFormat('yyyy-MM-dd').format(pickedDate);
-                        print(formattedDate);
-                        setState(() {
-                          dateOfBirthController.text =
-                              formattedDate; //set output date to TextField value.
-                        });
-                      } else {
-                        print("Fecha no seleccionada");
-                      }
-                    },
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Por favor ingrese una fecha';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(
-                    height: size.height * 0.02,
-                  ),
+                                              /// DNI
+                                              ///
+                                              TextFormField(
+                                                style: kTextFormFieldStyle(),
+                                                keyboardType:
+                                                    TextInputType.number,
+                                                decoration:
+                                                    const InputDecoration(
+                                                  prefixIcon: Icon(Icons.badge),
+                                                  hintText: 'DNI',
+                                                  border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                15)),
+                                                  ),
+                                                ),
+
+                                                controller: dniController,
+                                                // The validator receives the text that the user has entered.
+                                                validator: (value) {
+                                                  if (value == null ||
+                                                      value.isEmpty) {
+                                                    return 'Rellene este campo';
+                                                  } else if (value.length <
+                                                      13) {
+                                                    return 'Ingrese como mínimo 13 carácteres';
+                                                  } else if (value.length >
+                                                      13) {
+                                                    return 'Ingrese como máximo 13 carácteres';
+                                                  }
+                                                  return null;
+                                                },
+                                              ),
+                                              SizedBox(
+                                                height: size.height * 0.02,
+                                              ),
+                                              //Birth
+                                              TextFormField(
+                                                style: kTextFormFieldStyle(),
+                                                controller:
+                                                    dateOfBirthController,
+                                                decoration:
+                                                    const InputDecoration(
+                                                  prefixIcon: Icon(
+                                                      Icons.calendar_today),
+                                                  hintText:
+                                                      'Fecha de Nacimiento',
+                                                  border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                15)),
+                                                  ),
+                                                ),
+                                                readOnly: true,
+                                                onTap: () async {
+                                                  DateTime? pickedDate =
+                                                      await showDatePicker(
+                                                          context: context,
+                                                          initialDate:
+                                                              DateTime.now(),
+                                                          firstDate:
+                                                              DateTime(1901),
+                                                          lastDate:
+                                                              DateTime(2101));
+
+                                                  if (pickedDate != null) {
+                                                    print(pickedDate);
+                                                    String formattedDate =
+                                                        DateFormat('yyyy-MM-dd')
+                                                            .format(pickedDate);
+                                                    print(formattedDate);
+                                                    setState(() {
+                                                      dateOfBirthController
+                                                              .text =
+                                                          formattedDate; //set output date to TextField value.
+                                                    });
+                                                  } else {
+                                                    print(
+                                                        "Fecha no seleccionada");
+                                                  }
+                                                },
+                                                validator: (value) {
+                                                  if (value == null ||
+                                                      value.isEmpty) {
+                                                    return 'Por favor ingrese una fecha';
+                                                  }
+                                                  return null;
+                                                },
+                                              ),
+                                              SizedBox(
+                                                height: size.height * 0.02,
+                                              ),
 
                                               // Phone
                                               TextFormField(
                                                 style: kTextFormFieldStyle(),
-                                                keyboardType: TextInputType.phone,
+                                                keyboardType:
+                                                    TextInputType.phone,
                                                 decoration:
                                                     const InputDecoration(
-                                                  prefixIcon:
-                                                      Icon(Icons.phone),
+                                                  prefixIcon: Icon(Icons.phone),
                                                   hintText: 'Teléfono',
                                                   border: OutlineInputBorder(
                                                     borderRadius:
@@ -466,44 +515,121 @@ Future<void> PostAdress(int id, String adress, BuildContext context) async {
                                               ),
                                               SizedBox(
                                                 height: size.height * 0.02,
-                                              ), 
+                                              ),
                                               Padding(
-                                                padding: const EdgeInsets.only(right: 30.0),
-                                                child:  Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Row(
+                                                padding: const EdgeInsets.only(
+                                                    right: 30.0),
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceAround,
                                                   children: [
-                                                    Radio(value: 'M', groupValue: _sexo, 
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                      _sexo = value.toString();
-                                                    });
-                                                    }),
-                                                    Text('Masculino', style: TextStyle( fontSize: 16,),),
+                                                    Row(
+                                                      children: [
+                                                        Radio(
+                                                            value: 'M',
+                                                            groupValue: _sexo,
+                                                            onChanged: (value) {
+                                                              setState(() {
+                                                                _sexo = value
+                                                                    .toString();
+                                                              });
+                                                            }),
+                                                        RichText(
+                                                          text: TextSpan(
+                                                            children: [
+                                                              TextSpan(
+                                                                  text:
+                                                                      "Masculino ",
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                          black,
+                                                                      fontSize:
+                                                                          18)),
+                                                              WidgetSpan(
+                                                                child: Icon(
+                                                                    Icons.male,
+                                                                    size: 20),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                    Row(
+                                                      children: [
+                                                        Radio(
+                                                            value: 'F',
+                                                            groupValue: _sexo,
+                                                            onChanged: (value) {
+                                                              setState(() {
+                                                                softWrap:
+                                                                true;
+                                                                _sexo = value
+                                                                    .toString();
+                                                              });
+                                                            }),
+                                                        RichText(
+                                                          text: TextSpan(
+                                                            children: [
+                                                              TextSpan(
+                                                                  text:
+                                                                      "Femenino ",
+                                                                  style: TextStyle(
+                                                                      color:
+                                                                          black,
+                                                                      fontSize:
+                                                                          18)),
+                                                              WidgetSpan(
+                                                                child: Icon(
+                                                                    Icons
+                                                                        .female,
+                                                                    size: 20),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   ],
                                                 ),
-                                                Row(
-                                                  children: [
-                                                    Radio(value: 'F', groupValue: _sexo, 
-                                                    onChanged: (value) {
-                                                      setState(() {
-                                                      softWrap:
-                                                      true;
-                                                      _sexo = value.toString();
-                                                    });
-                                                    }),
-                                                    Text('Femenino', style: TextStyle( fontSize: 16,),),
-                                                  ],
-                                                ),
-                                               ],
-                                             ),
-                                                ),
-                                             
-                                                SizedBox(
+                                              ),
+                                              
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 200.0, top: 10.0),
+                                                child: Visibility(
+                                                  visible: _isVisible1,
+                                                  child: RichText(
+                                                            text: TextSpan(
+                                                              children: [
+                                                                TextSpan(
+                                                                    text:
+                                                                        "Seleccione una opción ",
+                                                                    style: TextStyle(
+                                                                        color:
+                                                                            redColor,
+                                                                        fontSize:
+                                                                            13)),
+        
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          ),
+                                              ),
+                                                     
+                                              SizedBox(
                                                 height: size.height * 0.02,
                                               ),
-                                   
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 250.0,
+                                                    top: 30.0,
+                                                    bottom: 30.0),
+                                                child: Text('Contraseña',
+                                                    style: TextStyle(
+                                                        fontSize: 16.0)),
+                                              ),
 
                                               /// password
                                               Obx(
@@ -608,55 +734,92 @@ Future<void> PostAdress(int id, String adress, BuildContext context) async {
                                                   },
                                                 ),
                                               ),
-
                                               Padding(
-                                                padding: const EdgeInsets.only(top: 20.0,right: 30.0, left: 20.0),
-                                                      child: Container(
-                                                          child: DropdownButton(
-                                                            hint: Text("Elige una ciudad"),
-                                                            icon: const Icon(Icons.keyboard_arrow_down),
-                                                            value: CitiesDropDownValue,
-                                                            items: CitiesDictionary.keys.map((id) {
-                                                              return DropdownMenuItem(
-                                                                value: id,
-                                                                child: Text(CitiesDictionary[id].toString()),
-                                                              );
-                                                            }).toList(),
-                                                            onChanged: (int? newValue) {
-                                                              setState(() {
-                                                                CitiesDropDownValue = newValue;
-                                                                
-                                                              });
-                                                            },
-                                                            
-                                                          ),
-                                                          width: MediaQuery.of(context).size.width * 3.5,
-                                                          height: 60,
-                                                          decoration: BoxDecoration(
-                                                            color: Colors.transparent,
-                                                            borderRadius: BorderRadius.circular(8),
-                                                            border: Border.all(
-                                                              color: Colors.transparent,
-                                                              width: 1,
+                                                padding: const EdgeInsets.only(
+                                                    right: 260.0, top: 30.0),
+                                                child: Text('Dirección',
+                                                    style: TextStyle(
+                                                        fontSize: 16.0)),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 10.0,
+                                                    right: 30.0,
+                                                    left: 20.0),
+                                                child: Container(
+                                                  child: DropdownButton(
+                                                    hint: Text(
+                                                        "Elige una ciudad"),
+                                                    icon: const Icon(Icons
+                                                        .keyboard_arrow_down),
+                                                    value: CitiesDropDownValue,
+                                                    items: CitiesDictionary.keys
+                                                        .map((id) {
+                                                      return DropdownMenuItem(
+                                                        value: id,
+                                                        child: Text(
+                                                            CitiesDictionary[id]
+                                                                .toString()),
+                                                      );
+                                                    }).toList(),
+                                                    onChanged: (int? newValue) {
+                                                      setState(() {
+                                                        CitiesDropDownValue =
+                                                            newValue;
+                                                      });
+                                                    },
+                                                  ),
+                                                  width: MediaQuery.of(context)
+                                                          .size
+                                                          .width *
+                                                      3.5,
+                                                  height: 60,
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.transparent,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8),
+                                                    border: Border.all(
+                                                      color: Colors.transparent,
+                                                      width: 1,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+    
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    right: 200.0, top: 10.0, bottom: 10.0),
+                                                child: Visibility(
+                                                  visible: _isVisible2,
+                                                  child: RichText(
+                                                            text: TextSpan(
+                                                              children: [
+                                                                TextSpan(
+                                                                    text:
+                                                                        "Seleccione una opción ",
+                                                                    style: TextStyle(
+                                                                        color:
+                                                                            redColor,
+                                                                        fontSize:
+                                                                            13)),
+        
+                                                              ],
                                                             ),
                                                           ),
-                                                        ),
-                                                ),
-
+                                                          ),
+                                              ),
+                                                
                                               SizedBox(
                                                 height: size.height * 0.01,
                                               ),
 
-                                              
-                                               TextFormField(
+                                              TextFormField(
                                                 style: kTextFormFieldStyle(),
-                                                keyboardType: TextInputType.text,
-                                                maxLines: 3,
                                                 decoration:
                                                     const InputDecoration(
-                                                  prefixIcon:
-                                                      Icon(Icons.article),
-                                                  hintText: '\nDirección',
+                                                  prefixIcon: Icon(Icons.home),
+                                                  hintText: 'Colonia',
                                                   border: OutlineInputBorder(
                                                     borderRadius:
                                                         BorderRadius.all(
@@ -665,23 +828,87 @@ Future<void> PostAdress(int id, String adress, BuildContext context) async {
                                                   ),
                                                 ),
 
-                                                controller: direController,
+                                                controller: coloniaController,
                                                 // The validator receives the text that the user has entered.
                                                 validator: (value) {
                                                   if (value == null ||
                                                       value.isEmpty) {
                                                     return 'Rellene este campo';
-                                                  }else{
-                                                    adressData!.Dire_Descripcion = value;
                                                   }
                                                   return null;
                                                 },
                                               ),
-
                                               SizedBox(
                                                 height: size.height * 0.02,
                                               ),
-                                                
+
+                                       
+                                              TextFormField(
+                                                style: kTextFormFieldStyle(),
+                                                decoration:
+                                                    const InputDecoration(
+                                                  prefixIcon: Icon(Icons.edit_road),
+                                                  hintText: 'Calle',
+                                                  border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                15)),
+                                                  ),
+                                                ),
+
+                                                controller: calleController,
+                                                // The validator receives the text that the user has entered.
+                                                validator: (value) {
+                                                  if (value == null ||
+                                                      value.isEmpty) {
+                                                    return 'Rellene este campo';
+                                                  }
+                                                  return null;
+                                                },
+                                              ),
+                                              SizedBox(
+                                                height: size.height * 0.02,
+                                              ),
+
+                                              TextFormField(
+                                                style: kTextFormFieldStyle(),
+                                                decoration:
+                                                    const InputDecoration(
+                                                  prefixIcon: Icon(Icons.edit_road),
+                                                  hintText: 'Avenida',
+                                                  border: OutlineInputBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                15)),
+                                                  ),
+                                                ),
+
+                                                controller: avenidaController,
+                                                // The validator receives the text that the user has entered.
+                                                validator: (value) {
+                                                  if (value == null ||
+                                                      value.isEmpty) {
+                                                    return 'Rellene este campo';
+                                                  }
+                                                  return null;
+                                                },
+                                              ),
+                                              SizedBox(
+                                                height: size.height * 0.06,
+                                              ),
+
+
+
+
+
+
+
+
+
+
+                                       
                                               /// SignUp Button
                                               signUpButton(theme),
                                               SizedBox(
@@ -744,9 +971,7 @@ Future<void> PostAdress(int id, String adress, BuildContext context) async {
     );
   }
 
-
-
- Future<void> dateBottomSheet(context) async {
+  Future<void> dateBottomSheet(context) async {
     var now = DateTime.now();
     var today = DateTime(now.year, now.month, now.day);
 
@@ -764,11 +989,9 @@ Future<void> PostAdress(int id, String adress, BuildContext context) async {
                     children: [
                       Text(
                         'Cancelar',
-
                       ),
                       Text(
                         'Done',
-
                       )
                     ],
                   ).paddingOnly(top: 8, left: 8, right: 8, bottom: 8),
@@ -776,9 +999,8 @@ Future<void> PostAdress(int id, String adress, BuildContext context) async {
                 Container(
                   height: 200,
                   child: CupertinoTheme(
-                    data: CupertinoThemeData(
-                        textTheme: CupertinoTextThemeData(
-                           )),
+                    data:
+                        CupertinoThemeData(textTheme: CupertinoTextThemeData()),
                     child: CupertinoDatePicker(
                       backgroundColor: Colors.white,
                       minimumDate: today,
@@ -807,7 +1029,8 @@ Future<void> PostAdress(int id, String adress, BuildContext context) async {
       height: 55,
       child: ElevatedButton(
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all(Color.fromRGBO(101,45,143,1)),
+          backgroundColor:
+              MaterialStateProperty.all(Color.fromRGBO(101, 45, 143, 1)),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),
@@ -816,22 +1039,43 @@ Future<void> PostAdress(int id, String adress, BuildContext context) async {
         ),
         onPressed: () {
           // Validate returns true if the form is valid, or false otherwise.
-            // ... Navigate To your Home Page
-              if (_formKey.currentState!.validate()) {
-                      PostAdress(CitiesDropDownValue!,direController.text, context);
-              }
+          // ... Navigate To your Home Page
+
+           String adress = "Col. " +
+                coloniaController.text +
+                ", " +
+                calleController.text +
+                " calle " +
+                avenidaController.text +
+                " avenida.";
+            bool result, result2;
+           if(_sexo == null){
+            result = true;
+              showToast1(result);
+            if(CitiesDropDownValue == null){
+              result2 = true;
+                showToast2(result2);
+                 if (_formKey.currentState!.validate()) {
+                  }  
+                }
+            }else if(CitiesDropDownValue == null){
+              result2 = true;
+          showToast2(result2);
+          }else{
+            result = false;
+            result2 = false;
+            showToast2(result2);
+              showToast1(result);
+            if (_formKey.currentState!.validate()) {
+              PostAdress(CitiesDropDownValue!, adress, context);
+            }   
+          }
         },
         child: const Text('Enviar'),
       ),
     );
   }
-
 }
-
-
-
-
-
 
 AppStore appStore = AppStore();
 
@@ -889,8 +1133,4 @@ class ExampleItemWidget extends StatelessWidget {
       ),
     );
   }
-
-  
 }
-
-  
