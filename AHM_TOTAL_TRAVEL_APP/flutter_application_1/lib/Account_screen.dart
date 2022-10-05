@@ -1,18 +1,44 @@
 import 'package:flutter/rendering.dart';
+import 'package:flutter_application_1/Screens/EditAccount.dart';
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/hotel_booking/calendar_popup_view.dart';
+import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/hotel_booking/hotel_list_view.dart';
 import 'package:flutter_application_1/hotel_booking/model/hotel_list_data.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 import 'hotel_booking/filters_screen.dart';
 import 'hotel_booking/hotel_app_theme.dart';
+import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'main.dart';
+import 'dart:convert';
 import 'package:flutter/src/rendering/box.dart';
 
+Future<dynamic> GetUserData(int? id_user, String? token) async {
+  String url_list =
+      "https://totaltravelapi.azurewebsites.net/API/Users/Find?id=" +
+          id_user.toString();
+  final headers = {
+    "Content-type": "application/json",
+    "Authorization": "bearer " + token!
+  };
+  final respuesta = await http.get(Uri.parse(url_list), headers: headers);
+  if (respuesta.body != "") {
+    Map<String, dynamic> userMap = jsonDecode(respuesta.body);
+    var data = DecoderAPI.fromJson(userMap);
+    return userMap['data']['data'];
+  } else {
+    print("Error: " + respuesta.statusCode.toString());
+  }
+}
+
 class AccountInfo extends StatefulWidget {
+  final UserLoggedModel? userloggeddata;
+  const AccountInfo(this.userloggeddata, {Key? key}) : super(key: key);
+
   @override
   State<AccountInfo> createState() => _AccountInfo();
 }
@@ -26,9 +52,16 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
 
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now().add(const Duration(days: 5));
+  //UserListViewModel? userData;
+  var userData;
 
   @override
   void initState() {
+    userData =
+        GetUserData(widget.userloggeddata!.ID, widget.userloggeddata!.Token);
+    //GetUserData(widget.userloggeddata!.ID, widget.userloggeddata!.Token)
+    //.then((value) => {userData = UserListViewModel.fromJson(value)});
+    //userData = UserListViewModel.;
     animationController = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
     super.initState();
@@ -81,7 +114,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           Padding(
                             padding: EdgeInsets.only(top: 25.0, right: 140.0),
                             child: Text(
-                              'Chris Hemsworth',
+                              userData['nombre_completo'],
                               style: TextStyle(
                                   fontSize: 20.0, fontWeight: FontWeight.bold),
                             ),
@@ -209,6 +242,38 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                                   ],
                                 ),
                               ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                right: 20.0,
+                                top: 20.0,
+                                bottom: 20.0,
+                                left: 20.0),
+                            child: SizedBox(
+                              width: double.infinity,
+                              height: 55,
+                              child: ElevatedButton(
+                                style: ButtonStyle(
+                                  backgroundColor: MaterialStateProperty.all(
+                                      Color.fromRGBO(101, 45, 143, 1)),
+                                  shape: MaterialStateProperty.all(
+                                    RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15),
+                                    ),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  // Validate returns true if the form is valid, or false otherwise.
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            EditAccount(widget.userloggeddata)),
+                                  );
+                                },
+                                child: const Text('Editar Cuenta'),
+                              ),
                             ),
                           ),
                         ],

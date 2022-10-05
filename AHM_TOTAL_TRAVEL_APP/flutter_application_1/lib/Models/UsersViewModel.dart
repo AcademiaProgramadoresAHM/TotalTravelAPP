@@ -49,27 +49,70 @@ class UserRegisterModel {
   DateTime? Usua_FechaModifica;
   bool? Usua_Estado;
 
-  Map<String, dynamic> toJson() => 
-{
-  "usua_ID": Usua_ID,
-  "usua_DNI": Usua_DNI,
-  "usua_Nombre": Usua_Nombre,
-  "usua_Apellido": Usua_Apellido,
-  "usua_FechaNaci": Usua_FechaNaci,
-  "usua_Email": Usua_Email,
-  "usua_Sexo": Usua_Sexo,
-  "usua_Telefono": Usua_Telefono,
-  "usua_Url": "string",
-  "usua_Password": Usua_Password,
-  "usua_esAdmin": Usua_esAdmin,
-  "usua_Salt": "string",
-  "role_ID": Role_ID,
-  "dire_ID": Dire_ID,
-  "part_ID": 0,
-  "usua_UsuarioCreacion": Usua_UsuarioCreacion,
-  "usua_UsuarioModifica": 0
-};
+  Map<String, dynamic> toJson() => {
+        "usua_ID": Usua_ID,
+        "usua_DNI": Usua_DNI,
+        "usua_Nombre": Usua_Nombre,
+        "usua_Apellido": Usua_Apellido,
+        "usua_FechaNaci": Usua_FechaNaci,
+        "usua_Email": Usua_Email,
+        "usua_Sexo": Usua_Sexo,
+        "usua_Telefono": Usua_Telefono,
+        "usua_Url": "string",
+        "usua_Password": Usua_Password,
+        "usua_esAdmin": Usua_esAdmin,
+        "usua_Salt": "string",
+        "role_ID": Role_ID,
+        "dire_ID": Dire_ID,
+        "part_ID": 0,
+        "usua_UsuarioCreacion": Usua_UsuarioCreacion,
+        "usua_UsuarioModifica": 0
+      };
+}
 
+class UserListViewModel {
+  int ID;
+  String DNI;
+  String nombre_completo;
+  String Genero;
+  DateTime? Fecha_Nacimiento;
+  String Email;
+  String Password;
+  String Telefono;
+  String Direccion;
+  int DireccionID;
+  String Partner;
+  int? PartnerID;
+  String Rol;
+  int Role_ID;
+  int? ID_Crea;
+  String UsuarioCreacion;
+  DateTime? Fecha_Creacion;
+  int? ID_Modifica;
+  String UsuarioModifica;
+  DateTime? Fecha_Modifica;
+  bool? Estado;
 
-
+  UserListViewModel.fromJson(Map<String, dynamic> json)
+      : ID = json['id'],
+        DNI = json['dni'],
+        nombre_completo = json['nombre_completo'],
+        Genero = json['genero'],
+        Fecha_Nacimiento = json['fecha_Nacimiento'],
+        Email = json['email'],
+        Password = json['password'],
+        Telefono = json['telefono'],
+        Direccion = json['direccion'],
+        DireccionID = json['direccionID'],
+        Rol = json['rol'],
+        Role_ID = json['rol_ID'],
+        Partner = json['partner'],
+        PartnerID = json['partnerID'],
+        ID_Crea = json['iD_Crea'],
+        UsuarioCreacion = json['usuarioCreacion'],
+        Fecha_Creacion = json['fecha_Creacion'],
+        ID_Modifica = json['iD_Modifica'],
+        UsuarioModifica = json['usuarioModifica'],
+        Fecha_Modifica = json['fecha_Modifica'],
+        Estado = json['estado'];
 }

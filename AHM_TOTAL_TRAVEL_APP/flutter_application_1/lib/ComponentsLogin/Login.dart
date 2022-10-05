@@ -11,7 +11,8 @@ import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'package:flutter_application_1/navigation_home_screen.dart';
 import 'package:nb_utils/nb_utils.dart';
 
-Future<void> PostLogin(String email, String password, BuildContext context) async {
+Future<void> PostLogin(
+    String email, String password, BuildContext context) async {
   UserLoginModel loginData = new UserLoginModel();
   loginData.Email = email;
   loginData.Password = password;
@@ -30,20 +31,18 @@ Future<void> PostLogin(String email, String password, BuildContext context) asyn
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => NavigationHomeScreen(),
+          builder: (context) => NavigationHomeScreen(userLogin),
         ),
       );
-    }else{
-       ScaffoldMessenger.of(context).showSnackBar(
-      
-        const SnackBar(
-          backgroundColor: white,
-      content: Text(
-        textAlign: TextAlign.center,
-        'La contraseña o usuario son incorrectos.',
-        style: TextStyle(color: redColor, fontSize: 16),
-      ),
-    ));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        backgroundColor: white,
+        content: Text(
+          textAlign: TextAlign.center,
+          'La contraseña o usuario son incorrectos.',
+          style: TextStyle(color: redColor, fontSize: 16),
+        ),
+      ));
     }
-  } 
+  }
 }

@@ -12,10 +12,14 @@ import 'package:flutter_application_1/home_screen.dart';
 import 'package:flutter_application_1/invite_friend_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/historial_transacciones.dart';
+import 'package:flutter_application_1/Models/UsersViewModel.dart';
 
 import 'Screens/Personalizados.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
+  final UserLoggedModel? userloggeddata;
+  const NavigationHomeScreen(this.userloggeddata, {Key? key}) : super(key: key);
+
   @override
   _NavigationHomeScreenState createState() => _NavigationHomeScreenState();
 }
@@ -86,14 +90,14 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
           break;
         case DrawerIndex.Account:
           setState(() {
-            screenView = AccountInfo();
+            screenView = AccountInfo(widget.userloggeddata);
           });
           break;
         case DrawerIndex.Personalization:
-        setState(() {
-          screenView = PersonaliScreen();
-        });
-        break;
+          setState(() {
+            screenView = PersonaliScreen();
+          });
+          break;
         case DrawerIndex.Historial:
           setState(() {
             screenView = HistorialScreen();
@@ -103,7 +107,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
           setState(() {
             screenView = SupportScreen();
           });
-          break;        
+          break;
         default:
           break;
       }
