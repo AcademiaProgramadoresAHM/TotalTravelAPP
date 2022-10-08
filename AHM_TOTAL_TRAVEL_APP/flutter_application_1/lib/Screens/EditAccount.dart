@@ -277,30 +277,6 @@ class _EditAccountState extends State<EditAccount> {
                   SizedBox(
                     height: size.height * 0.03,
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pop(
-                          context,
-                          CupertinoPageRoute(
-                              builder: (ctx) =>
-                                  AccountInfo(widget.userloggeddata)));
-                      nameController.clear();
-                      _formKey.currentState?.reset();
-
-                      simpleUIController.isObscure.value = true;
-                    },
-                    child: RichText(
-                      text: TextSpan(
-                        text: 'Ya tiene una cuenta?',
-                        style: kHaveAnAccountStyle(size),
-                        children: [
-                          TextSpan(
-                              text: " Inicie Sesion",
-                              style: kLoginOrSignUpTextStyle(size)),
-                        ],
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),

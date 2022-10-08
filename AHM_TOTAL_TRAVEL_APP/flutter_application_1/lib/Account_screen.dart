@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/rendering.dart';
 import 'package:flutter_application_1/Screens/EditAccount.dart';
 import 'package:flutter_application_1/app_theme.dart';
@@ -17,24 +19,6 @@ import 'main.dart';
 import 'dart:convert';
 import 'package:flutter/src/rendering/box.dart';
 
-Future<dynamic> GetUserData(int? id_user, String? token) async {
-  String url_list =
-      "https://totaltravelapi.azurewebsites.net/API/Users/Find?id=" +
-          id_user.toString();
-  final headers = {
-    "Content-type": "application/json",
-    "Authorization": "bearer " + token!
-  };
-  final respuesta = await http.get(Uri.parse(url_list), headers: headers);
-  if (respuesta.body != "") {
-    Map<String, dynamic> userMap = jsonDecode(respuesta.body);
-    var data = DecoderAPI.fromJson(userMap);
-    return userMap['data']['data'];
-  } else {
-    print("Error: " + respuesta.statusCode.toString());
-  }
-}
-
 class AccountInfo extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   const AccountInfo(this.userloggeddata, {Key? key}) : super(key: key);
@@ -52,19 +36,41 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
 
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now().add(const Duration(days: 5));
-  //UserListViewModel? userData;
-  var userData;
+  //UserListViewModel? _userData;
+  var _userData;
 
   @override
   void initState() {
-    userData =
-        GetUserData(widget.userloggeddata!.ID, widget.userloggeddata!.Token);
+    // userData =
+    //     GetUserData(widget.userloggeddata!.ID, widget.userloggeddata!.Token);
+    //userData =
     //GetUserData(widget.userloggeddata!.ID, widget.userloggeddata!.Token)
-    //.then((value) => {userData = UserListViewModel.fromJson(value)});
+    //  .then((value) => {userData = UserListViewModel.fromJson(value)});
     //userData = UserListViewModel.;
     animationController = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
     super.initState();
+    GetUserData();
+  }
+
+  Future<void> GetUserData() async {
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/Users/Find?id=" +
+            widget.userloggeddata!.ID.toString();
+    final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+    final respuesta = await http.get(Uri.parse(url_list), headers: headers);
+    if (respuesta.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(respuesta.body);
+      var data = userMap['data'];
+      setState(() {
+        _userData = data;
+      });
+    } else {
+      print("Error: " + respuesta.statusCode.toString());
+    }
   }
 
   Future<bool> getData() async {
@@ -114,7 +120,9 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           Padding(
                             padding: EdgeInsets.only(top: 25.0, right: 140.0),
                             child: Text(
-                              userData['nombre_completo'],
+                              _userData['nombre_completo'],
+                              //_userData?.nombre_completo ?? 'nulo',
+                              //widget.userloggeddata?.nombre_completo ?? 'nulo',
                               style: TextStyle(
                                   fontSize: 20.0, fontWeight: FontWeight.bold),
                             ),
@@ -137,7 +145,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           Padding(
                             padding: EdgeInsets.only(top: 25.0),
                             child: Text(
-                              'chrishemsworth@examples.com',
+                              _userData['email'],
                               style: TextStyle(
                                   fontSize: 20.0, fontWeight: FontWeight.bold),
                             ),
@@ -160,7 +168,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           Padding(
                             padding: EdgeInsets.only(top: 25.0, right: 150.0),
                             child: Text(
-                              '+504 89332227',
+                              _userData['telefono'],
                               style: TextStyle(
                                   fontSize: 20.0, fontWeight: FontWeight.bold),
                             ),
@@ -183,7 +191,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           Padding(
                             padding: EdgeInsets.only(top: 25.0, right: 140.0),
                             child: Text(
-                              '0501200410339',
+                              _userData['dni'],
                               style: TextStyle(
                                   fontSize: 20.0, fontWeight: FontWeight.bold),
                             ),

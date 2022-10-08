@@ -71,25 +71,25 @@ class UserRegisterModel {
 }
 
 class UserListViewModel {
-  int ID;
-  String DNI;
-  String nombre_completo;
-  String Genero;
+  int? ID;
+  String? DNI;
+  String? nombre_completo;
+  String? Genero;
   DateTime? Fecha_Nacimiento;
-  String Email;
-  String Password;
-  String Telefono;
-  String Direccion;
-  int DireccionID;
-  String Partner;
+  String? Email;
+  String? Password;
+  String? Telefono;
+  String? Direccion;
+  int? DireccionID;
+  String? Partner;
   int? PartnerID;
-  String Rol;
-  int Role_ID;
+  String? Rol;
+  int? Role_ID;
   int? ID_Crea;
-  String UsuarioCreacion;
+  String? UsuarioCreacion;
   DateTime? Fecha_Creacion;
   int? ID_Modifica;
-  String UsuarioModifica;
+  String? UsuarioModifica;
   DateTime? Fecha_Modifica;
   bool? Estado;
 
