@@ -169,10 +169,10 @@ class _changePasswordScreen extends State<changePasswordScreen> {
                     if (value == null || value.isEmpty) {
                       return 'Rellene este campo';
                     } else if (value.length < 7) {
-                      return 'Ingrese como mínimo 6 carácteres';
-                    } else if (value.length > 13) {
+                      return 'Ingrese como mínimo 7 carácteres';
+                    }  else if (value.length > 50) {
                       return 'Ingrese como máximo 13 carácteres';
-                    } else if (value != validation) {
+                    }else if (value != validation) {
                       return 'Las contraseñas no coinciden.';
                     }
                     return null;

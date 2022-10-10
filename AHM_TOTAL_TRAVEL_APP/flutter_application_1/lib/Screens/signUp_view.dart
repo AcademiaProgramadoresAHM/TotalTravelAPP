@@ -722,10 +722,10 @@ class _SignUpViewState extends State<SignUpView> {
                                                       return 'Rellene este campo';
                                                     } else if (value.length <
                                                         7) {
-                                                      return 'Ingrese como mínimo 6 carácteres';
+                                                      return 'Ingrese como mínimo 7 carácteres';
                                                     } else if (value.length >
-                                                        13) {
-                                                      return 'Ingrese como máximo 13 carácteres';
+                                                        50) {
+                                                      return 'Ingrese como máximo 50 carácteres';
                                                     } else if (value !=
                                                         validation) {
                                                       return 'Las contraseñas no coinciden.';
