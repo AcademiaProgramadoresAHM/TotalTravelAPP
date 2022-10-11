@@ -120,7 +120,32 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           Padding(
                             padding: EdgeInsets.only(top: 25.0, right: 140.0),
                             child: Text(
-                              _userData['nombre_completo'],
+                              _userData['nombre'],
+                              //_userData?.nombre_completo ?? 'nulo',
+                              //widget.userloggeddata?.nombre_completo ?? 'nulo',
+                              style: TextStyle(
+                                  fontSize: 20.0, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Divider(
+                            color: Color.fromRGBO(101, 45, 143, 1),
+                            thickness: 02.0,
+                            indent: 40.0,
+                            endIndent: 40.0,
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(right: 240.0, top: 20.0),
+                            child: Text(
+                              'Apellido',
+                              style: TextStyle(
+                                  fontFamily: 'Roboto', fontSize: 17.0),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 25.0, right: 140.0),
+                            child: Text(
+                              _userData['apellido'],
                               //_userData?.nombre_completo ?? 'nulo',
                               //widget.userloggeddata?.nombre_completo ?? 'nulo',
                               style: TextStyle(
@@ -146,6 +171,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             padding: EdgeInsets.only(top: 25.0),
                             child: Text(
                               _userData['email'],
+                              //'null',
                               style: TextStyle(
                                   fontSize: 20.0, fontWeight: FontWeight.bold),
                             ),
@@ -169,6 +195,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             padding: EdgeInsets.only(top: 25.0, right: 150.0),
                             child: Text(
                               _userData['telefono'],
+                              //'nulo',
                               style: TextStyle(
                                   fontSize: 20.0, fontWeight: FontWeight.bold),
                             ),
@@ -189,9 +216,10 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 25.0, right: 140.0),
+                            padding: EdgeInsets.only(top: 25.0, right: 100.0),
                             child: Text(
                               _userData['dni'],
+                              //'nulo',
                               style: TextStyle(
                                   fontSize: 20.0, fontWeight: FontWeight.bold),
                             ),
@@ -212,45 +240,43 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             ),
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.only(top: 25.0, right: 15.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Row(
-                                  children: [
-                                    Radio(
-                                      value: 'M',
-                                      groupValue: _sexo,
-                                      onChanged: (value) =>
-                                          evaluate ? null : value = 0,
-                                    ),
-                                    Text(
-                                      'Masculino',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    Radio(
-                                      value: 'F',
-                                      groupValue: _sexo,
-                                      onChanged: (value) =>
-                                          evaluate ? null : value = 0,
-                                    ),
-                                    Text(
-                                      'Femenino',
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                      ),
-                                    )
-                                  ],
-                                ),
-                              ],
+                            padding: EdgeInsets.only(top: 25.0, right: 130.0),
+                            child: Text(
+                              _userData['sexo'],
+                              //'nulo',
+                              style: TextStyle(
+                                  fontSize: 20.0, fontWeight: FontWeight.bold),
                             ),
+                          ),
+                          Divider(
+                            color: Color.fromRGBO(101, 45, 143, 1),
+                            thickness: 02.0,
+                            indent: 40.0,
+                            endIndent: 40.0,
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(right: 220.0, top: 20.0),
+                            child: Text(
+                              'Direccion',
+                              style: TextStyle(
+                                  fontFamily: 'Roboto', fontSize: 17.0),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 25.0),
+                            child: Text(
+                              _userData['direccion'],
+                              //'nulo',
+                              style: TextStyle(
+                                  fontSize: 20.0, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Divider(
+                            color: Color.fromRGBO(101, 45, 143, 1),
+                            thickness: 02.0,
+                            indent: 40.0,
+                            endIndent: 40.0,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(

@@ -7,7 +7,8 @@ class UserLoginModel {
 class UserLoggedModel {
   int? ID;
   String? DNI;
-  String? nombre_completo;
+  String? nombre;
+  String? apellido;
   String? Email;
   String? Rol;
   int? Role_ID;
@@ -18,7 +19,8 @@ class UserLoggedModel {
   UserLoggedModel.fromJson(Map<String, dynamic> json)
       : ID = json['id'],
         DNI = json['dni'],
-        nombre_completo = json['nombre_completo'],
+        nombre = json['nombre'],
+        apellido = json['apellido'],
         Email = json['email'],
         Rol = json['rol'],
         Role_ID = json['rol_ID'],
@@ -73,7 +75,8 @@ class UserRegisterModel {
 class UserListViewModel {
   int? ID;
   String? DNI;
-  String? nombre_completo;
+  String? nombre;
+  String? apellido;
   String? Genero;
   DateTime? Fecha_Nacimiento;
   String? Email;
@@ -96,7 +99,8 @@ class UserListViewModel {
   UserListViewModel.fromJson(Map<String, dynamic> json)
       : ID = json['id'],
         DNI = json['dni'],
-        nombre_completo = json['nombre_completo'],
+        nombre = json['nombre'],
+        apellido = json['apellido'],
         Genero = json['genero'],
         Fecha_Nacimiento = json['fecha_Nacimiento'],
         Email = json['email'],

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously, prefer_const_literals_to_create_immutables, prefer_interpolation_to_compose_strings
+
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -142,11 +144,13 @@ class _SignUpViewState extends State<SignUpView> {
       _isVisible1 = result;
     });
   }
-   void showToast2(bool result2) {
+
+  void showToast2(bool result2) {
     setState(() {
       _isVisible2 = result2;
     });
   }
+
   Map<int?, String> CitiesDictionary = Map();
 
   Future<dynamic> GetCities() async {
@@ -594,30 +598,27 @@ class _SignUpViewState extends State<SignUpView> {
                                                   ],
                                                 ),
                                               ),
-                                              
+
                                               Padding(
                                                 padding: const EdgeInsets.only(
                                                     right: 200.0, top: 10.0),
                                                 child: Visibility(
                                                   visible: _isVisible1,
                                                   child: RichText(
-                                                            text: TextSpan(
-                                                              children: [
-                                                                TextSpan(
-                                                                    text:
-                                                                        "Seleccione una opción ",
-                                                                    style: TextStyle(
-                                                                        color:
-                                                                            redColor,
-                                                                        fontSize:
-                                                                            13)),
-        
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          ),
+                                                    text: TextSpan(
+                                                      children: [
+                                                        TextSpan(
+                                                            text:
+                                                                "Seleccione una opción ",
+                                                            style: TextStyle(
+                                                                color: redColor,
+                                                                fontSize: 13)),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
-                                                     
+
                                               SizedBox(
                                                 height: size.height * 0.02,
                                               ),
@@ -786,30 +787,29 @@ class _SignUpViewState extends State<SignUpView> {
                                                   ),
                                                 ),
                                               ),
-    
+
                                               Padding(
                                                 padding: const EdgeInsets.only(
-                                                    right: 200.0, top: 10.0, bottom: 10.0),
+                                                    right: 200.0,
+                                                    top: 10.0,
+                                                    bottom: 10.0),
                                                 child: Visibility(
                                                   visible: _isVisible2,
                                                   child: RichText(
-                                                            text: TextSpan(
-                                                              children: [
-                                                                TextSpan(
-                                                                    text:
-                                                                        "Seleccione una opción ",
-                                                                    style: TextStyle(
-                                                                        color:
-                                                                            redColor,
-                                                                        fontSize:
-                                                                            13)),
-        
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          ),
+                                                    text: TextSpan(
+                                                      children: [
+                                                        TextSpan(
+                                                            text:
+                                                                "Seleccione una opción ",
+                                                            style: TextStyle(
+                                                                color: redColor,
+                                                                fontSize: 13)),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
-                                                
+
                                               SizedBox(
                                                 height: size.height * 0.01,
                                               ),
@@ -842,12 +842,12 @@ class _SignUpViewState extends State<SignUpView> {
                                                 height: size.height * 0.02,
                                               ),
 
-                                       
                                               TextFormField(
                                                 style: kTextFormFieldStyle(),
                                                 decoration:
                                                     const InputDecoration(
-                                                  prefixIcon: Icon(Icons.edit_road),
+                                                  prefixIcon:
+                                                      Icon(Icons.edit_road),
                                                   hintText: 'Calle',
                                                   border: OutlineInputBorder(
                                                     borderRadius:
@@ -875,7 +875,8 @@ class _SignUpViewState extends State<SignUpView> {
                                                 style: kTextFormFieldStyle(),
                                                 decoration:
                                                     const InputDecoration(
-                                                  prefixIcon: Icon(Icons.edit_road),
+                                                  prefixIcon:
+                                                      Icon(Icons.edit_road),
                                                   hintText: 'Avenida',
                                                   border: OutlineInputBorder(
                                                     borderRadius:
@@ -899,16 +900,6 @@ class _SignUpViewState extends State<SignUpView> {
                                                 height: size.height * 0.06,
                                               ),
 
-
-
-
-
-
-
-
-
-
-                                       
                                               /// SignUp Button
                                               signUpButton(theme),
                                               SizedBox(
@@ -1041,34 +1032,33 @@ class _SignUpViewState extends State<SignUpView> {
           // Validate returns true if the form is valid, or false otherwise.
           // ... Navigate To your Home Page
 
-           String adress = "Col. " +
-                coloniaController.text +
-                ", " +
-                calleController.text +
-                " calle " +
-                avenidaController.text +
-                " avenida.";
-            bool result, result2;
-           if(_sexo == null){
+          String adress = "Col. " +
+              coloniaController.text +
+              ", " +
+              calleController.text +
+              " calle " +
+              avenidaController.text +
+              " avenida.";
+          bool result, result2;
+          if (_sexo == null) {
             result = true;
-              showToast1(result);
-            if(CitiesDropDownValue == null){
+            showToast1(result);
+            if (CitiesDropDownValue == null) {
               result2 = true;
-                showToast2(result2);
-                 if (_formKey.currentState!.validate()) {
-                  }  
-                }
-            }else if(CitiesDropDownValue == null){
-              result2 = true;
-          showToast2(result2);
-          }else{
+              showToast2(result2);
+              if (_formKey.currentState!.validate()) {}
+            }
+          } else if (CitiesDropDownValue == null) {
+            result2 = true;
+            showToast2(result2);
+          } else {
             result = false;
             result2 = false;
             showToast2(result2);
-              showToast1(result);
+            showToast1(result);
             if (_formKey.currentState!.validate()) {
               PostAdress(CitiesDropDownValue!, adress, context);
-            }   
+            }
           }
         },
         child: const Text('Enviar'),
