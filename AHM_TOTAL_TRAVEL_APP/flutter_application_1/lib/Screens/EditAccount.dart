@@ -193,12 +193,22 @@ class _EditAccountState extends State<EditAccount> {
     surnameController.text = _userData['apellido'];
     dateOfBirthController.text = _userData['fecha_Nacimiento'];
     phoneController.text = _userData['telefono'];
-    //coloniaController.text = _userData['fecha_Nacimiento'];
-    //calleController.text = _userData['fecha_Nacimiento'];
-    //avenidaController.text = _userData['fecha_Nacimiento'];
     sexController.text = _userData['sexo'];
     direController.text = _userData['direccion'];
     emailController.text = _userData['email'];
+
+    String direccion = _userData['direccion'];
+    var splitDirec = direccion.split(',');
+
+    var splitCol = splitDirec[0].split('.');
+    coloniaController.text = splitCol[1];
+
+    var splitCalle = splitDirec[1].split('.');
+    calleController.text = splitCalle[1];
+
+    var splitAve = splitDirec[2].split('.');
+    avenidaController.text = splitAve[1];
+
     var size = MediaQuery.of(context).size;
     var theme = Theme.of(context);
 
@@ -457,7 +467,10 @@ class _EditAccountState extends State<EditAccount> {
                                 groupValue: _sexo,
                                 onChanged: (value) {
                                   setState(() {
-                                    _sexo = value.toString();
+                                    if (sexController.text == "Masculino") {
+                                      _sexo = value.toString();
+                                      print(_sexo);
+                                    }
                                   });
                                 }),
                             RichText(
@@ -484,7 +497,10 @@ class _EditAccountState extends State<EditAccount> {
                                   setState(() {
                                     softWrap:
                                     true;
-                                    _sexo = value.toString();
+                                    if (sexController.text == "Femenino") {
+                                      _sexo = value.toString();
+                                      print(_sexo);
+                                    }
                                   });
                                 }),
                             RichText(
@@ -680,13 +696,13 @@ class _EditAccountState extends State<EditAccount> {
           // Validate returns true if the form is valid, or false otherwise.
           // ... Navigate To your Home Page
 
-          String adress = "Col. " +
+          String adress = "Colonia. " +
               coloniaController.text +
               ", " +
               calleController.text +
-              " calle " +
+              " Calle. " +
               avenidaController.text +
-              " avenida.";
+              " Avenida. ";
           bool result, result2;
           if (_sexo == null) {
             result = true;
