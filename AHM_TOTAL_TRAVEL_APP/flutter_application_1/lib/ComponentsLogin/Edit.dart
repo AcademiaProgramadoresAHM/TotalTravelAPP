@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Account_screen.dart';
 import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
@@ -61,7 +63,7 @@ Future<void> EditRegister(
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => AccountInfo(userloggeddata),
+            builder: (context) => MyHomePage(),
           ),
         );
       }

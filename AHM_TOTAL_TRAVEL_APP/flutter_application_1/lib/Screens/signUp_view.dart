@@ -225,737 +225,591 @@ class _SignUpViewState extends State<SignUpView> {
       data: HotelAppTheme.buildLightTheme(),
       child: Container(
         child: Scaffold(
-          body: Stack(
-            children: <Widget>[
-              InkWell(
-                splashColor: Colors.transparent,
-                focusColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                hoverColor: Colors.transparent,
-                onTap: () {
-                  FocusScope.of(context).requestFocus(FocusNode());
-                },
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                      child: NestedScrollView(
-                          controller: _scrollController,
-                          headerSliverBuilder:
-                              (BuildContext context, bool innerBoxIsScrolled) {
-                            return <Widget>[
-                              SliverList(
-                                delegate: SliverChildBuilderDelegate(
-                                    (BuildContext context, int index) {
-                                  return Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: size.width > 600
-                                        ? MainAxisAlignment.center
-                                        : MainAxisAlignment.start,
-                                    children: [
-                                      SizedBox(
-                                        height: size.height * 0.03,
+          body: Container(
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: SingleChildScrollView(
+                      controller: _scrollController,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: size.width > 600
+                            ? MainAxisAlignment.center
+                            : MainAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: size.height * 0.03,
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 20.0, top: 10.0),
+                            child: Image.asset(
+                                'assets/images/AHM-Fondo-Nombre-inverso-3.png'),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20.0),
+                            child: Text(
+                              'Crea tu cuenta',
+                              style: kLoginSubtitleStyle(size),
+                            ),
+                          ),
+                          SizedBox(
+                            height: size.height * 0.03,
+                          ),
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 20.0, right: 20),
+                            child: Form(
+                              key: _formKey,
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 200.0, top: 10.0, bottom: 30.0),
+                                    child: Text('Información general',
+                                        style: TextStyle(fontSize: 16.0)),
+                                  ),
+
+                                  /// username
+                                  TextFormField(
+                                    style: kTextFormFieldStyle(),
+                                    decoration: const InputDecoration(
+                                      prefixIcon: Icon(Icons.person),
+                                      hintText: 'Nombre',
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15)),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 20.0, top: 10.0),
-                                        child: Image.asset(
-                                            'assets/images/AHM-Fondo-Nombre-inverso-3.png'),
+                                    ),
+
+                                    controller: nameController,
+                                    // The validator receives the text that the user has entered.
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Rellene este campo';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.02,
+                                  ),
+                                  // LastName
+                                  TextFormField(
+                                    style: kTextFormFieldStyle(),
+                                    decoration: const InputDecoration(
+                                      prefixIcon: Icon(Icons.person),
+                                      hintText: 'Apellido',
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15)),
                                       ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 20.0),
-                                        child: Text(
-                                          'Crea tu cuenta',
-                                          style: kLoginSubtitleStyle(size),
+                                    ),
+
+                                    controller: lastnameController,
+                                    // The validator receives the text that the user has entered.
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Rellene este campo';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.02,
+                                  ),
+
+                                  /// Gmail
+                                  TextFormField(
+                                    style: kTextFormFieldStyle(),
+                                    controller: emailController,
+                                    decoration: const InputDecoration(
+                                      prefixIcon: Icon(Icons.email_rounded),
+                                      hintText: 'Correo Electrónico',
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15)),
+                                      ),
+                                    ),
+                                    // The validator receives the text that the user has entered.
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Rellene este campo';
+                                      } else if (!value
+                                          .endsWith('@gmail.com')) {
+                                        return 'Ingrese una dirección válida';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.02,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 190.0, top: 10.0, bottom: 20.0),
+                                    child: Text('Información personal',
+                                        style: TextStyle(fontSize: 16.0)),
+                                  ),
+
+                                  /// DNI
+                                  ///
+                                  TextFormField(
+                                    style: kTextFormFieldStyle(),
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                      prefixIcon: Icon(Icons.badge),
+                                      hintText: 'DNI',
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15)),
+                                      ),
+                                    ),
+
+                                    controller: dniController,
+                                    // The validator receives the text that the user has entered.
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Rellene este campo';
+                                      } else if (value.length < 13) {
+                                        return 'Ingrese como mínimo 13 carácteres';
+                                      } else if (value.length > 13) {
+                                        return 'Ingrese como máximo 13 carácteres';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.02,
+                                  ),
+                                  //Birth
+                                  TextFormField(
+                                    style: kTextFormFieldStyle(),
+                                    controller: dateOfBirthController,
+                                    decoration: const InputDecoration(
+                                      prefixIcon: Icon(Icons.calendar_today),
+                                      hintText: 'Fecha de Nacimiento',
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15)),
+                                      ),
+                                    ),
+                                    readOnly: true,
+                                    onTap: () async {
+                                      DateTime? pickedDate =
+                                          await showDatePicker(
+                                              context: context,
+                                              initialDate: DateTime.now(),
+                                              firstDate: DateTime(1901),
+                                              lastDate: DateTime(2101));
+
+                                      if (pickedDate != null) {
+                                        print(pickedDate);
+                                        String formattedDate =
+                                            DateFormat('yyyy-MM-dd')
+                                                .format(pickedDate);
+                                        print(formattedDate);
+                                        setState(() {
+                                          dateOfBirthController.text =
+                                              formattedDate; //set output date to TextField value.
+                                        });
+                                      } else {
+                                        print("Fecha no seleccionada");
+                                      }
+                                    },
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Por favor ingrese una fecha';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.02,
+                                  ),
+
+                                  // Phone
+                                  TextFormField(
+                                    style: kTextFormFieldStyle(),
+                                    keyboardType: TextInputType.phone,
+                                    decoration: const InputDecoration(
+                                      prefixIcon: Icon(Icons.phone),
+                                      hintText: 'Teléfono',
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15)),
+                                      ),
+                                    ),
+
+                                    controller: phoneController,
+                                    // The validator receives the text that the user has entered.
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Rellene este campo';
+                                      } else if (value.length < 8) {
+                                        return 'Ingrese un número telefonico válido';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.02,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 30.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            Radio(
+                                                value: 'M',
+                                                groupValue: _sexo,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    _sexo = value.toString();
+                                                  });
+                                                }),
+                                            RichText(
+                                              text: TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                      text: "Masculino ",
+                                                      style: TextStyle(
+                                                          color: black,
+                                                          fontSize: 18)),
+                                                  WidgetSpan(
+                                                    child: Icon(Icons.male,
+                                                        size: 20),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: [
+                                            Radio(
+                                                value: 'F',
+                                                groupValue: _sexo,
+                                                onChanged: (value) {
+                                                  setState(() {
+                                                    softWrap:
+                                                    true;
+                                                    _sexo = value.toString();
+                                                  });
+                                                }),
+                                            RichText(
+                                              text: TextSpan(
+                                                children: [
+                                                  TextSpan(
+                                                      text: "Femenino ",
+                                                      style: TextStyle(
+                                                          color: black,
+                                                          fontSize: 18)),
+                                                  WidgetSpan(
+                                                    child: Icon(Icons.female,
+                                                        size: 20),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 200.0, top: 10.0),
+                                    child: Visibility(
+                                      visible: _isVisible1,
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                                text: "Seleccione una opción ",
+                                                style: TextStyle(
+                                                    color: redColor,
+                                                    fontSize: 13)),
+                                          ],
                                         ),
                                       ),
-                                      SizedBox(
-                                        height: size.height * 0.03,
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 20.0, right: 20),
-                                        child: Form(
-                                          key: _formKey,
-                                          child: Column(
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 200.0,
-                                                    top: 10.0,
-                                                    bottom: 30.0),
-                                                child: Text(
-                                                    'Información general',
-                                                    style: TextStyle(
-                                                        fontSize: 16.0)),
-                                              ),
+                                    ),
+                                  ),
 
-                                              /// username
-                                              TextFormField(
-                                                style: kTextFormFieldStyle(),
-                                                decoration:
-                                                    const InputDecoration(
-                                                  prefixIcon:
-                                                      Icon(Icons.person),
-                                                  hintText: 'Nombre',
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                15)),
-                                                  ),
-                                                ),
+                                  SizedBox(
+                                    height: size.height * 0.02,
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 250.0, top: 30.0, bottom: 30.0),
+                                    child: Text('Contraseña',
+                                        style: TextStyle(fontSize: 16.0)),
+                                  ),
 
-                                                controller: nameController,
-                                                // The validator receives the text that the user has entered.
-                                                validator: (value) {
-                                                  if (value == null ||
-                                                      value.isEmpty) {
-                                                    return 'Rellene este campo';
-                                                  }
-                                                  return null;
-                                                },
-                                              ),
-                                              SizedBox(
-                                                height: size.height * 0.02,
-                                              ),
-                                              // LastName
-                                              TextFormField(
-                                                style: kTextFormFieldStyle(),
-                                                decoration:
-                                                    const InputDecoration(
-                                                  prefixIcon:
-                                                      Icon(Icons.person),
-                                                  hintText: 'Apellido',
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                15)),
-                                                  ),
-                                                ),
-
-                                                controller: lastnameController,
-                                                // The validator receives the text that the user has entered.
-                                                validator: (value) {
-                                                  if (value == null ||
-                                                      value.isEmpty) {
-                                                    return 'Rellene este campo';
-                                                  }
-                                                  return null;
-                                                },
-                                              ),
-                                              SizedBox(
-                                                height: size.height * 0.02,
-                                              ),
-
-                                              /// Gmail
-                                              TextFormField(
-                                                style: kTextFormFieldStyle(),
-                                                controller: emailController,
-                                                decoration:
-                                                    const InputDecoration(
-                                                  prefixIcon:
-                                                      Icon(Icons.email_rounded),
-                                                  hintText:
-                                                      'Correo Electrónico',
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                15)),
-                                                  ),
-                                                ),
-                                                // The validator receives the text that the user has entered.
-                                                validator: (value) {
-                                                  if (value == null ||
-                                                      value.isEmpty) {
-                                                    return 'Rellene este campo';
-                                                  } else if (!value
-                                                      .endsWith('@gmail.com')) {
-                                                    return 'Ingrese una dirección válida';
-                                                  }
-                                                  return null;
-                                                },
-                                              ),
-                                              SizedBox(
-                                                height: size.height * 0.02,
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 190.0,
-                                                    top: 10.0,
-                                                    bottom: 20.0),
-                                                child: Text(
-                                                    'Información personal',
-                                                    style: TextStyle(
-                                                        fontSize: 16.0)),
-                                              ),
-
-                                              /// DNI
-                                              ///
-                                              TextFormField(
-                                                style: kTextFormFieldStyle(),
-                                                keyboardType:
-                                                    TextInputType.number,
-                                                decoration:
-                                                    const InputDecoration(
-                                                  prefixIcon: Icon(Icons.badge),
-                                                  hintText: 'DNI',
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                15)),
-                                                  ),
-                                                ),
-
-                                                controller: dniController,
-                                                // The validator receives the text that the user has entered.
-                                                validator: (value) {
-                                                  if (value == null ||
-                                                      value.isEmpty) {
-                                                    return 'Rellene este campo';
-                                                  } else if (value.length <
-                                                      13) {
-                                                    return 'Ingrese como mínimo 13 carácteres';
-                                                  } else if (value.length >
-                                                      13) {
-                                                    return 'Ingrese como máximo 13 carácteres';
-                                                  }
-                                                  return null;
-                                                },
-                                              ),
-                                              SizedBox(
-                                                height: size.height * 0.02,
-                                              ),
-                                              //Birth
-                                              TextFormField(
-                                                style: kTextFormFieldStyle(),
-                                                controller:
-                                                    dateOfBirthController,
-                                                decoration:
-                                                    const InputDecoration(
-                                                  prefixIcon: Icon(
-                                                      Icons.calendar_today),
-                                                  hintText:
-                                                      'Fecha de Nacimiento',
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                15)),
-                                                  ),
-                                                ),
-                                                readOnly: true,
-                                                onTap: () async {
-                                                  DateTime? pickedDate =
-                                                      await showDatePicker(
-                                                          context: context,
-                                                          initialDate:
-                                                              DateTime.now(),
-                                                          firstDate:
-                                                              DateTime(1901),
-                                                          lastDate:
-                                                              DateTime(2101));
-
-                                                  if (pickedDate != null) {
-                                                    print(pickedDate);
-                                                    String formattedDate =
-                                                        DateFormat('yyyy-MM-dd')
-                                                            .format(pickedDate);
-                                                    print(formattedDate);
-                                                    setState(() {
-                                                      dateOfBirthController
-                                                              .text =
-                                                          formattedDate; //set output date to TextField value.
-                                                    });
-                                                  } else {
-                                                    print(
-                                                        "Fecha no seleccionada");
-                                                  }
-                                                },
-                                                validator: (value) {
-                                                  if (value == null ||
-                                                      value.isEmpty) {
-                                                    return 'Por favor ingrese una fecha';
-                                                  }
-                                                  return null;
-                                                },
-                                              ),
-                                              SizedBox(
-                                                height: size.height * 0.02,
-                                              ),
-
-                                              // Phone
-                                              TextFormField(
-                                                style: kTextFormFieldStyle(),
-                                                keyboardType:
-                                                    TextInputType.phone,
-                                                decoration:
-                                                    const InputDecoration(
-                                                  prefixIcon: Icon(Icons.phone),
-                                                  hintText: 'Teléfono',
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                15)),
-                                                  ),
-                                                ),
-
-                                                controller: phoneController,
-                                                // The validator receives the text that the user has entered.
-                                                validator: (value) {
-                                                  if (value == null ||
-                                                      value.isEmpty) {
-                                                    return 'Rellene este campo';
-                                                  } else if (value.length < 8) {
-                                                    return 'Ingrese un número telefonico válido';
-                                                  }
-                                                  return null;
-                                                },
-                                              ),
-                                              SizedBox(
-                                                height: size.height * 0.02,
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 30.0),
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
-                                                  children: [
-                                                    Row(
-                                                      children: [
-                                                        Radio(
-                                                            value: 'M',
-                                                            groupValue: _sexo,
-                                                            onChanged: (value) {
-                                                              setState(() {
-                                                                _sexo = value
-                                                                    .toString();
-                                                              });
-                                                            }),
-                                                        RichText(
-                                                          text: TextSpan(
-                                                            children: [
-                                                              TextSpan(
-                                                                  text:
-                                                                      "Masculino ",
-                                                                  style: TextStyle(
-                                                                      color:
-                                                                          black,
-                                                                      fontSize:
-                                                                          18)),
-                                                              WidgetSpan(
-                                                                child: Icon(
-                                                                    Icons.male,
-                                                                    size: 20),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        Radio(
-                                                            value: 'F',
-                                                            groupValue: _sexo,
-                                                            onChanged: (value) {
-                                                              setState(() {
-                                                                softWrap:
-                                                                true;
-                                                                _sexo = value
-                                                                    .toString();
-                                                              });
-                                                            }),
-                                                        RichText(
-                                                          text: TextSpan(
-                                                            children: [
-                                                              TextSpan(
-                                                                  text:
-                                                                      "Femenino ",
-                                                                  style: TextStyle(
-                                                                      color:
-                                                                          black,
-                                                                      fontSize:
-                                                                          18)),
-                                                              WidgetSpan(
-                                                                child: Icon(
-                                                                    Icons
-                                                                        .female,
-                                                                    size: 20),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 200.0, top: 10.0),
-                                                child: Visibility(
-                                                  visible: _isVisible1,
-                                                  child: RichText(
-                                                    text: TextSpan(
-                                                      children: [
-                                                        TextSpan(
-                                                            text:
-                                                                "Seleccione una opción ",
-                                                            style: TextStyle(
-                                                                color: redColor,
-                                                                fontSize: 13)),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-
-                                              SizedBox(
-                                                height: size.height * 0.02,
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 250.0,
-                                                    top: 30.0,
-                                                    bottom: 30.0),
-                                                child: Text('Contraseña',
-                                                    style: TextStyle(
-                                                        fontSize: 16.0)),
-                                              ),
-
-                                              /// password
-                                              Obx(
-                                                () => TextFormField(
-                                                  style: kTextFormFieldStyle(),
-                                                  controller:
-                                                      passwordController,
-                                                  obscureText:
-                                                      simpleUIController
-                                                          .isObscure.value,
-                                                  decoration: InputDecoration(
-                                                    prefixIcon: const Icon(
-                                                        Icons.lock_open),
-                                                    suffixIcon: IconButton(
-                                                      icon: Icon(
-                                                        simpleUIController
-                                                                .isObscure.value
-                                                            ? Icons.visibility
-                                                            : Icons
-                                                                .visibility_off,
-                                                      ),
-                                                      onPressed: () {
-                                                        simpleUIController
-                                                            .isObscureActive();
-                                                      },
-                                                    ),
-                                                    hintText: 'Contraseña',
-                                                    border:
-                                                        const OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  15)),
-                                                    ),
-                                                  ),
-                                                  // The validator receives the text that the user has entered.
-                                                  validator: (value) {
-                                                    if (value == null ||
-                                                        value.isEmpty) {
-                                                      return 'Rellene este campo';
-                                                    } else {
-                                                      validation = value;
-                                                    }
-                                                    return null;
-                                                  },
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    bottom: 10.0),
-                                              ),
-                                              Obx(
-                                                () => TextFormField(
-                                                  style: kTextFormFieldStyle(),
-                                                  controller:
-                                                      password2Controller,
-                                                  obscureText:
-                                                      simpleUIController
-                                                          .isObscure.value,
-                                                  decoration: InputDecoration(
-                                                    prefixIcon: const Icon(
-                                                        Icons.lock_open),
-                                                    suffixIcon: IconButton(
-                                                      icon: Icon(
-                                                        simpleUIController
-                                                                .isObscure.value
-                                                            ? Icons.visibility
-                                                            : Icons
-                                                                .visibility_off,
-                                                      ),
-                                                      onPressed: () {
-                                                        simpleUIController
-                                                            .isObscureActive();
-                                                      },
-                                                    ),
-                                                    hintText:
-                                                        'Repetir contraseña',
-                                                    border:
-                                                        const OutlineInputBorder(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  15)),
-                                                    ),
-                                                  ),
-                                                  // The validator receives the text that the user has entered.
-                                                  validator: (value) {
-                                                    if (value == null ||
-                                                        value.isEmpty) {
-                                                      return 'Rellene este campo';
-                                                    } else if (value.length <
-                                                        7) {
-                                                      return 'Ingrese como mínimo 7 carácteres';
-                                                    } else if (value.length >
-                                                        50) {
-                                                      return 'Ingrese como máximo 50 carácteres';
-                                                    } else if (value !=
-                                                        validation) {
-                                                      return 'Las contraseñas no coinciden.';
-                                                    }
-                                                    return null;
-                                                  },
-                                                ),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 260.0, top: 30.0),
-                                                child: Text('Dirección',
-                                                    style: TextStyle(
-                                                        fontSize: 16.0)),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 10.0,
-                                                    right: 30.0,
-                                                    left: 20.0),
-                                                child: Container(
-                                                  child: DropdownButton(
-                                                    hint: Text(
-                                                        "Elige una ciudad"),
-                                                    icon: const Icon(Icons
-                                                        .keyboard_arrow_down),
-                                                    value: CitiesDropDownValue,
-                                                    items: CitiesDictionary.keys
-                                                        .map((id) {
-                                                      return DropdownMenuItem(
-                                                        value: id,
-                                                        child: Text(
-                                                            CitiesDictionary[id]
-                                                                .toString()),
-                                                      );
-                                                    }).toList(),
-                                                    onChanged: (int? newValue) {
-                                                      setState(() {
-                                                        CitiesDropDownValue =
-                                                            newValue;
-                                                      });
-                                                    },
-                                                  ),
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      3.5,
-                                                  height: 60,
-                                                  decoration: BoxDecoration(
-                                                    color: Colors.transparent,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8),
-                                                    border: Border.all(
-                                                      color: Colors.transparent,
-                                                      width: 1,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    right: 200.0,
-                                                    top: 10.0,
-                                                    bottom: 10.0),
-                                                child: Visibility(
-                                                  visible: _isVisible2,
-                                                  child: RichText(
-                                                    text: TextSpan(
-                                                      children: [
-                                                        TextSpan(
-                                                            text:
-                                                                "Seleccione una opción ",
-                                                            style: TextStyle(
-                                                                color: redColor,
-                                                                fontSize: 13)),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-
-                                              SizedBox(
-                                                height: size.height * 0.01,
-                                              ),
-
-                                              TextFormField(
-                                                style: kTextFormFieldStyle(),
-                                                decoration:
-                                                    const InputDecoration(
-                                                  prefixIcon: Icon(Icons.home),
-                                                  hintText: 'Colonia',
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                15)),
-                                                  ),
-                                                ),
-
-                                                controller: coloniaController,
-                                                // The validator receives the text that the user has entered.
-                                                validator: (value) {
-                                                  if (value == null ||
-                                                      value.isEmpty) {
-                                                    return 'Rellene este campo';
-                                                  }
-                                                  return null;
-                                                },
-                                              ),
-                                              SizedBox(
-                                                height: size.height * 0.02,
-                                              ),
-
-                                              TextFormField(
-                                                style: kTextFormFieldStyle(),
-                                                decoration:
-                                                    const InputDecoration(
-                                                  prefixIcon:
-                                                      Icon(Icons.edit_road),
-                                                  hintText: 'Calle',
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                15)),
-                                                  ),
-                                                ),
-
-                                                controller: calleController,
-                                                // The validator receives the text that the user has entered.
-                                                validator: (value) {
-                                                  if (value == null ||
-                                                      value.isEmpty) {
-                                                    return 'Rellene este campo';
-                                                  }
-                                                  return null;
-                                                },
-                                              ),
-                                              SizedBox(
-                                                height: size.height * 0.02,
-                                              ),
-
-                                              TextFormField(
-                                                style: kTextFormFieldStyle(),
-                                                decoration:
-                                                    const InputDecoration(
-                                                  prefixIcon:
-                                                      Icon(Icons.edit_road),
-                                                  hintText: 'Avenida',
-                                                  border: OutlineInputBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                15)),
-                                                  ),
-                                                ),
-
-                                                controller: avenidaController,
-                                                // The validator receives the text that the user has entered.
-                                                validator: (value) {
-                                                  if (value == null ||
-                                                      value.isEmpty) {
-                                                    return 'Rellene este campo';
-                                                  }
-                                                  return null;
-                                                },
-                                              ),
-                                              SizedBox(
-                                                height: size.height * 0.06,
-                                              ),
-
-                                              /// SignUp Button
-                                              signUpButton(theme),
-                                              SizedBox(
-                                                height: size.height * 0.03,
-                                              ),
-
-                                              /// Navigate To Login Screen
-                                              GestureDetector(
-                                                onTap: () {
-                                                  Navigator.push(
-                                                      context,
-                                                      CupertinoPageRoute(
-                                                          builder: (ctx) =>
-                                                              const Login()));
-                                                  nameController.clear();
-                                                  emailController.clear();
-                                                  passwordController.clear();
-                                                  _formKey.currentState
-                                                      ?.reset();
-
-                                                  simpleUIController
-                                                      .isObscure.value = true;
-                                                },
-                                                child: RichText(
-                                                  text: TextSpan(
-                                                    text:
-                                                        '¿Ya tienes una cuenta?',
-                                                    style: kHaveAnAccountStyle(
-                                                        size),
-                                                    children: [
-                                                      TextSpan(
-                                                          text:
-                                                              " Inicia Sesión",
-                                                          style:
-                                                              kLoginOrSignUpTextStyle(
-                                                                  size)),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
+                                  /// password
+                                  Obx(
+                                    () => TextFormField(
+                                      style: kTextFormFieldStyle(),
+                                      controller: passwordController,
+                                      obscureText:
+                                          simpleUIController.isObscure.value,
+                                      decoration: InputDecoration(
+                                        prefixIcon: const Icon(Icons.lock_open),
+                                        suffixIcon: IconButton(
+                                          icon: Icon(
+                                            simpleUIController.isObscure.value
+                                                ? Icons.visibility
+                                                : Icons.visibility_off,
                                           ),
+                                          onPressed: () {
+                                            simpleUIController
+                                                .isObscureActive();
+                                          },
+                                        ),
+                                        hintText: 'Contraseña',
+                                        border: const OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15)),
                                         ),
                                       ),
-                                    ],
-                                  );
-                                }, childCount: 1),
+                                      // The validator receives the text that the user has entered.
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Rellene este campo';
+                                        } else {
+                                          validation = value;
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.only(bottom: 10.0),
+                                  ),
+                                  Obx(
+                                    () => TextFormField(
+                                      style: kTextFormFieldStyle(),
+                                      controller: password2Controller,
+                                      obscureText:
+                                          simpleUIController.isObscure.value,
+                                      decoration: InputDecoration(
+                                        prefixIcon: const Icon(Icons.lock_open),
+                                        suffixIcon: IconButton(
+                                          icon: Icon(
+                                            simpleUIController.isObscure.value
+                                                ? Icons.visibility
+                                                : Icons.visibility_off,
+                                          ),
+                                          onPressed: () {
+                                            simpleUIController
+                                                .isObscureActive();
+                                          },
+                                        ),
+                                        hintText: 'Repetir contraseña',
+                                        border: const OutlineInputBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15)),
+                                        ),
+                                      ),
+                                      // The validator receives the text that the user has entered.
+                                      validator: (value) {
+                                        if (value == null || value.isEmpty) {
+                                          return 'Rellene este campo';
+                                        } else if (value.length < 7) {
+                                          return 'Ingrese como mínimo 7 carácteres';
+                                        } else if (value.length > 50) {
+                                          return 'Ingrese como máximo 50 carácteres';
+                                        } else if (value != validation) {
+                                          return 'Las contraseñas no coinciden.';
+                                        }
+                                        return null;
+                                      },
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 260.0, top: 30.0),
+                                    child: Text('Dirección',
+                                        style: TextStyle(fontSize: 16.0)),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 10.0, right: 30.0, left: 20.0),
+                                    child: Container(
+                                      child: DropdownButton(
+                                        hint: Text("Elige una ciudad"),
+                                        icon: const Icon(
+                                            Icons.keyboard_arrow_down),
+                                        value: CitiesDropDownValue,
+                                        items: CitiesDictionary.keys.map((id) {
+                                          return DropdownMenuItem(
+                                            value: id,
+                                            child: Text(CitiesDictionary[id]
+                                                .toString()),
+                                          );
+                                        }).toList(),
+                                        onChanged: (int? newValue) {
+                                          setState(() {
+                                            CitiesDropDownValue = newValue;
+                                          });
+                                        },
+                                      ),
+                                      width: MediaQuery.of(context).size.width *
+                                          3.5,
+                                      height: 60,
+                                      decoration: BoxDecoration(
+                                        color: Colors.transparent,
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(
+                                          color: Colors.transparent,
+                                          width: 1,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 200.0, top: 10.0, bottom: 10.0),
+                                    child: Visibility(
+                                      visible: _isVisible2,
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                                text: "Seleccione una opción ",
+                                                style: TextStyle(
+                                                    color: redColor,
+                                                    fontSize: 13)),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+                                  SizedBox(
+                                    height: size.height * 0.01,
+                                  ),
+
+                                  TextFormField(
+                                    style: kTextFormFieldStyle(),
+                                    decoration: const InputDecoration(
+                                      prefixIcon: Icon(Icons.home),
+                                      hintText: 'Colonia',
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15)),
+                                      ),
+                                    ),
+
+                                    controller: coloniaController,
+                                    // The validator receives the text that the user has entered.
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Rellene este campo';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.02,
+                                  ),
+
+                                  TextFormField(
+                                    style: kTextFormFieldStyle(),
+                                    decoration: const InputDecoration(
+                                      prefixIcon: Icon(Icons.edit_road),
+                                      hintText: 'Calle',
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15)),
+                                      ),
+                                    ),
+
+                                    controller: calleController,
+                                    // The validator receives the text that the user has entered.
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Rellene este campo';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.02,
+                                  ),
+
+                                  TextFormField(
+                                    style: kTextFormFieldStyle(),
+                                    decoration: const InputDecoration(
+                                      prefixIcon: Icon(Icons.edit_road),
+                                      hintText: 'Avenida',
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15)),
+                                      ),
+                                    ),
+
+                                    controller: avenidaController,
+                                    // The validator receives the text that the user has entered.
+                                    validator: (value) {
+                                      if (value == null || value.isEmpty) {
+                                        return 'Rellene este campo';
+                                      }
+                                      return null;
+                                    },
+                                  ),
+                                  SizedBox(
+                                    height: size.height * 0.06,
+                                  ),
+
+                                  /// SignUp Button
+                                  signUpButton(theme),
+                                  SizedBox(
+                                    height: size.height * 0.03,
+                                  ),
+
+                                  /// Navigate To Login Screen
+                                  GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          CupertinoPageRoute(
+                                              builder: (ctx) => const Login()));
+                                      nameController.clear();
+                                      emailController.clear();
+                                      passwordController.clear();
+                                      _formKey.currentState?.reset();
+
+                                      simpleUIController.isObscure.value = true;
+                                    },
+                                    child: RichText(
+                                      text: TextSpan(
+                                        text: '¿Ya tienes una cuenta?',
+                                        style: kHaveAnAccountStyle(size),
+                                        children: [
+                                          TextSpan(
+                                              text: " Inicia Sesión",
+                                              style: kLoginOrSignUpTextStyle(
+                                                  size)),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ];
-                          },
-                          body: Container()),
-                    ),
-                  ],
+                            ),
+                          ),
+                        ],
+                      )),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
