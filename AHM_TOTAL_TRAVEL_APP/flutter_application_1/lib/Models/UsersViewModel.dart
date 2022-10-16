@@ -41,7 +41,6 @@ class UserRegisterModel {
   String? Usua_Telefono;
   String? Usua_Password;
   int? Usua_esAdmin;
-  String? Usua_Salt;
   int? Role_ID;
   int? Dire_ID;
   int? Part_ID;
@@ -63,7 +62,6 @@ class UserRegisterModel {
         "usua_Url": "string",
         "usua_Password": Usua_Password,
         "usua_esAdmin": Usua_esAdmin,
-        "usua_Salt": "string",
         "role_ID": Role_ID,
         "dire_ID": Dire_ID,
         "part_ID": 0,

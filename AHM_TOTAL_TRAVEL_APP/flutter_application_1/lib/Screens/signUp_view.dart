@@ -176,9 +176,9 @@ class _SignUpViewState extends State<SignUpView> {
 
   Future<void> PostAdress(int id, String adress, BuildContext context) async {
     AdressesViewModel adressView = new AdressesViewModel();
-    adressView.Ciud_ID = id;
+    /*adressView.Ciud_ID = id;
     adressView.Dire_Descripcion = adress as String?;
-    adressView.Dire_UsuarioCreacion = 1;
+    adressView.Dire_UsuarioCreacion = 1;*/
 
     final url = Uri.parse("https://totaltravel.somee.com/API/Address/Insert");
     final headers = {

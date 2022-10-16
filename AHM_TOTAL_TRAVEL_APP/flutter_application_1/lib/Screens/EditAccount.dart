@@ -185,9 +185,9 @@ class _EditAccountState extends State<EditAccount> {
 
   Future<void> PostAdress(int id, String adress, BuildContext context) async {
     AdressesViewModel adressView = new AdressesViewModel();
-    adressView.Ciud_ID = id;
+    /*adressView.Ciud_ID = id;
     adressView.Dire_Descripcion = adress as String?;
-    adressView.Dire_UsuarioCreacion = 1;
+    adressView.Dire_UsuarioCreacion = 1;*/
 
     final url = Uri.parse(
         "https://totaltravelapi.azurewebsites.net/API/Address/Insert");
