@@ -27,6 +27,7 @@ class NavigationHomeScreen extends StatefulWidget {
 class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   Widget? screenView;
   DrawerIndex? drawerIndex;
+  UserLoggedModel? userloggeddata;
 
   @override
   void initState() {

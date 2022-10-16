@@ -71,7 +71,13 @@ class _EditAccountState extends State<EditAccount> {
     dniController.dispose();
     nameController.dispose();
     surnameController.dispose();
+    sexController.dispose();
+    dateOfBirthController.dispose();
     phoneController.dispose();
+    coloniaController.dispose();
+    calleController.dispose();
+    avenidaController.dispose();
+    emailController.dispose();
     super.dispose();
   }
 
@@ -158,23 +164,12 @@ class _EditAccountState extends State<EditAccount> {
       var data = DecoderAPI.fromJson(userMap);
       var status = RequestStatus.fromJson(data.data);
       if (status.CodeStatus! >= 0) {
-        if (status.CodeStatus == 0) {
-          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-            backgroundColor: white,
-            content: Text(
-              textAlign: TextAlign.center,
-              'El DNI ya está siendo utilizado.',
-              style: TextStyle(color: redColor, fontSize: 16),
-            ),
-          ));
-        } else {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MyHomePage(),
-            ),
-          );
-        }
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Login(),
+          ),
+        );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: white,
@@ -370,6 +365,9 @@ class _EditAccountState extends State<EditAccount> {
                                   ),
 
                                   controller: nameController,
+                                  onChanged: (value) {
+                                    nameController.text = value.toString();
+                                  },
                                   // The validator receives the text that the user has entered.
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
