@@ -1,18 +1,21 @@
+import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter_application_1/custom_drawer/home_drawer.dart';
 import 'package:flutter/material.dart';
 
 class DrawerUserController extends StatefulWidget {
-  const DrawerUserController({
-    Key? key,
-    this.drawerWidth = 250,
-    this.onDrawerCall,
-    this.screenView,
-    this.animatedIconData = AnimatedIcons.arrow_menu,
-    this.menuView,
-    this.drawerIsOpen,
-    this.screenIndex,
-  }) : super(key: key);
+  final UserLoggedModel? userloggeddata;
+  const DrawerUserController(
+      {Key? key,
+      this.drawerWidth = 250,
+      this.onDrawerCall,
+      this.screenView,
+      this.animatedIconData = AnimatedIcons.arrow_menu,
+      this.menuView,
+      this.drawerIsOpen,
+      this.screenIndex,
+      this.userloggeddata})
+      : super(key: key);
 
   final double drawerWidth;
   final Function(DrawerIndex)? onDrawerCall;
@@ -31,6 +34,7 @@ class _DrawerUserControllerState extends State<DrawerUserController>
   ScrollController? scrollController;
   AnimationController? iconAnimationController;
   AnimationController? animationController;
+  UserLoggedModel? userloggeddata;
 
   double scrolloffset = 0.0;
 
@@ -129,6 +133,7 @@ class _DrawerUserControllerState extends State<DrawerUserController>
                             widget.onDrawerCall!(indexType);
                           } catch (e) {}
                         },
+                        userloggeddata: widget.userloggeddata,
                       ),
                     );
                   },

@@ -80,7 +80,9 @@ class UserListViewModel {
   String? Email;
   String? Password;
   String? Telefono;
-  String? Direccion;
+  String? Colonia;
+  String? Calle;
+  String? Avenida;
   int? DireccionID;
   String? Partner;
   int? PartnerID;
@@ -104,7 +106,9 @@ class UserListViewModel {
         Email = json['email'],
         Password = json['password'],
         Telefono = json['telefono'],
-        Direccion = json['direccion'],
+        Colonia = json['colonia'],
+        Calle = json['calle'],
+        Avenida = json['avenida'],
         DireccionID = json['direccionID'],
         Rol = json['rol'],
         Role_ID = json['rol_ID'],

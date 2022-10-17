@@ -53,6 +53,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
               //callback from drawer for replace screen as user need with passing DrawerIndex(Enum index)
             },
             screenView: screenView,
+            userloggeddata: widget.userloggeddata,
             //we replace screen view as we need on navigate starting screens like MyHomePage, HelpScreen, FeedbackScreen, etc...
           ),
         ),

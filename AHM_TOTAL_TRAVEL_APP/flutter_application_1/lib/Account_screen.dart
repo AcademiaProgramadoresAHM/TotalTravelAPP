@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings
 
 import 'package:flutter/rendering.dart';
 import 'package:flutter_application_1/Screens/EditAccount.dart';
@@ -107,7 +107,21 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                       /*Contenido*/
                       child: Column(
                         children: <Widget>[
-                          ProfilePic(),
+                          Container(
+                              margin: const EdgeInsets.only(top: 70.0),
+                              height: 150,
+                              width: 150,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                boxShadow: <BoxShadow>[
+                                  BoxShadow(blurRadius: 8),
+                                ],
+                              ),
+                              child: ClipRRect(
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(60.0)),
+                                child: Image.network(_userData['image_URL']),
+                              )),
                           Padding(
                             padding:
                                 const EdgeInsets.only(right: 240.0, top: 70.0),
@@ -118,7 +132,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 25.0, right: 140.0),
+                            padding: EdgeInsets.only(top: 25.0, right: 195.0),
                             child: Text(
                               _userData['nombre'],
                               //_userData?.nombre_completo ?? 'nulo',
@@ -143,7 +157,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 25.0, right: 140.0),
+                            padding: EdgeInsets.only(top: 25.0, right: 195.0),
                             child: Text(
                               _userData['apellido'],
                               //_userData?.nombre_completo ?? 'nulo',
@@ -168,7 +182,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 25.0),
+                            padding: EdgeInsets.only(top: 25.0, right: 20.0),
                             child: Text(
                               _userData['email'],
                               //'null',
@@ -192,7 +206,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 25.0, right: 150.0),
+                            padding: EdgeInsets.only(top: 25.0, right: 154.0),
                             child: Text(
                               _userData['telefono'],
                               //'nulo',
@@ -240,7 +254,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 25.0, right: 130.0),
+                            padding: EdgeInsets.only(top: 25.0, right: 150.0),
                             child: Text(
                               _userData['sexo'],
                               //'nulo',
@@ -264,9 +278,15 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 25.0),
+                            padding: EdgeInsets.only(
+                                top: 25.0, right: 20.0, left: 40.0),
                             child: Text(
-                              _userData['direccion'],
+                              'Colonia ' +
+                                  _userData['colonia'] +
+                                  ', calle ' +
+                                  _userData['calle'] +
+                                  ', avenida ' +
+                                  _userData['avenida'],
                               //'nulo',
                               style: TextStyle(
                                   fontSize: 20.0, fontWeight: FontWeight.bold),
@@ -375,25 +395,23 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
   }
 }
 
-class ProfilePic extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(top: 70.0),
-      height: 150,
-      width: 150,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        boxShadow: <BoxShadow>[
-          BoxShadow(blurRadius: 8),
-        ],
-      ),
-      child: ClipRRect(
-        borderRadius: const BorderRadius.all(Radius.circular(60.0)),
-        child: Image.asset(
-          'assets/images/userImage.png',
-        ),
-      ),
-    );
-  }
-}
+// class ProfilePic extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       margin: const EdgeInsets.only(top: 70.0),
+//       height: 150,
+//       width: 150,
+//       decoration: BoxDecoration(
+//         shape: BoxShape.circle,
+//         boxShadow: <BoxShadow>[
+//           BoxShadow(blurRadius: 8),
+//         ],
+//       ),
+//       child: ClipRRect(
+//         borderRadius: const BorderRadius.all(Radius.circular(60.0)),
+//         child: Image.network(_userData['image_URL']),
+//       ),
+//     );
+//   }
+// }

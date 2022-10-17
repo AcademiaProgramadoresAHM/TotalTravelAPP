@@ -1,16 +1,21 @@
+import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'package:flutter_application_1/Screens/Login.dart';
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter_application_1/main.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class HomeDrawer extends StatefulWidget {
-  const HomeDrawer(
-      {Key? key,
-      this.screenIndex,
-      this.iconAnimationController,
-      this.callBackIndex})
-      : super(key: key);
+  const HomeDrawer({
+    Key? key,
+    this.screenIndex,
+    this.iconAnimationController,
+    this.callBackIndex,
+    this.userloggeddata,
+  }) : super(key: key);
 
+  final UserLoggedModel? userloggeddata;
   final AnimationController? iconAnimationController;
   final DrawerIndex? screenIndex;
   final Function(DrawerIndex)? callBackIndex;
@@ -20,11 +25,41 @@ class HomeDrawer extends StatefulWidget {
 }
 
 class _HomeDrawerState extends State<HomeDrawer> {
+  UserLoggedModel? userloggeddata;
   List<DrawerList>? drawerList;
+
+  var _userData;
+
   @override
   void initState() {
     setDrawerListArray();
     super.initState();
+    GetUserData();
+  }
+
+  Future<void> GetUserData() async {
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/Users/Find?id=" +
+            widget.userloggeddata!.ID.toString();
+    final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+    final respuesta = await http.get(Uri.parse(url_list), headers: headers);
+    if (respuesta.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(respuesta.body);
+      var data = userMap['data'];
+      setState(() {
+        _userData = data;
+      });
+    } else {
+      print("Error: " + respuesta.statusCode.toString());
+    }
+  }
+
+  Future<bool> getData() async {
+    await Future<dynamic>.delayed(const Duration(milliseconds: 200));
+    return true;
   }
 
   void setDrawerListArray() {
@@ -64,15 +99,15 @@ class _HomeDrawerState extends State<HomeDrawer> {
         icon: Icon(Icons.person),
       ),
       DrawerList(
-      index: DrawerIndex.Personalization,
-      labelName: 'Reservaciones',
-      icon: Icon(Icons.list),
-     ),
+        index: DrawerIndex.Personalization,
+        labelName: 'Reservaciones',
+        icon: Icon(Icons.list),
+      ),
       DrawerList(
         index: DrawerIndex.Support,
         labelName: 'Contactanos',
         icon: Icon(Icons.info),
-      ),     
+      ),
     ];
   }
 
@@ -124,7 +159,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                             child: ClipRRect(
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(60.0)),
-                              child: Image.asset('assets/images/userImage.png'),
+                              child: Image.network(_userData['image_URL']),
                             ),
                           ),
                         ),
@@ -134,7 +169,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8, left: 4),
                     child: Text(
-                      'Chris Hemsworth',
+                      _userData['nombre'] + ' ' + _userData['apellido'],
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: HexColor('#652D90'),
@@ -322,7 +357,7 @@ enum DrawerIndex {
   Testing,
   Account,
   Historial,
-  Personalization,  
+  Personalization,
   Support
 }
 

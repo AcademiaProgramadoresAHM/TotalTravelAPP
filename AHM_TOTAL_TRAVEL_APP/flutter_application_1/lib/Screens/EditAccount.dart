@@ -259,20 +259,10 @@ class _EditAccountState extends State<EditAccount> {
     dateOfBirthController.text = _userData['fecha_Nacimiento'];
     phoneController.text = _userData['telefono'];
     sexController.text = _userData['sexo'];
-    direController.text = _userData['direccion'];
+    coloniaController.text = _userData['colonia'];
+    calleController.text = _userData['calle'];
+    avenidaController.text = _userData['avenida'];
     emailController.text = _userData['email'];
-
-    String direccion = _userData['direccion'];
-    var splitDirec = direccion.split(',');
-
-    var splitCol = splitDirec[0].split('.');
-    coloniaController.text = splitCol[1];
-
-    var splitCalle = splitDirec[1].split('.');
-    calleController.text = splitCalle[1];
-
-    var splitAve = splitDirec[2].split('.');
-    avenidaController.text = splitAve[1];
 
     var size = MediaQuery.of(context).size;
     var theme = Theme.of(context);
