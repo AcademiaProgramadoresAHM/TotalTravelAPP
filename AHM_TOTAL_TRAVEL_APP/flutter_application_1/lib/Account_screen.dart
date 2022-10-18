@@ -41,6 +41,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
 
   @override
   void initState() {
+    GetUserData();
     // userData =
     //     GetUserData(widget.userloggeddata!.ID, widget.userloggeddata!.Token);
     //userData =
@@ -50,7 +51,6 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
     animationController = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
     super.initState();
-    GetUserData();
   }
 
   Future<void> GetUserData() async {
@@ -134,7 +134,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           Padding(
                             padding: EdgeInsets.only(top: 25.0, right: 195.0),
                             child: Text(
-                              _userData['nombre'],
+                              _userData['nombre'] ?? 'Nombre',
                               //_userData?.nombre_completo ?? 'nulo',
                               //widget.userloggeddata?.nombre_completo ?? 'nulo',
                               style: TextStyle(
@@ -159,7 +159,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           Padding(
                             padding: EdgeInsets.only(top: 25.0, right: 195.0),
                             child: Text(
-                              _userData['apellido'],
+                              _userData['apellido'] ?? 'Apellido',
                               //_userData?.nombre_completo ?? 'nulo',
                               //widget.userloggeddata?.nombre_completo ?? 'nulo',
                               style: TextStyle(
@@ -184,7 +184,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           Padding(
                             padding: EdgeInsets.only(top: 25.0, right: 20.0),
                             child: Text(
-                              _userData['email'],
+                              _userData['email'] ?? 'Email',
                               //'null',
                               style: TextStyle(
                                   fontSize: 20.0, fontWeight: FontWeight.bold),
@@ -208,7 +208,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           Padding(
                             padding: EdgeInsets.only(top: 25.0, right: 154.0),
                             child: Text(
-                              _userData['telefono'],
+                              _userData['telefono'] ?? 'Telefono',
                               //'nulo',
                               style: TextStyle(
                                   fontSize: 20.0, fontWeight: FontWeight.bold),
@@ -232,7 +232,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           Padding(
                             padding: EdgeInsets.only(top: 25.0, right: 100.0),
                             child: Text(
-                              _userData['dni'],
+                              _userData['dni'] ?? 'DNI',
                               //'nulo',
                               style: TextStyle(
                                   fontSize: 20.0, fontWeight: FontWeight.bold),
@@ -256,7 +256,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           Padding(
                             padding: EdgeInsets.only(top: 25.0, right: 150.0),
                             child: Text(
-                              _userData['sexo'],
+                              _userData['sexo'] ?? 'Sexo',
                               //'nulo',
                               style: TextStyle(
                                   fontSize: 20.0, fontWeight: FontWeight.bold),

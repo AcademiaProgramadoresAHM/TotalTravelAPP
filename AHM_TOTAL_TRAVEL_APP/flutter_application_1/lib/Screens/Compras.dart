@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/hotel_booking/hotel_app_theme.dart';
 import 'package:get/get.dart';
 import 'package:flutter_application_1/Screens/prueba.dart';
 import 'package:flutter_application_1/Screens/signUp_view.dart';
@@ -10,6 +11,7 @@ class Compras extends StatefulWidget {
   @override
   State<Compras> createState() => _Compras();
 }
+
 class _Compras extends State<Compras> {
   String? radioButtonValue;
   TextEditingController? textController1;
@@ -29,45 +31,12 @@ class _Compras extends State<Compras> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: scaffoldKey,
-      appBar: AppBar(
-               backgroundColor: Color.fromRGBO(101, 45, 143, 1),
-         title: Row(
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Text(
-                '       ',
-              ),
-            ),
-            Expanded(
-              flex: 5,
-              child: Center(
-                child: Text(
-                  'Realizar Pagos',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 25,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Image.asset('assets/images/logo-AHM-Fondo-Morao.png', height: 50,),
-              ),
-            ),
-          ],
-        ),
-            ),
       backgroundColor: Color(0xFFF1F4F8),
-      body: 
-      Column(
+      body: Column(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          getAppBarUI(),
           Expanded(
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
@@ -76,49 +45,6 @@ class _Compras extends State<Compras> {
                   mainAxisSize: MainAxisSize.max,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 32,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            blurRadius: 3,
-                            color: Color(0x4814181B),
-                            offset: Offset(0, 1),
-                          )
-                        ],
-                      ),
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(16, 4, 16, 8),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Order Total',
-                              style: TextStyle(
-                                    fontFamily: 'Lexend Deca',
-                                    color: Color(0xFF95A1AC),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                            ),
-                            Text(
-                              'HNL 1160.00',
-                              textAlign: TextAlign.end,
-                              style: TextStyle(
-                                    fontFamily: 'Lexend Deca',
-                                    color: Color(0xFF090F13),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(5, 12, 5, 1),
                       child: Container(
@@ -159,7 +85,6 @@ class _Compras extends State<Compras> {
                                           12, 0, 0, 0),
                                       child: Text(
                                         'Ingresa los siguientes datos',
-                                        
                                       ),
                                     ),
                                   ],
@@ -173,14 +98,12 @@ class _Compras extends State<Compras> {
                                   children: [
                                     Text(
                                       'Entrada',
-                                      
                                     ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           120, 0, 0, 0),
                                       child: Text(
                                         'Salida',
-                                        
                                       ),
                                     ),
                                   ],
@@ -194,10 +117,10 @@ class _Compras extends State<Compras> {
                                   children: [
                                     Text(
                                       'mar, 6 sep 2022\n12:00 - 17:00',
-                                      style:TextStyle(
-                                            fontFamily: 'Poppins',
-                                            color: Color(0xFF95A1AC),
-                                          ),
+                                      style: TextStyle(
+                                        fontFamily: 'Poppins',
+                                        color: Color(0xFF95A1AC),
+                                      ),
                                     ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
@@ -205,9 +128,9 @@ class _Compras extends State<Compras> {
                                       child: Text(
                                         'mié, 7 sep 2022\nA 13:00',
                                         style: TextStyle(
-                                              fontFamily: 'Poppins',
-                                              color: Color(0xFF95A1AC),
-                                            ),
+                                          fontFamily: 'Poppins',
+                                          color: Color(0xFF95A1AC),
+                                        ),
                                       ),
                                     ),
                                   ],
@@ -221,7 +144,6 @@ class _Compras extends State<Compras> {
                                 alignment: AlignmentDirectional(-0.9, 0),
                                 child: Text(
                                   'Duración de la estancia:',
-                                
                                 ),
                               ),
                               Align(
@@ -230,9 +152,9 @@ class _Compras extends State<Compras> {
                                   '2 noches',
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
-                                        fontFamily: 'Poppins',
-                                        color: Color(0xFF95A1AC),
-                                      ),
+                                    fontFamily: 'Poppins',
+                                    color: Color(0xFF95A1AC),
+                                  ),
                                 ),
                               ),
                               Divider(
@@ -243,7 +165,6 @@ class _Compras extends State<Compras> {
                                 alignment: AlignmentDirectional(-0.9, 0),
                                 child: Text(
                                   'Tu selección:',
-                                 
                                 ),
                               ),
                               Align(
@@ -252,16 +173,15 @@ class _Compras extends State<Compras> {
                                   'Habitación Triple',
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
-                                        fontFamily: 'Poppins',
-                                        color: Color(0xFF95A1AC),
-                                      ),
+                                    fontFamily: 'Poppins',
+                                    color: Color(0xFF95A1AC),
+                                  ),
                                 ),
                               ),
                               Align(
                                 alignment: AlignmentDirectional(-0.9, 0),
                                 child: Text(
                                   'Capacidad máxima',
-                                
                                 ),
                               ),
                               Align(
@@ -270,9 +190,9 @@ class _Compras extends State<Compras> {
                                   '3 adultos',
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
-                                        fontFamily: 'Poppins',
-                                        color: Color(0xFF95A1AC),
-                                      ),
+                                    fontFamily: 'Poppins',
+                                    color: Color(0xFF95A1AC),
+                                  ),
                                 ),
                               ),
                               Divider(),
@@ -309,11 +229,11 @@ class _Compras extends State<Compras> {
                                   Text(
                                     'Desglose del precio',
                                     style: TextStyle(
-                                          fontFamily: 'Lexend Deca',
-                                          color: Color(0xFF090F13),
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                                      fontFamily: 'Lexend Deca',
+                                      color: Color(0xFF090F13),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -328,22 +248,22 @@ class _Compras extends State<Compras> {
                                 children: [
                                   Text(
                                     'Habitación Doble',
-                                    style:TextStyle(
-                                          fontFamily: 'Lexend Deca',
-                                          color: Color(0xFF95A1AC),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.normal,
-                                        ),
+                                    style: TextStyle(
+                                      fontFamily: 'Lexend Deca',
+                                      color: Color(0xFF95A1AC),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal,
+                                    ),
                                   ),
                                   Text(
                                     'HNL 1000.00',
                                     textAlign: TextAlign.end,
                                     style: TextStyle(
-                                          fontFamily: 'Lexend Deca',
-                                          color: Color(0xFF090F13),
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                                      fontFamily: 'Lexend Deca',
+                                      color: Color(0xFF090F13),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -359,21 +279,21 @@ class _Compras extends State<Compras> {
                                   Text(
                                     '16% IVA',
                                     style: TextStyle(
-                                          fontFamily: 'Lexend Deca',
-                                          color: Color(0xFF95A1AC),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.normal,
-                                        ),
+                                      fontFamily: 'Lexend Deca',
+                                      color: Color(0xFF95A1AC),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal,
+                                    ),
                                   ),
                                   Text(
                                     'HNL 160.00',
                                     textAlign: TextAlign.end,
                                     style: TextStyle(
-                                          fontFamily: 'Lexend Deca',
-                                          color: Color(0xFF090F13),
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                                      fontFamily: 'Lexend Deca',
+                                      color: Color(0xFF090F13),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -389,21 +309,21 @@ class _Compras extends State<Compras> {
                                   Text(
                                     'Subtotal:',
                                     style: TextStyle(
-                                          fontFamily: 'Lexend Deca',
-                                          color: Color(0xFF95A1AC),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.normal,
-                                        ),
+                                      fontFamily: 'Lexend Deca',
+                                      color: Color(0xFF95A1AC),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal,
+                                    ),
                                   ),
                                   Text(
                                     'HNL 1160.00',
                                     textAlign: TextAlign.end,
                                     style: TextStyle(
-                                          fontFamily: 'Lexend Deca',
-                                          color: Color(0xFF090F13),
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.w500,
-                                        ),
+                                      fontFamily: 'Lexend Deca',
+                                      color: Color(0xFF090F13),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -419,21 +339,21 @@ class _Compras extends State<Compras> {
                                   Text(
                                     'Total',
                                     style: TextStyle(
-                                          fontFamily: 'Lexend Deca',
-                                          color: Color(0xFF95A1AC),
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.normal,
-                                        ),
+                                      fontFamily: 'Lexend Deca',
+                                      color: Color(0xFF95A1AC),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal,
+                                    ),
                                   ),
                                   Text(
                                     'HNL 1160.00',
                                     textAlign: TextAlign.end,
                                     style: TextStyle(
-                                          fontFamily: 'Lexend Deca',
-                                          color: Color(0xFF090F13),
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                                      fontFamily: 'Lexend Deca',
+                                      color: Color(0xFF090F13),
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -482,7 +402,6 @@ class _Compras extends State<Compras> {
                                           12, 0, 0, 0),
                                       child: Text(
                                         'Ingresa los siguientes datos',
-                                      
                                       ),
                                     ),
                                   ],
@@ -514,11 +433,11 @@ class _Compras extends State<Compras> {
                                     fillColor: Colors.white,
                                   ),
                                   style: TextStyle(
-                                        fontFamily: 'Outfit',
-                                        color: Color(0xFF0F1113),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                      ),
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF0F1113),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                  ),
                                 ),
                               ),
                               Padding(
@@ -547,11 +466,11 @@ class _Compras extends State<Compras> {
                                     fillColor: Colors.white,
                                   ),
                                   style: TextStyle(
-                                        fontFamily: 'Outfit',
-                                        color: Color(0xFF0F1113),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                      ),
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF0F1113),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                  ),
                                 ),
                               ),
                               Padding(
@@ -580,11 +499,11 @@ class _Compras extends State<Compras> {
                                     fillColor: Colors.white,
                                   ),
                                   style: TextStyle(
-                                        fontFamily: 'Outfit',
-                                        color: Color(0xFF0F1113),
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.normal,
-                                      ),
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF0F1113),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                  ),
                                 ),
                               ),
                               Padding(
@@ -592,10 +511,9 @@ class _Compras extends State<Compras> {
                                     0, 12, 0, 12),
                                 child: Text(
                                   '¿Para quién es la reserva?',
-                                
                                 ),
                               ),
-                            /*  Align(
+                              /*  Align(
                                 alignment: AlignmentDirectional(0, 0),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
@@ -640,29 +558,82 @@ class _Compras extends State<Compras> {
           Container(
             width: double.infinity,
             height: 90,
-            
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 34,0 ,0 ),
+              padding: EdgeInsetsDirectional.fromSTEB(0, 34, 0, 0),
               child: ElevatedButton(
                 onPressed: () {
                   print('Button pressed ...');
                 },
-                   child: Text('Enviar' ,
-               style: TextStyle(
-                                                    fontFamily: 'Lexend Deca',
-                                                    color: Colors.white,
-                                                    fontSize: 20,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),),
-                                          style: ButtonStyle( 
-                                            fixedSize: MaterialStateProperty.all(const Size(double.infinity, 50)),
-                                            backgroundColor: MaterialStateProperty.all(const  Color.fromRGBO(101, 45, 143, 1)),
-
-                                          ),            
+                child: Text(
+                  'Enviar',
+                  style: TextStyle(
+                    fontFamily: 'Lexend Deca',
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                style: ButtonStyle(
+                  fixedSize: MaterialStateProperty.all(
+                      const Size(double.infinity, 50)),
+                  backgroundColor: MaterialStateProperty.all(
+                      const Color.fromRGBO(101, 45, 143, 1)),
                 ),
               ),
-            ),        
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget getAppBarUI() {
+    return Container(
+      decoration: BoxDecoration(
+        color: HotelAppTheme.buildLightTheme().primaryColor,
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              offset: const Offset(0, 2),
+              blurRadius: 8.0),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top, left: 8, right: 8),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: Text(
+                '           ',
+              ),
+            ),
+            Expanded(
+              flex: 5,
+              child: Center(
+                child: Text(
+                  'Mi Compra',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 25,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Image.asset(
+                  'assets/images/logo-AHM-Fondo-Morao.png',
+                  height: 50,
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
