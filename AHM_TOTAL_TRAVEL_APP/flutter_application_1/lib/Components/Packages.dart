@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Components/Decodificador.dart';
 import 'package:flutter_application_1/utils/AppWidget.dart';
+import 'package:flutter_application_1/utils/prueba2/T2Colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/hotel_booking/model/PlanModal.dart';
 
@@ -42,126 +43,189 @@ List<Padding> ListDefaultPackages(List<dynamic> data, BuildContext context) {
         ),
         child: Column(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(0),
-                bottomRight: Radius.circular(0),
-                topLeft: Radius.circular(8),
-                topRight: Radius.circular(8),
-              ),
-              child: Image.network(
-                'https://images.unsplash.com/photo-1601918774946-25832a4be0d6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8YWlyYm5ifGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60',
-                width: double.infinity,
-                height: 190,
-                fit: BoxFit.cover,
-              ),
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 8),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: Text(
-                      element['nombre'],
-                      style: TextStyle(
-                        fontFamily: 'Outfit',
-                        color: Color(0xFF101213),
-                        fontSize: 20,
-                        fontWeight: FontWeight.w500,
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(0),
+                        bottomRight: Radius.circular(0),
+                        topLeft: Radius.circular(12),
+                        topRight: Radius.circular(12),
+                      ),
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.network(
+                        'https://picsum.photos/seed/898/600',
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 8),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: Text(
-                      element['hotel'],
-                      style: TextStyle(
-                        fontFamily: 'Outfit',
-                        color: Color(0xFF57636C),
-                        fontSize: 16,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 0, 90, 8),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: Text(
-                      element['descripcion_Paquete'],
-                      style: TextStyle(
-                        fontFamily: 'Outfit',
-                        color: Color(0xFF57636C),
-                        fontSize: 14,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              width: double.infinity,
-              height: 60,
-              decoration: BoxDecoration(),
-              child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(16, 0, 24, 12),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  children: [
-                    Icon(
-                      Icons.star_rounded,
-                      color: Color(0xFFFFA130),
-                      size: 24,
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(4, 0, 0, 0),
-                      child: Text(
-                        '4/5',
-                        style: TextStyle(
-                          fontFamily: 'Outfit',
-                          color: Color(0xFF101213),
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
-                      child: Text(
-                        'Rating',
-                        style: TextStyle(
-                          fontFamily: 'Outfit',
-                          color: Color(0xFF57636C),
-                          fontSize: 14,
-                          fontWeight: FontWeight.normal,
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(80, 0, 0, 0),
-                      child: ElevatedButton(
-                        onPressed: () {},
-                        child: const Text('Ver Detalles'),
-                      ),
-                    ),
-                  ],
                 ),
-              ),
-            ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(10, 10, 16, 12),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Container(
+                        width: 4,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          color: Color(0xFF4B39EF),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 6,
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    element['nombre'],
+                                    style: TextStyle(
+                                      fontFamily: 'Outfit',
+                                      color: Color(0xFF090F13),
+                                      fontSize: 26,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(
+                                    '\$' + element['precio'].toString(),
+                                    style: TextStyle(
+                                      fontFamily: 'Outfit',
+                                      color: Color(0xFF4B39EF),
+                                      fontSize: 24,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              Text(
+                                element['hotel'],
+                                style: TextStyle(
+                                  fontFamily: 'Outfit',
+                                  color: Color(0xFF4B39EF),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                child: Text(
+                                  element['descripcion_Paquete'],
+                                  style: TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF7C8791),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          2, 12, 24, 12),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Icon(
+                                            Icons.star_rounded,
+                                            color: Color(0xFFFFA130),
+                                            size: 24,
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    4, 0, 0, 0),
+                                            child: Text(
+                                              '4/5',
+                                              style: TextStyle(
+                                                fontFamily: 'Outfit',
+                                                color: Color(0xFF101213),
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    8, 0, 0, 0),
+                                            child: Text(
+                                              'Rating',
+                                              style: TextStyle(
+                                                fontFamily: 'Outfit',
+                                                color: Color(0xFF57636C),
+                                                fontSize: 14,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Color.fromRGBO(
+                                                    101, 45, 143, 1)),
+                                        shape: MaterialStateProperty.all(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          ),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        'Ver Detalles',
+                                        style: TextStyle(
+                                          fontFamily: 'Outfit',
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                      onPressed: () {},
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            )
           ],
         ),
       ),
