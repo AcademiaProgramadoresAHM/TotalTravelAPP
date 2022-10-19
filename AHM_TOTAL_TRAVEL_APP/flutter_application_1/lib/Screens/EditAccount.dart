@@ -305,24 +305,23 @@ class _EditAccountState extends State<EditAccount> {
     init();
     GetUserData();
 
-   /* nameController.addListener(() {
+    /* nameController.addListener(() {
       nameController.text;
     });*/
   }
 
   @override
   Widget build(BuildContext context) {
-   // dniController.text = _userData['dni'];
+    // dniController.text = _userData['dni'];
     //nameController.text = _userData['nombre'];
-    surnameController.text = _userData['apellido'];
-    dateOfBirthController.text = _userData['fecha_Nacimiento'];
-    phoneController.text = _userData['telefono'];
-    sexController.text = _userData['sexo'];
-    coloniaController.text = _userData['colonia'];
-    calleController.text = _userData['calle'];
-    avenidaController.text = _userData['avenida'];
-    emailController.text = _userData['email'];
-
+    // surnameController.text = _userData['apellido'];
+    //dateOfBirthController.text = _userData['fecha_Nacimiento'];
+    // phoneController.text = _userData['telefono'];
+    // sexController.text = _userData['sexo'];
+    // coloniaController.text = _userData['colonia'];
+    // calleController.text = _userData['calle'];
+    // avenidaController.text = _userData['avenida'];
+    // emailController.text = _userData['email'];
     var size = MediaQuery.of(context).size;
     var theme = Theme.of(context);
 
@@ -376,6 +375,11 @@ class _EditAccountState extends State<EditAccount> {
 
   Widget _buildMainBody(
       Size size, SimpleUIController simpleUIController, ThemeData theme) {
+    var splitFecha = _userData['fecha_Nacimiento'].toString().split('T');
+    print(splitFecha);
+
+    var fecha = splitFecha[0];
+    print(fecha);
     return Theme(
       data: HotelAppTheme.buildLightTheme(),
       child: Container(
@@ -421,13 +425,13 @@ class _EditAccountState extends State<EditAccount> {
                                           BorderRadius.all(Radius.circular(15)),
                                     ),
                                   ),
-                                  initialValue: _userData['nombre'],
-                                
+                                  initialValue: _userData['nombre'] ?? ' ',
+
                                   // The validator receives the text that the user has entered.
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Rellene este campo';
-                                    }else{
+                                    } else {
                                       nameController.text = value;
                                     }
                                     return null;
@@ -448,11 +452,13 @@ class _EditAccountState extends State<EditAccount> {
                                     ),
                                   ),
 
-                                  controller: surnameController,
+                                  initialValue: _userData['apellido'],
                                   // The validator receives the text that the user has entered.
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Rellene este campo';
+                                    } else {
+                                      surnameController.text = value;
                                     }
                                     return null;
                                   },
@@ -464,7 +470,7 @@ class _EditAccountState extends State<EditAccount> {
                                 /// Gmail
                                 TextFormField(
                                   style: kTextFormFieldStyle(),
-                                  controller: emailController,
+                                  initialValue: _userData['email'],
                                   decoration: const InputDecoration(
                                     prefixIcon: Icon(Icons.email_rounded),
                                     hintText: 'Correo Electrónico',
@@ -479,6 +485,8 @@ class _EditAccountState extends State<EditAccount> {
                                       return 'Rellene este campo';
                                     } else if (!value.endsWith('@gmail.com')) {
                                       return 'Ingrese una dirección válida';
+                                    } else {
+                                      emailController.text = value;
                                     }
                                     return null;
                                   },
@@ -516,7 +524,7 @@ class _EditAccountState extends State<EditAccount> {
                                       return 'Ingrese como mínimo 13 carácteres';
                                     } else if (value.length > 13) {
                                       return 'Ingrese como máximo 13 carácteres';
-                                    }else{
+                                    } else {
                                       dniController.text = value;
                                     }
                                     return null;
@@ -528,7 +536,8 @@ class _EditAccountState extends State<EditAccount> {
                                 //Birth
                                 TextFormField(
                                   style: kTextFormFieldStyle(),
-                                  controller: dateOfBirthController,
+                                  //controller: dateOfBirthController,
+                                  initialValue: fecha,
                                   decoration: const InputDecoration(
                                     prefixIcon: Icon(Icons.calendar_today),
                                     hintText: 'Fecha de Nacimiento',
@@ -583,13 +592,15 @@ class _EditAccountState extends State<EditAccount> {
                                     ),
                                   ),
 
-                                  controller: phoneController,
+                                  initialValue: _userData['telefono'],
                                   // The validator receives the text that the user has entered.
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Rellene este campo';
                                     } else if (value.length < 8) {
                                       return 'Ingrese un número telefonico válido';
+                                    } else {
+                                      phoneController.text = value;
                                     }
                                     return null;
                                   },
@@ -840,11 +851,13 @@ class _EditAccountState extends State<EditAccount> {
                                     ),
                                   ),
 
-                                  controller: calleController,
+                                  initialValue: _userData['calle'],
                                   // The validator receives the text that the user has entered.
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Rellene este campo';
+                                    } else {
+                                      calleController.text = value;
                                     }
                                     return null;
                                   },
@@ -864,11 +877,13 @@ class _EditAccountState extends State<EditAccount> {
                                     ),
                                   ),
 
-                                  controller: avenidaController,
+                                  initialValue: _userData['avenida'],
                                   // The validator receives the text that the user has entered.
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Rellene este campo';
+                                    } else {
+                                      avenidaController.text = value;
                                     }
                                     return null;
                                   },
