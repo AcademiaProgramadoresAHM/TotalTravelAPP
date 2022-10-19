@@ -115,7 +115,7 @@ List<Padding> ListDefaultPackages(List<dynamic> data, BuildContext context) {
             ),
             Container(
               width: double.infinity,
-              height: 60,
+              height: 50,
               decoration: BoxDecoration(),
               child: Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(16, 0, 24, 12),
@@ -152,8 +152,11 @@ List<Padding> ListDefaultPackages(List<dynamic> data, BuildContext context) {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(80, 0, 0, 0),
+                      padding: EdgeInsetsDirectional.fromSTEB(130, 0, 0, 0),
                       child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Color.fromRGBO(101, 45, 143, 1),
+                        ),
                         onPressed: () {},
                         child: const Text('Ver Detalles'),
                       ),
