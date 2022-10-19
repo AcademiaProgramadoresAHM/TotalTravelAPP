@@ -378,8 +378,8 @@ class _EditAccountState extends State<EditAccount> {
     var splitFecha = _userData['fecha_Nacimiento'].toString().split('T');
     print(splitFecha);
 
-    var fecha = splitFecha[0];
-    print(fecha);
+    dateOfBirthController.text = splitFecha[0];
+    //print(fecha);
     return Theme(
       data: HotelAppTheme.buildLightTheme(),
       child: Container(
@@ -537,7 +537,7 @@ class _EditAccountState extends State<EditAccount> {
                                 TextFormField(
                                   style: kTextFormFieldStyle(),
                                   //controller: dateOfBirthController,
-                                  initialValue: fecha,
+                                  initialValue: dateOfBirthController.text,
                                   decoration: const InputDecoration(
                                     prefixIcon: Icon(Icons.calendar_today),
                                     hintText: 'Fecha de Nacimiento',
