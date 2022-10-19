@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, sort_child_properties_last, prefer_const_literals_to_create_immutables, use_build_context_synchronously
 
 import 'dart:convert';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Account_screen.dart';
@@ -11,6 +12,7 @@ import 'package:flutter_application_1/ComponentsLogin/constants.dart';
 import 'package:flutter_application_1/ComponentsLogin/controller/simple_ui_controller.dart';
 import 'package:flutter_application_1/Models/AdressesViewModel.dart';
 import 'package:flutter_application_1/Models/RequestsViewModel.dart';
+import 'package:flutter_application_1/Models/SuburbsViewModel.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'package:flutter_application_1/Screens/Login.dart';
 import 'package:flutter_application_1/home_screen.dart';
@@ -31,6 +33,7 @@ class EditAccount extends StatefulWidget {
 }
 
 class _EditAccountState extends State<EditAccount> {
+  int? suburbValue;
   TextEditingController dniController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController surnameController = TextEditingController();
@@ -42,6 +45,7 @@ class _EditAccountState extends State<EditAccount> {
   TextEditingController avenidaController = TextEditingController();
   TextEditingController direController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  TextEditingController textSuburbsEditingController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
   String? selectedValue;
@@ -66,6 +70,8 @@ class _EditAccountState extends State<EditAccount> {
   final lastDate = DateTime.now();
   final firstDate = DateTime.utc(1900, 1, 1);
 
+  var name = "";
+
   @override
   void dispose() {
     dniController.dispose();
@@ -84,10 +90,13 @@ class _EditAccountState extends State<EditAccount> {
   SimpleUIController simpleUIController = Get.put(SimpleUIController());
 
   int? CitiesDropDownValue;
+  int? SuburbsDropDownValue;
+
   bool _isVisible1 = false;
   bool _isVisible2 = false;
+  bool _isVisible3 = false;
   String defaultDetalles = '';
-  int? adressId;
+  String? adressId;
   CiudadesViewModel? planDetalles;
   AdressesViewModel? adressData;
 
@@ -103,19 +112,24 @@ class _EditAccountState extends State<EditAccount> {
     });
   }
 
+  void showToast3(bool result3) {
+    setState(() {
+      _isVisible3 = result3;
+    });
+  }
+
   Map<int?, String> CitiesDictionary = Map();
 
   Future<dynamic> GetCities() async {
-    var data;
-    String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/Cities/List";
+    var citiesData;
+    String url_list = "https://totaltravel.somee.com/API/Cities/List";
     final respuesta = await http.get(Uri.parse(url_list));
     if (respuesta.statusCode == 200) {
       Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
       var Json = DecoderAPI.fromJson(ServerResponse);
-      data = Json.data;
+      citiesData = Json.data;
       // rellena diccionario de datos
-      data.forEach((x) {
+      citiesData.forEach((x) {
         CiudadesViewModel element = CiudadesViewModel.fromJson(x);
         var descripcion = element.Ciudad! + ", " + element.Pais.toString();
         CitiesDictionary[element.ID] = descripcion;
@@ -127,70 +141,39 @@ class _EditAccountState extends State<EditAccount> {
     }
   }
 
-  Future<void> EditRegister(
-      String DNI,
-      String Nombre,
-      String Apellido,
-      String Email,
-      String FechaNacimiento,
-      String Telefono,
-      String Sexo,
-      int adressId,
-      BuildContext context) async {
-    UserRegisterModel editData = new UserRegisterModel();
-    editData.Usua_DNI = DNI;
-    editData.Usua_Nombre = Nombre;
-    editData.Usua_Apellido = Apellido;
-    editData.Usua_Email = Email;
-    editData.Usua_FechaNaci = FechaNacimiento;
-    editData.Usua_Telefono = Telefono;
-    editData.Usua_Sexo = Sexo;
-    editData.Dire_ID = adressId;
-    editData.Role_ID = 2;
-    editData.Usua_UsuarioCreacion = 1;
-    editData.Usua_esAdmin = 0;
+  Map<int?, String> SuburbsDictionary = Map();
 
-    String url =
-        "https://totaltravelapi.azurewebsites.net/API/Users/Update?id=" +
-            widget.userloggeddata!.ID.toString();
-    final headers = {
-      "Content-type": "application/json",
-      "Authorization": "bearer " + widget.userloggeddata!.Token!
-    };
-    final response = await http.put(Uri.parse(url), headers: headers);
+  Future<dynamic> GetSuburbs() async {
+    var suburbsData;
+    String url_list = "https://totaltravel.somee.com/API/Suburbs/List";
+    final respuesta = await http.get(Uri.parse(url_list));
+    if (respuesta.statusCode == 200) {
+      Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
+      var Json = DecoderAPI.fromJson(ServerResponse);
+      suburbsData = Json.data;
+      // rellena diccionario de datos
+      suburbsData.forEach((x) {
+        SuburbsViewModel element = SuburbsViewModel.fromJson(x);
 
-    if (response.body != " ") {
-      Map<String, dynamic> userMap = jsonDecode(response.body);
-      var data = DecoderAPI.fromJson(userMap);
-      var status = RequestStatus.fromJson(data.data);
-      if (status.CodeStatus! >= 0) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Login(),
-          ),
-        );
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: white,
-          content: Text(
-            textAlign: TextAlign.center,
-            'Ha ocurrido un error.',
-            style: TextStyle(color: redColor, fontSize: 16),
-          ),
-        ));
-      }
+        var descripcion = element.Colonia!;
+        SuburbsDictionary[element.ID] = descripcion;
+      });
+
+      return Json.data;
+    } else {
+      print("Error: " + respuesta.statusCode.toString());
     }
   }
 
-  Future<void> PostAdress(int id, String adress, BuildContext context) async {
+  Future<void> PostAdress(
+      int id, String calle, String avenida, BuildContext context) async {
     AdressesViewModel adressView = new AdressesViewModel();
-    /*adressView.Ciud_ID = id;
-    adressView.Dire_Descripcion = adress as String?;
-    adressView.Dire_UsuarioCreacion = 1;*/
+    adressView.Colo_ID = id;
+    adressView.Dire_Calle = calle;
+    adressView.Dire_Avenida = avenida;
+    adressView.Dire_UsuarioCreacion = 1;
 
-    final url = Uri.parse(
-        "https://totaltravelapi.azurewebsites.net/API/Address/Insert");
+    final url = Uri.parse("https://totaltravel.somee.com/API/Address/Insert");
     final headers = {
       "Content-type": "application/json",
       "Accept": "text/plain"
@@ -204,7 +187,7 @@ class _EditAccountState extends State<EditAccount> {
       if (data.data != null) {
         RequestStatus requestStatus = RequestStatus.fromJson(data.data);
         if (requestStatus.CodeStatus! >= 0) {
-          adressId = requestStatus.CodeStatus;
+          adressId = requestStatus.CodeStatus.toString();
           EditRegister(
               dniController.text,
               nameController.text,
@@ -220,13 +203,75 @@ class _EditAccountState extends State<EditAccount> {
     }
   }
 
-  @override
-  void initState() {
-    dateOfBirthController.text = ""; //set the initial value of text field
-    super.initState();
-    GetCities();
-    init();
-    GetUserData();
+  Future<void> EditRegister(
+      String DNI,
+      String Nombre,
+      String Apellido,
+      String Email,
+      String FechaNacimiento,
+      String Telefono,
+      String Sexo,
+      String adressId,
+      BuildContext context) async {
+    final headers = {
+      'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+    };
+    final uri = Uri.parse("https://totaltravel.somee.com/API/Users/Update?id=" +
+        widget.userloggeddata!.ID.toString());
+    var map = new Map<String, dynamic>();
+    map['usua_DNI'] = DNI;
+    map['usua_Nombre'] = Nombre;
+    map['usua_Apellido'] = Apellido;
+    map['usua_FechaNaci'] = FechaNacimiento;
+    map['usua_Telefono'] = Telefono;
+    map['usua_Sexo'] = Sexo;
+    map['usua_Email'] = Email;
+    map['dire_ID'] = adressId;
+    map['usua_esAdmin'] = "0";
+    map['role_ID'] = "1";
+    map['part_ID'] = "0";
+    map['usua_UsuarioModifica'] = "1";
+    map['file'] = "string";
+
+    http.Response response = await http.put(
+      uri,
+      headers: headers,
+      body: map,
+    );
+
+    if (response.body != " ") {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var data = DecoderAPI.fromJson(userMap);
+      var status = RequestStatus.fromJson(data.data);
+      if (status.CodeStatus! >= 0) {
+        if (status.CodeStatus == 0) {
+          ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+            backgroundColor: white,
+            content: Text(
+              textAlign: TextAlign.center,
+              'El DNI ya está siendo utilizado.',
+              style: TextStyle(color: redColor, fontSize: 16),
+            ),
+          ));
+        } else {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => Login(),
+            ),
+          );
+        }
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: white,
+          content: Text(
+            textAlign: TextAlign.center,
+            'Ha ocurrido un error.',
+            style: TextStyle(color: redColor, fontSize: 16),
+          ),
+        ));
+      }
+    }
   }
 
   var _userData;
@@ -249,6 +294,20 @@ class _EditAccountState extends State<EditAccount> {
     } else {
       print("Error: " + respuesta.statusCode.toString());
     }
+  }
+
+  @override
+  void initState() {
+    dateOfBirthController.text = ""; //set the initial value of text field
+    super.initState();
+    GetCities();
+    GetSuburbs();
+    init();
+    GetUserData();
+
+    nameController.addListener(() {
+      nameController.text;
+    });
   }
 
   @override
@@ -336,12 +395,21 @@ class _EditAccountState extends State<EditAccount> {
                         SizedBox(
                           height: size.height * 0.03,
                         ),
+
+                        /// username
                         Padding(
                           padding: const EdgeInsets.only(left: 20.0, right: 20),
                           child: Form(
                             key: _formKey,
                             child: Column(
                               children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 200.0, top: 10.0, bottom: 30.0),
+                                  child: Text('Información general',
+                                      style: TextStyle(fontSize: 16.0)),
+                                ),
+
                                 /// username
                                 TextFormField(
                                   style: kTextFormFieldStyle(),
@@ -355,9 +423,6 @@ class _EditAccountState extends State<EditAccount> {
                                   ),
 
                                   controller: nameController,
-                                  onChanged: (value) {
-                                    nameController.text = value.toString();
-                                  },
                                   // The validator receives the text that the user has entered.
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -419,7 +484,14 @@ class _EditAccountState extends State<EditAccount> {
                                 SizedBox(
                                   height: size.height * 0.02,
                                 ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 190.0, top: 10.0, bottom: 20.0),
+                                  child: Text('Información personal',
+                                      style: TextStyle(fontSize: 16.0)),
+                                ),
 
+                                /// DNI
                                 ///
                                 TextFormField(
                                   style: kTextFormFieldStyle(),
@@ -609,47 +681,11 @@ class _EditAccountState extends State<EditAccount> {
                                 SizedBox(
                                   height: size.height * 0.02,
                                 ),
-
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      right: 160.0, top: 30.0),
+                                      right: 260.0, top: 30.0),
                                   child: Text('Dirección',
                                       style: TextStyle(fontSize: 16.0)),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      top: 10.0, right: 30.0, left: 20.0),
-                                  child: Container(
-                                    child: DropdownButton(
-                                      hint: Text("Elige una ciudad"),
-                                      icon:
-                                          const Icon(Icons.keyboard_arrow_down),
-                                      value: CitiesDropDownValue,
-                                      items: CitiesDictionary.keys.map((id) {
-                                        return DropdownMenuItem(
-                                          value: id,
-                                          child: Text(
-                                              CitiesDictionary[id].toString()),
-                                        );
-                                      }).toList(),
-                                      onChanged: (int? newValue) {
-                                        setState(() {
-                                          CitiesDropDownValue = newValue;
-                                        });
-                                      },
-                                    ),
-                                    width:
-                                        MediaQuery.of(context).size.width * 3.5,
-                                    height: 60,
-                                    decoration: BoxDecoration(
-                                      color: Colors.transparent,
-                                      borderRadius: BorderRadius.circular(8),
-                                      border: Border.all(
-                                        color: Colors.transparent,
-                                        width: 1,
-                                      ),
-                                    ),
-                                  ),
                                 ),
 
                                 Padding(
@@ -675,25 +711,115 @@ class _EditAccountState extends State<EditAccount> {
                                   height: size.height * 0.01,
                                 ),
 
-                                TextFormField(
-                                  style: kTextFormFieldStyle(),
-                                  decoration: const InputDecoration(
-                                    prefixIcon: Icon(Icons.home),
-                                    hintText: 'Colonia',
-                                    border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(15)),
+                                Padding(
+                                    padding: const EdgeInsets.only(top: 0),
+                                    child: Container(
+                                      height: 65,
+                                      decoration: BoxDecoration(
+                                          color: Colors.transparent),
+                                      child: DropdownButtonHideUnderline(
+                                          child: DropdownButton2(
+                                              isExpanded: true,
+                                              hint: Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 0),
+                                                child: TextFormField(
+                                                  style: kTextFormFieldStyle(),
+                                                  decoration:
+                                                      const InputDecoration(
+                                                    border: InputBorder.none,
+                                                    prefixIcon: Icon(
+                                                        Icons.calendar_today),
+                                                    hintText: 'Colonia',
+                                                  ),
+                                                ),
+                                              ),
+                                              items: SuburbsDictionary.keys
+                                                  .map((id) {
+                                                return DropdownMenuItem(
+                                                  value: id,
+                                                  child: Text(
+                                                      SuburbsDictionary[id]
+                                                          .toString()),
+                                                );
+                                              }).toList(),
+                                              value: suburbValue,
+                                              onChanged: (value) {
+                                                setState(() {
+                                                  suburbValue = value as int?;
+                                                  SuburbsDropDownValue = value;
+                                                });
+                                              },
+                                              buttonHeight: 70,
+                                              buttonWidth: 400,
+                                              itemHeight: 40,
+                                              dropdownMaxHeight: 200,
+                                              searchController:
+                                                  textSuburbsEditingController,
+                                              searchInnerWidget: Padding(
+                                                padding: const EdgeInsets.only(
+                                                  top: 10,
+                                                  bottom: 4,
+                                                  right: 8,
+                                                  left: 10,
+                                                ),
+                                                child: TextFormField(
+                                                  controller:
+                                                      textSuburbsEditingController,
+                                                  decoration: InputDecoration(
+                                                    isDense: true,
+                                                    contentPadding:
+                                                        const EdgeInsets
+                                                            .symmetric(
+                                                      horizontal: 10,
+                                                      vertical: 8,
+                                                    ),
+                                                    hintText:
+                                                        'Busca un destino',
+                                                    hintStyle: const TextStyle(
+                                                        fontSize: 17),
+                                                    border: OutlineInputBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              4),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              searchMatchFn:
+                                                  (item, searchValue) {
+                                                return (item.value
+                                                    .toString()
+                                                    .contains(searchValue));
+                                              },
+                                              onMenuStateChange: (isOpen) {
+                                                if (!isOpen) {
+                                                  textSuburbsEditingController
+                                                      .clear();
+                                                }
+                                              })),
+                                    )),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 200.0, top: 0, bottom: 10.0),
+                                  child: Visibility(
+                                    visible: _isVisible3,
+                                    child: RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          TextSpan(
+                                              text: "Seleccione una opción ",
+                                              style: TextStyle(
+                                                  color: redColor,
+                                                  fontSize: 13)),
+                                        ],
+                                      ),
                                     ),
                                   ),
+                                ),
 
-                                  controller: coloniaController,
-                                  // The validator receives the text that the user has entered.
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Rellene este campo';
-                                    }
-                                    return null;
-                                  },
+                                SizedBox(
+                                  height: size.height * 0.01,
                                 ),
                                 SizedBox(
                                   height: size.height * 0.02,
@@ -786,33 +912,29 @@ class _EditAccountState extends State<EditAccount> {
           // Validate returns true if the form is valid, or false otherwise.
           // ... Navigate To your Home Page
 
-          String adress = "Colonia. " +
-              coloniaController.text +
-              ", " +
-              "Calle. " +
-              calleController.text +
-              ", " +
-              "Avenida. " +
-              avenidaController.text;
-          bool result, result2;
+          bool result, result2, result3;
           if (_sexo == null) {
             result = true;
             showToast1(result);
-            if (CitiesDropDownValue == null) {
-              result2 = true;
-              showToast2(result2);
+            if (SuburbsDropDownValue == null) {
+              result3 = true;
+              showToast3(result3);
               if (_formKey.currentState!.validate()) {}
             }
-          } else if (CitiesDropDownValue == null) {
-            result2 = true;
-            showToast2(result2);
-          } else {
-            result = false;
+          } else if (SuburbsDropDownValue == null) {
+            result3 = true;
+            showToast2(result3);
             result2 = false;
             showToast2(result2);
+            if (_formKey.currentState!.validate()) {}
+          } else if (_sexo != null && SuburbsDropDownValue != null) {
+            result = false;
+            showToast3(result);
+            showToast2(result);
             showToast1(result);
             if (_formKey.currentState!.validate()) {
-              PostAdress(CitiesDropDownValue!, adress, context);
+              PostAdress(SuburbsDropDownValue!, calleController.text,
+                  avenidaController.text, context);
             }
           }
         },
