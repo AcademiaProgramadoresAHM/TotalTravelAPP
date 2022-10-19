@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/utils/AppWidget.dart';
@@ -7,21 +9,13 @@ import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
-
+import 'package:http/http.dart' as http;
+import '../ComponentsLogin/Decoder.dart';
 import '../ComponentsLogin/constants.dart';
+import '../Models/CitiesViewModel.dart';
+import '../Models/HotelsViewModel.dart';
 import '../main.dart';
 
-
-final List<String> items = [
-  'A_Item1',
-  'A_Item2',
-  'A_Item3',
-  'A_Item4',
-  'B_Item1',
-  'B_Item2',
-  'B_Item3',
-  'B_Item4',
-];
 
 class createPackage extends StatefulWidget {
   const createPackage({Key? key}) : super(key: key);
@@ -31,6 +25,7 @@ class createPackage extends StatefulWidget {
 }
 
 class _createPackage extends State<createPackage> {
+  int? selectedCity;
   String? selectedValue;
 final TextEditingController textEditingController = TextEditingController();
   String? dropDownValue;
@@ -38,10 +33,75 @@ final TextEditingController textEditingController = TextEditingController();
   TextEditingController? textController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+
+
+
+//Dropdown cities
+
+  int? CitiesDropDownValue;
+  bool _isVisible1 = false;
+  
+  void showToast1(bool result) {
+    setState(() {
+      _isVisible1 = result;
+    });
+  }
+
+
+  Map<int?, String> CitiesDictionary = Map();
+
+  Future<dynamic> GetCities() async {
+    var data;
+    String url_list = "https://totaltravel.somee.com/API/Cities/List";
+    var respuesta = await http.get(Uri.parse(url_list));
+    if (respuesta.statusCode == 200) {
+      Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
+      var Json = DecoderAPI.fromJson(ServerResponse);
+      data = Json.data;
+      // rellena diccionario de datos
+      data.forEach((x) {
+        CiudadesViewModel element = CiudadesViewModel.fromJson(x);
+        var descripcion = element.Ciudad!;
+        CitiesDictionary[element.ID] = descripcion;
+      });
+
+      return Json.data;
+    } else {
+      print("Error: " + respuesta.statusCode.toString());
+    }
+  }
+
+
+  Map<int?, String> HotelsDictionary = Map();
+
+  Future<dynamic> GetHotels(idCiudad) async {
+    var data;
+    String url_list = "https://totaltravel.somee.com/API/Hotels/List";
+    var respuesta = await http.get(Uri.parse(url_list));
+    if (respuesta.statusCode == 200) {
+      var hotelList = respuesta.body;
+      Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
+      var Json = DecoderAPI.fromJson(ServerResponse);
+      data = Json.data;
+      // rellena diccionario de datos
+      data.forEach((x) {
+        HotelViewModel element = HotelViewModel.fromJson(x);
+        if(element.ciudadID = idCiudad){
+          var descripcion = element.descripcion!;
+          HotelsDictionary[element.ID] = descripcion;
+        }
+      });
+      return Json.data;
+    } else {
+      print("Error: " + respuesta.statusCode.toString());
+    }
+  }
+
+
   @override
   void initState() {
     super.initState();
-    textController = TextEditingController();
+    GetCities();
   }
 
   @override
@@ -126,7 +186,7 @@ final TextEditingController textEditingController = TextEditingController();
                     ),
                   ),
                   Align(
-                    alignment: AlignmentDirectional(0.05, 0),
+                    alignment: AlignmentDirectional(-0.30, 0),
                     child: Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                       child: Text(
@@ -213,7 +273,10 @@ final TextEditingController textEditingController = TextEditingController();
                                 style: ElevatedButton.styleFrom(
                                   primary: Color(0xFF652D8F), // backgroundforeground
                                 ),
-                                onPressed: () { },
+                                onPressed: () { 
+                                  GetHotels(CitiesDropDownValue);
+
+                                },
                                 child: Text('Buscar'),
                               ),
                             
@@ -222,7 +285,7 @@ final TextEditingController textEditingController = TextEditingController();
                        Container(
                           height: 65,
                         decoration: BoxDecoration(color: Colors.white),
-                         child: DropdownButtonHideUnderline(
+                         child:  DropdownButtonHideUnderline(
                                 child: DropdownButton2(
                                   isExpanded: true,
                                   
@@ -230,34 +293,27 @@ final TextEditingController textEditingController = TextEditingController();
                                     padding: const EdgeInsets.only(left: 0),
                                     child: TextFormField(
                                       style: kTextFormFieldStyle(),
-                                      controller: dateOfBirthController,
                                       decoration: const InputDecoration(
                                       
                                         border: InputBorder.none,
-                                        prefixIcon: Icon(Icons.calendar_today),
+                                        prefixIcon: Icon(Icons.location_on_outlined),
                                         hintText: 'Destino',
                                         
                                       ),
                                     ),
                                   ),
-                                  items: items
-                                          .map((item) => DropdownMenuItem<String>(
-                                    value: item,
-                                    
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 20),
-                                      child: Text(
-                                        item,
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ),
-                                  )).toList(),
-                                  value: selectedValue,
+                                   items: CitiesDictionary.keys.map((id) {
+                                          return DropdownMenuItem(
+                                            value: id,
+                                            child: Text(CitiesDictionary[id]
+                                                .toString()),
+                                          );
+                                        }).toList(),
+                                         value: selectedCity,
                                   onChanged: (value) {
                                     setState(() {
-                                      selectedValue = value as String;
+                                      selectedCity = value as int?;
+                                       CitiesDropDownValue = value;
                                     });
                                   },
                                   buttonHeight: 70,
