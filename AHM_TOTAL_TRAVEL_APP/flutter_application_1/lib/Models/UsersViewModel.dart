@@ -49,6 +49,7 @@ class UserRegisterModel {
   int? Usua_UsuarioModifica;
   DateTime? Usua_FechaModifica;
   bool? Usua_Estado;
+  String? File;
 
   Map<String, dynamic> toJson() => {
         "usua_ID": Usua_ID,

@@ -223,13 +223,9 @@ class _LoginViewState extends State<Login> {
                 SizedBox(
                   height: size.height * 0.01,
                 ),
-                Text(
-                  'Al crear una cuenta significa que está de acuerdo con nuestros Términos de servicio y nuestra Política de privacidad',
-                  style: kLoginTermsAndPrivacyStyle(size),
-                  textAlign: TextAlign.center,
-                ),
+               
                 SizedBox(
-                  height: size.height * 0.02,
+                  height: size.height * 0.10,
                 ),
 
                 /// Login Button

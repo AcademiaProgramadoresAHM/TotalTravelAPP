@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_constructors, use_build_context_synchronously, prefer_const_literals_to_create_immutables, prefer_interpolation_to_compose_strings
 
 import 'dart:convert';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Models/AdressesViewModel.dart';
 import 'package:flutter_application_1/Models/RequestsViewModel.dart';
+import 'package:flutter_application_1/Models/SuburbsViewModel.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
@@ -27,6 +29,7 @@ class SignUpView extends StatefulWidget {
 }
 
 class _SignUpViewState extends State<SignUpView> {
+  int? suburbValue;
   TextEditingController dniController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController lastnameController = TextEditingController();
@@ -40,7 +43,9 @@ class _SignUpViewState extends State<SignUpView> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController password2Controller = TextEditingController();
+   TextEditingController textSuburbsEditingController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  
   List<ListModel> example = [
     ListModel(name: 'Cupertino Date Picker'),
     //ListModel(name: 'Cupertino Time Picker'),
@@ -132,10 +137,13 @@ class _SignUpViewState extends State<SignUpView> {
 //Dropdown cities
 
   int? CitiesDropDownValue;
+  int? SuburbsDropDownValue;
+
   bool _isVisible1 = false;
   bool _isVisible2 = false;
+  bool _isVisible3 = false;
   String defaultDetalles = '';
-  int? adressId;
+  String? adressId;
   CiudadesViewModel? planDetalles;
   AdressesViewModel? adressData;
 
@@ -148,6 +156,11 @@ class _SignUpViewState extends State<SignUpView> {
   void showToast2(bool result2) {
     setState(() {
       _isVisible2 = result2;
+    });
+  }
+   void showToast3(bool result3) {
+    setState(() {
+      _isVisible3 = result3;
     });
   }
 
@@ -174,11 +187,36 @@ class _SignUpViewState extends State<SignUpView> {
     }
   }
 
-  Future<void> PostAdress(int id, String adress, BuildContext context) async {
+  Map<int?, String> SuburbsDictionary = Map();
+
+  Future<dynamic> GetSuburbs() async {
+    var data;
+    String url_list = "https://totaltravel.somee.com/API/Suburbs/List";
+    final respuesta = await http.get(Uri.parse(url_list));
+    if (respuesta.statusCode == 200) {
+      Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
+      var Json = DecoderAPI.fromJson(ServerResponse);
+      data = Json.data;
+      // rellena diccionario de datos
+      data.forEach((x) {
+        SuburbsViewModel element = SuburbsViewModel.fromJson(x);
+
+        var descripcion = element.Colonia!;
+        SuburbsDictionary[element.ID] = descripcion;
+      });
+
+      return Json.data;
+    } else {
+      print("Error: " + respuesta.statusCode.toString());
+    }
+  }
+
+  Future<void> PostAdress(int id, String calle, String avenida, BuildContext context) async {
     AdressesViewModel adressView = new AdressesViewModel();
-    /*adressView.Ciud_ID = id;
-    adressView.Dire_Descripcion = adress as String?;
-    adressView.Dire_UsuarioCreacion = 1;*/
+    adressView.Colo_ID = id;
+    adressView.Dire_Calle = calle;
+    adressView.Dire_Avenida = avenida;
+    adressView.Dire_UsuarioCreacion = 1;
 
     final url = Uri.parse("https://totaltravel.somee.com/API/Address/Insert");
     final headers = {
@@ -194,7 +232,7 @@ class _SignUpViewState extends State<SignUpView> {
       if (data.data != null) {
         RequestStatus requestStatus = RequestStatus.fromJson(data.data);
         if (requestStatus.CodeStatus! >= 0) {
-          adressId = requestStatus.CodeStatus;
+          adressId = requestStatus.CodeStatus.toString();
           PostRegister(
               dniController.text,
               nameController.text,
@@ -215,6 +253,7 @@ class _SignUpViewState extends State<SignUpView> {
   void initState() {
     super.initState();
     GetCities();
+    GetSuburbs();
     init();
   }
 
@@ -637,41 +676,7 @@ class _SignUpViewState extends State<SignUpView> {
                                     child: Text('Dirección',
                                         style: TextStyle(fontSize: 16.0)),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10.0, right: 30.0, left: 20.0),
-                                    child: Container(
-                                      child: DropdownButton(
-                                        hint: Text("Elige una ciudad"),
-                                        icon: const Icon(
-                                            Icons.keyboard_arrow_down),
-                                        value: CitiesDropDownValue,
-                                        items: CitiesDictionary.keys.map((id) {
-                                          return DropdownMenuItem(
-                                            value: id,
-                                            child: Text(CitiesDictionary[id]
-                                                .toString()),
-                                          );
-                                        }).toList(),
-                                        onChanged: (int? newValue) {
-                                          setState(() {
-                                            CitiesDropDownValue = newValue;
-                                          });
-                                        },
-                                      ),
-                                      width: MediaQuery.of(context).size.width *
-                                          3.5,
-                                      height: 60,
-                                      decoration: BoxDecoration(
-                                        color: Colors.transparent,
-                                        borderRadius: BorderRadius.circular(8),
-                                        border: Border.all(
-                                          color: Colors.transparent,
-                                          width: 1,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                 
 
                                   Padding(
                                     padding: const EdgeInsets.only(
@@ -696,25 +701,103 @@ class _SignUpViewState extends State<SignUpView> {
                                     height: size.height * 0.01,
                                   ),
 
-                                  TextFormField(
-                                    style: kTextFormFieldStyle(),
-                                    decoration: const InputDecoration(
-                                      prefixIcon: Icon(Icons.home),
-                                      hintText: 'Colonia',
-                                      border: OutlineInputBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(15)),
+                                 Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 0),
+                                    child: 
+                                    Container(
+                          height: 65,
+                        decoration: BoxDecoration(color: Colors.transparent),
+                         child: DropdownButtonHideUnderline(
+                                child: DropdownButton2(
+                                  isExpanded: true,
+                                  
+                                  hint: Padding(
+                                    padding: const EdgeInsets.only(left: 0),
+                                    child: TextFormField(
+                                      style: kTextFormFieldStyle(),
+                                      decoration: const InputDecoration(
+                                      
+                                        border: InputBorder.none,
+                                        prefixIcon: Icon(Icons.calendar_today),
+                                        hintText: 'Colonia',
+                                        
                                       ),
                                     ),
+                                  ),
+                                  items: SuburbsDictionary.keys.map((id) {
+                                          return DropdownMenuItem(
+                                            value: id,
+                                            child: Text(SuburbsDictionary[id]
+                                                .toString()),
+                                          );
+                                        }).toList(),
+                                         value: suburbValue,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      suburbValue = value as int?;
+                                       SuburbsDropDownValue = value;
+                                    });
+                                  },
+                                  buttonHeight: 70,
+                                  buttonWidth: 400,
+                                  itemHeight: 40,
+                                  dropdownMaxHeight: 200,
+                                  searchController: textSuburbsEditingController,
+                                  searchInnerWidget: Padding(
+                                    padding: const EdgeInsets.only(
+                                      top: 10,
+                                      bottom: 4,
+                                      right: 8,
+                                      left: 10,
+                                    ),
+                                     child: TextFormField(
+                                      controller: textSuburbsEditingController,
+                                      decoration: InputDecoration(
+                                        isDense: true,
+                                        contentPadding: const EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                          vertical: 8,
+                                        ),
+                                        hintText: 'Busca un destino',
+                                        hintStyle: const TextStyle(fontSize: 17),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(4),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  searchMatchFn: (item, searchValue) {
+                                    return (item.value.toString().contains(searchValue));
+                                  },
+                                  onMenuStateChange: (isOpen) {
+                                  if (!isOpen) {
+                                    textSuburbsEditingController.clear();
+                                  }
+                                }
+                      )),
+                       )),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 200.0, top: 0, bottom: 10.0),
+                                    child: Visibility(
+                                      visible: _isVisible3,
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                                text: "Seleccione una opción ",
+                                                style: TextStyle(
+                                                    color: redColor,
+                                                    fontSize: 13)),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
 
-                                    controller: coloniaController,
-                                    // The validator receives the text that the user has entered.
-                                    validator: (value) {
-                                      if (value == null || value.isEmpty) {
-                                        return 'Rellene este campo';
-                                      }
-                                      return null;
-                                    },
+                                  SizedBox(
+                                    height: size.height * 0.01,
                                   ),
                                   SizedBox(
                                     height: size.height * 0.02,
@@ -828,7 +911,7 @@ class _SignUpViewState extends State<SignUpView> {
             child: Column(
               children: [
                 Container(
-                  color: appStore.appBarColor,
+                  color: Colors.white,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -886,32 +969,30 @@ class _SignUpViewState extends State<SignUpView> {
           // Validate returns true if the form is valid, or false otherwise.
           // ... Navigate To your Home Page
 
-          String adress = "Col. " +
-              coloniaController.text +
-              ", " +
-              calleController.text +
-              " calle " +
-              avenidaController.text +
-              " avenida.";
-          bool result, result2;
+          bool result, result2, result3;
           if (_sexo == null) {
             result = true;
             showToast1(result);
-            if (CitiesDropDownValue == null) {
-              result2 = true;
-              showToast2(result2);
-              if (_formKey.currentState!.validate()) {}
-            }
-          } else if (CitiesDropDownValue == null) {
-            result2 = true;
-            showToast2(result2);
-          } else {
-            result = false;
+              if (SuburbsDropDownValue == null) {
+              result3 = true;
+              showToast3(result3);
+               if (_formKey.currentState!.validate()) {}
+              }
+            
+          } else if(SuburbsDropDownValue == null){
+            result3 = true;
+            showToast2(result3);
             result2 = false;
             showToast2(result2);
+            if (_formKey.currentState!.validate()) {}
+          }
+           else if(_sexo != null && SuburbsDropDownValue != null ){
+            result = false;
+            showToast3(result);
+            showToast2(result);
             showToast1(result);
             if (_formKey.currentState!.validate()) {
-              PostAdress(CitiesDropDownValue!, adress, context);
+              PostAdress(SuburbsDropDownValue!, calleController.text, avenidaController.text, context);
             }
           }
         },
@@ -921,25 +1002,6 @@ class _SignUpViewState extends State<SignUpView> {
   }
 }
 
-AppStore appStore = AppStore();
-
-class AppStore {
-  Color textPrimaryColor = Color(0xFF212121);
-  Color iconColorPrimaryDark = Color(0xFF212121);
-  Color scaffoldBackground = Colors.white;
-  Color backgroundColor = Colors.black;
-  Color backgroundSecondaryColor = Color(0xFF131d25);
-  Color appColorPrimaryLightColor = Colors.white;
-  Color textSecondaryColor = Color(0xFF5A5C5E);
-  Color appBarColor = Colors.white;
-  Color iconColor = Color(0xFF212121);
-  Color iconSecondaryColor = Color(0xFFA8ABAD);
-  Color cardColor = Colors.white;
-  Color appColorPrimary = Color(0xFF1157FA);
-  Color scaffoldBackgroundColor = Colors.white;
-
-  AppStore();
-}
 
 class ListModel {
   String? name;
@@ -949,32 +1011,4 @@ class ListModel {
   ListModel({this.name, this.widget, this.isNew});
 }
 
-class ExampleItemWidget extends StatelessWidget {
-  final ListModel tabBarType;
-  final Function onTap;
-  final bool showTrailing;
 
-  ExampleItemWidget(this.tabBarType,
-      {required this.onTap, this.showTrailing = false});
-
-  @override
-  Widget build(BuildContext context) {
-    return Card(
-      color: appStore.appBarColor,
-      margin: EdgeInsets.fromLTRB(12, 12, 12, 0),
-      elevation: 2.0,
-      shadowColor: Colors.black,
-      child: ListTile(
-        onTap: () => onTap(),
-        title: Text(tabBarType.name!,
-            style: TextStyle(fontWeight: FontWeight.bold)),
-        trailing: showTrailing
-            ? Icon(Icons.arrow_forward_ios,
-                size: 15, color: appStore.textPrimaryColor)
-            : tabBarType.isNew ?? false
-                ? Text('New', style: TextStyle(fontSize: 14, color: Colors.red))
-                : null,
-      ),
-    );
-  }
-}

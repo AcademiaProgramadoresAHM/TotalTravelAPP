@@ -15,6 +15,7 @@ import 'package:flutter_application_1/historial_transacciones.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
 
 import 'Screens/Personalizados.dart';
+import 'main.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
@@ -87,7 +88,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
           break;
         case DrawerIndex.CrearPaquete:
           setState(() {
-            screenView = MyApp();
+            screenView = createPackage();
           });
           break;
         case DrawerIndex.Account:
