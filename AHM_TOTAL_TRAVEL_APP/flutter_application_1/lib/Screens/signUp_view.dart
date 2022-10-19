@@ -30,6 +30,7 @@ class SignUpView extends StatefulWidget {
 
 class _SignUpViewState extends State<SignUpView> {
   int? suburbValue;
+   TextEditingController textSuburbsEditingController = TextEditingController();
   TextEditingController dniController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController lastnameController = TextEditingController();
@@ -43,7 +44,7 @@ class _SignUpViewState extends State<SignUpView> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController password2Controller = TextEditingController();
-   TextEditingController textSuburbsEditingController = TextEditingController();
+  
   final ScrollController _scrollController = ScrollController();
   
   List<ListModel> example = [
@@ -759,7 +760,7 @@ class _SignUpViewState extends State<SignUpView> {
                                           horizontal: 10,
                                           vertical: 8,
                                         ),
-                                        hintText: 'Busca un destino',
+                                        hintText: 'Busca un colonia',
                                         hintStyle: const TextStyle(fontSize: 17),
                                         border: OutlineInputBorder(
                                           borderRadius: BorderRadius.circular(4),

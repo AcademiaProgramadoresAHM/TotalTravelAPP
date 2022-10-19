@@ -375,10 +375,10 @@ class _EditAccountState extends State<EditAccount> {
 
   Widget _buildMainBody(
       Size size, SimpleUIController simpleUIController, ThemeData theme) {
-    var splitFecha = _userData['fecha_Nacimiento'].toString().split('T');
-    print(splitFecha);
+    // var splitFecha = _userData['fecha_Nacimiento'].toString().split('T');
+    // print(splitFecha);
 
-    dateOfBirthController.text = splitFecha[0];
+    // dateOfBirthController.text = splitFecha[0];
     //print(fecha);
     return Theme(
       data: HotelAppTheme.buildLightTheme(),
@@ -571,6 +571,8 @@ class _EditAccountState extends State<EditAccount> {
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Por favor ingrese una fecha';
+                                    } else {
+                                      dateOfBirthController.text = value;
                                     }
                                     return null;
                                   },
