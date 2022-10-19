@@ -305,15 +305,15 @@ class _EditAccountState extends State<EditAccount> {
     init();
     GetUserData();
 
-    nameController.addListener(() {
+   /* nameController.addListener(() {
       nameController.text;
-    });
+    });*/
   }
 
   @override
   Widget build(BuildContext context) {
-    dniController.text = _userData['dni'];
-    nameController.text = _userData['nombre'];
+   // dniController.text = _userData['dni'];
+    //nameController.text = _userData['nombre'];
     surnameController.text = _userData['apellido'];
     dateOfBirthController.text = _userData['fecha_Nacimiento'];
     phoneController.text = _userData['telefono'];
@@ -421,12 +421,14 @@ class _EditAccountState extends State<EditAccount> {
                                           BorderRadius.all(Radius.circular(15)),
                                     ),
                                   ),
-
-                                  controller: nameController,
+                                  initialValue: _userData['nombre'],
+                                
                                   // The validator receives the text that the user has entered.
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
                                       return 'Rellene este campo';
+                                    }else{
+                                      nameController.text = value;
                                     }
                                     return null;
                                   },
@@ -505,7 +507,7 @@ class _EditAccountState extends State<EditAccount> {
                                     ),
                                   ),
 
-                                  controller: dniController,
+                                  initialValue: _userData['dni'],
                                   // The validator receives the text that the user has entered.
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -514,6 +516,8 @@ class _EditAccountState extends State<EditAccount> {
                                       return 'Ingrese como mínimo 13 carácteres';
                                     } else if (value.length > 13) {
                                       return 'Ingrese como máximo 13 carácteres';
+                                    }else{
+                                      dniController.text = value;
                                     }
                                     return null;
                                   },
