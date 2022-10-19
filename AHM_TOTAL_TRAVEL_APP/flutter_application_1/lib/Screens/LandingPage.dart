@@ -76,7 +76,9 @@ class LandingPageState extends State<LandingPage> {
                     child: Column(
                       children: [
                         Text(element['nombre'], style: boldTextStyle(size: 30)),
-                        Text(element['descripcion_Paquete'],
+                        Text(
+                            element['descripcion_Paquete'] ??
+                                'No descripcion Disponible',
                             style: secondaryTextStyle()),
                         24.height,
                         Text('\$' + element['precio'].toString(),
@@ -92,15 +94,21 @@ class LandingPageState extends State<LandingPage> {
                               symbolColor: Color.fromARGB(255, 101, 45, 144),
                               spacing: 24,
                               children: [
-                                Text(element['hotel'],
+                                Text(
+                                    element['hotel'] ??
+                                        'No hay Hoteles Disponibles',
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600)),
-                                Text(element['restaurante'],
+                                Text(
+                                    element['restaurante'] ??
+                                        'No hay Restaurantes Disponibles',
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600)),
-                                Text(element['duracion_Paquete'],
+                                Text(
+                                    element['duracion_Paquete'] ??
+                                        'No Disponibles',
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600)),
