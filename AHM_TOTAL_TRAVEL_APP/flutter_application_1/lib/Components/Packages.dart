@@ -80,7 +80,7 @@ List<Padding> ListDefaultPackages(List<dynamic> data, BuildContext context) {
                         width: 4,
                         height: 150,
                         decoration: BoxDecoration(
-                          color: Color(0xFF4B39EF),
+                          color: Color.fromRGBO(101, 45, 143, 1),
                           borderRadius: BorderRadius.circular(4),
                         ),
                       ),
@@ -111,7 +111,7 @@ List<Padding> ListDefaultPackages(List<dynamic> data, BuildContext context) {
                                     '\$' + element['precio'].toString(),
                                     style: TextStyle(
                                       fontFamily: 'Outfit',
-                                      color: Color(0xFF4B39EF),
+                                      color: Color.fromRGBO(101, 45, 143, 1),
                                       fontSize: 24,
                                       fontWeight: FontWeight.w600,
                                     ),
@@ -122,7 +122,7 @@ List<Padding> ListDefaultPackages(List<dynamic> data, BuildContext context) {
                                 element['hotel'],
                                 style: TextStyle(
                                   fontFamily: 'Outfit',
-                                  color: Color(0xFF4B39EF),
+                                  color: Color.fromRGBO(101, 45, 143, 1),
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
                                 ),
