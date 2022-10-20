@@ -308,11 +308,6 @@ class _EditAccountState extends State<EditAccount> {
 
   @override
   Widget build(BuildContext context) {
-    // if (_userData['sexo'] != "Masculino") {
-    //   _sexo = "M";
-    // } else {
-    //   _sexo = "F";
-    // }
     // dniController.text = _userData['dni'];
     //nameController.text = _userData['nombre'];
     // surnameController.text = _userData['apellido'];
@@ -534,53 +529,6 @@ class _EditAccountState extends State<EditAccount> {
                                 SizedBox(
                                   height: size.height * 0.02,
                                 ),
-                                //Birth
-                                TextFormField(
-                                  style: kTextFormFieldStyle(),
-                                  controller: dateOfBirthController,
-                                  //initialValue: dateOfBirthController.text,
-                                  decoration: const InputDecoration(
-                                    prefixIcon: Icon(Icons.calendar_today),
-                                    hintText: 'Fecha de Nacimiento',
-                                    border: OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(15)),
-                                    ),
-                                  ),
-                                  readOnly: true,
-                                  onTap: () async {
-                                    DateTime? pickedDate = await showDatePicker(
-                                        context: context,
-                                        initialDate: DateTime.now(),
-                                        firstDate: DateTime(1901),
-                                        lastDate: DateTime(2101));
-
-                                    if (pickedDate != null) {
-                                      print(pickedDate);
-                                      String formattedDate =
-                                          DateFormat('yyyy-MM-dd')
-                                              .format(pickedDate);
-                                      print(formattedDate);
-                                      setState(() {
-                                        dateOfBirthController.text =
-                                            formattedDate; //set output date to TextField value.
-                                      });
-                                    } else {
-                                      print("Fecha no seleccionada");
-                                    }
-                                  },
-                                  validator: (value) {
-                                    if (value == null || value.isEmpty) {
-                                      return 'Por favor ingrese una fecha';
-                                    } else {
-                                      dateOfBirthController.text = value;
-                                    }
-                                    return null;
-                                  },
-                                ),
-                                SizedBox(
-                                  height: size.height * 0.02,
-                                ),
 
                                 // Phone
                                 TextFormField(
@@ -607,99 +555,6 @@ class _EditAccountState extends State<EditAccount> {
                                     }
                                     return null;
                                   },
-                                ),
-                                SizedBox(
-                                  height: size.height * 0.02,
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 30.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Radio(
-                                              value: 'M',
-                                              groupValue: _sexo,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  _sexo = value.toString();
-                                                  choice = 'M';
-                                                });
-                                              }),
-                                          RichText(
-                                            text: TextSpan(
-                                              children: [
-                                                TextSpan(
-                                                    text: "Masculino ",
-                                                    style: TextStyle(
-                                                        color: black,
-                                                        fontSize: 18)),
-                                                WidgetSpan(
-                                                  child: Icon(Icons.male,
-                                                      size: 20),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Radio(
-                                              value: 'F',
-                                              groupValue: _sexo,
-                                              onChanged: (value) {
-                                                setState(() {
-                                                  softWrap:
-                                                  true;
-                                                  _sexo = value.toString();
-                                                  choice = 'F';
-                                                });
-                                              }),
-                                          RichText(
-                                            text: TextSpan(
-                                              children: [
-                                                TextSpan(
-                                                    text: "Femenino ",
-                                                    style: TextStyle(
-                                                        color: black,
-                                                        fontSize: 18)),
-                                                WidgetSpan(
-                                                  child: Icon(Icons.female,
-                                                      size: 20),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 200.0, top: 10.0),
-                                  child: Visibility(
-                                    visible: _isVisible1,
-                                    child: RichText(
-                                      text: TextSpan(
-                                        children: [
-                                          TextSpan(
-                                              text: "Seleccione una opción ",
-                                              style: TextStyle(
-                                                  color: redColor,
-                                                  fontSize: 13)),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-
-                                SizedBox(
-                                  height: size.height * 0.02,
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(
