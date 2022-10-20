@@ -65,12 +65,11 @@ class _EditAccountState extends State<EditAccount> {
   }
 
   final _formKey = GlobalKey<FormState>();
-  var validation, _sexo;
+  var validation;
+  String? _sexo, choice;
 
   final lastDate = DateTime.now();
   final firstDate = DateTime.utc(1900, 1, 1);
-
-  var name = "";
 
   @override
   void dispose() {
@@ -195,7 +194,7 @@ class _EditAccountState extends State<EditAccount> {
               emailController.text,
               dateOfBirthController.text,
               phoneController.text,
-              _sexo,
+              choice,
               adressId!,
               context);
         }
@@ -210,7 +209,7 @@ class _EditAccountState extends State<EditAccount> {
       String Email,
       String FechaNacimiento,
       String Telefono,
-      String Sexo,
+      String? Sexo,
       String adressId,
       BuildContext context) async {
     final headers = {
@@ -299,19 +298,21 @@ class _EditAccountState extends State<EditAccount> {
   @override
   void initState() {
     dateOfBirthController.text = ""; //set the initial value of text field
-    super.initState();
+
     GetCities();
     GetSuburbs();
     init();
     GetUserData();
-
-    /* nameController.addListener(() {
-      nameController.text;
-    });*/
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    // if (_userData['sexo'] != "Masculino") {
+    //   _sexo = "M";
+    // } else {
+    //   _sexo = "F";
+    // }
     // dniController.text = _userData['dni'];
     //nameController.text = _userData['nombre'];
     // surnameController.text = _userData['apellido'];
@@ -536,8 +537,8 @@ class _EditAccountState extends State<EditAccount> {
                                 //Birth
                                 TextFormField(
                                   style: kTextFormFieldStyle(),
-                                  //controller: dateOfBirthController,
-                                  initialValue: dateOfBirthController.text,
+                                  controller: dateOfBirthController,
+                                  //initialValue: dateOfBirthController.text,
                                   decoration: const InputDecoration(
                                     prefixIcon: Icon(Icons.calendar_today),
                                     hintText: 'Fecha de Nacimiento',
@@ -624,6 +625,7 @@ class _EditAccountState extends State<EditAccount> {
                                               onChanged: (value) {
                                                 setState(() {
                                                   _sexo = value.toString();
+                                                  choice = 'M';
                                                 });
                                               }),
                                           RichText(
@@ -653,6 +655,7 @@ class _EditAccountState extends State<EditAccount> {
                                                   softWrap:
                                                   true;
                                                   _sexo = value.toString();
+                                                  choice = 'F';
                                                 });
                                               }),
                                           RichText(
