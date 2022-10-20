@@ -57,8 +57,9 @@ Map<int?, String> HotelsDictionary = Map();
 List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
   List<Padding> list = [];
   final _controller = PageController();
-
+  List<String> imageUrl;
   data.forEach((element) {
+    imageUrl = element['image_URL'].split(',');
     list.add(Padding(
       padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
       child: Container(
@@ -95,7 +96,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.network(
-                        'https://picsum.photos/seed/898/600',
+                        'https://totaltravel.somee.com/Images/' + imageUrl[0].toString(),
                         width: 100,
                         height: 100,
                         fit: BoxFit.cover,
@@ -277,7 +278,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('           Hoteles'),
+          title: Text('           Restaurantes'),
           backgroundColor: Color.fromRGBO(101, 45, 143, 1),
           ),
         body: SingleChildScrollView(

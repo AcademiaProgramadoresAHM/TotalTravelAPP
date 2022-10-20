@@ -158,7 +158,7 @@ class _createCustomPackage extends State<createCustomPackage> {
                 flex: 5,
                 child: Center(
                   child: Text(
-                    'Crear Paquete',
+                    'Crear paquete',
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 25,

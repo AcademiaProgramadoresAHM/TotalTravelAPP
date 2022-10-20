@@ -52,13 +52,39 @@ Map<int?, String> HotelsDictionary = Map();
   }
 }
 
+  Future<dynamic> FindHotels(idHotel) async {
+    List<dynamic> findHotel;
+  String url_list =
+      "https://totaltravelapi.azurewebsites.net/API/Hotels/Find?Id=" + idHotel;
+       final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+  final response = await http.get(Uri.parse(url_list), headers: headers);
+  if (response.statusCode == 200) {
+     Map<String, dynamic> userMap = jsonDecode(response.body);
+     var Json = DecoderAPI.fromJson(userMap);
+     findHotel = Json.data;
+
+
+
+    print(findHotel);
+    return findHotel;
+  } else {
+    print("Error " + response.statusCode.toString());
+  }
+}
+
+
+
 
 
 List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
   List<Padding> list = [];
   final _controller = PageController();
-
+  List<String> imageUrl;
   data.forEach((element) {
+     imageUrl = element['image_URL'].split(',');
     list.add(Padding(
       padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
       child: Container(
@@ -94,8 +120,9 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
+                      
                       child: Image.network(
-                        'https://picsum.photos/seed/898/600',
+                       'https://totaltravel.somee.com/Images/' + imageUrl[0].toString(),
                         width: 100,
                         height: 100,
                         fit: BoxFit.cover,
@@ -236,7 +263,10 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                           fontWeight: FontWeight.normal,
                                         ),
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        FindHotels(element['id']);
+
+                                      },
                                     ),
                                   ],
                                 ),

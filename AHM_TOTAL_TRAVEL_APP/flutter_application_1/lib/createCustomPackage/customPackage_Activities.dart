@@ -33,7 +33,7 @@ Map<int?, String> HotelsDictionary = Map();
   Future<dynamic> GetListActivities(Ciudad,userloggeddata) async {
     List<dynamic> dataActivities;
   String url_list =
-      "https://totaltravel.somee.com/API/ActivitiesExtra/List";
+      "https://totaltravelapi.azurewebsites.net/API/ActivitiesExtra/List";
        final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -56,8 +56,9 @@ Map<int?, String> HotelsDictionary = Map();
 List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
   List<Padding> list = [];
   final _controller = PageController();
-
+  List<String> imageUrl;
   data.forEach((element) {
+    imageUrl = element['imageURL'].split(',');
     list.add(Padding(
       padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
       child: Container(
@@ -94,7 +95,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.network(
-                        'https://picsum.photos/seed/898/600',
+                       'https://totaltravel.somee.com/Images/' + imageUrl[0].toString(),
                         width: 100,
                         height: 100,
                         fit: BoxFit.cover,
@@ -134,7 +135,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                     style: TextStyle(
                                       fontFamily: 'Outfit',
                                       color: Color(0xFF090F13),
-                                      fontSize: 22,
+                                      fontSize: 20,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
