@@ -91,7 +91,7 @@ class _EditAccountState extends State<EditAccount> {
   int? CitiesDropDownValue;
   int? SuburbsDropDownValue;
 
-  bool _isVisible1 = false;
+  //bool _isVisible1 = false;
   bool _isVisible2 = false;
   bool _isVisible3 = false;
   String defaultDetalles = '';
@@ -99,11 +99,11 @@ class _EditAccountState extends State<EditAccount> {
   CiudadesViewModel? planDetalles;
   AdressesViewModel? adressData;
 
-  void showToast1(bool result) {
-    setState(() {
-      _isVisible1 = result;
-    });
-  }
+  // void showToast1(bool result) {
+  //   setState(() {
+  //     _isVisible1 = result;
+  //   });
+  // }
 
   void showToast2(bool result2) {
     setState(() {
@@ -193,8 +193,6 @@ class _EditAccountState extends State<EditAccount> {
               surnameController.text,
               emailController.text,
               dateOfBirthController.text,
-              phoneController.text,
-              choice,
               adressId!,
               context);
         }
@@ -207,9 +205,7 @@ class _EditAccountState extends State<EditAccount> {
       String Nombre,
       String Apellido,
       String Email,
-      String FechaNacimiento,
       String Telefono,
-      String? Sexo,
       String adressId,
       BuildContext context) async {
     final headers = {
@@ -221,9 +217,7 @@ class _EditAccountState extends State<EditAccount> {
     map['usua_DNI'] = DNI;
     map['usua_Nombre'] = Nombre;
     map['usua_Apellido'] = Apellido;
-    map['usua_FechaNaci'] = FechaNacimiento;
     map['usua_Telefono'] = Telefono;
-    map['usua_Sexo'] = Sexo;
     map['usua_Email'] = Email;
     map['dire_ID'] = adressId;
     map['usua_esAdmin'] = "0";
@@ -792,25 +786,26 @@ class _EditAccountState extends State<EditAccount> {
           // ... Navigate To your Home Page
 
           bool result, result2, result3;
-          if (_sexo == null) {
-            result = true;
-            showToast1(result);
-            if (SuburbsDropDownValue == null) {
-              result3 = true;
-              showToast3(result3);
-              if (_formKey.currentState!.validate()) {}
-            }
-          } else if (SuburbsDropDownValue == null) {
+          // if (_sexo == null) {
+          //   result = true;
+          //   showToast1(result);
+          //   if (SuburbsDropDownValue == null) {
+          //     result3 = true;
+          //     showToast3(result3);
+          //     if (_formKey.currentState!.validate()) {}
+          //   }
+          // } else
+          if (SuburbsDropDownValue == null) {
             result3 = true;
             showToast2(result3);
             result2 = false;
             showToast2(result2);
             if (_formKey.currentState!.validate()) {}
-          } else if (_sexo != null && SuburbsDropDownValue != null) {
+          } else if (SuburbsDropDownValue != null) {
             result = false;
             showToast3(result);
             showToast2(result);
-            showToast1(result);
+            //showToast1(result);
             if (_formKey.currentState!.validate()) {
               PostAdress(SuburbsDropDownValue!, calleController.text,
                   avenidaController.text, context);
