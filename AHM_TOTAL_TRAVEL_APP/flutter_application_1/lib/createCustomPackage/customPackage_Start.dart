@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/ComponentsLogin/Edit.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
 import 'package:flutter_application_1/utils/AppWidget.dart';
 import 'package:flutter_application_1/utils/prueba2/T2Colors.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -14,11 +16,14 @@ import '../ComponentsLogin/Decoder.dart';
 import '../ComponentsLogin/constants.dart';
 import '../Models/CitiesViewModel.dart';
 import '../Models/HotelsViewModel.dart';
+import '../Models/UsersViewModel.dart';
 import '../main.dart';
 
 
 class createPackage extends StatefulWidget {
-  const createPackage({Key? key}) : super(key: key);
+  final UserLoggedModel? userloggeddata;
+  const createPackage(this.userloggeddata, {Key? key}) : super(key: key);
+
 
   @override
   _createPackage createState() => _createPackage();
@@ -70,34 +75,6 @@ final TextEditingController textEditingController = TextEditingController();
       print("Error: " + respuesta.statusCode.toString());
     }
   }
-
-
-  Map<int?, String> HotelsDictionary = Map();
-
-  Future<dynamic> GetHotels(idCiudad) async {
-    var data;
-    String url_list = "https://totaltravel.somee.com/API/Hotels/List";
-    var respuesta = await http.get(Uri.parse(url_list));
-    if (respuesta.statusCode == 200) {
-      var hotelList = respuesta.body;
-      Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
-      var Json = DecoderAPI.fromJson(ServerResponse);
-      data = Json.data;
-      // rellena diccionario de datos
-      data.forEach((x) {
-        HotelViewModel element = HotelViewModel.fromJson(x);
-        if(element.ciudadID = idCiudad){
-          var descripcion = element.descripcion!;
-          HotelsDictionary[element.ID] = descripcion;
-        }
-      });
-      return Json.data;
-    } else {
-      print("Error: " + respuesta.statusCode.toString());
-    }
-  }
-
-
   @override
   void initState() {
     super.initState();
@@ -273,8 +250,16 @@ final TextEditingController textEditingController = TextEditingController();
                                 style: ElevatedButton.styleFrom(
                                   primary: Color(0xFF652D8F), // backgroundforeground
                                 ),
-                                onPressed: () { 
-                                  GetHotels(CitiesDropDownValue);
+                                onPressed: () async { 
+                                  if(CitiesDropDownValue != null){
+                                    CiudadesViewModel cityModel = new CiudadesViewModel(CitiesDropDownValue,null,null,null,null);
+                                       Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) =>  createCustomPackage(cityModel, widget.userloggeddata)),
+                                        );
+                                      
+                                  }
+                                  
 
                                 },
                                 child: Text('Buscar'),
@@ -354,8 +339,11 @@ final TextEditingController textEditingController = TextEditingController();
                                 }
                       )),
                        )],
+                      
                       ),
+                      
                     ),
+                    
                   ),
                 ],
               ),

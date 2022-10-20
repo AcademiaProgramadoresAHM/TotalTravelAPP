@@ -1,6 +1,6 @@
 import 'package:flutter_application_1/Account_screen.dart';
 import 'package:flutter_application_1/Screens/Compras.dart';
-import 'package:flutter_application_1/Screens/crearPaquete.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_Start.dart';
 import 'package:flutter_application_1/Screens/historialcompras.dart';
 import 'package:flutter_application_1/Support_Screen.dart';
 import 'package:flutter_application_1/app_theme.dart';
@@ -88,7 +88,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
           break;
         case DrawerIndex.CrearPaquete:
           setState(() {
-            screenView = createPackage();
+            screenView = createPackage(widget.userloggeddata);
           });
           break;
         case DrawerIndex.Account:
