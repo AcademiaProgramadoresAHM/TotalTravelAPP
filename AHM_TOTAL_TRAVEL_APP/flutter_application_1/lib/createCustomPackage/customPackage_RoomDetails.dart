@@ -234,7 +234,7 @@ List<double> _getCustomItemsHeights() {
                                   
                               ),*/ Padding(
                                 padding:
-                                    EdgeInsetsDirectional.fromSTEB(10, 30, 0, 0),
+                                    EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                                 child: Column(
                                   children: [
                                     const SizedBox(height: 16),
