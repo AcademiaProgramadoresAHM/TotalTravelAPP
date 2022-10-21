@@ -7,17 +7,17 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 
-class HotelDetails extends StatefulWidget {
+class RoomDetails extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
-  final List<dynamic> Hotel;
-  const HotelDetails(this.userloggeddata, this.Hotel, {Key? key}) : super(key: key);
+  final List<dynamic> Room;
+  const RoomDetails(this.userloggeddata, this.Room, {Key? key}) : super(key: key);
 
   @override
-  _HotelDetails createState() => _HotelDetails();
+  _RoomDetails createState() => _RoomDetails();
 }
 
-class _HotelDetails extends State<HotelDetails> {
-  HotelViewModel? hotelId;
+class _RoomDetails extends State<RoomDetails> {
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
 
@@ -53,8 +53,7 @@ List<Padding> HotelDetails(List<dynamic> data, BuildContext context) {
   final _controller = PageController();
   List<String> imageUrl;
   data.forEach((element) {
-     hotelId = new HotelViewModel(element['id'], null, null, null);
-     imageUrl = element['image_URL'].split(',');
+     imageUrl = element['imageUrl'].split(',');
     list.add(Padding(
       padding: EdgeInsetsDirectional.fromSTEB(18, 14, 18,0),
       child: Container(
@@ -122,7 +121,7 @@ List<Padding> HotelDetails(List<dynamic> data, BuildContext context) {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    element['hotel'],
+                                    element['habitacion'],
                                     style: TextStyle(
                                       fontFamily: 'Outfit',
                                       color: Color(0xFF090F13),
@@ -243,32 +242,7 @@ List<Padding> HotelDetails(List<dynamic> data, BuildContext context) {
                                   color: Color.fromARGB(182, 246, 246, 246),
                                 ),
                                  
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 10, 220, 0),
-                                child: Text("Dirección",
-                                  style: TextStyle(
-                                    fontFamily: 'Outfit',
-                                    color: Colors.black,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                               Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(35, 20, 10, 30),
-                                child: Text(
-                                  "Avenida " + element['avenida'] + " Calle "+ element['calle']+ " Colonia " + element['colonia'] + ", " + element['ciudad']
-                                  /*element['ciudad'] + "\nCol. " + element['colonia'] + ", Calle " + element['calle'] + ", Ave. " + element['avenida']*/ ,
-                                  style: TextStyle(
-                                    fontFamily: 'Outfit',
-                                    color: Color(0xFF7C8791),
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
+                            
               ],
             )
           ],
@@ -353,146 +327,14 @@ List<Padding> HotelDetails(List<dynamic> data, BuildContext context) {
                                       verticalDirection: VerticalDirection.down,
                                       clipBehavior: Clip.none,
                                       children: HotelDetails(
-                                          widget.Hotel, context));
+                                          widget.Room, context));
                               },
 
                             ),
                           ],
                         )),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: ElevatedButton(
-          onPressed: () {
-            
-            Navigator.push(
-              context,
-               MaterialPageRoute(builder: (context) =>  RoomsListcustomPackage( widget.userloggeddata,hotelId)),
-              );
-          },
-          child: Text('Selecciona habitaciones', style: TextStyle(fontSize: 18),),
-          style: ElevatedButton.styleFrom(
-            primary: Color(0xFF652D8F),
-
-          ),
-        ),
-      ),
-
       
     );
   }
 }
 
-
-/*SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Stack(
-            children: [
-              Stack(
-                children: [
-                  Stack(
-                    children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 40, 0, 0),
-                        child: Image.network(
-                          'https://picsum.photos/seed/385/600',
-                          width: 400,
-                          height: 250,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Container(
-                        width: 380,
-                        height: 30,
-                        decoration: BoxDecoration(
-                          color:
-                              Colors.white,
-                        ),
-                      ),
-                    ],
-                  ),
-                  Container(
-                    width: 380,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-              Align(
-                alignment: AlignmentDirectional(-0.98, 0.06),
-                child: Container(
-                  width: 380,
-                  height: 80,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(-0.94, 0),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
-                  child: Text(
-                    'Hotel Nombre',
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 26,
-                          fontWeight: FontWeight.w800,
-                        ),
-                  ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(-0.94, 0.1),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
-                  child: Text(
-                    '[rating]',
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                          fontFamily: 'Poppins',
-                          fontSize: 15,
-                          fontWeight: FontWeight.w800,
-                        ),
-                  ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(0.94, 0),
-                child: Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(15, 0, 0, 0),
-                  child: GradientText(
-                    '[4.5]',
-                    textAlign: TextAlign.start,
-                    style: TextStyle(
-                          fontFamily: 'Poppins',
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w800,
-                        ),
-                    colors: [Color(0xFFFFC36D), Color(0xFFF5A42E)],
-                    gradientDirection: GradientDirection.ltr,
-                    gradientType: GradientType.linear,
-                  ),
-                ),
-              ),
-              Align(
-                alignment: AlignmentDirectional(0, 0.98),
-                child: Container(
-                  width: 380,
-                  height: 250,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                  ),
-                  child: Text(
-                    'Descripcion',
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ), */

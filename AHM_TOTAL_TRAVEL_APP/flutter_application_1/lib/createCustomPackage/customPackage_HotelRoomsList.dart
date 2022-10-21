@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_HotelDetails.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_RoomDetails.dart';
 import 'package:http/http.dart' as http;
 import '../Models/CitiesViewModel.dart';
 import '../Models/UsersViewModel.dart';
@@ -10,26 +11,26 @@ import '../utils/models.dart';
 import '../utils/AppWidget.dart';
 import '../utils/ListaHoteles.dart';
 
-class HotelcustomPackage extends StatefulWidget {
+class RoomsListcustomPackage extends StatefulWidget {
   static var tag = "/DemoT2Cards";
   final UserLoggedModel? userloggeddata;
-  final CiudadesViewModel? Ciudad;
+  final HotelViewModel? Hotel;
 
-  const HotelcustomPackage( this.userloggeddata, this.Ciudad,{super.key});
+  const RoomsListcustomPackage( this.userloggeddata, this.Hotel,{super.key});
   @override
-  _HotelcustomPackage createState() => _HotelcustomPackage();
+  _RoomsListcustomPackage createState() => _RoomsListcustomPackage();
 }
 
-class _HotelcustomPackage extends State<HotelcustomPackage> {
+class _RoomsListcustomPackage extends State<RoomsListcustomPackage> {
 late List<Hoteles> ListaHoteles;
 Map<int?, String> HotelsDictionary = Map();
 
 
 
-  Future<dynamic> GetListHotels(Ciudad,userloggeddata) async {
-    List<dynamic> dataHotels;
+  Future<dynamic> GetListRooms(Hotel,userloggeddata) async {
+    List<dynamic> dataRooms;
   String url_list =
-      "https://totaltravelapi.azurewebsites.net/API/Hotels/List";
+      "https://totaltravel.somee.com/API/Rooms/List";
        final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -38,10 +39,10 @@ Map<int?, String> HotelsDictionary = Map();
   if (response.statusCode == 200) {
     Map<String, dynamic> userMap = jsonDecode(response.body);
      var Json = DecoderAPI.fromJson(userMap);
-     dataHotels = Json.data;
-     var Hotel = dataHotels.where((x) => x['ciudadID'] == Ciudad.ID).toList();
+     dataRooms = Json.data;
+     var Room = dataRooms.where((x) => x['hotelID'] == Hotel.ID).toList();
   
-    return Hotel;
+    return Room;
   } else {
     print("Error " + response.statusCode.toString());
   }
@@ -49,10 +50,10 @@ Map<int?, String> HotelsDictionary = Map();
 
 
 
-  Future<dynamic> FindHotels(idHotel,userloggeddata) async {
-    List<dynamic> dataHotels;
+  Future<dynamic> FindRooms(idRoom,userloggeddata) async {
+    List<dynamic> dataRoom;
   String url_list =
-      "https://totaltravelapi.azurewebsites.net/API/Hotels/List";
+      "https://totaltravelapi.azurewebsites.net/API/Rooms/List";
        final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -61,13 +62,12 @@ Map<int?, String> HotelsDictionary = Map();
   if (response.statusCode == 200) {
     Map<String, dynamic> userMap = jsonDecode(response.body);
      var Json = DecoderAPI.fromJson(userMap);
-     dataHotels = Json.data;
-     var Hotel = dataHotels.where((x) => x['id'] == idHotel).toList();
+     dataRoom = Json.data;
+     var Room = dataRoom.where((x) => x['id'] == idRoom).toList();
   
-    print(Hotel);
        Navigator.push(
               context,
-               MaterialPageRoute(builder: (context) =>  HotelDetails( widget.userloggeddata,Hotel)),
+               MaterialPageRoute(builder: (context) =>  RoomDetails( widget.userloggeddata,Room)),
               );
   } else {
     print("Error " + response.statusCode.toString());
@@ -83,7 +83,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
   final _controller = PageController();
   List<String> imageUrl;
   data.forEach((element) {
-     imageUrl = element['image_URL'].split(',');
+     imageUrl = element['imageUrl'].split(',');
     list.add(Padding(
       padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
       child: Container(
@@ -157,7 +157,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    element['hotel'],
+                                    element['habitacion'],
                                     style: TextStyle(
                                       fontFamily: 'Outfit',
                                       color: Color(0xFF090F13),
@@ -263,7 +263,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                         ),
                                       ),
                                       onPressed: () {
-                                        FindHotels(element['id'],widget.userloggeddata);
+                                        FindRooms(element['id'],widget.userloggeddata);
                                       },
                                     ),
                                   ],
@@ -308,11 +308,11 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
         backgroundColor: Color(0xFF652D8F),
         automaticallyImplyLeading: false,
         title: Align(
-          alignment: AlignmentDirectional(0, -0.05),
+          alignment: AlignmentDirectional(0.4, -0.05),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(60, 15, 0, 10),
+            padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 10),
             child: Text(
-              'Hoteles',
+              'Habitaciones',
               textAlign: TextAlign.center,
               style: TextStyle(
                     fontFamily: 'Poppins',
@@ -364,7 +364,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                   return Text("No data");
                                 }
                               },
-                              future: GetListHotels(widget.Ciudad,widget.userloggeddata),
+                              future: GetListRooms(widget.Hotel,widget.userloggeddata),
                             ),
                           ],
                         )),

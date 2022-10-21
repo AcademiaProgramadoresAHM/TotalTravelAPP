@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/ComponentsLogin/Edit.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
+import 'package:flutter_application_1/createCustomPackage/steppers.dart';
 import 'package:flutter_application_1/utils/AppWidget.dart';
 import 'package:flutter_application_1/utils/prueba2/T2Colors.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -100,9 +101,9 @@ final TextEditingController textEditingController = TextEditingController();
         title: Align(
           alignment: AlignmentDirectional(0.5, -0.05),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
+            padding: EdgeInsetsDirectional.fromSTEB(15, 15, 0, 10),
             child: Text(
-              'Crea tu paquete',
+              'Agencia Total Travel',
               textAlign: TextAlign.center,
               style: TextStyle(
                     fontFamily: 'Poppins',
@@ -347,22 +348,7 @@ final TextEditingController textEditingController = TextEditingController();
                   ),
                 ],
               ),
-              LinearPercentIndicator(
-                percent: 0.5,
-                width: 392,
-                lineHeight: 24,
-                animation: true,
-                progressColor: Color(0xFFFFC36D),
-                backgroundColor: Color(0xFFF1F4F8),
-                center: Text(
-                  '50%',
-                  style: TextStyle(
-                        fontFamily: 'Poppins',
-                        color: Color(0xFF652D8F),
-                      ),
-                ),
-                padding: EdgeInsets.zero,
-              ),
+              
             ],
           ),
         ),

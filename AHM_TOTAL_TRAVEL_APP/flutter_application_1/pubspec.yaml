@@ -49,6 +49,10 @@ dependencies:
     percent_indicator: ^4.2.2
     dropdown_button2: ^1.8.5
     universal_html: ^2.0.8
+    enhance_stepper: ^0.1.1
+    tuple: ^2.0.1
+    ddlog: ^0.0.7
+    simple_gradient_text: ^1.2.4
     
     
 dev_dependencies:
