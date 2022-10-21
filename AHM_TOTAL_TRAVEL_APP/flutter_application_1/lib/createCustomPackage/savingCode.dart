@@ -215,10 +215,7 @@ class _createCustomPackage extends State<createCustomPackage> {
                             primary: Color.fromRGBO(101, 45, 143, 1),
                           ),
                           onPressed: () {
-                             Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) =>  HotelcustomPackage( widget.userloggeddata,widget.Ciudad)),
-                                        );
+                      
                           },
                         ),
                       ),
@@ -244,10 +241,7 @@ class _createCustomPackage extends State<createCustomPackage> {
                             primary: Color.fromARGB(255, 101, 45, 143),
                           ),
                            onPressed: () {
-                             Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) =>  customActivities( widget.userloggeddata,widget.Ciudad)),
-                                        );
+                           
                           },
                         ),
                       ),

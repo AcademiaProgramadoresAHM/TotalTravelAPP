@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
@@ -19,40 +20,71 @@ class RoomDetails extends StatefulWidget {
 class _RoomDetails extends State<RoomDetails> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  TextEditingController? _QuestController;
 
 
+  
 
-DateTimeRange dateRange = DateTimeRange(
-    start: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day), 
-    end: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day + 1)
-    );
 
 List<Padding> HotelDetails(List<dynamic> data, BuildContext context) {
+
   
-  final start = dateRange.start;
-  final end = dateRange.end;
-    final difference = dateRange.duration;
-
-  Future pickDateRange() async {
-  DateTimeRange? newDataRange = await showDateRangePicker(
-    context: context, 
-    initialDateRange: dateRange, 
-    firstDate: dateRange.start, 
-    lastDate: DateTime(2100),
-    );
-
-    if(newDataRange == null) return;
-    
-    setState(() {
-      dateRange = newDataRange;
-    });
-
-}
-
   List<Padding> list = [];
+  List<String> items = [];
   final _controller = PageController();
   List<String> imageUrl;
+  
   data.forEach((element) {
+
+    for (var i = 1; i <= element['camas']; i++) {
+     items.add('${i.toString()}');
+    }
+
+String? selectedValue;
+
+List<DropdownMenuItem<String>> _addDividersAfterItems(List<String> items) {
+  List<DropdownMenuItem<String>> _menuItems = [];
+  for (var item in items) {
+    _menuItems.addAll(
+      [
+        DropdownMenuItem<String>(
+          value: item,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text(
+              item,
+              style: const TextStyle(
+                fontSize: 14,
+              ),
+            ),
+          ),
+        ),
+        //If it's last item, we will not add Divider after it.
+        if (item != items.last)
+          const DropdownMenuItem<String>(
+            enabled: false,
+            child: Divider(),
+          ),
+      ],
+    );
+  }
+  return _menuItems;
+}
+
+List<double> _getCustomItemsHeights() {
+  List<double> _itemsHeights = [];
+  for (var i = 0; i < (items.length * 2) - 1; i++) {
+    if (i.isEven) {
+      _itemsHeights.add(40);
+    }
+    //Dividers indexes will be the odd indexes
+    if (i.isOdd) {
+      _itemsHeights.add(4);
+    }
+  }
+  return _itemsHeights;
+}
+
      imageUrl = element['imageUrl'].split(',');
     list.add(Padding(
       padding: EdgeInsetsDirectional.fromSTEB(18, 14, 18,0),
@@ -132,6 +164,19 @@ List<Padding> HotelDetails(List<dynamic> data, BuildContext context) {
 
                                 ],
                               ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                child: Text(
+                                  element['categoria'],
+                                  style: TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF7C8791),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
                               Text(
                                 " ",
                                 style: TextStyle(
@@ -154,9 +199,18 @@ List<Padding> HotelDetails(List<dynamic> data, BuildContext context) {
                                   ),
                                 ),
                               ),
-                              Padding(
+                              Text(
+                                " ",
+                                style: TextStyle(
+                                  fontFamily: 'Outfit',
+                                  color: Color.fromRGBO(101, 45, 143, 1),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              /*Padding(
                                 padding:
-                                    EdgeInsetsDirectional.fromSTEB(20, 40, 0, 0),
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                                 child: Column(
                                   children: [
                                     const SizedBox(height: 16),
@@ -164,58 +218,123 @@ List<Padding> HotelDetails(List<dynamic> data, BuildContext context) {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Expanded(
-                                          child: Text("Fecha entrada", style: TextStyle(
+                                          child: Text("Huespedes", style: TextStyle(
+                                              fontFamily: 'Outfit',
+                                    color: Color(0xFF7C8791),
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w500, )
+                                    )
+                                         
+                                         ),
+                                         
+                                      ],
+                                    )
+                                  ],
+                                ),
+                                  
+                              ),*/ Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(10, 30, 0, 0),
+                                child: Column(
+                                  children: [
+                                    const SizedBox(height: 16),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Expanded(
+                                          child: Text("Huespedes", style: TextStyle(
                                               fontFamily: 'Outfit',
                                     color: Color(0xFF7C8791),
                                     fontSize: 18,
                                     fontWeight: FontWeight.w500, ))
+                                         
                                          ),
-                                         const SizedBox(width: 12),
-                                         Expanded(
-                                          child: Padding(
-                                            padding: const EdgeInsets.only(left: 10),
-                                            child: Text("Fecha Salida", style: TextStyle(
+                                         Padding(padding: EdgeInsets.only(left: 120)),
+                                          Expanded(
+                                          child: Text("Camas", style: TextStyle(
                                               fontFamily: 'Outfit',
                                     color: Color(0xFF7C8791),
                                     fontSize: 18,
-                                    fontWeight: FontWeight.w500, ),),
-                                          ),)
+                                    fontWeight: FontWeight.w500, ))
+                                         
+                                         ),
                                       ],
                                     )
                                   ],
                                 ),
                                   
                               ),
-                             Padding(
+                              Padding(
                                 padding:
-                                    EdgeInsetsDirectional.only(top: 0),
+                                    EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
                                 child: Column(
                                   children: [
-                                    const SizedBox(height: 16),
-                                    Row(
+                                    Form(
+                                      child:Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Expanded(
-                                          child: ElevatedButton(
-                                            child: Text(DateFormat('dd-MM-yyyy').format(start), style: TextStyle(color: Color.fromARGB(255, 197, 136, 51),),), 
-                                            style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
-                                            onPressed: pickDateRange,
-                                            )
-                                         ),
-                                         const SizedBox(width: 12),
+                                          flex: 3,
+                                          child:TextFormField(
+                                              controller: _QuestController,
+                                              decoration: InputDecoration(
+                                                          focusColor: Colors.white,
+                                                          border: InputBorder.none,
+                                                          //add prefix icon
+                                                          prefixIcon: Icon(
+                                                            Icons.person_outline_rounded,
+                                                            color: Colors.grey,
+                                                          )),
+                                              validator: (value) {
+                                                String? err = (value);
+                                                if (err != null) {
+                                                 return "Ingrese una cantidad";
+                                                }
+                                                return err;
+                                              },
+                                              
+                                            )),
                                          Expanded(
-                                          child: ElevatedButton(
-                                             style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
-                                            child: Text(DateFormat('dd-MM-yyyy').format(end), style: TextStyle(color: Color.fromARGB(255, 197, 136, 51),),),  
-                                            onPressed: pickDateRange,
-                                            ))
+                                            flex: 2,
+                                          child: Text(" "),
+                                         ),
+                                    
+                                          Expanded(
+                                            flex: 3,
+                                          child: 
+                                          DropdownButtonHideUnderline(
+                                                      child: DropdownButton2(
+                                                        isExpanded: true,
+                                                        hint: Text(
+                                                          '1',
+                                                          style: TextStyle(
+                                                            fontSize: 16,
+                                                            color: Theme.of(context).hintColor,
+                                                          ),
+                                                        ),
+                                                        items: _addDividersAfterItems(items),
+                                                        customItemsHeights: _getCustomItemsHeights(),
+                                                        value: selectedValue,
+                                                        onChanged: (value) {
+                                                          setState(() {
+                                                            selectedValue = value as String;
+                                                          });
+                                                        },
+                                                        buttonHeight: 50,
+                                                        dropdownMaxHeight: 150,
+                                                        buttonWidth: 140,
+                                                        itemPadding: const EdgeInsets.symmetric(horizontal: 8.0),
+                                                      ),
+                                                    ),
+                                         ),
                                       ],
-                                    )
+                                    ))
+                                    
                                   ],
                                 ),
                                   
-
                               ),
+                           
                         
                             ],
                           ),
@@ -252,19 +371,13 @@ List<Padding> HotelDetails(List<dynamic> data, BuildContext context) {
     ),
     
     );
-    
-
+  
   }
   
   );
-
-
-
   return list;
   
 }
-
-
 
 
 

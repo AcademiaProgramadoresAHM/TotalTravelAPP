@@ -361,7 +361,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                       children: ListHotels(
                                           snapshot.data, context));
                                 } else {
-                                  return Text("No data");
+                                  return Text(" ");
                                 }
                               },
                               future: GetListRooms(widget.Hotel,widget.userloggeddata),

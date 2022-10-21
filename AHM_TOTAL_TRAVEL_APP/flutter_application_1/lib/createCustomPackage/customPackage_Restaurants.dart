@@ -303,7 +303,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                       children: ListHotels(
                                           snapshot.data, context));
                                 } else {
-                                  return Text("No data");
+                                  return Text(" ");
                                 }
                               },
                               future: GetListRestaurants(widget.Ciudad,widget.userloggeddata),
