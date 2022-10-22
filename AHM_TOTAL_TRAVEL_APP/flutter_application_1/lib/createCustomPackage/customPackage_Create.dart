@@ -190,6 +190,33 @@ class _createCustomPackage extends State<createCustomPackage> {
           Expanded(
             // the Stepper widget
             child: Stepper(
+              margin: EdgeInsetsDirectional.fromSTEB(70,60,50,60),
+                controlsBuilder: (context, _) {
+                            var onStepContinue = _stepContinue;
+                             var onStepCancel = _stepCancel;
+                            return Row(
+                              children: <Widget>[
+                                TextButton(
+                                  onPressed:onStepContinue,
+                                  child: const Text(
+                                    'Siguiente',
+                                    style:
+                                      TextStyle(color:Color(0xFF652D8F)),
+                                  ),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+
+                                  },
+                                  child: const Text(
+                                      'Cancelar',
+                                    style:
+                                      TextStyle(color: Color(0xFF652D8F)),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
               // vertical or horizontial
               type: _isVerticalStepper
                   ? StepperType.vertical
@@ -199,6 +226,7 @@ class _createCustomPackage extends State<createCustomPackage> {
               onStepTapped: (step) => _stepTapped(step),
               onStepContinue: _stepContinue,
               onStepCancel: _stepCancel,
+              
               steps: [
                 // The first step: Name
                 Step(
@@ -209,7 +237,7 @@ class _createCustomPackage extends State<createCustomPackage> {
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         child: ElevatedButton(
                           child: Text(
-                              '                 Seleccionar hotel                 ',
+                              '     Seleccionar hotel      ',
                               style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
                             primary: Color.fromRGBO(101, 45, 143, 1),
@@ -238,7 +266,7 @@ class _createCustomPackage extends State<createCustomPackage> {
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         child: ElevatedButton(
                           child: Text(
-                              '             Seleccionar actividades             ',
+                              '     Seleccionar actividades     ',
                               style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
                             primary: Color.fromARGB(255, 101, 45, 143),
@@ -296,7 +324,7 @@ class _createCustomPackage extends State<createCustomPackage> {
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         child: ElevatedButton(
                           child: Text(
-                              '                 Seleccionar restaurante                 ',
+                              '      Seleccionar restaurante    ',
                               style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
                             primary: Color.fromRGBO(101, 45, 143, 1),
@@ -325,7 +353,7 @@ class _createCustomPackage extends State<createCustomPackage> {
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         child: ElevatedButton(
                           child: Text(
-                              '                 Realizar pago                 ',
+                              '              Realizar pago                 ',
                               style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
                             primary: Color.fromARGB(255, 101, 45, 143),

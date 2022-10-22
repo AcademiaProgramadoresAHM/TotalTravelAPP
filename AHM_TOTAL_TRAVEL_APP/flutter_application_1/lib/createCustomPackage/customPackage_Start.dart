@@ -35,7 +35,6 @@ class _createPackage extends State<createPackage> {
   String? selectedValue;
 final TextEditingController textEditingController = TextEditingController();
   String? dropDownValue;
-  TextEditingController dateOfBirthController = TextEditingController();
   TextEditingController? textController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -180,7 +179,7 @@ final TextEditingController textEditingController = TextEditingController();
                     padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                     child: Container(
                       width: 330,
-                      height: 200,
+                      height: 138,
                       decoration: BoxDecoration(
                         color: Color(0x00FFFFFF),
                         shape: BoxShape.rectangle,
@@ -191,51 +190,6 @@ final TextEditingController textEditingController = TextEditingController();
                       ),
                       child: Stack(
                         children: [
-                          Align(
-                            alignment: AlignmentDirectional(0, 0.06),
-                            child:   Container(
-                              height: 65,
-                              decoration: BoxDecoration(color: Colors.white),
-                              child: TextFormField(
-                                      style: kTextFormFieldStyle(),
-                                      controller: dateOfBirthController,
-                                      decoration: const InputDecoration(
-                                        prefixIcon: Icon(Icons.calendar_today),
-                                        hintText: 'Fecha',
-                                        border: InputBorder.none
-                                      ),
-                                      readOnly: true,
-                                      onTap: () async {
-                                        DateTime? pickedDate =
-                                            await showDatePicker(
-                                                context: context,
-                                                initialDate: DateTime.now(),
-                                                firstDate: DateTime(1901),
-                                                lastDate: DateTime(2101));
-
-                                        if (pickedDate != null) {
-                                          print(pickedDate);
-                                          String formattedDate =
-                                              DateFormat('yyyy-MM-dd')
-                                                  .format(pickedDate);
-                                          print(formattedDate);
-                                          setState(() {
-                                            dateOfBirthController.text =
-                                                formattedDate; //set output date to TextField value.
-                                          });
-                                        } else {
-                                          print("Fecha no seleccionada");
-                                        }
-                                      },
-                                      validator: (value) {
-                                        if (value == null || value.isEmpty) {
-                                          return 'Por favor ingrese una fecha';
-                                        }
-                                        return null;
-                                      },
-                                    ),
-                            ),
-                          ),
                           Align(
                             alignment: AlignmentDirectional(0, 1.00),
                             child: Container(
@@ -273,26 +227,22 @@ final TextEditingController textEditingController = TextEditingController();
                         decoration: BoxDecoration(color: Colors.white),
                          child:  DropdownButtonHideUnderline(
                                 child: DropdownButton2(
-                                  isExpanded: true,
-                                  
+                                  isExpanded: true,                             
                                   hint: Padding(
                                     padding: const EdgeInsets.only(left: 0),
                                     child: TextFormField(
                                       style: kTextFormFieldStyle(),
                                       decoration: const InputDecoration(
-                                      
                                         border: InputBorder.none,
                                         prefixIcon: Icon(Icons.location_on_outlined),
                                         hintText: 'Destino',
-                                        
                                       ),
                                     ),
                                   ),
                                    items: CitiesDictionary.keys.map((id) {
                                           return DropdownMenuItem(
                                             value: id,
-                                            child: Text(CitiesDictionary[id]
-                                                .toString()),
+                                            child: Text(CitiesDictionary[id].toString()),
                                           );
                                         }).toList(),
                                          value: selectedCity,
@@ -302,9 +252,9 @@ final TextEditingController textEditingController = TextEditingController();
                                        CitiesDropDownValue = value;
                                     });
                                   },
-                                  buttonHeight: 70,
+                                  buttonHeight: 100,
                                   buttonWidth: 400,
-                                  itemHeight: 40,
+                                  itemHeight: 50,
                                   dropdownMaxHeight: 200,
                                   searchController: textEditingController,
                                   searchInnerWidget: Padding(
