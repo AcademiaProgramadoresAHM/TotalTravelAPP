@@ -1,8 +1,12 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
+import 'package:flutter_application_1/ComponentsLogin/controller/simple_ui_controller.dart';
 import 'package:flutter_application_1/hotel_booking/calendar_popup_view.dart';
 import 'package:flutter_application_1/hotel_booking/hotel_list_view.dart';
 import 'package:flutter_application_1/hotel_booking/model/hotel_list_data.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'hotel_booking/filters_screen.dart';
 import 'hotel_booking/hotel_app_theme.dart';
@@ -19,7 +23,7 @@ class SupportScreen extends StatefulWidget {
 class _HomePageWidgetState extends State<SupportScreen> {
   TextEditingController? shortBioController;
 
-  final scaffoldKey = GlobalKey<ScaffoldState>();
+  final _columnKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -29,517 +33,410 @@ class _HomePageWidgetState extends State<SupportScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          title: Text('Info. Contacto', style: TextStyle(fontSize: 22)),
-          automaticallyImplyLeading: false,
-          backgroundColor: Color.fromRGBO(101, 45, 143, 1)),
-      key: scaffoldKey,
-      backgroundColor: Color.fromARGB(255, 224, 221, 221),
-      body: SingleChildScrollView(
-        child: SafeArea(
-          child: GestureDetector(
-            onTap: () => FocusScope.of(context).unfocus(),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(15, 10, 0, 10),
-                        child: Text(
-                          'CONTACTANOS',
-                          style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ],
+    var size = MediaQuery.of(context).size;
+    Get.put(SimpleUIController());
+
+    SimpleUIController simpleUIController = Get.find<SimpleUIController>();
+    return Theme(
+      data: HotelAppTheme.buildLightTheme(),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            getAppBarUI(),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 8),
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: Color(0xFFF1F4F8),
+                    width: 2,
                   ),
                 ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.1,
-                  decoration: BoxDecoration(
-                    color: Colors.white, //ocupa revisar**
-                  ),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
                   child: Row(
                     mainAxisSize: MainAxisSize.max,
                     children: [
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFF1F4F8),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        alignment: AlignmentDirectional(0, 0),
+                        child: Icon(Icons.location_on),
+                      ),
                       Expanded(
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 8),
-                          child: Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: Color(0xFFF1F4F8),
-                                width: 2,
-                              ),
-                            ),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Container(
-                                      width: 50,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFF1F4F8),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      alignment: AlignmentDirectional(0, 0),
-                                      child: Icon(Icons.location_on)
-                                      // Text(
-                                      //   '4',
-                                      //   textAlign: TextAlign.center,
-                                      //   style: TextStyle(
-                                      //     fontFamily: 'Outfit',
-                                      //     color: Color(0xFF101213),
-                                      //     fontSize: 24,
-                                      //     fontWeight: FontWeight.w500,
-                                      //   ),
-                                      // ),
-                                      ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          12, 0, 0, 0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Nos Ubicamos',
-                                            style: TextStyle(
-                                              fontFamily: 'Outfit',
-                                              color: Color(0xFF101213),
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 4, 0, 0),
-                                            child: Text(
-                                              'C. Hacia Armenta, San Pedro Sula 21102',
-                                              style: TextStyle(
-                                                fontFamily: 'Outfit',
-                                                color: Color(0xFF57636C),
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.1,
-                  decoration: BoxDecoration(
-                    color: Colors.white, //ocupa Revisar***
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 8),
-                          child: Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: Color(0xFFF1F4F8),
-                                width: 2,
-                              ),
-                            ),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Container(
-                                      width: 50,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFF1F4F8),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      alignment: AlignmentDirectional(0, 0),
-                                      child: Icon(Icons.call)),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          12, 0, 0, 0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Llamada Directamente',
-                                            style: TextStyle(
-                                              fontFamily: 'Outfit',
-                                              color: Color(0xFF101213),
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 4, 0, 0),
-                                            child: Text(
-                                              '+504 9478-6523 || +504 9647-5812',
-                                              style: TextStyle(
-                                                fontFamily: 'Outfit',
-                                                color: Color(0xFF57636C),
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.1,
-                  decoration: BoxDecoration(
-                    color: Colors.white, //Ocupa Revisar**
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 8),
-                          child: Container(
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(12),
-                              border: Border.all(
-                                color: Color(0xFFF1F4F8),
-                                width: 2,
-                              ),
-                            ),
-                            child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Container(
-                                      width: 50,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFF1F4F8),
-                                        borderRadius: BorderRadius.circular(10),
-                                      ),
-                                      alignment: AlignmentDirectional(0, 0),
-                                      child: Icon(Icons.chat_bubble)),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          12, 0, 0, 0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Servicio Por Chat',
-                                            style: TextStyle(
-                                              fontFamily: 'Outfit',
-                                              color: Color(0xFF101213),
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 4, 0, 0),
-                                            child: Text(
-                                              'Habla directamente con nuestros agente en linea desde la comodidad de tu casa',
-                                              style: TextStyle(
-                                                fontFamily: 'Outfit',
-                                                color: Color(0xFF57636C),
-                                                fontSize: 12,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.5,
-                  decoration:
-                      BoxDecoration(color: Colors.white //ocupa Revisar***
-                          ),
-                  child: Material(
-                    color: Colors.transparent,
-                    elevation: 5,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(0),
-                        bottomRight: Radius.circular(0),
-                        topLeft: Radius.circular(16),
-                        topRight: Radius.circular(16),
-                      ),
-                    ),
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(0),
-                          bottomRight: Radius.circular(0),
-                          topLeft: Radius.circular(16),
-                          topRight: Radius.circular(16),
-                        ),
-                      ),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 12, 0, 0),
-                                  child: Container(
-                                    width: 50,
-                                    height: 4,
-                                    decoration: BoxDecoration(
-                                      color: Color(0xFFE0E3E7),
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
-                              child: Text(
-                                'Contactanos',
+                          padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Úbicanos',
                                 style: TextStyle(
                                   fontFamily: 'Outfit',
                                   color: Color(0xFF101213),
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 4, 0, 0),
-                              child: Text(
-                                'Cuentanos en que podemos Ayudarte',
-                                style: TextStyle(
-                                  fontFamily: 'Outfit',
-                                  color: Color(0xFF57636C),
-                                  fontSize: 14,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.normal,
                                 ),
                               ),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(40),
-                                    child: Image.network(
-                                      'https://i0.wp.com/red.land/wp-content/uploads/1-55-1.jpg?fit=1400%2C1050&ssl=1',
-                                      width: 40,
-                                      height: 40,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        12, 0, 0, 0),
-                                    child: Text(
-                                      'Nombre',
-                                      style: TextStyle(
-                                        fontFamily: 'Outfit',
-                                        color: Color(0xFF57636C),
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w500,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
-                              child: TextFormField(
-                                controller: shortBioController,
-                                obscureText: false,
-                                decoration: InputDecoration(
-                                  hintText: 'Enter your note here...',
-                                  hintStyle: TextStyle(
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                child: Text(
+                                  'Altia Business Park, Bulevar Armenta, San Pedro Sula 21102',
+                                  style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color(0xFF57636C),
-                                    fontSize: 14,
+                                    fontSize: 12,
                                     fontWeight: FontWeight.normal,
                                   ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xFFF1F4F8),
-                                      width: 2,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0xFFF1F4F8),
-                                      width: 2,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 2,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                      color: Color(0x00000000),
-                                      width: 2,
-                                    ),
-                                    borderRadius: BorderRadius.circular(8),
-                                  ),
-                                  contentPadding:
-                                      EdgeInsetsDirectional.fromSTEB(
-                                          20, 32, 20, 12),
                                 ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 8),
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: Color(0xFFF1F4F8),
+                    width: 2,
+                  ),
+                ),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFF1F4F8),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        alignment: AlignmentDirectional(0, 0),
+                        child: Icon(Icons.call),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Llámanos',
                                 style: TextStyle(
                                   fontFamily: 'Outfit',
                                   color: Color(0xFF101213),
-                                  fontSize: 14,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.normal,
                                 ),
-                                textAlign: TextAlign.start,
-                                maxLines: 4,
-                                keyboardType: TextInputType.multiline,
                               ),
-                            ),
-                            Row(
-                              mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 24, 0, 44),
-                                  child: ElevatedButton(
-                                    child: Text('Enviar',
-                                        style: TextStyle(fontSize: 20)),
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Color.fromRGBO(101, 45, 143, 1),
-                                    ),
-                                    onPressed: () {},
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                child: Text(
+                                  '+504 2580-2015',
+                                  style: TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF57636C),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal,
                                   ),
-                                  // child: FFButtonWidget(
-                                  //   onPressed: () async {
-                                  //     context.pop();
-                                  //   },
-                                  //   text: 'Enviar',
-                                  //   options: FFButtonOptions(
-                                  //     width: 270,
-                                  //     height: 50,
-                                  //     color: Color(0xFF4B39EF),
-                                  //     textStyle: TextStyle(
-                                  //       fontFamily: 'Outfit',
-                                  //       color: Colors.white,
-                                  //       fontSize: 18,
-                                  //       fontWeight: FontWeight.w500,
-                                  //     ),
-                                  //     elevation: 3,
-                                  //     borderSide: BorderSide(
-                                  //       color: Colors.transparent,
-                                  //       width: 1,
-                                  //     ),
-                                  //   ),
-                                  // ),
                                 ),
-                              ],
-                            ),
-                          ],
+                              ),
+                            ],
+                          ),
                         ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 8),
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    color: Color(0xFFF1F4F8),
+                    width: 2,
+                  ),
+                ),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(8, 8, 8, 8),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Color(0xFFF1F4F8),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        alignment: AlignmentDirectional(0, 0),
+                        child: Icon(Icons.chat_bubble),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Nuestras redes sociales',
+                                style: TextStyle(
+                                  fontFamily: 'Outfit',
+                                  color: Color(0xFF101213),
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                child: Text(
+                                  'Facebook: Agencia TotalTravel \nInstagram: @totalTravel \nWhatsapp: +504 9647-5812',
+                                  style: TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF57636C),
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(16, 12, 0, 0),
+              child: Text(
+                'Contáctanos',
+                style: TextStyle(
+                  fontFamily: 'Outfit',
+                  color: Color(0xFF101213),
+                  fontSize: 22,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(16, 4, 0, 0),
+              child: Text(
+                'Cuentanos en que podemos Ayudarte',
+                style: TextStyle(
+                  fontFamily: 'Outfit',
+                  color: Color(0xFF57636C),
+                  fontSize: 14,
+                  fontWeight: FontWeight.normal,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(40),
+                    child: Image.network(
+                      'https://i0.wp.com/red.land/wp-content/uploads/1-55-1.jpg?fit=1400%2C1050&ssl=1',
+                      width: 40,
+                      height: 40,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
+                    child: Text(
+                      'Nombre',
+                      style: TextStyle(
+                        fontFamily: 'Outfit',
+                        color: Color(0xFF57636C),
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
+              child: Form(
+                key: _columnKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      controller: shortBioController,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        hintText: 'Escribe tu mensaje aqui...',
+                        hintStyle: TextStyle(
+                          fontFamily: 'Outfit',
+                          color: Color(0xFF57636C),
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color.fromARGB(255, 208, 140, 240),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0xFFF1F4F8),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        errorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        focusedErrorBorder: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            color: Color(0x00000000),
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        contentPadding:
+                            EdgeInsetsDirectional.fromSTEB(20, 32, 20, 12),
+                      ),
+                      style: TextStyle(
+                        fontFamily: 'Outfit',
+                        color: Color(0xFF101213),
+                        fontSize: 14,
+                        fontWeight: FontWeight.normal,
+                      ),
+                      textAlign: TextAlign.start,
+                      maxLines: 4,
+                      keyboardType: TextInputType.multiline,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Rellene este campo';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(
+                      height: size.height * 0.02,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      height: 55,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all(
+                              Color.fromRGBO(101, 45, 143, 1)),
+                          shape: MaterialStateProperty.all(
+                            RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                          ),
+                        ),
+                        onPressed: () {
+                          if (_columnKey.currentState!.validate()) {}
+                        },
+                        child: const Text('Enviar'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget getAppBarUI() {
+    return Container(
+      decoration: BoxDecoration(
+        color: HotelAppTheme.buildLightTheme().primaryColor,
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+              color: Colors.grey.withOpacity(0.2),
+              offset: const Offset(0, 2),
+              blurRadius: 8.0),
+        ],
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(
+            top: MediaQuery.of(context).padding.top, left: 8, right: 8),
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: Text(
+                '           ',
+              ),
+            ),
+            Expanded(
+              flex: 5,
+              child: Center(
+                child: Text(
+                  'Contáctanos',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 25,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Image.asset(
+                  'assets/images/logo-AHM-Fondo-Morao.png',
+                  height: 50,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );
