@@ -1,40 +1,36 @@
 import 'dart:convert';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:nb_utils/nb_utils.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_HotelDetails.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_RoomDetails.dart';
 import 'package:http/http.dart' as http;
 import '../Models/CitiesViewModel.dart';
 import '../Models/UsersViewModel.dart';
 import '../utils/models.dart';
 import '../utils/AppWidget.dart';
-import '../utils/T2Colors.dart';
 import '../utils/ListaHoteles.dart';
-import '../utils/flutter_rating_bar.dart';
 
-class RestaurantcustomPackage extends StatefulWidget {
+class RoomsListcustomPackage extends StatefulWidget {
   static var tag = "/DemoT2Cards";
   final UserLoggedModel? userloggeddata;
-  final CiudadesViewModel? Ciudad;
+  final HotelViewModel? Hotel;
 
-  const RestaurantcustomPackage( this.userloggeddata, this.Ciudad,{super.key});
+  const RoomsListcustomPackage( this.userloggeddata, this.Hotel,{super.key});
   @override
-  _RestaurantcustomPackage createState() => _RestaurantcustomPackage();
+  _RoomsListcustomPackage createState() => _RoomsListcustomPackage();
 }
 
-class _RestaurantcustomPackage extends State<RestaurantcustomPackage> {
+class _RoomsListcustomPackage extends State<RoomsListcustomPackage> {
 late List<Hoteles> ListaHoteles;
 Map<int?, String> HotelsDictionary = Map();
 
 
 
-  Future<dynamic> GetListRestaurants(Ciudad,userloggeddata) async {
-    List<dynamic> dataRestaurants;
+  Future<dynamic> GetListRooms(Hotel,userloggeddata) async {
+    List<dynamic> dataRooms;
   String url_list =
-      "https://totaltravelapi.azurewebsites.net/API/Restaurants/List";
+      "https://totaltravel.somee.com/API/Rooms/List";
        final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -43,14 +39,42 @@ Map<int?, String> HotelsDictionary = Map();
   if (response.statusCode == 200) {
     Map<String, dynamic> userMap = jsonDecode(response.body);
      var Json = DecoderAPI.fromJson(userMap);
-     dataRestaurants = Json.data;
-     var Restaurant = dataRestaurants.where((x) => x['ciudadID'] == Ciudad.ID).toList();
+     dataRooms = Json.data;
+     var Room = dataRooms.where((x) => x['hotelID'] == Hotel.ID).toList();
   
-    return Restaurant;
+    return Room;
   } else {
     print("Error " + response.statusCode.toString());
   }
 }
+
+
+
+  Future<dynamic> FindRooms(idRoom,userloggeddata) async {
+    List<dynamic> dataRoom;
+  String url_list =
+      "https://totaltravelapi.azurewebsites.net/API/Rooms/List";
+       final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+  final response = await http.get(Uri.parse(url_list), headers: headers);
+  if (response.statusCode == 200) {
+    Map<String, dynamic> userMap = jsonDecode(response.body);
+     var Json = DecoderAPI.fromJson(userMap);
+     dataRoom = Json.data;
+     var Room = dataRoom.where((x) => x['id'] == idRoom).toList();
+  
+       Navigator.push(
+              context,
+               MaterialPageRoute(builder: (context) =>  RoomDetails( widget.userloggeddata,Room)),
+              );
+  } else {
+    print("Error " + response.statusCode.toString());
+  }
+}
+
+
 
 
 
@@ -59,7 +83,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
   final _controller = PageController();
   List<String> imageUrl;
   data.forEach((element) {
-    imageUrl = element['image_URL'].split(',');
+     imageUrl = element['imageUrl'].split(',');
     list.add(Padding(
       padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
       child: Container(
@@ -95,8 +119,9 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
+                      
                       child: Image.network(
-                        imageUrl[0].toString(),
+                       imageUrl[0].toString(),
                         width: 100,
                         height: 100,
                         fit: BoxFit.cover,
@@ -132,7 +157,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    element['restaurante'],
+                                    element['habitacion'],
                                     style: TextStyle(
                                       fontFamily: 'Outfit',
                                       color: Color(0xFF090F13),
@@ -156,7 +181,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                                 child: Text(
-                                   "Col. " + element['colonia'] +  ", Calle " +  element['calle'] + ", Ave. " + element['avenida'],
+                                  element['descripcion'],
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color(0xFF7C8791),
@@ -237,7 +262,9 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                           fontWeight: FontWeight.normal,
                                         ),
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        FindRooms(element['id'],widget.userloggeddata);
+                                      },
                                     ),
                                   ],
                                 ),
@@ -278,9 +305,40 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('           Restaurantes'),
-          backgroundColor: Color.fromRGBO(101, 45, 143, 1),
+        backgroundColor: Color(0xFF652D8F),
+        automaticallyImplyLeading: false,
+        title: Align(
+          alignment: AlignmentDirectional(0.4, -0.05),
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 10),
+            child: Text(
+              'Habitaciones',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                    fontFamily: 'Poppins',
+                    color: Colors.white,
+                    fontSize: 23,
+                  ),
+            ),
           ),
+        ),
+        actions: [
+          Align(
+            alignment: AlignmentDirectional(-0.05, 0.05),
+            child: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+              child: Image.asset(
+                'assets/images/logo-AHM-Fondo-Morao.png',
+                width: 50,
+                height: 50,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ],
+        centerTitle: false,
+        elevation: 2,
+      ),
         body: SingleChildScrollView(
                   
                             // color:
@@ -306,7 +364,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                   return Text(" ");
                                 }
                               },
-                              future: GetListRestaurants(widget.Ciudad,widget.userloggeddata),
+                              future: GetListRooms(widget.Hotel,widget.userloggeddata),
                             ),
                           ],
                         )),

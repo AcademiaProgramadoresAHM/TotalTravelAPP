@@ -1,19 +1,14 @@
 import 'dart:convert';
-
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:nb_utils/nb_utils.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_HotelDetails.dart';
 import 'package:http/http.dart' as http;
 import '../Models/CitiesViewModel.dart';
 import '../Models/UsersViewModel.dart';
 import '../utils/models.dart';
 import '../utils/AppWidget.dart';
-import '../utils/T2Colors.dart';
 import '../utils/ListaHoteles.dart';
-import '../utils/flutter_rating_bar.dart';
 
 class HotelcustomPackage extends StatefulWidget {
   static var tag = "/DemoT2Cards";
@@ -52,24 +47,28 @@ Map<int?, String> HotelsDictionary = Map();
   }
 }
 
-  Future<dynamic> FindHotels(idHotel) async {
-    List<dynamic> findHotel;
+
+
+  Future<dynamic> FindHotels(idHotel,userloggeddata) async {
+    List<dynamic> dataHotels;
   String url_list =
-      "https://totaltravelapi.azurewebsites.net/API/Hotels/Find?Id=" + idHotel;
+      "https://totaltravelapi.azurewebsites.net/API/Hotels/List";
        final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
     };
   final response = await http.get(Uri.parse(url_list), headers: headers);
   if (response.statusCode == 200) {
-     Map<String, dynamic> userMap = jsonDecode(response.body);
+    Map<String, dynamic> userMap = jsonDecode(response.body);
      var Json = DecoderAPI.fromJson(userMap);
-     findHotel = Json.data;
-
-
-
-    print(findHotel);
-    return findHotel;
+     dataHotels = Json.data;
+     var Hotel = dataHotels.where((x) => x['id'] == idHotel).toList();
+  
+    print(Hotel);
+       Navigator.push(
+              context,
+               MaterialPageRoute(builder: (context) =>  HotelDetails( widget.userloggeddata,Hotel)),
+              );
   } else {
     print("Error " + response.statusCode.toString());
   }
@@ -122,7 +121,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                       borderRadius: BorderRadius.circular(12),
                       
                       child: Image.network(
-                       'https://totaltravel.somee.com/Images/' + imageUrl[0].toString(),
+                       imageUrl[0].toString(),
                         width: 100,
                         height: 100,
                         fit: BoxFit.cover,
@@ -264,8 +263,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                         ),
                                       ),
                                       onPressed: () {
-                                        FindHotels(element['id']);
-
+                                        FindHotels(element['id'],widget.userloggeddata);
                                       },
                                     ),
                                   ],
@@ -291,6 +289,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
 
 
 
+
   @override
   void initState() {
     super.initState();
@@ -307,9 +306,40 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('           Hoteles'),
-          backgroundColor: Color.fromRGBO(101, 45, 143, 1),
+        backgroundColor: Color(0xFF652D8F),
+        automaticallyImplyLeading: false,
+        title: Align(
+          alignment: AlignmentDirectional(0, -0.05),
+          child: Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(60, 15, 0, 10),
+            child: Text(
+              'Hoteles',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                    fontFamily: 'Poppins',
+                    color: Colors.white,
+                    fontSize: 23,
+                  ),
+            ),
           ),
+        ),
+        actions: [
+          Align(
+            alignment: AlignmentDirectional(-0.05, 0.05),
+            child: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+              child: Image.asset(
+                'assets/images/logo-AHM-Fondo-Morao.png',
+                width: 50,
+                height: 50,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ],
+        centerTitle: false,
+        elevation: 2,
+      ),
         body: SingleChildScrollView(
                   
                             // color:
@@ -332,7 +362,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                       children: ListHotels(
                                           snapshot.data, context));
                                 } else {
-                                  return Text("No data");
+                                  return Text("");
                                 }
                               },
                               future: GetListHotels(widget.Ciudad,widget.userloggeddata),

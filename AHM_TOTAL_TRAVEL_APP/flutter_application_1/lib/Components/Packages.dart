@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Components/Decodificador.dart';
+import 'package:flutter_application_1/DefaultPackageScreens/DetailsPackage.dart';
 import 'package:flutter_application_1/utils/AppWidget.dart';
 import 'package:flutter_application_1/utils/prueba2/T2Colors.dart';
 import 'package:http/http.dart' as http;
@@ -212,7 +213,13 @@ List<Padding> ListDefaultPackages(List<dynamic> data, BuildContext context) {
                                           fontWeight: FontWeight.normal,
                                         ),
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DetailPackageScreen()));
+                                      },
                                     ),
                                   ],
                                 ),

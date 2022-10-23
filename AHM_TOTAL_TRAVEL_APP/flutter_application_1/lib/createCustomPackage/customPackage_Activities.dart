@@ -95,7 +95,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.network(
-                       'https://totaltravel.somee.com/Images/' + imageUrl[0].toString(),
+                       imageUrl[0].toString(),
                         width: 100,
                         height: 100,
                         fit: BoxFit.cover,
@@ -310,7 +310,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                       children: ListHotels(
                                           snapshot.data, context));
                                 } else {
-                                  return Text("No data");
+                                  return Text(" ");
                                 }
                               },
                               future: GetListActivities(widget.Ciudad,widget.userloggeddata),

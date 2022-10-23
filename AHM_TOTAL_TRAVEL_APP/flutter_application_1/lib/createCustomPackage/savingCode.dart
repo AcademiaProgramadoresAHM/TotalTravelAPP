@@ -10,7 +10,6 @@ import 'package:flutter_application_1/createCustomPackage/customPackage_Activiti
 import 'package:flutter_application_1/createCustomPackage/customPackage_Hotels.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Restaurants.dart';
 import 'package:flutter_application_1/hotel_booking/calendar_popup_view.dart';
-import 'package:percent_indicator/percent_indicator.dart';
 import '../utils/T7Colors.dart';
 import 'package:intl/intl.dart';
 
@@ -144,40 +143,41 @@ class _createCustomPackage extends State<createCustomPackage> {
   Widget build(BuildContext context) {
     return Scaffold(
        appBar: AppBar(
-        backgroundColor: Color(0xFF652D8F),
-        automaticallyImplyLeading: false,
-        title: Align(
-          alignment: AlignmentDirectional(0, 0),
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(40, 15, 0, 10),
-            child: Text(
-              'Crea tu paquete',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                    fontFamily: 'Poppins',
-                    color: Colors.white,
-                    fontSize: 23,
-                  ),
-            ),
-          ),
-        ),
-        actions: [
-          Align(
-            alignment: AlignmentDirectional(-0.05, 0.05),
-            child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-              child: Image.asset(
-                'assets/images/logo-AHM-Fondo-Morao.png',
-                width: 50,
-                height: 50,
-                fit: BoxFit.cover,
+          backgroundColor: Color.fromRGBO(101, 45, 143, 1),
+         title: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 1,
+              child: Text(
+                '           ',
               ),
             ),
-          ),
-        ],
-        centerTitle: false,
-        elevation: 2,
-      ),
+            Padding(
+              padding: const EdgeInsets.only(right: 70),
+              child: Expanded(
+                flex: 5,
+                child: Center(
+                  child: Text(
+                    'Crear paquete',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 25,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Expanded(
+              flex: 1,
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Image.asset('assets/images/logo-AHM-Fondo-Morao.png', height: 50,),
+              ),
+            ),
+          ],
+        ),
+        ),
       body: Column(
         children: [
           // Controls the stepper orientation
@@ -190,33 +190,6 @@ class _createCustomPackage extends State<createCustomPackage> {
           Expanded(
             // the Stepper widget
             child: Stepper(
-              margin: EdgeInsetsDirectional.fromSTEB(70,60,50,60),
-                controlsBuilder: (context, _) {
-                            var onStepContinue = _stepContinue;
-                             var onStepCancel = _stepCancel;
-                            return Row(
-                              children: <Widget>[
-                                TextButton(
-                                  onPressed:onStepContinue,
-                                  child: const Text(
-                                    'Siguiente',
-                                    style:
-                                      TextStyle(color:Color(0xFF652D8F)),
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-
-                                  },
-                                  child: const Text(
-                                      'Cancelar',
-                                    style:
-                                      TextStyle(color: Color(0xFF652D8F)),
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
               // vertical or horizontial
               type: _isVerticalStepper
                   ? StepperType.vertical
@@ -226,7 +199,6 @@ class _createCustomPackage extends State<createCustomPackage> {
               onStepTapped: (step) => _stepTapped(step),
               onStepContinue: _stepContinue,
               onStepCancel: _stepCancel,
-              
               steps: [
                 // The first step: Name
                 Step(
@@ -237,16 +209,13 @@ class _createCustomPackage extends State<createCustomPackage> {
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         child: ElevatedButton(
                           child: Text(
-                              '     Seleccionar hotel      ',
+                              '                 Seleccionar hotel                 ',
                               style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
                             primary: Color.fromRGBO(101, 45, 143, 1),
                           ),
                           onPressed: () {
-                             Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) =>  HotelcustomPackage( widget.userloggeddata,widget.Ciudad)),
-                                        );
+                      
                           },
                         ),
                       ),
@@ -266,16 +235,13 @@ class _createCustomPackage extends State<createCustomPackage> {
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         child: ElevatedButton(
                           child: Text(
-                              '     Seleccionar actividades     ',
+                              '             Seleccionar actividades             ',
                               style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
                             primary: Color.fromARGB(255, 101, 45, 143),
                           ),
                            onPressed: () {
-                             Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) =>  customActivities( widget.userloggeddata,widget.Ciudad)),
-                                        );
+                           
                           },
                         ),
                       ),
@@ -324,7 +290,7 @@ class _createCustomPackage extends State<createCustomPackage> {
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         child: ElevatedButton(
                           child: Text(
-                              '      Seleccionar restaurante    ',
+                              '                 Seleccionar restaurante                 ',
                               style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
                             primary: Color.fromRGBO(101, 45, 143, 1),
@@ -353,7 +319,7 @@ class _createCustomPackage extends State<createCustomPackage> {
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         child: ElevatedButton(
                           child: Text(
-                              '              Realizar pago                 ',
+                              '                 Realizar pago                 ',
                               style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
                             primary: Color.fromARGB(255, 101, 45, 143),
@@ -378,24 +344,7 @@ class _createCustomPackage extends State<createCustomPackage> {
               ],
             ),
           ),
-          LinearPercentIndicator(
-                percent: 0.5,
-                width: 392,
-                lineHeight: 24,
-                animation: true,
-                progressColor: Color(0xFFFFC36D),
-                backgroundColor: Color(0xFFF1F4F8),
-                center: Text(
-                  '50%',
-                  style: TextStyle(
-                        fontFamily: 'Poppins',
-                        color: Color(0xFF652D8F),
-                      ),
-                ),
-                padding: EdgeInsets.zero,
-              ),
         ],
-        
       ),
        
     );
