@@ -10,10 +10,10 @@ class EmailVerificationViewModel {
 
 class EmailContactViewModel {
   String? BodyData;
-  String? To;
+  String? Email;
 
   Map<String, dynamic> toJson() => {
-        "to": To,
+        "to": Email,
         "toName": "totaltravelenterprise@gmail.com",
         "subject": "string",
         "bodyData": BodyData

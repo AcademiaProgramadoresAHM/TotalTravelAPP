@@ -127,10 +127,10 @@ Future<void> changePassword(
 }
 
 Future<void> PostEmailContact(
-    String body, String to, BuildContext context) async {
+    String body, String email, BuildContext context) async {
   EmailContactViewModel emailBody = new EmailContactViewModel();
   emailBody.BodyData = body;
-  emailBody.To = to;
+  emailBody.Email = email;
 
   final url = Uri.parse(
       "https://totaltravelapi.azurewebsites.net/API/Login/EmailContact");
