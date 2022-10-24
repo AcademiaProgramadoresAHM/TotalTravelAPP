@@ -78,7 +78,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
           break;
         case DrawerIndex.FeedBack:
           setState(() {
-            screenView = FeedbackScreen();
+            screenView = FeedbackScreen(widget.userloggeddata);
           });
           break;
         case DrawerIndex.Compras:
