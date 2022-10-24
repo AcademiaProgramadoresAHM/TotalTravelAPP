@@ -53,7 +53,6 @@ class _createCustomPackage extends State<createCustomPackage> {
       StepSet(widget.Step);
     //GetListHotels(widget.Ciudad,widget.userloggeddata);
   }
-
     void StepSet(Step){
       
     switch (widget.Step) {
@@ -417,7 +416,7 @@ class _createCustomPackage extends State<createCustomPackage> {
               ],
             ),
           ),
-          LinearPercentIndicator(
+         /* LinearPercentIndicator(
                 percent: 0.5,
                 width: 392,
                 lineHeight: 24,
@@ -432,7 +431,7 @@ class _createCustomPackage extends State<createCustomPackage> {
                       ),
                 ),
                 padding: EdgeInsets.zero,
-              ),
+              ),*/
         ],
         
       ),

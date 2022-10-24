@@ -38,6 +38,11 @@ final TextEditingController textEditingController = TextEditingController();
   TextEditingController? textController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
+ @override
+  void initState() {
+    super.initState();
+    GetCities();
+  }
 
 
 
@@ -75,12 +80,7 @@ final TextEditingController textEditingController = TextEditingController();
       print("Error: " + respuesta.statusCode.toString());
     }
   }
-  @override
-  void initState() {
-    super.initState();
-    GetCities();
-  }
-
+ 
   @override
   void dispose() {
     textController?.dispose();
