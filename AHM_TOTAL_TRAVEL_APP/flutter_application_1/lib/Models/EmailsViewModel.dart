@@ -8,4 +8,14 @@ class EmailVerificationViewModel {
       };
 }
 
-class EmailContactViewModel {}
+class EmailContactViewModel {
+  String? BodyData;
+  String? To;
+
+  Map<String, dynamic> toJson() => {
+        "to": To,
+        "toName": "totaltravelenterprise@gmail.com",
+        "subject": "string",
+        "bodyData": BodyData
+      };
+}
