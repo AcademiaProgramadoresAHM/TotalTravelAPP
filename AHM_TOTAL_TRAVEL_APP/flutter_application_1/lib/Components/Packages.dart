@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Components/Decodificador.dart';
 import 'package:flutter_application_1/DefaultPackageScreens/DetailsPackage.dart';
 import 'package:flutter_application_1/utils/AppWidget.dart';
+import '../Models/UsersViewModel.dart';
 import 'package:flutter_application_1/utils/prueba2/T2Colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/hotel_booking/model/PlanModal.dart';
 
 //-------------LISTADO DE PAQUETES PREDETERMINADOS--------------
+
+// final UserLoggedModel? userloggeddata;
 
 Future<dynamic> GetListadoPackages() async {
   String url_list =
@@ -214,11 +217,11 @@ List<Padding> ListDefaultPackages(List<dynamic> data, BuildContext context) {
                                         ),
                                       ),
                                       onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    DetailPackageScreen()));
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //         builder: (context) =>
+                                        //             DetailPackageScreen()));
                                       },
                                     ),
                                   ],
@@ -239,29 +242,5 @@ List<Padding> ListDefaultPackages(List<dynamic> data, BuildContext context) {
     ));
   });
 
-  return list;
-}
-
-List<Container> LandScreenPackage(List<dynamic> data, BuildContext context) {
-  List<Container> list = [];
-  List<PlanModal> planList = [];
-  final _controller = PageController();
-  for (var i = 0; i <= 3; i++) {
-    var element = data[i];
-    planList.add(
-      PlanModal(
-        image: 'assets/images/Argentina.jpg',
-        title: element['nombre'],
-        subTitle: 'Disfruta de un experiencia inolvidable',
-        price: '\$0',
-        planPriceSubTitle: 'per user/month',
-        optionList: [
-          PlanModal(title: 'Viaja hazta con 3 personas mas'),
-          PlanModal(title: 'Transporte hacia tu destino'),
-          PlanModal(title: 'Hoteles 5 Estrellas'),
-        ],
-      ),
-    );
-  }
   return list;
 }

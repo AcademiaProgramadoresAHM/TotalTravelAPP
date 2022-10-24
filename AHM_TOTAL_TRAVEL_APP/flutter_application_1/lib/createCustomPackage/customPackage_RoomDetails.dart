@@ -10,7 +10,7 @@ import 'package:flutter_application_1/createCustomPackage/customPackage_HotelRoo
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
-import 'package:flutter_spinbox/flutter_spinbox.dart';
+// import 'package:flutter_spinbox/flutter_spinbox.dart';
 
 class RoomDetails extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
@@ -22,30 +22,28 @@ class RoomDetails extends StatefulWidget {
   _RoomDetails createState() => _RoomDetails();
 }
 
-
-
-
 class _RoomDetails extends State<RoomDetails> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController? _QuestController;
   TextEditingController? _RoomsController;
-    CiudadesViewModel Ciudad = new CiudadesViewModel(null, null, null, null, null);
-    double people = 2;
-    double rooms = 1;
-    String wordPeople = "personas", wordRooms = "habitación";  
-void SetRooms(roomsNumber){
-  setState(() {
-        rooms = roomsNumber;
-          rooms == 1? wordRooms="habitación":wordRooms="habitaciones"; 
-      });
-}
+  CiudadesViewModel Ciudad =
+      new CiudadesViewModel(null, null, null, null, null);
+  double people = 2;
+  double rooms = 1;
+  String wordPeople = "personas", wordRooms = "habitación";
+  void SetRooms(roomsNumber) {
+    setState(() {
+      rooms = roomsNumber;
+      rooms == 1 ? wordRooms = "habitación" : wordRooms = "habitaciones";
+    });
+  }
 
-void SetPeople(peopleNumber){
-  setState(() {
-        people = peopleNumber;
-        people == 1? wordPeople="persona":wordPeople="personas"; 
-      });
-}
+  void SetPeople(peopleNumber) {
+    setState(() {
+      people = peopleNumber;
+      people == 1 ? wordPeople = "persona" : wordPeople = "personas";
+    });
+  }
 
   DateTimeRange dateRange = DateTimeRange(
       start: DateTime(
@@ -54,16 +52,15 @@ void SetPeople(peopleNumber){
           DateTime.now().year, DateTime.now().month, DateTime.now().day + 1));
   var nights = 1;
   String wordNight = "noche";
-   var Price = 0;
+  var Price = 0;
 
-
-  
   List<Padding> HotelDetails(List<dynamic> data, BuildContext context) {
     Future pickDateRange() async {
       DateTimeRange? newDataRange = await showDateRangePicker(
         context: context,
         initialDateRange: dateRange,
-        firstDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
+        firstDate: DateTime(
+            DateTime.now().year, DateTime.now().month, DateTime.now().day),
         lastDate: DateTime(2100),
       );
 
@@ -73,38 +70,36 @@ void SetPeople(peopleNumber){
         dateRange = newDataRange;
         final difference = dateRange.duration.inDays;
         nights = difference;
-        nights == 1? wordNight="noche":wordNight="noches"; 
+        nights == 1 ? wordNight = "noche" : wordNight = "noches";
       });
     }
 
     int intParse(doubleNum) {
-    double multiplier = .5;
-    return (multiplier * doubleNum).round();
-}
+      double multiplier = .5;
+      return (multiplier * doubleNum).round();
+    }
 
     List<Padding> list = [];
     List<String> items = [];
 
     final _controller = PageController();
     List<String> imageUrl;
-     
+
     data.forEach((element) {
       for (var i = 1; i <= element['camas']; i++) {
         items.add('${i.toString()}');
       }
-      
-      String? selectedValue;
-      void SetPrice(price){
-                  setState(() {
-                        if(people > 2){
-                          price = element['precio'] * 1.17;
-                        }
-                        else if(nights >= 1){
-                          price = price * nights;
-                        }
 
-                      });
-              }
+      String? selectedValue;
+      void SetPrice(price) {
+        setState(() {
+          if (people > 2) {
+            price = element['precio'] * 1.17;
+          } else if (nights >= 1) {
+            price = price * nights;
+          }
+        });
+      }
 
       List<DropdownMenuItem<String>> _addDividersAfterItems(
           List<String> items) {
@@ -279,7 +274,9 @@ void SetPeople(peopleNumber){
                                                                 left: 20)),
                                                     ElevatedButton(
                                                       child: Text(
-                                                        DateFormat('dd-MM-yyyy').format(dateRange.start),
+                                                        DateFormat('dd-MM-yyyy')
+                                                            .format(dateRange
+                                                                .start),
                                                         style: TextStyle(
                                                           color: Color.fromRGBO(
                                                               101, 45, 143, 1),
@@ -290,8 +287,8 @@ void SetPeople(peopleNumber){
                                                         elevation: 0.0,
                                                         shadowColor:
                                                             Colors.transparent,
-                                                        backgroundColor:
-                                                            Colors.white,
+                                                        // backgroundColor:
+                                                        //     Colors.white,
                                                         padding:
                                                             EdgeInsets.zero,
                                                       ),
@@ -327,8 +324,8 @@ void SetPeople(peopleNumber){
                                                     elevation: 0.0,
                                                     shadowColor:
                                                         Colors.transparent,
-                                                    backgroundColor:
-                                                        Colors.white,
+                                                    // backgroundColor:
+                                                    //     Colors.white,
                                                     padding: EdgeInsets.zero,
                                                   ),
                                                   child: Text(
@@ -359,7 +356,10 @@ void SetPeople(peopleNumber){
                                           ),
                                         ),
                                       ),
-                                      Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0)),
+                                      Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 0, 0, 0)),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             10, 0, 10, 0),
@@ -373,7 +373,7 @@ void SetPeople(peopleNumber){
                                           style: ElevatedButton.styleFrom(
                                             elevation: 0.0,
                                             shadowColor: Colors.transparent,
-                                            backgroundColor: Colors.white,
+                                            // backgroundColor: Colors.white,
                                             padding: EdgeInsets.zero,
                                           ),
                                           onPressed: () {
@@ -386,7 +386,6 @@ void SetPeople(peopleNumber){
                                                   child: Center(
                                                     child: Column(
                                                       children: <Widget>[
- 
                                                         Padding(
                                                           padding:
                                                               EdgeInsetsDirectional
@@ -397,7 +396,8 @@ void SetPeople(peopleNumber){
                                                             style: TextStyle(
                                                               fontFamily:
                                                                   'Outfit',
-                                                              color: Colors.black,
+                                                              color:
+                                                                  Colors.black,
                                                               fontSize: 17,
                                                               fontWeight:
                                                                   FontWeight
@@ -405,108 +405,178 @@ void SetPeople(peopleNumber){
                                                             ),
                                                           ),
                                                         ),
-                                                        Padding(
-                                                          child: SpinBox(
-                                                            max: 10,
-                                                            value: rooms,
-                                                            onChanged: (value) {
-                                                                setState(() {
-                                                                 SetRooms(value);
-                                                                });
-                                                            },
-                                                          ),
-                                                          padding:
-                                                              const EdgeInsets
-                                                                  .only(left: 30, right: 30),
-                                                        ),
-                                                         Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(0,
-                                                                      10, 0, 0),
-                                                          child: Text(
-                                                            "Personas",
-                                                            style: TextStyle(
-                                                              fontFamily:
-                                                                  'Outfit',
-                                                              color: Colors.black,
-                                                              fontSize: 17,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          child: SpinBox(
-                                                            max: 30.0, 
-                                                            value: people,
-                                                            onChanged: (people) {
-                                                                 SetPeople(people);
-                                                            },
-                                                          ),
-                                                          padding:
-                                                                 const EdgeInsets
-                                                                  .only(left: 30, right: 30, bottom: 10),
-                                                        ),
+                                                        // Padding(
+                                                        //   child: SpinBox(
+                                                        //     max: 10,
+                                                        //     value: rooms,
+                                                        //     onChanged: (value) {
+                                                        //       setState(() {
+                                                        //         SetRooms(value);
+                                                        //       });
+                                                        //     },
+                                                        //   ),
+                                                        //   padding:
+                                                        //       const EdgeInsets
+                                                        //               .only(
+                                                        //           left: 30,
+                                                        //           right: 30),
+                                                        // ),
+                                                        // Padding(
+                                                        //   padding:
+                                                        //       EdgeInsetsDirectional
+                                                        //           .fromSTEB(0,
+                                                        //               10, 0, 0),
+                                                        //   child: Text(
+                                                        //     "Personas",
+                                                        //     style: TextStyle(
+                                                        //       fontFamily:
+                                                        //           'Outfit',
+                                                        //       color:
+                                                        //           Colors.black,
+                                                        //       fontSize: 17,
+                                                        //       fontWeight:
+                                                        //           FontWeight
+                                                        //               .w500,
+                                                        //     ),
+                                                        //   ),
+                                                        // ),
+                                                        // Padding(
+                                                        //   child: SpinBox(
+                                                        //     max: 30.0,
+                                                        //     value: people,
+                                                        //     onChanged:
+                                                        //         (people) {
+                                                        //       SetPeople(people);
+                                                        //     },
+                                                        //   ),
+                                                        //   padding:
+                                                        //       const EdgeInsets
+                                                        //               .only(
+                                                        //           left: 30,
+                                                        //           right: 30,
+                                                        //           bottom: 10),
+                                                        // ),
                                                         SizedBox(
                                                           width: 300,
-                                                          height:40,
-                                                        child: ElevatedButton(
-                                                             onPressed: () {
-                                                                var roomMax = people.toInt()  / (rooms.toInt() * element['capacidad']);
-                                                                if(roomMax > 1){
-                                                                   var quantMax = people.toInt() / element['capacidad'];
-                                                                   showDialog<String>(
-                                                                      context: context,
-                                                                      builder: (BuildContext context) => AlertDialog(
-                                                                        title: Padding(padding: EdgeInsets.only(top: 15, left: 20, right: 20), child: Text('Habitaciones insuficientes', style: TextStyle(color: Color.fromARGB(255, 128, 9, 1), fontSize: 18, fontFamily: 'Outfit',  fontWeight: FontWeight.w500),),), 
-                                                                        content: Padding(padding: EdgeInsets.only(top: 10, left: 0, right: 0), child: Text('¿Desea agregar más habitaciones?', style: TextStyle(
-                                                                                        fontFamily: 'Outfit',
-                                                                                        color: Color(0xFF7C8791),
-                                                                                        fontSize: 16,
-                                                                                        fontWeight: FontWeight.w500,
-                                                                                      ),)),
-                                                                        actions: <Widget>[
-                                                                          TextButton(
-                                                                            onPressed: () {
-                                                                              Navigator.pop(context, 'Cancel');
-                                                      
-                                                                            },
-                                                                            child: const Text('Cancelar', style: TextStyle(color: Color(0xFF7C8791)),),
-                                                                          ),
-                                                                          TextButton(
-                                                                            onPressed: () {
-                                                                              Navigator.pop(context, 'OK');
-                                                                              SetPrice(Price);
-
-                                                                              SetRooms(quantMax);
-                                                                              Navigator.pop(context);
-                                                                               
-                                                                            },
-                                                                            child: const Text('Aceptar'),
-                                                                          ),
-                                                                        ],
+                                                          height: 40,
+                                                          child: ElevatedButton(
+                                                            onPressed: () {
+                                                              var roomMax = people
+                                                                      .toInt() /
+                                                                  (rooms.toInt() *
+                                                                      element[
+                                                                          'capacidad']);
+                                                              if (roomMax > 1) {
+                                                                var quantMax = people
+                                                                        .toInt() /
+                                                                    element[
+                                                                        'capacidad'];
+                                                                showDialog<
+                                                                    String>(
+                                                                  context:
+                                                                      context,
+                                                                  builder: (BuildContext
+                                                                          context) =>
+                                                                      AlertDialog(
+                                                                    title:
+                                                                        Padding(
+                                                                      padding: EdgeInsets.only(
+                                                                          top:
+                                                                              15,
+                                                                          left:
+                                                                              20,
+                                                                          right:
+                                                                              20),
+                                                                      child:
+                                                                          Text(
+                                                                        'Habitaciones insuficientes',
+                                                                        style: TextStyle(
+                                                                            color: Color.fromARGB(
+                                                                                255,
+                                                                                128,
+                                                                                9,
+                                                                                1),
+                                                                            fontSize:
+                                                                                18,
+                                                                            fontFamily:
+                                                                                'Outfit',
+                                                                            fontWeight:
+                                                                                FontWeight.w500),
                                                                       ),
-                                                                    );
-                                                                }else{
-                                                                  SetPrice(Price);
-                                                                  Navigator.pop(context);
-                                                                }
-                                                              
-                                                             },
-                                                            child: Text('Aplicar', style: TextStyle(fontSize: 18),),
-                                                            style: ElevatedButton.styleFrom(
-                                                              primary: Color(0xFF652D8F),
+                                                                    ),
+                                                                    content: Padding(
+                                                                        padding: EdgeInsets.only(top: 10, left: 0, right: 0),
+                                                                        child: Text(
+                                                                          '¿Desea agregar más habitaciones?',
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontFamily:
+                                                                                'Outfit',
+                                                                            color:
+                                                                                Color(0xFF7C8791),
+                                                                            fontSize:
+                                                                                16,
+                                                                            fontWeight:
+                                                                                FontWeight.w500,
+                                                                          ),
+                                                                        )),
+                                                                    actions: <
+                                                                        Widget>[
+                                                                      TextButton(
+                                                                        onPressed:
+                                                                            () {
+                                                                          Navigator.pop(
+                                                                              context,
+                                                                              'Cancel');
+                                                                        },
+                                                                        child:
+                                                                            const Text(
+                                                                          'Cancelar',
+                                                                          style:
+                                                                              TextStyle(color: Color(0xFF7C8791)),
+                                                                        ),
+                                                                      ),
+                                                                      TextButton(
+                                                                        onPressed:
+                                                                            () {
+                                                                          Navigator.pop(
+                                                                              context,
+                                                                              'OK');
+                                                                          SetPrice(
+                                                                              Price);
 
+                                                                          SetRooms(
+                                                                              quantMax);
+                                                                          Navigator.pop(
+                                                                              context);
+                                                                        },
+                                                                        child: const Text(
+                                                                            'Aceptar'),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                );
+                                                              } else {
+                                                                SetPrice(Price);
+                                                                Navigator.pop(
+                                                                    context);
+                                                              }
+                                                            },
+                                                            child: Text(
+                                                              'Aplicar',
+                                                              style: TextStyle(
+                                                                  fontSize: 18),
+                                                            ),
+                                                            style:
+                                                                ElevatedButton
+                                                                    .styleFrom(
+                                                              primary: Color(
+                                                                  0xFF652D8F),
                                                             ),
                                                           ),
-                                                          ),
-                                                          
-                                                           
+                                                        ),
                                                       ],
                                                     ),
-                                                    
                                                   ),
                                                 );
                                               },
@@ -514,55 +584,63 @@ void SetPeople(peopleNumber){
                                           },
                                         ),
                                       ),
-                                      Padding(padding: EdgeInsetsDirectional.fromSTEB(180, 0, 0, 0),
-                                      child: Text(
-                                                            'HNL ${Price}',
-                                                            textAlign: TextAlign.end,
-                                                            style: TextStyle(
-                                                              fontFamily: 'Lexend Deca',
-                                                              color: Color(0xFF090F13),
-                                                              fontSize: 22,
-                                                              fontWeight: FontWeight.bold,
-                                                            ),
-                                                          ),
-                                      ),
                                       Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(160, 10, 0, 0),
-                                        child: SizedBox(
-                                          width: 150,
-                                          child: ElevatedButton(
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Color.fromRGBO(
-                                                    101, 45, 143, 1)),
-                                        shape: MaterialStateProperty.all(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(15),
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            180, 0, 0, 0),
+                                        child: Text(
+                                          'HNL ${Price}',
+                                          textAlign: TextAlign.end,
+                                          style: TextStyle(
+                                            fontFamily: 'Lexend Deca',
+                                            color: Color(0xFF090F13),
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ),
-                                      child: Text(
-                                        'Confirmar',
-                                        style: TextStyle(
-                                          fontFamily: 'Outfit',
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal,
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            160, 10, 0, 0),
+                                        child: SizedBox(
+                                          width: 150,
+                                          child: ElevatedButton(
+                                            style: ButtonStyle(
+                                              backgroundColor:
+                                                  MaterialStateProperty.all(
+                                                      Color.fromRGBO(
+                                                          101, 45, 143, 1)),
+                                              shape: MaterialStateProperty.all(
+                                                RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                ),
+                                              ),
+                                            ),
+                                            child: Text(
+                                              'Confirmar',
+                                              style: TextStyle(
+                                                fontFamily: 'Outfit',
+                                                color: Colors.white,
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        createCustomPackage(
+                                                            Ciudad,
+                                                            widget
+                                                                .userloggeddata,
+                                                            1)),
+                                              );
+                                            },
+                                          ),
                                         ),
                                       ),
-                                      onPressed: () {
-                                       Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) =>  createCustomPackage(Ciudad,widget.userloggeddata, 1)),
-                                          );
-                                      },
-                                    ),),
-                                      ),
-                                         
                                     ],
-                                    
                                   )))
                         ],
                       ),
@@ -575,7 +653,6 @@ void SetPeople(peopleNumber){
                       endIndent: 1,
                       color: Color(0xFFFFC36D),
                     ),
-                    
                   ],
                 )
               ],
