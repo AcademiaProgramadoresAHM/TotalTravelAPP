@@ -18,6 +18,7 @@ void main() {
   runApp(const MyApp());
 }
 
+
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
@@ -33,19 +34,57 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
+  
 class createCustomPackage extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final CiudadesViewModel? Ciudad;
-  const createCustomPackage(this.Ciudad,this.userloggeddata, {Key? key, }) : super(key: key);
+  final int? Step;
+  const createCustomPackage(this.Ciudad,this.userloggeddata,this.Step, {Key? key, }) : super(key: key);
 
   @override
   _createCustomPackage createState() => _createCustomPackage();
 }
-
+int _currentStep = 0;
 class _createCustomPackage extends State<createCustomPackage> {
   // the current step
-  int _currentStep = 0;
+
+@override
+  void initState() {
+      StepSet(widget.Step);
+    //GetListHotels(widget.Ciudad,widget.userloggeddata);
+  }
+
+    void StepSet(Step){
+      
+    switch (widget.Step) {
+      case 0:
+        setState(() {
+        _currentStep = 0;
+      });
+        break;
+        case 1:
+        setState(() {
+        _currentStep = 1;
+      });
+        break;
+      case 2:
+        setState(() {
+        _currentStep = 2;
+      });
+        break;
+          case 3:
+        setState(() {
+        _currentStep = 3;
+      });
+        break;
+      default:
+        setState(() {
+        _currentStep = 0;
+      });
+    }
+    
+  }
+
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now().add(const Duration(days: 5));
 

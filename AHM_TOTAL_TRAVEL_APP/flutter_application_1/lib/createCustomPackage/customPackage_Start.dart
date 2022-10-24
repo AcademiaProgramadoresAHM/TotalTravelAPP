@@ -210,7 +210,7 @@ final TextEditingController textEditingController = TextEditingController();
                                     CiudadesViewModel cityModel = new CiudadesViewModel(CitiesDropDownValue,null,null,null,null);
                                        Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) =>  createCustomPackage(cityModel, widget.userloggeddata)),
+                                          MaterialPageRoute(builder: (context) =>  createCustomPackage(cityModel, widget.userloggeddata, null)),
                                         );
                                       
                                   }

@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_application_1/Models/CitiesViewModel.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_HotelRoomsList.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -27,7 +29,7 @@ class _RoomDetails extends State<RoomDetails> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController? _QuestController;
   TextEditingController? _RoomsController;
-
+    CiudadesViewModel Ciudad = new CiudadesViewModel(null, null, null, null, null);
     double people = 2;
     double rooms = 1;
     String wordPeople = "personas", wordRooms = "habitación";  
@@ -523,8 +525,44 @@ void SetPeople(peopleNumber){
                                                               fontWeight: FontWeight.bold,
                                                             ),
                                                           ),
-                                      )
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(160, 10, 0, 0),
+                                        child: SizedBox(
+                                          width: 150,
+                                          child: ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Color.fromRGBO(
+                                                    101, 45, 143, 1)),
+                                        shape: MaterialStateProperty.all(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          ),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        'Confirmar',
+                                        style: TextStyle(
+                                          fontFamily: 'Outfit',
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                       Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) =>  createCustomPackage(Ciudad,widget.userloggeddata, 1)),
+                                          );
+                                      },
+                                    ),),
+                                      ),
+                                         
                                     ],
+                                    
                                   )))
                         ],
                       ),
