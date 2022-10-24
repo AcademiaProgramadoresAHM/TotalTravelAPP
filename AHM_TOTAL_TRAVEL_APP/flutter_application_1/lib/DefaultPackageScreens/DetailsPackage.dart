@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'package:flutter_application_1/feedback_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_application_1/Components/Decodificador.dart';
 import 'package:flutter_application_1/Components/Packages.dart';
 import 'package:flutter_application_1/Models/DefaultPackageViewModel.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
@@ -17,33 +21,24 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   DefaultPackageViewModel? DefaulPackageId;
 
+  Future<dynamic> GetListadoPackageshome() async {
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/DefaultPackages/List";
+    final response = await http.get(Uri.parse(url_list));
+    if (response.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var user = Decodificador.fromJson(userMap);
+      return user.data;
+    } else {
+      print("Error " + response.statusCode.toString());
+    }
+  }
+
   List<Padding> PackageDetails(List<dynamic> data, BuildContext context) {
-    // final start = dateRange.start;
-    // final end = dateRange.end;
-    // final difference = dateRange.duration;
-
-    // Future pickDateRange() async {
-    //   DateTimeRange? newDataRange = await showDateRangePicker(
-    //     context: context,
-    //     initialDateRange: dateRange,
-    //     firstDate: dateRange.start,
-    //     lastDate: DateTime(2100),
-    //   );
-
-    //   if (newDataRange == null) return;
-
-    //   setState(() {
-    //     dateRange = newDataRange;
-    //   });
-    // }
-
     List<Padding> list = [];
     final _controller = PageController();
     List<String> imageUrl;
     data.forEach((element) {
-      DefaulPackageId = new DefaultPackageViewModel(
-          element['id'], element['nombre'], null, null, null, null, null);
-      // imageUrl = element['image_URL'].split(',');
       list.add(
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(18, 14, 18, 0),
@@ -68,8 +63,8 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                     Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(18, 0, 0, 0),
                       child: Container(
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        height: 150,
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: 190,
                         decoration: BoxDecoration(
                           color: Colors.white,
                         ),
@@ -101,7 +96,7 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                   padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
                   child: Container(
                     width: MediaQuery.of(context).size.width,
-                    height: 300,
+                    height: 320,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       boxShadow: [
@@ -253,7 +248,9 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     10, 0, 0, 0),
-                                            child: Text(element['precio'],
+                                            child: Text(
+                                                element['precio'].toString() ??
+                                                    '00.00',
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.black)),
@@ -261,28 +258,56 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                                         ],
                                       ),
                                     ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 20),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
+                                    Flexible(
+                                      child: Column(
                                         children: [
-                                          Text('Hotel de Hospedaje:',
+                                          FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: Text(
+                                              "Hotel de Hospedaje:",
                                               style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Colors.black)),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    10, 0, 0, 0),
-                                            child: Text(element['hotel'],
-                                                style: TextStyle(
-                                                    fontSize: 18,
-                                                    color: Colors.black)),
+                                                  fontSize: 16,
+                                                  color: Colors.white,
+                                                  overflow:
+                                                      TextOverflow.ellipsis),
+                                            ),
+                                          ),
+                                          FittedBox(
+                                            fit: BoxFit.scaleDown,
+                                            child: Text(
+                                              element['hotel'],
+                                              style: TextStyle(
+                                                  fontSize: 16,
+                                                  color: Colors.white,
+                                                  overflow:
+                                                      TextOverflow.ellipsis),
+                                            ),
                                           ),
                                         ],
                                       ),
                                     ),
+                                    // Padding(
+                                    //   padding: EdgeInsetsDirectional.fromSTEB(
+                                    //       0, 0, 0, 20),
+                                    //   child: Row(
+                                    //     mainAxisSize: MainAxisSize.max,
+                                    //     children: [
+                                    //       Text('Hotel de Hospedaje:',
+                                    //           style: TextStyle(
+                                    //               fontSize: 18,
+                                    //               color: Colors.black)),
+                                    //       Padding(
+                                    //         padding:
+                                    //             EdgeInsetsDirectional.fromSTEB(
+                                    //                 10, 0, 0, 0),
+                                    //         child: Text(element['hotel'],
+                                    //             style: TextStyle(
+                                    //                 fontSize: 18,
+                                    //                 color: Colors.black)),
+                                    //       ),
+                                    //     ],
+                                    //   ),
+                                    // ),
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
@@ -294,7 +319,7 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   10, 0, 0, 0),
-                                          child: Text(element['restaurantes'],
+                                          child: Text(element['restaurante'],
                                               style: TextStyle(
                                                   fontSize: 18,
                                                   color: Colors.black)),
@@ -403,12 +428,12 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                           runAlignment: WrapAlignment.start,
                           verticalDirection: VerticalDirection.down,
                           clipBehavior: Clip.none,
-                          children: PackageDetails(snapshot.data, context));
+                          children: PackageDetails(widget.Package, context));
                     } else {
                       return Text("No data");
                     }
                   },
-                  future: GetListadoPackages(),
+                  future: GetListadoPackageshome(),
                 ),
               ],
             )),
