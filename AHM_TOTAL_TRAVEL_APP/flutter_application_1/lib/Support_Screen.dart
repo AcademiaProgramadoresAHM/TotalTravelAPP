@@ -1,6 +1,6 @@
-// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
-
+import 'package:flutter_application_1/ComponentsLogin/constants.dart';
 import 'package:flutter_application_1/ComponentsLogin/controller/simple_ui_controller.dart';
+import 'package:flutter_application_1/ComponentsLogin/Recover.dart';
 import 'package:flutter_application_1/hotel_booking/calendar_popup_view.dart';
 import 'package:flutter_application_1/hotel_booking/hotel_list_view.dart';
 import 'package:flutter_application_1/hotel_booking/model/hotel_list_data.dart';
@@ -17,18 +17,18 @@ class SupportScreen extends StatefulWidget {
   const SupportScreen({Key? key}) : super(key: key);
 
   @override
-  _HomePageWidgetState createState() => _HomePageWidgetState();
+  _SupportScreenState createState() => _SupportScreenState();
 }
 
-class _HomePageWidgetState extends State<SupportScreen> {
-  TextEditingController? shortBioController;
+class _SupportScreenState extends State<SupportScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController shortBioController = TextEditingController();
 
   final _columnKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-    shortBioController = TextEditingController();
   }
 
   @override
@@ -267,40 +267,34 @@ class _HomePageWidgetState extends State<SupportScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(40),
-                    child: Image.network(
-                      'https://i0.wp.com/red.land/wp-content/uploads/1-55-1.jpg?fit=1400%2C1050&ssl=1',
-                      width: 40,
-                      height: 40,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                    child: Text(
-                      'Nombre',
-                      style: TextStyle(
-                        fontFamily: 'Outfit',
-                        color: Color(0xFF57636C),
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
               padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
               child: Form(
                 key: _columnKey,
                 child: Column(
                   children: [
+                    TextFormField(
+                      style: kTextFormFieldStyle(),
+                      decoration: const InputDecoration(
+                        prefixIcon: Icon(Icons.person),
+                        hintText: 'Correo Electronico',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15)),
+                        ),
+                      ),
+                      controller: emailController,
+                      // The validator receives the text that the user has entered.
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Rellene este campo';
+                        } else if (!value.endsWith('@gmail.com')) {
+                          return 'Ingrese una dirección válida';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(
+                      height: size.height * 0.02,
+                    ),
                     TextFormField(
                       controller: shortBioController,
                       obscureText: false,
@@ -376,7 +370,10 @@ class _HomePageWidgetState extends State<SupportScreen> {
                           ),
                         ),
                         onPressed: () {
-                          if (_columnKey.currentState!.validate()) {}
+                          if (_columnKey.currentState!.validate()) {
+                            PostEmailContact(shortBioController.text,
+                                emailController.text, context);
+                          }
                         },
                         child: const Text('Enviar'),
                       ),
