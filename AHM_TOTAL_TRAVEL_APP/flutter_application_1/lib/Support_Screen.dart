@@ -1,6 +1,10 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
 
+import 'dart:convert';
+
+import 'package:flutter_application_1/ComponentsLogin/constants.dart';
 import 'package:flutter_application_1/ComponentsLogin/controller/simple_ui_controller.dart';
+import 'package:flutter_application_1/ComponentsLogin/Recover.dart';
 import 'package:flutter_application_1/hotel_booking/calendar_popup_view.dart';
 import 'package:flutter_application_1/hotel_booking/hotel_list_view.dart';
 import 'package:flutter_application_1/hotel_booking/model/hotel_list_data.dart';
@@ -8,33 +12,67 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 import 'hotel_booking/filters_screen.dart';
 import 'hotel_booking/hotel_app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_application_1/Models/UsersViewModel.dart';
 
 class SupportScreen extends StatefulWidget {
-  const SupportScreen({Key? key}) : super(key: key);
+  final UserLoggedModel? userloggeddata;
+  const SupportScreen(this.userloggeddata, {Key? key}) : super(key: key);
 
   @override
-  _HomePageWidgetState createState() => _HomePageWidgetState();
+  _SupportScreenState createState() => _SupportScreenState();
 }
 
-class _HomePageWidgetState extends State<SupportScreen> {
-  TextEditingController? shortBioController;
+class _SupportScreenState extends State<SupportScreen> {
+  TextEditingController shortBioController = TextEditingController();
 
   final _columnKey = GlobalKey<FormState>();
+  var _userData;
+
+  Future<void> GetUserData() async {
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/Users/Find?id=" +
+            widget.userloggeddata!.ID.toString();
+    final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+    final respuesta = await http.get(Uri.parse(url_list), headers: headers);
+    if (respuesta.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(respuesta.body);
+      var data = userMap['data'];
+      setState(() {
+        _userData = data;
+      });
+    } else {
+      print("Error: " + respuesta.statusCode.toString());
+    }
+  }
 
   @override
   void initState() {
+    GetUserData();
     super.initState();
-    shortBioController = TextEditingController();
+    shortBioController.text = "";
+  }
+
+  @override
+  void dispose() {
+    shortBioController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     Get.put(SimpleUIController());
+
+    String? name = _userData['nombre'] + ' ' + _userData['apellido'];
+    shortBioController.text = "";
 
     SimpleUIController simpleUIController = Get.find<SimpleUIController>();
     return Theme(
@@ -267,40 +305,14 @@ class _HomePageWidgetState extends State<SupportScreen> {
               ),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(40),
-                    child: Image.network(
-                      'https://i0.wp.com/red.land/wp-content/uploads/1-55-1.jpg?fit=1400%2C1050&ssl=1',
-                      width: 40,
-                      height: 40,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(12, 0, 0, 0),
-                    child: Text(
-                      'Nombre',
-                      style: TextStyle(
-                        fontFamily: 'Outfit',
-                        color: Color(0xFF57636C),
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
               padding: EdgeInsetsDirectional.fromSTEB(16, 16, 16, 0),
               child: Form(
                 key: _columnKey,
                 child: Column(
                   children: [
+                    SizedBox(
+                      height: size.height * 0.02,
+                    ),
                     TextFormField(
                       controller: shortBioController,
                       obscureText: false,
@@ -376,7 +388,12 @@ class _HomePageWidgetState extends State<SupportScreen> {
                           ),
                         ),
                         onPressed: () {
-                          if (_columnKey.currentState!.validate()) {}
+                          if (_columnKey.currentState!.validate()) {
+                            PostEmailContact(
+                                shortBioController.text, name, context);
+                          }
+
+                          //
                         },
                         child: const Text('Enviar'),
                       ),

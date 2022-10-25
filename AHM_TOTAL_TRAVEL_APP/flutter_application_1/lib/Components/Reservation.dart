@@ -1,21 +1,14 @@
-import 'dart:convert';
-
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Components/Decodificador.dart';
-import 'package:flutter_application_1/DefaultPackageScreens/DetailsPackage.dart';
-import 'package:flutter_application_1/utils/AppWidget.dart';
-import '../Models/UsersViewModel.dart';
-import 'package:flutter_application_1/utils/prueba2/T2Colors.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter_application_1/hotel_booking/model/PlanModal.dart';
-
 //-------------LISTADO DE PAQUETES PREDETERMINADOS--------------
 
-// final UserLoggedModel? userloggeddata;
+import 'dart:convert';
+import 'package:flutter/material.dart';
+import 'Decodificador.dart';
+import 'package:http/http.dart' as http;
 
-Future<dynamic> GetListadoPackages() async {
+Future<dynamic> GetListadoReservation() async {
   String url_list =
-      "https://totaltravelapi.azurewebsites.net/API/DefaultPackages/List";
+      "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
+
   final response = await http.get(Uri.parse(url_list));
   if (response.statusCode == 200) {
     Map<String, dynamic> userMap = jsonDecode(response.body);
@@ -26,7 +19,7 @@ Future<dynamic> GetListadoPackages() async {
   }
 }
 
-List<Padding> ListDefaultPackages(List<dynamic> data, BuildContext context) {
+List<Padding> ListDefaultReservation(List<dynamic> data, BuildContext context) {
   List<Padding> list = [];
   final _controller = PageController();
 
@@ -64,15 +57,6 @@ List<Padding> ListDefaultPackages(List<dynamic> data, BuildContext context) {
                         topRight: Radius.circular(12),
                       ),
                     ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.network(
-                        'https://picsum.photos/seed/898/600',
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
                   ),
                 ),
                 Padding(
@@ -103,7 +87,7 @@ List<Padding> ListDefaultPackages(List<dynamic> data, BuildContext context) {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    element['nombre'],
+                                    element['numeroPersonas'].toString(),
                                     style: TextStyle(
                                       fontFamily: 'Outfit',
                                       color: Color(0xFF090F13),
@@ -123,7 +107,52 @@ List<Padding> ListDefaultPackages(List<dynamic> data, BuildContext context) {
                                 ],
                               ),
                               Text(
-                                element['hotel'],
+                                element['descripcionPaquete'],
+                                style: TextStyle(
+                                  fontFamily: 'Outfit',
+                                  color: Color.fromRGBO(101, 45, 143, 1),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Text(
+                                element['fecha_Entrada'],
+                                style: TextStyle(
+                                  fontFamily: 'Outfit',
+                                  color: Color.fromRGBO(101, 45, 143, 1),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Text(
+                                element['fecha_Salida'],
+                                style: TextStyle(
+                                  fontFamily: 'Outfit',
+                                  color: Color.fromRGBO(101, 45, 143, 1),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Text(
+                                element['nombre_Hotel'],
+                                style: TextStyle(
+                                  fontFamily: 'Outfit',
+                                  color: Color.fromRGBO(101, 45, 143, 1),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Text(
+                                element['nombre'],
+                                style: TextStyle(
+                                  fontFamily: 'Outfit',
+                                  color: Color.fromRGBO(101, 45, 143, 1),
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Text(
+                                element['apellido'],
                                 style: TextStyle(
                                   fontFamily: 'Outfit',
                                   color: Color.fromRGBO(101, 45, 143, 1),
@@ -135,7 +164,7 @@ List<Padding> ListDefaultPackages(List<dynamic> data, BuildContext context) {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                                 child: Text(
-                                  element['descripcion_Paquete'],
+                                  element['email'],
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color(0xFF7C8791),
@@ -163,34 +192,6 @@ List<Padding> ListDefaultPackages(List<dynamic> data, BuildContext context) {
                                             color: Color(0xFFFFA130),
                                             size: 24,
                                           ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    4, 0, 0, 0),
-                                            child: Text(
-                                              '4/5',
-                                              style: TextStyle(
-                                                fontFamily: 'Outfit',
-                                                color: Color(0xFF101213),
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    8, 0, 0, 0),
-                                            child: Text(
-                                              'Rating',
-                                              style: TextStyle(
-                                                fontFamily: 'Outfit',
-                                                color: Color(0xFF57636C),
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                            ),
-                                          ),
                                         ],
                                       ),
                                     ),
@@ -217,11 +218,11 @@ List<Padding> ListDefaultPackages(List<dynamic> data, BuildContext context) {
                                         ),
                                       ),
                                       onPressed: () {
-                                        // Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: (context) =>
-                                        //             DetailPackageScreen()));
+                                        //Navigator.push(
+                                        //  context,
+                                        //    MaterialPageRoute(
+                                        //builder: (context) =>
+                                        // DetailPackageScreen()));
                                       },
                                     ),
                                   ],
