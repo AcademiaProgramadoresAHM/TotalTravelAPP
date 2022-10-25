@@ -3,7 +3,7 @@ import 'package:flutter_application_1/ComponentsLogin/Register.dart';
 import 'package:flutter_application_1/Screens/Login.dart';
 import 'package:flutter_application_1/Screens/recoverPass.dart';
 import 'package:flutter_application_1/Screens/signIn_screen.dart';
-
+import 'package:flutter_application_1/home_screen.dart';
 import 'package:get/get.dart';
 import 'package:flutter_application_1/Screens/prueba.dart';
 import 'package:flutter_application_1/Screens/signUp_view.dart';
@@ -129,12 +129,9 @@ class _SuccessEmailContactViewState extends State<SuccessEmailContact> {
           ),
         ),
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const Login()),
-          );
+          Navigator.pop(context);
         },
-        child: const Text('Ingresar'),
+        child: const Text('Aceptar'),
       ),
     );
   }

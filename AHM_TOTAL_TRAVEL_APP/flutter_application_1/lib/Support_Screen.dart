@@ -1,3 +1,7 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables, prefer_const_constructors
+
+import 'dart:convert';
+
 import 'package:flutter_application_1/ComponentsLogin/constants.dart';
 import 'package:flutter_application_1/ComponentsLogin/controller/simple_ui_controller.dart';
 import 'package:flutter_application_1/ComponentsLogin/Recover.dart';
@@ -8,33 +12,67 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 import 'hotel_booking/filters_screen.dart';
 import 'hotel_booking/hotel_app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_application_1/Models/UsersViewModel.dart';
 
 class SupportScreen extends StatefulWidget {
-  const SupportScreen({Key? key}) : super(key: key);
+  final UserLoggedModel? userloggeddata;
+  const SupportScreen(this.userloggeddata, {Key? key}) : super(key: key);
 
   @override
   _SupportScreenState createState() => _SupportScreenState();
 }
 
 class _SupportScreenState extends State<SupportScreen> {
-  TextEditingController emailController = TextEditingController();
   TextEditingController shortBioController = TextEditingController();
 
   final _columnKey = GlobalKey<FormState>();
+  var _userData;
+
+  Future<void> GetUserData() async {
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/Users/Find?id=" +
+            widget.userloggeddata!.ID.toString();
+    final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+    final respuesta = await http.get(Uri.parse(url_list), headers: headers);
+    if (respuesta.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(respuesta.body);
+      var data = userMap['data'];
+      setState(() {
+        _userData = data;
+      });
+    } else {
+      print("Error: " + respuesta.statusCode.toString());
+    }
+  }
 
   @override
   void initState() {
+    GetUserData();
     super.initState();
+    shortBioController.text = "";
+  }
+
+  @override
+  void dispose() {
+    shortBioController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     Get.put(SimpleUIController());
+
+    String? name = _userData['nombre'] + ' ' + _userData['apellido'];
+    shortBioController.text = "";
 
     SimpleUIController simpleUIController = Get.find<SimpleUIController>();
     return Theme(
@@ -272,26 +310,6 @@ class _SupportScreenState extends State<SupportScreen> {
                 key: _columnKey,
                 child: Column(
                   children: [
-                    TextFormField(
-                      style: kTextFormFieldStyle(),
-                      decoration: const InputDecoration(
-                        prefixIcon: Icon(Icons.person),
-                        hintText: 'Correo Electronico',
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(15)),
-                        ),
-                      ),
-                      controller: emailController,
-                      // The validator receives the text that the user has entered.
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Rellene este campo';
-                        } else if (!value.endsWith('@gmail.com')) {
-                          return 'Ingrese una dirección válida';
-                        }
-                        return null;
-                      },
-                    ),
                     SizedBox(
                       height: size.height * 0.02,
                     ),
@@ -371,9 +389,11 @@ class _SupportScreenState extends State<SupportScreen> {
                         ),
                         onPressed: () {
                           if (_columnKey.currentState!.validate()) {
-                            PostEmailContact(shortBioController.text,
-                                emailController.text, context);
+                            PostEmailContact(
+                                shortBioController.text, name, context);
                           }
+
+                          //
                         },
                         child: const Text('Enviar'),
                       ),

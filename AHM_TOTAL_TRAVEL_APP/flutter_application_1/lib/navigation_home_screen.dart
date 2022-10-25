@@ -108,7 +108,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
           break;
         case DrawerIndex.Support:
           setState(() {
-            screenView = SupportScreen();
+            screenView = SupportScreen(widget.userloggeddata);
           });
           break;
         default:
