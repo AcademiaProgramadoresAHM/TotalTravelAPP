@@ -32,6 +32,7 @@ class _SupportScreenState extends State<SupportScreen> {
 
   final _columnKey = GlobalKey<FormState>();
   var _userData;
+  String? name;
 
   Future<void> GetUserData() async {
     String url_list =
@@ -47,6 +48,7 @@ class _SupportScreenState extends State<SupportScreen> {
       var data = userMap['data'];
       setState(() {
         _userData = data;
+        name = _userData['nombre'] + ' ' + _userData['apellido'];
       });
     } else {
       print("Error: " + respuesta.statusCode.toString());
@@ -71,7 +73,6 @@ class _SupportScreenState extends State<SupportScreen> {
     var size = MediaQuery.of(context).size;
     Get.put(SimpleUIController());
 
-    String? name = _userData['nombre'] + ' ' + _userData['apellido'];
     shortBioController.text = "";
 
     SimpleUIController simpleUIController = Get.find<SimpleUIController>();

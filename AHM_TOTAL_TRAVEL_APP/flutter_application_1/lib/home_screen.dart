@@ -7,11 +7,13 @@ import 'package:intl/intl.dart';
 import 'hotel_booking/filters_screen.dart';
 import 'hotel_booking/hotel_app_theme.dart';
 import 'package:flutter_application_1/Components/Packages.dart';
+import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_application_1/Components/Packages.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  final UserLoggedModel? userloggeddata;
+  const MyHomePage(this.userloggeddata, {Key? key}) : super(key: key);
 
   @override
   _HotelHomeScreenState createState() => _HotelHomeScreenState();

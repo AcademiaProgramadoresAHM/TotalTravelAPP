@@ -17,8 +17,6 @@ import 'package:nb_utils/nb_utils.dart';
 
 import 'Decoder.dart';
 
-late final UserLoggedModel? userloggeddata;
-
 Future<void> PostEmailVerification(String email, BuildContext context) async {
   EmailVerificationViewModel loginData = new EmailVerificationViewModel();
   loginData.Email = email;
@@ -130,6 +128,7 @@ Future<void> changePassword(
 
 Future<void> PostEmailContact(
     String body, String? user, BuildContext context) async {
+  UserLoggedModel? userloggeddata;
   EmailContactViewModel emailBody = new EmailContactViewModel();
   emailBody.BodyData = body;
   emailBody.User = user;
