@@ -52,8 +52,7 @@ Map<int?, String> HotelsDictionary = Map();
 }
 
 
-
-List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
+List<Padding> ListActivities(List<dynamic> data, BuildContext context) {
   List<Padding> list = [];
   final _controller = PageController();
   List<String> imageUrl;
@@ -244,7 +243,10 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                           fontWeight: FontWeight.normal,
                                         ),
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        
+
+                                      },
                                     ),
                                   ],
                                 ),
@@ -307,7 +309,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                       runAlignment: WrapAlignment.start,
                                       verticalDirection: VerticalDirection.down,
                                       clipBehavior: Clip.none,
-                                      children: ListHotels(
+                                      children: ListActivities(
                                           snapshot.data, context));
                                 } else {
                                   return Text(" ");
