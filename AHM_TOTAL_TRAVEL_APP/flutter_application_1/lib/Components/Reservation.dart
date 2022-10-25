@@ -1,7 +1,7 @@
 //-------------LISTADO DE PAQUETES PREDETERMINADOS--------------
 
 import 'dart:convert';
-import 'dart:js';
+//import 'dart:js';
 import 'package:flutter/material.dart';
 import 'Decodificador.dart';
 import 'package:http/http.dart' as http;

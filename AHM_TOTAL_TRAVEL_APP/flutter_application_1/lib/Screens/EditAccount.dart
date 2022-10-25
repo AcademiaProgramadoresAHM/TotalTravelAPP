@@ -15,6 +15,7 @@ import 'package:flutter_application_1/Models/RequestsViewModel.dart';
 import 'package:flutter_application_1/Models/SuburbsViewModel.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'package:flutter_application_1/Screens/Login.dart';
+import 'package:flutter_application_1/SuccessOrErrorScreens/SuccessfullyEditUser.dart';
 import 'package:flutter_application_1/home_screen.dart';
 import 'package:flutter_application_1/hotel_booking/hotel_app_theme.dart';
 import 'package:get/get.dart';
@@ -250,7 +251,7 @@ class _EditAccountState extends State<EditAccount> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => Login(),
+              builder: (context) => SuccessEditUser(widget.userloggeddata),
             ),
           );
         }

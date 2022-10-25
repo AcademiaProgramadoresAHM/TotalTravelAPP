@@ -134,7 +134,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
           break;
         case DrawerIndex.Historial:
           setState(() {
-            screenView = HistorialScreen(widget.userloggeddata);
+            screenView = HistorialScreen();
           });
           break;
         case DrawerIndex.Support:

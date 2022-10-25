@@ -17,6 +17,8 @@ import 'package:nb_utils/nb_utils.dart';
 
 import 'Decoder.dart';
 
+late final UserLoggedModel? userloggeddata;
+
 Future<void> PostEmailVerification(String email, BuildContext context) async {
   EmailVerificationViewModel loginData = new EmailVerificationViewModel();
   loginData.Email = email;
@@ -145,7 +147,7 @@ Future<void> PostEmailContact(
   Navigator.push(
     context,
     MaterialPageRoute(
-      builder: (context) => SuccessEmailContact(),
+      builder: (context) => SuccessEmailContact(userloggeddata),
     ),
   );
 }
