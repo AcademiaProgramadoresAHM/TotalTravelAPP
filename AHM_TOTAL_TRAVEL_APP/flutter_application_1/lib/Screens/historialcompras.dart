@@ -1,5 +1,4 @@
-
-
+import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/detallesdehistorial.dart';
@@ -7,6 +6,8 @@ import 'package:flutter_application_1/Screens/detallesdehistorial.dart';
 import '../hotel_booking/hotel_app_theme.dart';
 
 class Comprashistorial extends StatefulWidget {
+  final UserLoggedModel? userloggeddata;
+  const Comprashistorial(this.userloggeddata, {Key? key}) : super(key: key);
   @override
   _ComprashistorialState createState() => _ComprashistorialState();
 }
@@ -25,36 +26,39 @@ class _ComprashistorialState extends State<Comprashistorial> {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(101, 45, 143, 1),
-         title: Row(
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Text(
-                '           ',
-              ),
-            ),
-            Expanded(
-              flex: 5,
-              child: Center(
+          title: Row(
+            children: <Widget>[
+              Expanded(
+                flex: 1,
                 child: Text(
-                  'Historial de Compras',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 25,
-                    color: Colors.white,
+                  '           ',
+                ),
+              ),
+              Expanded(
+                flex: 5,
+                child: Center(
+                  child: Text(
+                    'Historial de Compras',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 25,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Image.asset('assets/images/logo-AHM-Fondo-Morao.png', height: 50,),
+              Expanded(
+                flex: 1,
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Image.asset(
+                    'assets/images/logo-AHM-Fondo-Morao.png',
+                    height: 50,
+                  ),
+                ),
               ),
-            ),
-          ],
-        ),
+            ],
+          ),
         ),
         body: ListView(
           children: <Widget>[
@@ -74,12 +78,13 @@ class _ComprashistorialState extends State<Comprashistorial> {
                             topRight: Radius.circular(8.0),
                           ),
                           child: Image.asset(
-                            'assets/images/Inglaterra.jpg',
+                            'assets/images/Honduras.png',
                           )),
                       ListTile(
-                        title: Text('Paquete Inglaterra'),
-                        subtitle: Text('Hotel: Hilton Princess '),
-                        trailing: Text('L.45900.00',
+                        title: Text('Honduras'),
+                        subtitle: Text(
+                            'Hotel: Pepitos Intercontinental \nReservado el: 22/09/22'),
+                        trailing: Text('L.5900.00',
                             style:
                                 TextStyle(color: Colors.green, fontSize: 20)),
                       ),

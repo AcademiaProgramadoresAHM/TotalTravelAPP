@@ -1,3 +1,4 @@
+import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'package:flutter_application_1/Screens/historialcompras.dart';
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,8 @@ class detalleshistorial extends StatefulWidget {
 }
 
 class _detalleshistorialState extends State<detalleshistorial> {
+  UserLoggedModel? get userloggeddata => null;
+
   @override
   void initState() {
     super.initState();
@@ -31,7 +34,9 @@ class _detalleshistorialState extends State<detalleshistorial> {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Comprashistorial()),
+                MaterialPageRoute(
+                    builder: (context) =>
+                        Comprashistorial(this.userloggeddata)),
               );
             },
             child: Icon(Icons.arrow_back_ios),
