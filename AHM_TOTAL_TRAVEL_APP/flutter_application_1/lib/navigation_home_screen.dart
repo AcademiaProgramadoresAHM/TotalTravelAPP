@@ -104,7 +104,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
           break;
         case DrawerIndex.Help:
           setState(() {
-            screenView = Comprashistorial();
+            screenView = Comprashistorial(widget.userloggeddata);
           });
           break;
         case DrawerIndex.FeedBack:
@@ -134,7 +134,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
           break;
         case DrawerIndex.Historial:
           setState(() {
-            screenView = HistorialScreen();
+            screenView = HistorialScreen(widget.userloggeddata);
           });
           break;
         case DrawerIndex.Support:
