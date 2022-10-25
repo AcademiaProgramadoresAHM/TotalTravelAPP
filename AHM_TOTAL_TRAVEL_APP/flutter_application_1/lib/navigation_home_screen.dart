@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter_application_1/Account_screen.dart';
 import 'package:flutter_application_1/Screens/Compras.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Start.dart';
@@ -13,7 +15,9 @@ import 'package:flutter_application_1/invite_friend_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/historial_transacciones.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
+import 'package:http/http.dart' as http;
 
+import 'Components/Decodificador.dart';
 import 'Screens/Personalizados.dart';
 import 'main.dart';
 
@@ -29,6 +33,33 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   Widget? screenView;
   DrawerIndex? drawerIndex;
   UserLoggedModel? userloggeddata;
+
+  Future<dynamic> FindReservation(userloggeddata) async {
+    List<dynamic> datapackage;
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
+    final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+    final response = await http.get(Uri.parse(url_list), headers: headers);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var Json = Decodificador.fromJson(userMap);
+      datapackage = Json.data;
+      var package =
+          datapackage.where((x) => x['id'] == userloggeddata.id).toList();
+
+      print(package);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => PersonaliScreen(widget.userloggeddata)),
+      );
+    } else {
+      print("Error " + response.statusCode.toString());
+    }
+  }
 
   @override
   void initState() {
@@ -98,7 +129,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
           break;
         case DrawerIndex.Personalization:
           setState(() {
-            screenView = PersonaliScreen();
+            screenView = PersonaliScreen(widget.userloggeddata);
           });
           break;
         case DrawerIndex.Historial:
