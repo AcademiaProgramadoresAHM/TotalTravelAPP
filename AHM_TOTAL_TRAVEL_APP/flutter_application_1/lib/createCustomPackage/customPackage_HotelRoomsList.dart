@@ -15,8 +15,9 @@ class RoomsListcustomPackage extends StatefulWidget {
   static var tag = "/DemoT2Cards";
   final UserLoggedModel? userloggeddata;
   final HotelViewModel? Hotel;
+  final CiudadesViewModel Ciudad;
 
-  const RoomsListcustomPackage( this.userloggeddata, this.Hotel,{super.key});
+  const RoomsListcustomPackage( this.userloggeddata, this.Hotel,this.Ciudad,{super.key});
   @override
   _RoomsListcustomPackage createState() => _RoomsListcustomPackage();
 }
@@ -67,7 +68,7 @@ Map<int?, String> HotelsDictionary = Map();
   
        Navigator.push(
               context,
-               MaterialPageRoute(builder: (context) =>  RoomDetails( widget.userloggeddata,Room)),
+               MaterialPageRoute(builder: (context) =>  RoomDetails( widget.userloggeddata,Room, widget.Ciudad)),
               );
   } else {
     print("Error " + response.statusCode.toString());
@@ -249,7 +250,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                         shape: MaterialStateProperty.all(
                                           RoundedRectangleBorder(
                                             borderRadius:
-                                                BorderRadius.circular(15),
+                                                BorderRadius.circular(4),
                                           ),
                                         ),
                                       ),

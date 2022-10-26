@@ -9,6 +9,7 @@ import 'package:flutter_application_1/Screens/reservaHotel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Activities.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Hotels.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Restaurants.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_Start.dart';
 import 'package:flutter_application_1/hotel_booking/calendar_popup_view.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import '../utils/T7Colors.dart';
@@ -235,16 +236,24 @@ class _createCustomPackage extends State<createCustomPackage> {
                             return Row(
                               children: <Widget>[
                                 TextButton(
-                                  onPressed:onStepContinue,
+                                  onPressed:null,
                                   child: const Text(
-                                    'Siguiente',
+                                    '',
                                     style:
                                       TextStyle(color:Color(0xFF652D8F)),
                                   ),
                                 ),
                                 TextButton(
-                                  onPressed: () {
-
+                                  onPressed: (){
+                                    if(_currentStep==0){
+                                           Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => createPackage(widget.userloggeddata)),
+                                          );
+                                    }else{
+                                      onStepCancel;
+                                    }
                                   },
                                   child: const Text(
                                       'Cancelar',
@@ -261,7 +270,13 @@ class _createCustomPackage extends State<createCustomPackage> {
                   : StepperType.horizontal,
               physics: const ScrollPhysics(),
               currentStep: _currentStep,
-              onStepTapped: (step) => _stepTapped(step),
+              onStepTapped:(step){
+                  if(step>_currentStep){
+                    setState((){
+                        _currentStep=step;
+                    });
+                  }
+                },
               onStepContinue: _stepContinue,
               onStepCancel: _stepCancel,
               
