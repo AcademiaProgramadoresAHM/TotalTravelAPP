@@ -44,6 +44,33 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
     }
   }
 
+  Future<dynamic> FindReservation(idReservation, userloggeddata) async {
+    List<dynamic> dataReservation;
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
+    final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+    final response = await http.get(Uri.parse(url_list), headers: headers);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var Json = Decodificador.fromJson(userMap);
+      dataReservation = Json.data;
+      var reservation =
+          dataReservation.where((x) => x['id'] == idReservation).toList();
+
+      print(reservation);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  Personali2Screen(widget.userloggeddata, reservation)));
+    } else {
+      print("Error " + response.statusCode.toString());
+    }
+  }
+
   List<Padding> ListDefaultReservation(
       List<dynamic> data, BuildContext context) {
     List<Padding> list = [];
@@ -246,12 +273,8 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                           ),
                                         ),
                                         onPressed: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      Personali2Screen(widget
-                                                          .userloggeddata)));
+                                          FindReservation(widget.userloggeddata,
+                                              element['id']);
                                         },
                                       ),
                                     ],
