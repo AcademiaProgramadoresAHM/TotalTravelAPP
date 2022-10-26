@@ -31,22 +31,7 @@ class _RoomDetails extends State<RoomDetails> {
   double people = 2;
   double rooms = 1;
   String wordPeople = "personas", wordRooms = "habitación";
-  double SetPrice(data, people, nights) {
-      var price = data;
-      if(price!= null){
-         if (nights != null) {
-        price = price * nights;
-      }
-      if (people != null) {
-        price = price * 1.17;
-      }
-       return price;
-      }else{
-        return 1500.0;
-      }
-     
-     
-  }
+
 
   void SetRooms(roomsNumber) {
     setState(() {
@@ -59,9 +44,9 @@ class _RoomDetails extends State<RoomDetails> {
     setState(() {
       people = peopleNumber;
       people == 1 ? wordPeople = "persona" : wordPeople = "personas";
-      SetPrice(null, people, null);
     });
   }
+ 
 
   DateTimeRange dateRange = DateTimeRange(
       start: DateTime(
@@ -70,6 +55,7 @@ class _RoomDetails extends State<RoomDetails> {
           DateTime.now().year, DateTime.now().month, DateTime.now().day + 1));
   var nights = 1;
   String wordNight = "noche";
+  var price;
 
   List<Padding> HotelDetails(List<dynamic> data, BuildContext context) {
     Future pickDateRange() async {
@@ -87,8 +73,8 @@ class _RoomDetails extends State<RoomDetails> {
         dateRange = newDataRange;
         final difference = dateRange.duration.inDays;
         nights = difference - 1;
+        nights == 0 ? nights = 1: nights = 1;
         nights == 1 ? wordNight = "noche" : wordNight = "noches";
-        SetPrice(null, null, nights);
       });
     }
 
@@ -107,6 +93,14 @@ class _RoomDetails extends State<RoomDetails> {
       for (var i = 1; i <= element['camas']; i++) {
         items.add('${i.toString()}');
       }
+
+      double SetPrice(price){
+        if(price ==null){
+           price = element['precio'];
+        }
+        return price;
+      }
+
 
       String? selectedValue;
 
@@ -428,6 +422,7 @@ class _RoomDetails extends State<RoomDetails> {
                                                                   setState(() {
                                                                     SetRooms(
                                                                         value);
+                                                                      
                                                                   });
                                                                 },
                                                               ),
@@ -467,8 +462,14 @@ class _RoomDetails extends State<RoomDetails> {
                                                                 value: people,
                                                                 onChanged:
                                                                     (people) {
-                                                                  SetPeople(
-                                                                      people);
+                                                                  SetPeople(people);
+                                                                  var price = element['precio'];
+                                                                  for (var i = 1; i <= people -2; i++) {
+                                                                    price = price  * 1.17;
+                                                                    print(price);
+                                                                  }
+                                                                    SetPrice(price);
+                                                                      
                                                                 },
                                                               ),
                                                               padding:
@@ -548,6 +549,7 @@ class _RoomDetails extends State<RoomDetails> {
                                                                                 () {
                                                                               Navigator.pop(context, 'OK');
 
+
                                                                               SetRooms(quantMax);
                                                                               Navigator.pop(context);
                                                                             },
@@ -589,7 +591,7 @@ class _RoomDetails extends State<RoomDetails> {
                                             100, 10, 0, 0),
                                         child: Text(
                                           "Total:     "
-                                          'HNL ${SetPrice(element['precio'], null, null)}',
+                                          'HNL ${SetPrice(null)}',
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
                                             fontFamily: 'Lexend Deca',
