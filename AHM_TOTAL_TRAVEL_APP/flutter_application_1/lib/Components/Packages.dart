@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Components/Decodificador.dart';
 import 'package:flutter_application_1/DefaultPackageScreens/DetailsPackage.dart';
+import 'package:flutter_application_1/feedback_screen.dart';
 import 'package:flutter_application_1/utils/AppWidget.dart';
 import '../Models/UsersViewModel.dart';
 import 'package:flutter_application_1/utils/prueba2/T2Colors.dart';
@@ -11,7 +12,7 @@ import 'package:flutter_application_1/hotel_booking/model/PlanModal.dart';
 
 //-------------LISTADO DE PAQUETES PREDETERMINADOS--------------
 
-// final UserLoggedModel? userloggeddata;
+UserLoggedModel? userloggeddata;
 
 Future<dynamic> GetListadoPackages() async {
   String url_list =
@@ -21,6 +22,33 @@ Future<dynamic> GetListadoPackages() async {
     Map<String, dynamic> userMap = jsonDecode(response.body);
     var user = Decodificador.fromJson(userMap);
     return user.data;
+  } else {
+    print("Error " + response.statusCode.toString());
+  }
+}
+
+Future<dynamic> FindPackage(
+    idPackage, userloggeddata, BuildContext context) async {
+  List<dynamic> datapackage;
+  String url_list =
+      "https://totaltravelapi.azurewebsites.net/API/DefaultPackages/List";
+  final headers = {
+    "Content-type": "application/json",
+    "Authorization": "bearer " + userloggeddata!.Token!
+  };
+  final response = await http.get(Uri.parse(url_list), headers: headers);
+  if (response.statusCode == 200) {
+    Map<String, dynamic> userMap = jsonDecode(response.body);
+    var Json = Decodificador.fromJson(userMap);
+    datapackage = Json.data;
+    var package = datapackage.where((x) => x['id'] == idPackage).toList();
+
+    print(package);
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+          builder: (context) => DetailPackageScreen(userloggeddata, package)),
+    );
   } else {
     print("Error " + response.statusCode.toString());
   }
@@ -217,11 +245,14 @@ List<Padding> ListDefaultPackages(List<dynamic> data, BuildContext context) {
                                         ),
                                       ),
                                       onPressed: () {
-                                        // Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: (context) =>
-                                        //             DetailPackageScreen()));
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    FeedbackScreen(
+                                                        userloggeddata)));
+                                        // FindPackage(element['id'],
+                                        //     userloggeddata, context);
                                       },
                                     ),
                                   ],
