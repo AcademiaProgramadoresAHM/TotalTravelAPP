@@ -344,7 +344,7 @@ final TextEditingController textEditingController = TextEditingController();
                                       style: kTextFormFieldStyle(),
                                       decoration: const InputDecoration(
                                         border: InputBorder.none,
-                                        prefixIcon: Icon(Icons.location_on_outlined),
+                                       // prefixIcon: Icon(Icons.location_on_outlined),
                                         hintText: 'Destino',
                                       ),
                                     ),
@@ -352,7 +352,10 @@ final TextEditingController textEditingController = TextEditingController();
                                    items: CitiesDictionary.keys.map((id) {
                                           return DropdownMenuItem(
                                             value: id,
-                                            child: Text(CitiesDictionary[id].toString()),
+                                            child: Padding(padding: EdgeInsetsDirectional.fromSTEB(40, 0, 0, 0),
+                                            child:  Text(CitiesDictionary[id].toString(),), 
+                                            ) 
+                                           
                                           );
                                         }).toList(),
                                          value: selectedCity,
@@ -369,35 +372,14 @@ final TextEditingController textEditingController = TextEditingController();
                                   searchController: textEditingController,
                                   searchInnerWidget: Padding(
                                     padding: const EdgeInsets.only(
-                                      top: 10,
+                                      top: 0,
                                       bottom: 4,
                                       right: 8,
                                       left: 10,
                                     ),
-                                     child: TextFormField(
-                                      controller: textEditingController,
-                                      decoration: InputDecoration(
-                                        isDense: true,
-                                        contentPadding: const EdgeInsets.symmetric(
-                                          horizontal: 10,
-                                          vertical: 8,
-                                        ),
-                                        hintText: 'Busca un destino',
-                                        hintStyle: const TextStyle(fontSize: 17),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(4),
-                                        ),
-                                      ),
-                                    ),
+                                    
                                   ),
-                                  searchMatchFn: (item, searchValue) {
-                                    return (item.value.toString().contains(searchValue));
-                                  },
-                                  onMenuStateChange: (isOpen) {
-                                  if (!isOpen) {
-                                    textEditingController.clear();
-                                  }
-                                }
+                                 
                       )),
                        )],
                         
