@@ -128,6 +128,7 @@ Future<void> changePassword(
 
 Future<void> PostEmailContact(
     String body, String? user, BuildContext context) async {
+  UserLoggedModel? userloggeddata;
   EmailContactViewModel emailBody = new EmailContactViewModel();
   emailBody.BodyData = body;
   emailBody.User = user;
@@ -145,7 +146,7 @@ Future<void> PostEmailContact(
   Navigator.push(
     context,
     MaterialPageRoute(
-      builder: (context) => SuccessEmailContact(),
+      builder: (context) => SuccessEmailContact(userloggeddata),
     ),
   );
 }

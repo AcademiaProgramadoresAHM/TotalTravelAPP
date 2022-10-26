@@ -1,6 +1,7 @@
 //-------------LISTADO DE PAQUETES PREDETERMINADOS--------------
 
 import 'dart:convert';
+//import 'dart:js';
 import 'package:flutter/material.dart';
 import 'Decodificador.dart';
 import 'package:http/http.dart' as http;
@@ -96,6 +97,15 @@ List<Padding> ListDefaultReservation(List<dynamic> data, BuildContext context) {
                                     ),
                                   ),
                                   Text(
+                                    element['cantidadPagos'].toString(),
+                                    style: TextStyle(
+                                      fontFamily: 'Outfit',
+                                      color: Color(0xFF090F13),
+                                      fontSize: 26,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(
                                     '\$' + element['precio'].toString(),
                                     style: TextStyle(
                                       fontFamily: 'Outfit',
@@ -165,6 +175,32 @@ List<Padding> ListDefaultReservation(List<dynamic> data, BuildContext context) {
                                     EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                                 child: Text(
                                   element['email'],
+                                  style: TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF7C8791),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                child: Text(
+                                  element['dni'],
+                                  style: TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF7C8791),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                child: Text(
+                                  element['telefono'],
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color(0xFF7C8791),

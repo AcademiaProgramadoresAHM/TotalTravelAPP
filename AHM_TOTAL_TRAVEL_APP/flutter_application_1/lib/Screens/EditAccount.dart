@@ -15,6 +15,7 @@ import 'package:flutter_application_1/Models/RequestsViewModel.dart';
 import 'package:flutter_application_1/Models/SuburbsViewModel.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'package:flutter_application_1/Screens/Login.dart';
+import 'package:flutter_application_1/SuccessOrErrorScreens/SuccessfullyEditUser.dart';
 import 'package:flutter_application_1/home_screen.dart';
 import 'package:flutter_application_1/hotel_booking/hotel_app_theme.dart';
 import 'package:get/get.dart';
@@ -98,12 +99,6 @@ class _EditAccountState extends State<EditAccount> {
   String? adressId;
   CiudadesViewModel? planDetalles;
   AdressesViewModel? adressData;
-
-  // void showToast1(bool result) {
-  //   setState(() {
-  //     _isVisible1 = result;
-  //   });
-  // }
 
   void showToast2(bool result2) {
     setState(() {
@@ -250,7 +245,7 @@ class _EditAccountState extends State<EditAccount> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => Login(),
+              builder: (context) => SuccessEditUser(widget.userloggeddata),
             ),
           );
         }
@@ -302,16 +297,6 @@ class _EditAccountState extends State<EditAccount> {
 
   @override
   Widget build(BuildContext context) {
-    // dniController.text = _userData['dni'];
-    //nameController.text = _userData['nombre'];
-    // surnameController.text = _userData['apellido'];
-    //dateOfBirthController.text = _userData['fecha_Nacimiento'];
-    // phoneController.text = _userData['telefono'];
-    // sexController.text = _userData['sexo'];
-    // coloniaController.text = _userData['colonia'];
-    // calleController.text = _userData['calle'];
-    // avenidaController.text = _userData['avenida'];
-    // emailController.text = _userData['email'];
     var size = MediaQuery.of(context).size;
     var theme = Theme.of(context);
 

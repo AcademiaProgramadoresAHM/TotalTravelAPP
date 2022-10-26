@@ -29,6 +29,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
   List<DrawerList>? drawerList;
 
   var _userData;
+  String? name;
 
   @override
   void initState() {
@@ -51,6 +52,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
       var data = userMap['data'];
       setState(() {
         _userData = data;
+        name = _userData['nombre'] + ' ' + _userData['apellido'];
       });
     } else {
       print("Error: " + respuesta.statusCode.toString());
@@ -169,7 +171,7 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   Padding(
                     padding: const EdgeInsets.only(top: 8, left: 4),
                     child: Text(
-                      _userData['nombre'] + ' ' + _userData['apellido'],
+                      name ?? 'nulo',
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         color: HexColor('#652D90'),

@@ -15,15 +15,15 @@ import '../ComponentsLogin/controller/simple_ui_controller.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_application_1/ComponentsLogin/Login.dart';
 
-class SuccessEmailContact extends StatefulWidget {
+class SuccessEditUser extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
-  const SuccessEmailContact(this.userloggeddata, {Key? key}) : super(key: key);
+  const SuccessEditUser(this.userloggeddata, {Key? key}) : super(key: key);
 
   @override
-  State<SuccessEmailContact> createState() => _SuccessEmailContactViewState();
+  State<SuccessEditUser> createState() => _SuccessEditUserViewState();
 }
 
-class _SuccessEmailContactViewState extends State<SuccessEmailContact> {
+class _SuccessEditUserViewState extends State<SuccessEditUser> {
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -96,7 +96,7 @@ class _SuccessEmailContactViewState extends State<SuccessEmailContact> {
                 GestureDetector(
                   child: RichText(
                     text: TextSpan(
-                      text: 'Su correo se envio correctamente',
+                      text: 'Su información se ha editado correctamente',
                       style: kHaveAnAccountStyle(size),
                     ),
                   ),
