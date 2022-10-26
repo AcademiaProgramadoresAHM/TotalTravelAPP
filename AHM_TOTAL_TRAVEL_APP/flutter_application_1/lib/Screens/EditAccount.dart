@@ -100,12 +100,6 @@ class _EditAccountState extends State<EditAccount> {
   CiudadesViewModel? planDetalles;
   AdressesViewModel? adressData;
 
-  // void showToast1(bool result) {
-  //   setState(() {
-  //     _isVisible1 = result;
-  //   });
-  // }
-
   void showToast2(bool result2) {
     setState(() {
       _isVisible2 = result2;
@@ -303,16 +297,6 @@ class _EditAccountState extends State<EditAccount> {
 
   @override
   Widget build(BuildContext context) {
-    // dniController.text = _userData['dni'];
-    //nameController.text = _userData['nombre'];
-    // surnameController.text = _userData['apellido'];
-    //dateOfBirthController.text = _userData['fecha_Nacimiento'];
-    // phoneController.text = _userData['telefono'];
-    // sexController.text = _userData['sexo'];
-    // coloniaController.text = _userData['colonia'];
-    // calleController.text = _userData['calle'];
-    // avenidaController.text = _userData['avenida'];
-    // emailController.text = _userData['email'];
     var size = MediaQuery.of(context).size;
     var theme = Theme.of(context);
 

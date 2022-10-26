@@ -1,14 +1,11 @@
-//-------------LISTADO DE PAQUETES PREDETERMINADOS--------------
-
 import 'dart:convert';
-//import 'dart:js';
 import 'package:flutter/material.dart';
 import 'Decodificador.dart';
 import 'package:http/http.dart' as http;
 
-Future<dynamic> GetListadoReservation() async {
+Future<dynamic> GetListadoShoppingHistory() async {
   String url_list =
-      "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
+      "https://totaltravelapi.azurewebsites.net/API/RecordPayment/List";
 
   final response = await http.get(Uri.parse(url_list));
   if (response.statusCode == 200) {
@@ -20,7 +17,8 @@ Future<dynamic> GetListadoReservation() async {
   }
 }
 
-List<Padding> ListDefaultReservation(List<dynamic> data, BuildContext context) {
+List<Padding> ListDefaultShoppingHistory(
+    List<dynamic> data, BuildContext context) {
   List<Padding> list = [];
   final _controller = PageController();
 
@@ -48,7 +46,7 @@ List<Padding> ListDefaultReservation(List<dynamic> data, BuildContext context) {
                   padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
                   child: Container(
                     width: MediaQuery.of(context).size.width * 0.9,
-                    height: 120,
+                    height: 0,
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.only(
@@ -88,36 +86,27 @@ List<Padding> ListDefaultReservation(List<dynamic> data, BuildContext context) {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    element['numeroPersonas'].toString(),
+                                    element['descripcion_Paquete'].toString(),
                                     style: TextStyle(
                                       fontFamily: 'Outfit',
                                       color: Color(0xFF090F13),
-                                      fontSize: 26,
+                                      fontSize: 16,
                                       fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                   Text(
-                                    element['cantidadPagos'].toString(),
-                                    style: TextStyle(
-                                      fontFamily: 'Outfit',
-                                      color: Color(0xFF090F13),
-                                      fontSize: 26,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  Text(
-                                    '\$' + element['precio'].toString(),
+                                    '\$' + element['montoPago'].toString(),
                                     style: TextStyle(
                                       fontFamily: 'Outfit',
                                       color: Color.fromRGBO(101, 45, 143, 1),
-                                      fontSize: 24,
+                                      fontSize: 19,
                                       fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 ],
                               ),
                               Text(
-                                element['descripcionPaquete'],
+                                element['nombreCompleto'],
                                 style: TextStyle(
                                   fontFamily: 'Outfit',
                                   color: Color.fromRGBO(101, 45, 143, 1),
@@ -126,7 +115,7 @@ List<Padding> ListDefaultReservation(List<dynamic> data, BuildContext context) {
                                 ),
                               ),
                               Text(
-                                element['fecha_Entrada'],
+                                element['dni'],
                                 style: TextStyle(
                                   fontFamily: 'Outfit',
                                   color: Color.fromRGBO(101, 45, 143, 1),
@@ -135,7 +124,7 @@ List<Padding> ListDefaultReservation(List<dynamic> data, BuildContext context) {
                                 ),
                               ),
                               Text(
-                                element['fecha_Salida'],
+                                element['fechaPago'],
                                 style: TextStyle(
                                   fontFamily: 'Outfit',
                                   color: Color.fromRGBO(101, 45, 143, 1),
@@ -144,69 +133,12 @@ List<Padding> ListDefaultReservation(List<dynamic> data, BuildContext context) {
                                 ),
                               ),
                               Text(
-                                element['nombre_Hotel'],
+                                element['tipoPago'],
                                 style: TextStyle(
                                   fontFamily: 'Outfit',
                                   color: Color.fromRGBO(101, 45, 143, 1),
                                   fontSize: 14,
                                   fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              Text(
-                                element['nombre'],
-                                style: TextStyle(
-                                  fontFamily: 'Outfit',
-                                  color: Color.fromRGBO(101, 45, 143, 1),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              Text(
-                                element['apellido'],
-                                style: TextStyle(
-                                  fontFamily: 'Outfit',
-                                  color: Color.fromRGBO(101, 45, 143, 1),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                                child: Text(
-                                  element['email'],
-                                  style: TextStyle(
-                                    fontFamily: 'Outfit',
-                                    color: Color(0xFF7C8791),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                                child: Text(
-                                  element['dni'],
-                                  style: TextStyle(
-                                    fontFamily: 'Outfit',
-                                    color: Color(0xFF7C8791),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                                child: Text(
-                                  element['telefono'],
-                                  style: TextStyle(
-                                    fontFamily: 'Outfit',
-                                    color: Color(0xFF7C8791),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                  ),
                                 ),
                               ),
                               Padding(
@@ -220,46 +152,6 @@ List<Padding> ListDefaultReservation(List<dynamic> data, BuildContext context) {
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           2, 12, 24, 12),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Icon(
-                                            Icons.star_rounded,
-                                            color: Color(0xFFFFA130),
-                                            size: 24,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    ElevatedButton(
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Color.fromRGBO(
-                                                    101, 45, 143, 1)),
-                                        shape: MaterialStateProperty.all(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                          ),
-                                        ),
-                                      ),
-                                      child: Text(
-                                        'Ver Detalles',
-                                        style: TextStyle(
-                                          fontFamily: 'Outfit',
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        //Navigator.push(
-                                        //  context,
-                                        //    MaterialPageRoute(
-                                        //builder: (context) =>
-                                        // DetailPackageScreen()));
-                                      },
                                     ),
                                   ],
                                 ),

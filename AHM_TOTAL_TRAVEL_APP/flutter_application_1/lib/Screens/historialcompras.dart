@@ -1,3 +1,4 @@
+import 'package:flutter_application_1/Components/ShoppingHistory.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -60,187 +61,31 @@ class _ComprashistorialState extends State<Comprashistorial> {
             ],
           ),
         ),
-        body: ListView(
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.all(8.0),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                child: InkWell(
-                  onTap: () => print("ciao"),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch, // add this
-                    children: <Widget>[
-                      ClipRRect(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(8.0),
-                            topRight: Radius.circular(8.0),
-                          ),
-                          child: Image.asset(
-                            'assets/images/Honduras.png',
-                          )),
-                      ListTile(
-                        title: Text('Honduras'),
-                        subtitle: Text(
-                            'Hotel: Pepitos Intercontinental \nReservado el: 22/09/22'),
-                        trailing: Text('L.5900.00',
-                            style:
-                                TextStyle(color: Colors.green, fontSize: 20)),
-                      ),
-                      TextButton(
-                        style: ButtonStyle(
-                          foregroundColor:
-                              MaterialStateProperty.all<Color>(Colors.blue),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => detalleshistorial()),
-                          );
-                        },
-                        child: Text('Ver Detalles'),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.all(8.0),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                child: InkWell(
-                  onTap: () => print("ciao"),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch, // add this
-                    children: <Widget>[
-                      ClipRRect(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(8.0),
-                            topRight: Radius.circular(8.0),
-                          ),
-                          child: Image.asset(
-                            'assets/images/Jamaica.jpg',
-                          )),
-                      ListTile(
-                        title: Text('Paquete Jamaica'),
-                        subtitle: Text('Hotel: Hilton Princess'),
-                        trailing: Text('L.15000.00',
-                            style:
-                                TextStyle(color: Colors.green, fontSize: 20)),
-                      ),
-                      TextButton(
-                        style: ButtonStyle(
-                          foregroundColor:
-                              MaterialStateProperty.all<Color>(Colors.blue),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => detalleshistorial()),
-                          );
-                        },
-                        child: Text('Ver Detalles'),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.all(8.0),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                child: InkWell(
-                  onTap: () => print("ciao"),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch, // add this
-                    children: <Widget>[
-                      ClipRRect(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(8.0),
-                            topRight: Radius.circular(8.0),
-                          ),
-                          child: Image.asset(
-                            'assets/images/hotel.jpg',
-                          )),
-                      ListTile(
-                        title: Text('La Ensenada'),
-                        subtitle: Text('Hotel: La Ensenada  4dias/3noches'),
-                        trailing: Text('L.4900.00',
-                            style:
-                                TextStyle(color: Colors.green, fontSize: 20)),
-                      ),
-                      TextButton(
-                        style: ButtonStyle(
-                          foregroundColor:
-                              MaterialStateProperty.all<Color>(Colors.blue),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => detalleshistorial()),
-                          );
-                        },
-                        child: Text('Ver Detalles'),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.all(8.0),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                child: InkWell(
-                  onTap: () => print("ciao"),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch, // add this
-                    children: <Widget>[
-                      ClipRRect(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(8.0),
-                            topRight: Radius.circular(8.0),
-                          ),
-                          child: Image.asset(
-                            'assets/images/Zambia.jpg',
-                          )),
-                      ListTile(
-                        title: Text('Paquete Zambia'),
-                        subtitle: Text('Hotel: Pepitos Intercontinental '),
-                        trailing: Text('L.50900.00',
-                            style:
-                                TextStyle(color: Colors.green, fontSize: 20)),
-                      ),
-                      TextButton(
-                        style: ButtonStyle(
-                          foregroundColor:
-                              MaterialStateProperty.all<Color>(Colors.blue),
-                        ),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => detalleshistorial()),
-                          );
-                        },
-                        child: Text('Ver Detalles'),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+        body: SingleChildScrollView(
+            child: Column(
+          children: [
+            FutureBuilder<dynamic>(
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Wrap(
+                      spacing: 8,
+                      runSpacing: 4,
+                      alignment: WrapAlignment.start,
+                      crossAxisAlignment: WrapCrossAlignment.start,
+                      direction: Axis.horizontal,
+                      runAlignment: WrapAlignment.start,
+                      verticalDirection: VerticalDirection.down,
+                      clipBehavior: Clip.none,
+                      children:
+                          ListDefaultShoppingHistory(snapshot.data, context));
+                } else {
+                  return Text("No data");
+                }
+              },
+              future: GetListadoShoppingHistory(),
             ),
           ],
-        ),
+        )),
       ),
     );
   }
