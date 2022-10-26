@@ -19,6 +19,8 @@ import 'main.dart';
 import 'dart:convert';
 import 'package:flutter/src/rendering/box.dart';
 
+UserLoggedModel? userloggeddata;
+
 class AccountInfo extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   const AccountInfo(this.userloggeddata, {Key? key}) : super(key: key);
@@ -38,16 +40,13 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
   DateTime endDate = DateTime.now().add(const Duration(days: 5));
   //UserListViewModel? _userData;
   var _userData;
+  String? name, surname, email, phone, dni, sex, direction;
+  String image =
+      'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png';
 
   @override
   void initState() {
     GetUserData();
-    // userData =
-    //     GetUserData(widget.userloggeddata!.ID, widget.userloggeddata!.Token);
-    //userData =
-    //GetUserData(widget.userloggeddata!.ID, widget.userloggeddata!.Token)
-    //  .then((value) => {userData = UserListViewModel.fromJson(value)});
-    //userData = UserListViewModel.;
     animationController = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
     super.initState();
@@ -67,6 +66,19 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
       var data = userMap['data'];
       setState(() {
         _userData = data;
+        image = _userData['image_URL'];
+        name = _userData['nombre'];
+        surname = _userData['apellido'];
+        email = _userData['email'];
+        phone = _userData['telefono'];
+        dni = _userData['dni'];
+        sex = _userData['sexo'];
+        direction = 'Colonia ' +
+            _userData['colonia'] +
+            ', calle ' +
+            _userData['calle'] +
+            ', avenida ' +
+            _userData['avenida'];
       });
     } else {
       print("Error: " + respuesta.statusCode.toString());
@@ -114,13 +126,16 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
                                 boxShadow: <BoxShadow>[
-                                  BoxShadow(blurRadius: 8),
+                                  BoxShadow(
+                                      blurRadius: 8,
+                                      color:
+                                          Color.fromARGB(255, 255, 255, 255)),
                                 ],
                               ),
                               child: ClipRRect(
                                 borderRadius: const BorderRadius.all(
                                     Radius.circular(60.0)),
-                                child: Image.network(_userData['image_URL']),
+                                child: Image.network(image),
                               )),
                           Padding(
                             padding:
@@ -134,7 +149,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           Padding(
                             padding: EdgeInsets.only(top: 25.0, right: 195.0),
                             child: Text(
-                              _userData['nombre'] ?? 'Nombre',
+                              name ?? 'Nombre',
                               //_userData?.nombre_completo ?? 'nulo',
                               //widget.userloggeddata?.nombre_completo ?? 'nulo',
                               style: TextStyle(
@@ -159,7 +174,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           Padding(
                             padding: EdgeInsets.only(top: 25.0, right: 195.0),
                             child: Text(
-                              _userData['apellido'] ?? 'Apellido',
+                              surname ?? 'Apellido',
                               //_userData?.nombre_completo ?? 'nulo',
                               //widget.userloggeddata?.nombre_completo ?? 'nulo',
                               style: TextStyle(
@@ -184,7 +199,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           Padding(
                             padding: EdgeInsets.only(top: 25.0, right: 20.0),
                             child: Text(
-                              _userData['email'] ?? 'Email',
+                              email ?? 'Email',
                               //'null',
                               style: TextStyle(
                                   fontSize: 20.0, fontWeight: FontWeight.bold),
@@ -208,7 +223,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           Padding(
                             padding: EdgeInsets.only(top: 25.0, right: 154.0),
                             child: Text(
-                              _userData['telefono'] ?? 'Telefono',
+                              phone ?? 'Telefono',
                               //'nulo',
                               style: TextStyle(
                                   fontSize: 20.0, fontWeight: FontWeight.bold),
@@ -232,7 +247,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           Padding(
                             padding: EdgeInsets.only(top: 25.0, right: 100.0),
                             child: Text(
-                              _userData['dni'] ?? 'DNI',
+                              dni ?? 'DNI',
                               //'nulo',
                               style: TextStyle(
                                   fontSize: 20.0, fontWeight: FontWeight.bold),
@@ -256,7 +271,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           Padding(
                             padding: EdgeInsets.only(top: 25.0, right: 150.0),
                             child: Text(
-                              _userData['sexo'] ?? 'Sexo',
+                              sex ?? 'Sexo',
                               //'nulo',
                               style: TextStyle(
                                   fontSize: 20.0, fontWeight: FontWeight.bold),
@@ -281,12 +296,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             padding: EdgeInsets.only(
                                 top: 25.0, right: 20.0, left: 40.0),
                             child: Text(
-                              'Colonia ' +
-                                  _userData['colonia'] +
-                                  ', calle ' +
-                                  _userData['calle'] +
-                                  ', avenida ' +
-                                  _userData['avenida'],
+                              direction ?? 'Direccion',
                               //'nulo',
                               style: TextStyle(
                                   fontSize: 20.0, fontWeight: FontWeight.bold),
@@ -395,23 +405,51 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
   }
 }
 
-// class ProfilePic extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       margin: const EdgeInsets.only(top: 70.0),
-//       height: 150,
-//       width: 150,
-//       decoration: BoxDecoration(
-//         shape: BoxShape.circle,
-//         boxShadow: <BoxShadow>[
-//           BoxShadow(blurRadius: 8),
-//         ],
-//       ),
-//       child: ClipRRect(
-//         borderRadius: const BorderRadius.all(Radius.circular(60.0)),
-//         child: Image.network(_userData['image_URL']),
-//       ),
-//     );
+// var _userData;
+// String? name, surname, email, phone, dni, sex, street, avenue;
+
+// Future<void> GetUserData() async {
+//   String url_list =
+//       "https://totaltravelapi.azurewebsites.net/API/Users/Find?id=" +
+//           userloggeddata!.ID.toString();
+//   final headers = {
+//     "Content-type": "application/json",
+//     "Authorization": "bearer " + userloggeddata!.Token!
+//   };
+//   final respuesta = await http.get(Uri.parse(url_list), headers: headers);
+//   if (respuesta.statusCode == 200) {
+//     Map<String, dynamic> userMap = jsonDecode(respuesta.body);
+//     var data = userMap['data'];
+//     _userData = data;
+//   } else {
+//     print("Error: " + respuesta.statusCode.toString());
 //   }
 // }
+
+// class Data {
+//   String? name;
+//   String? surname;
+//   String? email;
+//   String? phone;
+//   int? dni;
+//   String? street;
+//   String? avenue;
+
+//   Data(
+//       {this.name,
+//       this.surname,
+//       this.email,
+//       this.phone,
+//       this.dni,
+//       this.street,
+//       this.avenue});
+// }
+
+// final data = Data(
+//     name: _userData['nombre'],
+//     surname: _userData['apellido'],
+//     email: _userData['email'],
+//     phone: _userData['telefono'],
+//     dni: _userData['dni'],
+//     street: _userData['calle'],
+//     avenue: _userData['avenida']);
