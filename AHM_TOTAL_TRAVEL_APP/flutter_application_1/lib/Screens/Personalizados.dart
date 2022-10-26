@@ -19,36 +19,6 @@ class PersonaliScreen extends StatefulWidget {
   @override
   _PersonaliScreenState createState() => _PersonaliScreenState();
 }
-/*
-  Future<dynamic> FindReservation(idPackage, userloggeddata) async {
-    List<dynamic> datapackage;
-    String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
-    final headers = {
-      "Content-type": "application/json",
-      "Authorization": "bearer " + widget.userloggeddata!.Token!
-    };
-    final response = await http.get(Uri.parse(url_list), headers: headers);
-    if (response.statusCode == 200) {
-      Map<String, dynamic> userMap = jsonDecode(response.body);
-      var Json = Decodificador.fromJson(userMap);
-      datapackage = Json.data;
-      var package = datapackage.where((x) => x['id'] == idPackage).toList();
-
-      print(package);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                DetailPackageScreen(widget.userloggeddata, package)),
-      );
-    } else {
-      print("Error " + response.statusCode.toString());
-    }
-  }
-
-
-*/
 
 class _PersonaliScreenState extends State<PersonaliScreen> {
   Future<dynamic> GetListReservation(userloggeddata) async {
@@ -85,7 +55,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
-            color: Colors.white,
+            color: Color.fromARGB(255, 255, 255, 255),
             boxShadow: [
               BoxShadow(
                 blurRadius: 4,
@@ -99,22 +69,6 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
               Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      height: 120,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(0),
-                          bottomRight: Radius.circular(0),
-                          topLeft: Radius.circular(12),
-                          topRight: Radius.circular(12),
-                        ),
-                      ),
-                    ),
-                  ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(10, 10, 16, 12),
                     child: Row(
@@ -143,68 +97,72 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      element['numeroPersonas'].toString(),
+                                    /*Text(
+                                      element['numeroPersonas'].toString() +
+                                          'Personas',
                                       style: TextStyle(
                                         fontFamily: 'Outfit',
                                         color: Color(0xFF090F13),
-                                        fontSize: 26,
+                                        fontSize: 25,
                                         fontWeight: FontWeight.w500,
                                       ),
-                                    ),
+                                    ),*/
                                     Text(
-                                      '\$' + element['precio'].toString(),
+                                      'Paquete: ' +
+                                          element['descripcionPaquete'],
                                       style: TextStyle(
                                         fontFamily: 'Outfit',
                                         color: Color.fromRGBO(101, 45, 143, 1),
-                                        fontSize: 24,
+                                        fontSize: 25,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
                                   ],
                                 ),
                                 Text(
-                                  element['descripcionPaquete'],
+                                  'Precio: L.' + element['precio'].toString(),
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color.fromRGBO(101, 45, 143, 1),
-                                    fontSize: 14,
+                                    fontSize: 25,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 Text(
-                                  element['fecha_Entrada'],
+                                  'Fecha entrada: ' + element['fecha_Entrada'],
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color.fromRGBO(101, 45, 143, 1),
-                                    fontSize: 14,
+                                    fontSize: 25,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
                                 Text(
-                                  element['fecha_Salida'],
+                                  'Fecha Salida:   ' + element['fecha_Salida'],
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color.fromRGBO(101, 45, 143, 1),
-                                    fontSize: 14,
+                                    fontSize: 25,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
+                                /*
                                 Text(
                                   element['nombre_Hotel'],
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color.fromRGBO(101, 45, 143, 1),
-                                    fontSize: 14,
+                                    fontSize: 25,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
+                               
                                 Text(
                                   element['nombre'],
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color.fromRGBO(101, 45, 143, 1),
-                                    fontSize: 14,
+                                    fontSize: 25,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -213,7 +171,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color.fromRGBO(101, 45, 143, 1),
-                                    fontSize: 14,
+                                    fontSize: 25,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -225,11 +183,24 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                     style: TextStyle(
                                       fontFamily: 'Outfit',
                                       color: Color(0xFF7C8791),
-                                      fontSize: 14,
+                                      fontSize: 25,
                                       fontWeight: FontWeight.normal,
                                     ),
                                   ),
                                 ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 4, 0, 0),
+                                  child: Text(
+                                    element['telefono'],
+                                    style: TextStyle(
+                                      fontFamily: 'Outfit',
+                                      color: Color(0xFF7C8791),
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                ),*/
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0, 8, 0, 0),
@@ -275,11 +246,12 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                           ),
                                         ),
                                         onPressed: () {
-                                          //Navigator.push(
-                                          //  context,
-                                          //    MaterialPageRoute(
-                                          //builder: (context) =>
-                                          // DetailPackageScreen()));
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      Personali2Screen(widget
+                                                          .userloggeddata)));
                                         },
                                       ),
                                     ],

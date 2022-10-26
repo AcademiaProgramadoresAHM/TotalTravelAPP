@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:http/http.dart' as http;
 import '../Models/CitiesViewModel.dart';
@@ -19,257 +20,446 @@ class customActivities extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final CiudadesViewModel? Ciudad;
 
-  const customActivities( this.userloggeddata, this.Ciudad,{super.key});
+  const customActivities(this.userloggeddata, this.Ciudad, {super.key});
   @override
   _customActivities createState() => _customActivities();
 }
 
+  TimeOfDay time = TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
 class _customActivities extends State<customActivities> {
-late List<Hoteles> ListaHoteles;
-Map<int?, String> HotelsDictionary = Map();
 
 
+  late List<Hoteles> ListaHoteles;
+  Map<int?, String> HotelsDictionary = Map();
 
-  Future<dynamic> GetListActivities(Ciudad,userloggeddata) async {
+  Future<dynamic> GetListActivities(Ciudad, userloggeddata) async {
     List<dynamic> dataActivities;
-  String url_list =
-      "https://totaltravelapi.azurewebsites.net/API/ActivitiesExtra/List";
-       final headers = {
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/ActivitiesExtra/List";
+    final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
     };
-  final response = await http.get(Uri.parse(url_list), headers: headers);
-  if (response.statusCode == 200) {
-    Map<String, dynamic> userMap = jsonDecode(response.body);
-     var Json = DecoderAPI.fromJson(userMap);
-     dataActivities = Json.data;
-     var activity = dataActivities.where((x) => x['ciudadID'] == Ciudad.ID).toList();
-  
-    return activity;
-  } else {
-    print("Error " + response.statusCode.toString());
+    final response = await http.get(Uri.parse(url_list), headers: headers);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var Json = DecoderAPI.fromJson(userMap);
+      dataActivities = Json.data;
+      var activity =
+          dataActivities.where((x) => x['ciudadID'] == Ciudad.ID).toList();
+
+      return activity;
+    } else {
+      print("Error " + response.statusCode.toString());
+    }
   }
-}
 
-
-List<Padding> ListActivities(List<dynamic> data, BuildContext context) {
-  List<Padding> list = [];
-  final _controller = PageController();
-  List<String> imageUrl;
-  data.forEach((element) {
-    imageUrl = element['imageURL'].split(',');
-    list.add(Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(8),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 4,
-              color: Color(0x32000000),
-              offset: Offset(0, 2),
-            )
-          ],
-        ),
-        child: Column(
-          children: [
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(0),
-                        bottomRight: Radius.circular(0),
-                        topLeft: Radius.circular(12),
-                        topRight: Radius.circular(12),
+  List<Padding> ListActivities(List<dynamic> data, BuildContext context) {
+  final hours = time.hour.toString().padLeft(2,'0');
+  final minutes = time.minute.toString().padLeft(2,'0');
+    List<Padding> list = [];
+    final _controller = PageController();
+    List<String> imageUrl;
+    data.forEach((element) {
+      imageUrl = element['imageURL'].split(',');
+      list.add(Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 4,
+                color: Color(0x32000000),
+                offset: Offset(0, 2),
+              )
+            ],
+          ),
+          child: Column(
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 120,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(0),
+                          bottomRight: Radius.circular(0),
+                          topLeft: Radius.circular(12),
+                          topRight: Radius.circular(12),
+                        ),
                       ),
-                    ),
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Image.network(
-                       imageUrl[0].toString(),
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Image.network(
+                          imageUrl[0].toString(),
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(10, 10, 16, 12),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Container(
-                        width: 4,
-                        height: 150,
-                        decoration: BoxDecoration(
-                          color: Color.fromRGBO(101, 45, 143, 1),
-                          borderRadius: BorderRadius.circular(4),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 16, 12),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Container(
+                          width: 4,
+                          height: 150,
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(101, 45, 143, 1),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        flex: 6,
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    element['actividad'],
-                                    style: TextStyle(
-                                      fontFamily: 'Outfit',
-                                      color: Color(0xFF090F13),
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                  Text(
-                                    '\$' + element['precio'].toString(),
-                                    style: TextStyle(
-                                      fontFamily: 'Outfit',
-                                      color: Color.fromRGBO(101, 45, 143, 1),
-                                      fontSize: 24,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              Text(
-                                " ",
-                                style: TextStyle(
-                                  fontFamily: 'Outfit',
-                                  color: Color.fromRGBO(101, 45, 143, 1),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-                                child: Text(
-                                  element['descripcion'],
-                                  style: TextStyle(
-                                    fontFamily: 'Outfit',
-                                    color: Color(0xFF7C8791),
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 8, 0, 0),
-                                child: Row(
+                        Expanded(
+                          flex: 6,
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
                                   mainAxisSize: MainAxisSize.max,
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          2, 12, 24, 12),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Icon(
-                                            Icons.star_rounded,
-                                            color: Color(0xFFFFA130),
-                                            size: 24,
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    4, 0, 0, 0),
-                                            child: Text(
-                                              '4/5',
-                                              style: TextStyle(
-                                                fontFamily: 'Outfit',
-                                                color: Color(0xFF101213),
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    8, 0, 0, 0),
-                                            child: Text(
-                                              'Rating',
-                                              style: TextStyle(
-                                                fontFamily: 'Outfit',
-                                                color: Color(0xFF57636C),
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                    Text(
+                                      element['actividad'],
+                                      style: TextStyle(
+                                        fontFamily: 'Outfit',
+                                        color: Color(0xFF090F13),
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w500,
                                       ),
                                     ),
-                                    ElevatedButton(
-                                      style: ButtonStyle(
-                                        backgroundColor:
-                                            MaterialStateProperty.all(
-                                                Color.fromRGBO(
-                                                    101, 45, 143, 1)),
-                                        shape: MaterialStateProperty.all(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                          ),
-                                        ),
+                                    Text(
+                                      '\$' + element['precio'].toString(),
+                                      style: TextStyle(
+                                        fontFamily: 'Outfit',
+                                        color: Color.fromRGBO(101, 45, 143, 1),
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w600,
                                       ),
-                                      child: Text(
-                                        'Reservar',
-                                        style: TextStyle(
-                                          fontFamily: 'Outfit',
-                                          color: Colors.white,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                      onPressed: () {
-                                        
-
-                                      },
                                     ),
                                   ],
                                 ),
-                              ),
-                            ],
+                                Text(
+                                  " ",
+                                  style: TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Color.fromRGBO(101, 45, 143, 1),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 4, 0, 0),
+                                  child: Text(
+                                    element['descripcion'],
+                                    style: TextStyle(
+                                      fontFamily: 'Outfit',
+                                      color: Color(0xFF7C8791),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 8, 0, 0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            2, 12, 24, 12),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Icon(
+                                              Icons.star_rounded,
+                                              color: Color(0xFFFFA130),
+                                              size: 24,
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(4, 0, 0, 0),
+                                              child: Text(
+                                                '4/5',
+                                                style: TextStyle(
+                                                  fontFamily: 'Outfit',
+                                                  color: Color(0xFF101213),
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(8, 0, 0, 0),
+                                              child: Text(
+                                                'Rating',
+                                                style: TextStyle(
+                                                  fontFamily: 'Outfit',
+                                                  color: Color(0xFF57636C),
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.normal,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  10, 0, 10, 0),
+                                          child: SizedBox(
+                                            width: 100,
+                                            child: ElevatedButton(
+                                              child: Text(
+                                                "Reservar",
+                                                style: TextStyle(),
+                                              ),
+                                              
+                                              style: ElevatedButton.styleFrom(
+                                                elevation: 0.0,
+                                                shadowColor: Colors.transparent,
+                                                backgroundColor:
+                                                    Color(0xFF652D8F),
+                                                padding: EdgeInsets.zero,
+                                                
+                                              ),
+                                              onPressed: () {
+                                                showModalBottomSheet<void>(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return Container(
+                                                      height: 300,
+                                                      color: Colors.white,
+                                                      child: Center(
+                                                        child: Column(
+                                                          children: <Widget>[
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0,
+                                                                          30,
+                                                                          0,
+                                                                          0),
+                                                              child: Text(
+                                                                "Personas",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontFamily:
+                                                                      'Outfit',
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: 17,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              child: SpinBox(
+                                                                max: 10,
+                                                                value: 1,
+                                                                onChanged:
+                                                                    (value) {
+                                                                  setState(
+                                                                      () {});
+                                                                },
+                                                              ),
+                                                              padding:
+                                                                  const EdgeInsets
+                                                                          .only(
+                                                                      left: 30,
+                                                                      right:
+                                                                          30),
+                                                            ),
+                                                               Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0,
+                                                                          30,
+                                                                          0,
+                                                                          0),
+                                                              child: Text(
+                                                                "Seleccione una hora",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontFamily:
+                                                                      'Outfit',
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: 17,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                           Padding(padding: 
+                                                           EdgeInsetsDirectional.fromSTEB(0, 10, 0, 20),
+                                                           child: 
+                                                            SizedBox(
+                                                              width: 200,
+                                                              child: ElevatedButton(
+                                                              child: Text( '${hours}:${minutes}', style:  TextStyle(fontSize: 16)),
+                                                              onPressed: () async{
+                                                                TimeOfDay? newTime = 
+                                                                await showTimePicker(
+                                                                  cancelText: "Cancelar",
+                                                                  confirmText: "Confirmar",
+                                                                  context: context, 
+                                                                  initialTime: time);
+
+                                                                if(newTime == null) return;
+                                                                setState(() => time = newTime);
+
+                                                              },
+                                                              style: ElevatedButton.styleFrom(
+                                                                backgroundColor: Color(0xFF652D8F)
+                                                              ),
+                                                              ),
+                                                            )
+                                                           ),
+
+                                                       
+                                                            SizedBox(
+                                                              width: 300,
+                                                              height: 40,
+                                                              child:
+                                                                  ElevatedButton(
+                                                                onPressed: () {
+                                                                  if (2 >
+                                                                      1) {
+                                                                    /*showDialog<
+                                                                        String>(
+                                                                      context:
+                                                                          context,
+                                                                      builder: (BuildContext
+                                                                              context) =>
+                                                                          AlertDialog(
+                                                                        title:
+                                                                            Padding(
+                                                                          padding: EdgeInsets.only(
+                                                                              top: 15,
+                                                                              left: 20,
+                                                                              right: 20),
+                                                                          child:
+                                                                              Text(
+                                                                            'Habitaciones insuficientes',
+                                                                            style: TextStyle(
+                                                                                color: Color.fromARGB(255, 128, 9, 1),
+                                                                                fontSize: 18,
+                                                                                fontFamily: 'Outfit',
+                                                                                fontWeight: FontWeight.w500),
+                                                                          ),
+                                                                        ),
+                                                                        content: Padding(
+                                                                            padding: EdgeInsets.only(top: 10, left: 0, right: 0),
+                                                                            child: Text(
+                                                                              '¿Desea agregar más habitaciones?',
+                                                                              style: TextStyle(
+                                                                                fontFamily: 'Outfit',
+                                                                                color: Color(0xFF7C8791),
+                                                                                fontSize: 16,
+                                                                                fontWeight: FontWeight.w500,
+                                                                              ),
+                                                                            )),
+                                                                        actions: <
+                                                                            Widget>[
+                                                                          TextButton(
+                                                                            onPressed:
+                                                                                () {
+                                                                              Navigator.pop(context, 'Cancel');
+                                                                            },
+                                                                            child:
+                                                                                const Text(
+                                                                              'Cancelar',
+                                                                              style: TextStyle(color: Color(0xFF7C8791)),
+                                                                            ),
+                                                                          ),
+                                                                          TextButton(
+                                                                            onPressed:
+                                                                                () {
+                                                                              Navigator.pop(context, 'OK');
+
+                                                                              Navigator.pop(context);
+                                                                            },
+                                                                            child:
+                                                                                const Text('Aceptar'),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    );*/
+                                                                  } else {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  }
+                                                                },
+                                                                child: Text(
+                                                                  'Aplicar',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          18),
+                                                                ),
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                  primary: Color(
+                                                                      0xFF652D8F),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                            ),
+                                          )),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            )
-          ],
+                ],
+              )
+            ],
+          ),
         ),
-      ),
-    ));
-  });
+      ));
+    });
 
-  return list;
-}
-
-
+    return list;
+  }
 
   @override
   void initState() {
@@ -283,44 +473,41 @@ List<Padding> ListActivities(List<dynamic> data, BuildContext context) {
     var width = MediaQuery.of(context).size.width;
     changeStatusColor(appStore.appBarColor);
     return MaterialApp(
-      title: 'Flutter layout demo',
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('           Actividades'),
-          backgroundColor: Color.fromRGBO(101, 45, 143, 1),
+        title: 'Flutter layout demo',
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          appBar: AppBar(
+            title: Text('           Actividades'),
+            backgroundColor: Color.fromRGBO(101, 45, 143, 1),
           ),
-        body: SingleChildScrollView(
-                  
-                            // color:
-                            //     HotelAppTheme.buildLightTheme().backgroundColor,
-                            child: Column(
-                          children: [
-                            FutureBuilder<dynamic>(
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return Wrap(
-                                      spacing: 8,
-                                      runSpacing: 4,
-                                      alignment: WrapAlignment.start,
-                                      crossAxisAlignment:
-                                          WrapCrossAlignment.start,
-                                      direction: Axis.horizontal,
-                                      runAlignment: WrapAlignment.start,
-                                      verticalDirection: VerticalDirection.down,
-                                      clipBehavior: Clip.none,
-                                      children: ListActivities(
-                                          snapshot.data, context));
-                                } else {
-                                  return Text(" ");
-                                }
-                              },
-                              future: GetListActivities(widget.Ciudad,widget.userloggeddata),
-                            ),
-                          ],
-                        )),
-      )
-    );
+          body: SingleChildScrollView(
+
+              // color:
+              //     HotelAppTheme.buildLightTheme().backgroundColor,
+              child: Column(
+            children: [
+              FutureBuilder<dynamic>(
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Wrap(
+                        spacing: 8,
+                        runSpacing: 4,
+                        alignment: WrapAlignment.start,
+                        crossAxisAlignment: WrapCrossAlignment.start,
+                        direction: Axis.horizontal,
+                        runAlignment: WrapAlignment.start,
+                        verticalDirection: VerticalDirection.down,
+                        clipBehavior: Clip.none,
+                        children: ListActivities(snapshot.data, context));
+                  } else {
+                    return Text(" ");
+                  }
+                },
+                future: GetListActivities(widget.Ciudad, widget.userloggeddata),
+              ),
+            ],
+          )),
+        ));
   }
 
   Column _buildButtonColumn(Color color, IconData icon, String label) {

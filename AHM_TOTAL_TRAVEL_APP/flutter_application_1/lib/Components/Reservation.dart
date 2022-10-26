@@ -20,34 +20,6 @@ Future<dynamic> GetListadoReservation() async {
   }
 }
 
-/*
-  Future<dynamic> FindReservation(idPackage, userloggeddata) async {
-    List<dynamic> datapackage;
-    String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
-    final headers = {
-      "Content-type": "application/json",
-      "Authorization": "bearer " + widget.userloggeddata!.Token!
-    };
-    final response = await http.get(Uri.parse(url_list), headers: headers);
-    if (response.statusCode == 200) {
-      Map<String, dynamic> userMap = jsonDecode(response.body);
-      var Json = Decodificador.fromJson(userMap);
-      datapackage = Json.data;
-      var package = datapackage.where((x) => x['id'] == idPackage).toList();
-
-      print(package);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                DetailPackageScreen(widget.userloggeddata, package)),
-      );
-    } else {
-      print("Error " + response.statusCode.toString());
-    }
-  }
-*/
 List<Padding> ListDefaultReservation(List<dynamic> data, BuildContext context) {
   List<Padding> list = [];
   final _controller = PageController();
@@ -125,6 +97,15 @@ List<Padding> ListDefaultReservation(List<dynamic> data, BuildContext context) {
                                     ),
                                   ),
                                   Text(
+                                    element['cantidadPagos'].toString(),
+                                    style: TextStyle(
+                                      fontFamily: 'Outfit',
+                                      color: Color(0xFF090F13),
+                                      fontSize: 26,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(
                                     '\$' + element['precio'].toString(),
                                     style: TextStyle(
                                       fontFamily: 'Outfit',
@@ -194,6 +175,32 @@ List<Padding> ListDefaultReservation(List<dynamic> data, BuildContext context) {
                                     EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                                 child: Text(
                                   element['email'],
+                                  style: TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF7C8791),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                child: Text(
+                                  element['dni'],
+                                  style: TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF7C8791),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                child: Text(
+                                  element['telefono'],
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color(0xFF7C8791),

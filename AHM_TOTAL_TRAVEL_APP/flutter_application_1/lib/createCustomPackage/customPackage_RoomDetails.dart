@@ -16,7 +16,8 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 class RoomDetails extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final List<dynamic> Room;
-  const RoomDetails(this.userloggeddata, this.Room, {Key? key})
+  final CiudadesViewModel Ciudad;
+  const RoomDetails(this.userloggeddata, this.Room,this.Ciudad,{Key? key})
       : super(key: key);
 
   @override
@@ -27,20 +28,24 @@ class _RoomDetails extends State<RoomDetails> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController? _QuestController;
   TextEditingController? _RoomsController;
-  CiudadesViewModel Ciudad =
-      new CiudadesViewModel(null, null, null, null, null);
   double people = 2;
   double rooms = 1;
   String wordPeople = "personas", wordRooms = "habitación";
   double SetPrice(data, people, nights) {
       var price = data;
-      if (nights != null) {
+      if(price!= null){
+         if (nights != null) {
         price = price * nights;
       }
       if (people != null) {
         price = price * 1.17;
       }
-      return price;
+       return price;
+      }else{
+        return 1500.0;
+      }
+     
+     
   }
 
   void SetRooms(roomsNumber) {
@@ -262,7 +267,7 @@ class _RoomDetails extends State<RoomDetails> {
                                                 child: Row(
                                                   children: [
                                                     Text(
-                                                      "Entrada",
+                                                      "Seleccione su\nfecha de entrada",
                                                       style: TextStyle(
                                                         fontFamily: 'Outfit',
                                                         color:
@@ -277,7 +282,7 @@ class _RoomDetails extends State<RoomDetails> {
                                                             EdgeInsets.only(
                                                                 left: 20)),
                                                     SizedBox(
-                                                        width: 100,
+                                                        width: 150,
                                                         child: ElevatedButton(
                                                           child: Text(
                                                             DateFormat(
@@ -291,8 +296,7 @@ class _RoomDetails extends State<RoomDetails> {
                                                             elevation: 0.0,
                                                             shadowColor: Colors
                                                                 .transparent,
-                                                            // backgroundColor:
-                                                            //     Colors.white,
+                                                            backgroundColor: Color(0xFF652D8F),
                                                             padding:
                                                                 EdgeInsets.zero,
                                                           ),
@@ -312,7 +316,7 @@ class _RoomDetails extends State<RoomDetails> {
                                             Row(
                                               children: [
                                                 Text(
-                                                  "Salida",
+                                                  "Seleccione su\nfecha de salida",
                                                   style: TextStyle(
                                                     fontFamily: 'Outfit',
                                                     color: Color(0xFF7C8791),
@@ -324,15 +328,14 @@ class _RoomDetails extends State<RoomDetails> {
                                                     padding: EdgeInsets.only(
                                                         left: 30)),
                                                 SizedBox(
-                                                    width: 100,
+                                                    width: 150,
                                                     child: ElevatedButton(
                                                       style: ElevatedButton
                                                           .styleFrom(
                                                         elevation: 0.0,
                                                         shadowColor:
                                                             Colors.transparent,
-                                                        // backgroundColor:
-                                                        //     Colors.white,
+                                                        backgroundColor: Color(0xFF652D8F),
                                                         padding:
                                                             EdgeInsets.zero,
                                                       ),
@@ -352,7 +355,7 @@ class _RoomDetails extends State<RoomDetails> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             10, 10, 0, 0),
                                         child: Text(
-                                          "N.º de habitaciones y personas",
+                                          "Seleccione habitaciones y personas",
                                           style: TextStyle(
                                             fontFamily: 'Outfit',
                                             color: Color(0xFF7C8791),
@@ -379,7 +382,7 @@ class _RoomDetails extends State<RoomDetails> {
                                               style: ElevatedButton.styleFrom(
                                                 elevation: 0.0,
                                                 shadowColor: Colors.transparent,
-                                                // backgroundColor: Colors.white,
+                                                backgroundColor: Color(0xFF652D8F),
                                                 padding: EdgeInsets.zero,
                                               ),
                                               onPressed: () {
@@ -605,12 +608,12 @@ class _RoomDetails extends State<RoomDetails> {
                                             style: ButtonStyle(
                                               backgroundColor:
                                                   MaterialStateProperty.all(
-                                                      Color.fromRGBO(
-                                                          101, 45, 143, 1)),
+                                                      Color(0xFF652D8F)),
+                                               
                                               shape: MaterialStateProperty.all(
                                                 RoundedRectangleBorder(
                                                   borderRadius:
-                                                      BorderRadius.circular(15),
+                                                      BorderRadius.circular(4),
                                                 ),
                                               ),
                                             ),
@@ -629,10 +632,7 @@ class _RoomDetails extends State<RoomDetails> {
                                                 MaterialPageRoute(
                                                     builder: (context) =>
                                                         createCustomPackage(
-                                                            Ciudad,
-                                                            widget
-                                                                .userloggeddata,
-                                                            1)),
+                                                            widget.Ciudad,widget.userloggeddata,1)),
                                               );
                                             },
                                           ),
