@@ -63,7 +63,7 @@ Future<void> EditRegister(
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => MyHomePage(userloggeddata),
+            builder: (context) => MyHomePage(),
           ),
         );
       }

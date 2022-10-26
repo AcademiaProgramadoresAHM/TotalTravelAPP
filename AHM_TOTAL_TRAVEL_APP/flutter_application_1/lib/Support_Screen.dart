@@ -59,7 +59,6 @@ class _SupportScreenState extends State<SupportScreen> {
   void initState() {
     GetUserData();
     super.initState();
-    shortBioController.text = "";
   }
 
   @override
@@ -72,8 +71,6 @@ class _SupportScreenState extends State<SupportScreen> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     Get.put(SimpleUIController());
-
-    shortBioController.text = "";
 
     SimpleUIController simpleUIController = Get.find<SimpleUIController>();
     return Theme(
@@ -393,6 +390,7 @@ class _SupportScreenState extends State<SupportScreen> {
                             PostEmailContact(
                                 shortBioController.text, name, context);
                           }
+                          shortBioController.text = "";
 
                           //
                         },

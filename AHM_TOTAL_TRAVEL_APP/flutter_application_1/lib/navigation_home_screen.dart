@@ -64,7 +64,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   @override
   void initState() {
     drawerIndex = DrawerIndex.HOME;
-    screenView = MyHomePage(widget.userloggeddata);
+    screenView = MyHomePage();
     super.initState();
   }
 
@@ -99,7 +99,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
       switch (drawerIndex) {
         case DrawerIndex.HOME:
           setState(() {
-            screenView = MyHomePage(widget.userloggeddata);
+            screenView = MyHomePage();
           });
           break;
         case DrawerIndex.Help:
