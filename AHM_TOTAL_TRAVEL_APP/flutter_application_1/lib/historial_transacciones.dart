@@ -1,3 +1,4 @@
+import 'package:flutter_application_1/Components/PaymentHistory.dart';
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter/material.dart';
 
@@ -20,111 +21,65 @@ class _HistorialScreenState extends State<HistorialScreen> {
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: Color.fromRGBO(101, 45, 143, 1),
-         title: Row(
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Text(
-                '           ',
-              ),
-            ),
-            Expanded(
-              flex: 5,
-              child: Center(
+          title: Row(
+            children: <Widget>[
+              Expanded(
+                flex: 1,
                 child: Text(
-                  'Historial de Transacciones',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20,
-                    color: Colors.white,
+                  '           ',
+                ),
+              ),
+              Expanded(
+                flex: 5,
+                child: Center(
+                  child: Text(
+                    'Historial de Transacciones',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
-            ),
-            Expanded(
-              flex: 1,
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Image.asset('assets/images/logo-AHM-Fondo-Morao.png', height: 50,),
+              Expanded(
+                flex: 1,
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Image.asset(
+                    'assets/images/logo-AHM-Fondo-Morao.png',
+                    height: 50,
+                  ),
+                ),
               ),
+            ],
+          ),
+        ),
+        body: SingleChildScrollView(
+            child: Column(
+          children: [
+            FutureBuilder<dynamic>(
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Wrap(
+                      spacing: 8,
+                      runSpacing: 4,
+                      alignment: WrapAlignment.start,
+                      crossAxisAlignment: WrapCrossAlignment.start,
+                      direction: Axis.horizontal,
+                      runAlignment: WrapAlignment.start,
+                      verticalDirection: VerticalDirection.down,
+                      clipBehavior: Clip.none,
+                      children:
+                          ListDefaultPaymentHistory(snapshot.data, context));
+                } else {
+                  return Text("No data");
+                }
+              },
+              future: GetListadoPaymentHistory(),
             ),
           ],
-        ),
-        ),
-        body: ListView(
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 8.0),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                child: InkWell(
-                  onTap: () => print("ciao"),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch, // add this
-                    children: <Widget>[
-                      ListTile(
-                        title: Text('Codigo De Factura'),
-                        subtitle: Text('#098213'),
-                      ),
-                      ListTile(
-                        title: Text('Fecha de compra'),
-                        subtitle: Text('20/04/2022'),
-                      ),
-                      ListTile(
-                        title: Text('Nombre del paquete'),
-                        subtitle: Text('Paquete Personalizado: HN-GT'),
-                      ),
-                      ListTile(
-                        title: Text('Total'),
-                        subtitle: Text('L 25,000'),
-                      ),
-                      ListTile(
-                        title: Text('Tipo Pago'),
-                        subtitle: Text('Tranferencia Bancaria'),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 8.0),
-              child: Card(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(8.0))),
-                child: InkWell(
-                  onTap: () => print("ciao"),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: <Widget>[
-                      ListTile(
-                        title: Text('Codigo De Factura'),
-                        subtitle: Text('#90832'),
-                      ),
-                      ListTile(
-                        title: Text('Fecha de compra'),
-                        subtitle: Text('20/10/2022'),
-                      ),
-                      ListTile(
-                        title: Text('Nombre del paquete'),
-                        subtitle: Text('Viaje Por Roatan'),
-                      ),
-                      ListTile(
-                        title: Text('Total'),
-                        subtitle: Text('L 13,000'),
-                      ),
-                      ListTile(
-                        title: Text('Tipo Pago'),
-                        subtitle: Text('Tarjeta de Credito'),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
+        )),
       ),
     );
   }

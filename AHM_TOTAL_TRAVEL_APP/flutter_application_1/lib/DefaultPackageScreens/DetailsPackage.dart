@@ -3,8 +3,11 @@ import 'package:flutter_application_1/feedback_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/Components/Decodificador.dart';
+import 'package:flutter_spinbox/flutter_spinbox.dart';
+import 'package:flutter_application_1/navigation_home_screen.dart';
 import 'package:flutter_application_1/Components/Packages.dart';
 import 'package:flutter_application_1/Models/DefaultPackageViewModel.dart';
+import 'package:flutter_application_1/Models/ReservationViewModel.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
 
 class DetailPackageScreen extends StatefulWidget {
@@ -19,7 +22,35 @@ class DetailPackageScreen extends StatefulWidget {
 
 class _DetailPackageScreenState extends State<DetailPackageScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  double people = 2;
+  double _pagos = 1;
   DefaultPackageViewModel? DefaulPackageId;
+  ReservationInsert Reserv = new ReservationInsert();
+
+  void SetPay(PayNumber) {
+    setState(() {
+      _pagos = PayNumber;
+    });
+  }
+
+  void SetPeople(peopleNumber) {
+    setState(() {
+      people = peopleNumber;
+    });
+  }
+
+  // Future<void> crearUsuario(
+  //     ReservationInsert user, BuildContext context) async {
+  //   final url = Uri.parse(
+  //       "https://totaltravelapi.azurewebsites.net/API/Reservation/List");
+  //   final headers = {"Content-type": "application/json"};
+  //   final json = '{""}';
+  //   final response = await post(url, headers: headers, body: json);
+  //   Navigator.pop(
+  //       context,
+  //       MaterialPageRoute(
+  //           builder: (context) => NavigationHomeScreen(widget.userloggeddata)));
+  // }
 
   Future<dynamic> GetListadoPackageshome() async {
     String url_list =
@@ -56,7 +87,7 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
             ),
             child: Column(
               mainAxisSize: MainAxisSize.max,
-              children: [
+              children: <Widget>[
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
@@ -94,20 +125,20 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                 ),
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 320,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 4,
-                          color: Color(0x33000000),
-                          offset: Offset(0, 2),
-                        )
-                      ],
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                  child: Flexible(
+                    // width: MediaQuery.of(context).size.width,
+                    // height: 320,
+                    // decoration: BoxDecoration(
+                    //   color: Colors.white,
+                    //   boxShadow: [
+                    //     BoxShadow(
+                    //       blurRadius: 4,
+                    //       color: Color(0x33000000),
+                    //       offset: Offset(0, 2),
+                    //     )
+                    //   ],
+                    //   borderRadius: BorderRadius.circular(12),
+                    // ),
                     child: Align(
                       alignment: AlignmentDirectional(0, 0),
                       child: Padding(
@@ -118,6 +149,7 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Expanded(
+                              flex: 12,
                               child: Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(15, 0, 5, 0),
@@ -130,6 +162,7 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
                                         Expanded(
+                                          flex: 6,
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
                                             crossAxisAlignment:
@@ -202,12 +235,19 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          Text(
+                                          Flexible(
+                                              child: new Text(
                                             element['descripcion_Paquete'],
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 color: Colors.black),
-                                          ),
+                                          )),
+                                          // Text(
+                                          //   element['descripcion_Paquete'],
+                                          //   style: TextStyle(
+                                          //       fontSize: 18,
+                                          //       color: Colors.black),
+                                          // ),
                                         ],
                                       ),
                                     ),
@@ -217,19 +257,22 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          Text('Duracion:',
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Colors.black)),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    10, 0, 0, 0),
-                                            child: Text(
-                                                element['duracion_Paquete'],
+                                          Flexible(
+                                            child: new Text('Duracion:',
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.black)),
+                                          ),
+                                          Flexible(
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(10, 0, 0, 0),
+                                              child: Text(
+                                                  element['duracion_Paquete'],
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      color: Colors.black)),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -258,71 +301,50 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                                         ],
                                       ),
                                     ),
-                                    Flexible(
-                                      child: Column(
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 20),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          FittedBox(
-                                            fit: BoxFit.scaleDown,
-                                            child: Text(
-                                              "Hotel de Hospedaje:",
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.white,
-                                                  overflow:
-                                                      TextOverflow.ellipsis),
-                                            ),
+                                          Flexible(
+                                            child: Text('Hotel de Hospedaje:',
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: Colors.black)),
                                           ),
-                                          FittedBox(
-                                            fit: BoxFit.scaleDown,
-                                            child: Text(
-                                              element['hotel'],
-                                              style: TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.white,
-                                                  overflow:
-                                                      TextOverflow.ellipsis),
+                                          Flexible(
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(10, 0, 0, 0),
+                                              child: Text(element['hotel'],
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      color: Colors.black)),
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                    // Padding(
-                                    //   padding: EdgeInsetsDirectional.fromSTEB(
-                                    //       0, 0, 0, 20),
-                                    //   child: Row(
-                                    //     mainAxisSize: MainAxisSize.max,
-                                    //     children: [
-                                    //       Text('Hotel de Hospedaje:',
-                                    //           style: TextStyle(
-                                    //               fontSize: 18,
-                                    //               color: Colors.black)),
-                                    //       Padding(
-                                    //         padding:
-                                    //             EdgeInsetsDirectional.fromSTEB(
-                                    //                 10, 0, 0, 0),
-                                    //         child: Text(element['hotel'],
-                                    //             style: TextStyle(
-                                    //                 fontSize: 18,
-                                    //                 color: Colors.black)),
-                                    //       ),
-                                    //     ],
-                                    //   ),
-                                    // ),
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
-                                        Text('Restaurante Incluido:',
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: Colors.black)),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  10, 0, 0, 0),
-                                          child: Text(element['restaurante'],
+                                        Flexible(
+                                          child: Text('Restaurante Incluido:',
                                               style: TextStyle(
                                                   fontSize: 18,
                                                   color: Colors.black)),
+                                        ),
+                                        Flexible(
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    10, 0, 0, 0),
+                                            child: Text(element['restaurante'],
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: Colors.black)),
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -361,7 +383,161 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                             fontWeight: FontWeight.normal,
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          showModalBottomSheet<void>(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return Container(
+                                height: 300,
+                                color: Colors.white,
+                                child: Center(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 30, 0, 0),
+                                        child: Text(
+                                          "Cantidad de Pagos a Realizar",
+                                          style: TextStyle(
+                                            fontFamily: 'Outfit',
+                                            color: Colors.black,
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        child: SpinBox(
+                                          max: 10,
+                                          value: _pagos,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              SetPay(value);
+                                            });
+                                          },
+                                        ),
+                                        padding: const EdgeInsets.only(
+                                            left: 30, right: 30),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 10, 0, 0),
+                                        child: Text(
+                                          "Personas",
+                                          style: TextStyle(
+                                            fontFamily: 'Outfit',
+                                            color: Colors.black,
+                                            fontSize: 17,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        child: SpinBox(
+                                          max: 30.0,
+                                          value: people,
+                                          onChanged: (people) {
+                                            SetPeople(people);
+                                          },
+                                        ),
+                                        padding: const EdgeInsets.only(
+                                            left: 30, right: 30, bottom: 10),
+                                      ),
+                                      SizedBox(
+                                        width: 300,
+                                        height: 40,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            // var roomMax = people.toInt() /
+                                            //     (_pagos.toInt() *
+                                            //         element['capacidad']);
+                                            // if (roomMax > 1) {
+                                            //   var quantMax = people.toInt() /
+                                            //       element['capacidad'];
+                                            //   showDialog<String>(
+                                            //     context: context,
+                                            //     builder:
+                                            //         (BuildContext context) =>
+                                            //             AlertDialog(
+                                            //       title: Padding(
+                                            //         padding: EdgeInsets.only(
+                                            //             top: 15,
+                                            //             left: 20,
+                                            //             right: 20),
+                                            //         child: Text(
+                                            //           'Habitaciones insuficientes',
+                                            //           style: TextStyle(
+                                            //               color: Color.fromARGB(
+                                            //                   255, 128, 9, 1),
+                                            //               fontSize: 18,
+                                            //               fontFamily: 'Outfit',
+                                            //               fontWeight:
+                                            //                   FontWeight.w500),
+                                            //         ),
+                                            //       ),
+                                            //       content: Padding(
+                                            //           padding: EdgeInsets.only(
+                                            //               top: 10,
+                                            //               left: 0,
+                                            //               right: 0),
+                                            //           child: Text(
+                                            //             '¿Desea agregar más habitaciones?',
+                                            //             style: TextStyle(
+                                            //               fontFamily: 'Outfit',
+                                            //               color:
+                                            //                   Color(0xFF7C8791),
+                                            //               fontSize: 16,
+                                            //               fontWeight:
+                                            //                   FontWeight.w500,
+                                            //             ),
+                                            //           )),
+                                            //       actions: <Widget>[
+                                            //         TextButton(
+                                            //           onPressed: () {
+                                            //             Navigator.pop(
+                                            //                 context, 'Cancel');
+                                            //           },
+                                            //           child: const Text(
+                                            //             'Cancelar',
+                                            //             style: TextStyle(
+                                            //                 color: Color(
+                                            //                     0xFF7C8791)),
+                                            //           ),
+                                            //         ),
+                                            //         TextButton(
+                                            //           onPressed: () {
+                                            //             Navigator.pop(
+                                            //                 context, 'OK');
+
+                                            //             SetPay(quantMax);
+                                            //             Navigator.pop(context);
+                                            //           },
+                                            //           child:
+                                            //               const Text('Aceptar'),
+                                            //         ),
+                                            //       ],
+                                            //     ),
+                                            //   );
+                                            // } else {
+                                            //   Navigator.pop(context);
+                                            // }
+                                          },
+                                          child: Text(
+                                            'Confirmar',
+                                            style: TextStyle(fontSize: 18),
+                                          ),
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Color(0xFF652D8F),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          );
+                        },
                       ),
                     ],
                   ),

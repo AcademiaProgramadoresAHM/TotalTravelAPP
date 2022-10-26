@@ -1,4 +1,32 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+
+class ReservationInsert {
+  int? resvId;
+  int? usuaId;
+  int? paquId;
+  bool? resvEsPersonalizado;
+  int? resvCantidadPagos;
+  int? resvNumeroPersonas;
+  bool? resvConfirmacionPago;
+  bool? resvConfirmacionHotel;
+  bool? resvConfirmacionRestaurante;
+  bool? resvConfirmacionTrans;
+  double? resvPrecio;
+
+  // ReservationInsert.fromJson(Map<String, dynamic> json)
+  //     : resvId = json["resv_ID"],
+  //       usuaId = json["usua_ID"],
+  //       paquId = json["paqu_ID"],
+  //       resvEsPersonalizado = json["resv_esPersonalizado"],
+  //       resvCantidadPagos = json["resv_CantidadPagos"],
+  //       resvNumeroPersonas = json["resv_NumeroPersonas"],
+  //       resvConfirmacionPago = json["resv_ConfirmacionPago"],
+  //       resvConfirmacionHotel = json["resv_ConfirmacionHotel"],
+  //       resvConfirmacionRestaurante = json["resv_ConfirmacionRestaurante"],
+  //       resvConfirmacionTrans = json["resv_ConfirmacionTrans"],
+  //       resvPrecio = json["resv_Precio"].toDouble();
+}
 
 class ReservationUserViewModel {
   int? ID;

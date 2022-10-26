@@ -12,6 +12,8 @@ import '../utils/AppWidget.dart';
 import '../utils/ListaHoteles.dart';
 import 'package:flutter_application_1/Components/Packages.dart';
 
+import 'Models/HotelsViewModel.dart';
+
 class FeedbackScreen extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   const FeedbackScreen(this.userloggeddata, {super.key});
@@ -20,19 +22,56 @@ class FeedbackScreen extends StatefulWidget {
 }
 
 class _FeedbackScreenState extends State<FeedbackScreen> {
+  HotelViewModel? hotelId;
   @override
   void initState() {
     super.initState();
   }
 
-  Future<dynamic> GetListadoPackageshome() async {
+  Future<dynamic> GetListadoPackageshome(userloggeddata) async {
+    //listado paquetes
     String url_list =
         "https://totaltravelapi.azurewebsites.net/API/DefaultPackages/List";
     final response = await http.get(Uri.parse(url_list));
+    //imagen Hoteles
+    String url_list2 =
+        "https://totaltravelapi.azurewebsites.net/API/Hotels/List";
+    final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+    final response2 = await http.get(Uri.parse(url_list2), headers: headers);
+
+    if (response.statusCode == 200 && response2.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      Map<String, dynamic> HotelMap = jsonDecode(response2.body);
+      var user = Decodificador.fromJson(userMap);
+      var hotelimg = Decodificador.fromJson(HotelMap);
+      return user.data;
+    } else {
+      print("Error " + response.statusCode.toString());
+    }
+  }
+
+  Future<dynamic> GetListHotels(userloggeddata) async {
+    List<dynamic> dataHotels;
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/Hotels/List";
+    final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+    final response = await http.get(Uri.parse(url_list), headers: headers);
     if (response.statusCode == 200) {
       Map<String, dynamic> userMap = jsonDecode(response.body);
-      var user = Decodificador.fromJson(userMap);
-      return user.data;
+      var Json = Decodificador.fromJson(userMap);
+      List<dynamic> CardHoteles = [];
+      for (var i = 0; i < 1; i++) {
+        var JsonList = Json.data.toList();
+        CardHoteles.add(JsonList[i]);
+      }
+      print(CardHoteles);
+      return CardHoteles;
     } else {
       print("Error " + response.statusCode.toString());
     }
@@ -69,8 +108,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
       List<dynamic> data, BuildContext context) {
     List<Padding> list = [];
     final _controller = PageController();
-
+    List<String> imageUrl;
     data.forEach((element) {
+      //imageUrl = ;
       list.add(Padding(
         padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
         child: Container(
@@ -107,7 +147,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(12),
                         child: Image.network(
-                          'https://picsum.photos/seed/898/600',
+                          'https://media-cdn.tripadvisor.com/media/photo-s/25/fb/8c/46/hotel-exterior.jpg',
+                          //imageUrl[0].toString(),
                           width: 100,
                           height: 100,
                           fit: BoxFit.cover,
@@ -343,7 +384,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                   return Text("No data");
                 }
               },
-              future: GetListadoPackageshome(),
+              future: GetListadoPackageshome(widget.userloggeddata),
             ),
           ],
         ),
