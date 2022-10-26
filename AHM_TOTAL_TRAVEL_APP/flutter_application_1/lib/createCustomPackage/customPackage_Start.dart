@@ -167,21 +167,6 @@ final TextEditingController textEditingController = TextEditingController();
     return list;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
  
   @override
   void dispose() {
@@ -339,7 +324,7 @@ final TextEditingController textEditingController = TextEditingController();
                                 child: DropdownButton2(
                                   isExpanded: true,                             
                                   hint: Padding(
-                                    padding: const EdgeInsets.only(left: 0),
+                                    padding: const EdgeInsets.only(left: 30),
                                     child: TextFormField(
                                       style: kTextFormFieldStyle(),
                                       decoration: const InputDecoration(
@@ -352,7 +337,7 @@ final TextEditingController textEditingController = TextEditingController();
                                    items: CitiesDictionary.keys.map((id) {
                                           return DropdownMenuItem(
                                             value: id,
-                                            child: Padding(padding: EdgeInsetsDirectional.fromSTEB(40, 0, 0, 0),
+                                            child: Padding(padding: EdgeInsetsDirectional.fromSTEB(30, 0, 0, 0),
                                             child:  Text(CitiesDictionary[id].toString(),), 
                                             ) 
                                            
