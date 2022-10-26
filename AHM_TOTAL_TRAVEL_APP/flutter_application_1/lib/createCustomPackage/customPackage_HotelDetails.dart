@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Models/CitiesViewModel.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_HotelRoomsList.dart';
@@ -10,7 +11,8 @@ import 'package:simple_gradient_text/simple_gradient_text.dart';
 class HotelDetails extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final List<dynamic> Hotel;
-  const HotelDetails(this.userloggeddata, this.Hotel, {Key? key})
+  final CiudadesViewModel Ciudad;
+  const HotelDetails(this.userloggeddata, this.Hotel,this.Ciudad, {Key? key})
       : super(key: key);
 
   @override
@@ -260,7 +262,7 @@ class _HotelDetails extends State<HotelDetails> {
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      RoomsListcustomPackage(widget.userloggeddata, hotelId)),
+                      RoomsListcustomPackage(widget.userloggeddata, hotelId,widget.Ciudad)),
             );
           },
           child: Text(

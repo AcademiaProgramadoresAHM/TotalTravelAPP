@@ -23,7 +23,7 @@ class _HotelcustomPackage extends State<HotelcustomPackage> {
   late List<Hoteles> ListaHoteles;
   Map<int?, String> HotelsDictionary = Map();
 
-  Future<dynamic> GetListHotels(Ciudad, userloggeddata) async {
+  Future<dynamic> GetListHotels(Ciudad, userloggeddata,idHotel, bool) async {
     List<dynamic> dataHotels;
     String url_list =
         "https://totaltravelapi.azurewebsites.net/API/Hotels/List";
@@ -32,43 +32,40 @@ class _HotelcustomPackage extends State<HotelcustomPackage> {
       "Authorization": "bearer " + widget.userloggeddata!.Token!
     };
     final response = await http.get(Uri.parse(url_list), headers: headers);
-    if (response.statusCode == 200) {
-      Map<String, dynamic> userMap = jsonDecode(response.body);
-      var Json = DecoderAPI.fromJson(userMap);
-      dataHotels = Json.data;
-      var Hotel = dataHotels.where((x) => x['ciudadID'] == Ciudad.ID).toList();
+    var Hotel;
+      if(bool == true){
+                if (response.statusCode == 200) 
+              {
+                Map<String, dynamic> userMap = jsonDecode(response.body);
+                var Json = DecoderAPI.fromJson(userMap);
+                dataHotels = Json.data;
+                  Hotel = dataHotels.where((x) => x['ciudadID'] == Ciudad.ID).toList();
+                return Hotel;
+              }
+      }
+      else if(bool == false){
+         if (response.statusCode == 200) 
+         {
+            Map<String, dynamic> userMap = jsonDecode(response.body);
+            var Json = DecoderAPI.fromJson(userMap);
+            dataHotels = Json.data;
+            var Hotel = dataHotels.where((x) => x['id'] == idHotel).toList();
 
-      return Hotel;
-    } else {
-      print("Error " + response.statusCode.toString());
-    }
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => HotelDetails(widget.userloggeddata, Hotel,Ciudad)),
+            );
+          }
+      }
+      else{
+          print("Error " + response.statusCode.toString());
+      }
+     
+    
   }
 
-  Future<dynamic> FindHotels(idHotel, userloggeddata) async {
-    List<dynamic> dataHotels;
-    String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/Hotels/List";
-    final headers = {
-      "Content-type": "application/json",
-      "Authorization": "bearer " + widget.userloggeddata!.Token!
-    };
-    final response = await http.get(Uri.parse(url_list), headers: headers);
-    if (response.statusCode == 200) {
-      Map<String, dynamic> userMap = jsonDecode(response.body);
-      var Json = DecoderAPI.fromJson(userMap);
-      dataHotels = Json.data;
-      var Hotel = dataHotels.where((x) => x['id'] == idHotel).toList();
 
-      print(Hotel);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => HotelDetails(widget.userloggeddata, Hotel)),
-      );
-    } else {
-      print("Error " + response.statusCode.toString());
-    }
-  }
 
   List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
     List<Padding> list = [];
@@ -252,8 +249,7 @@ class _HotelcustomPackage extends State<HotelcustomPackage> {
                                           ),
                                         ),
                                         onPressed: () {
-                                          FindHotels(element['id'],
-                                              widget.userloggeddata);
+                                          GetListHotels(widget.Ciudad,widget.userloggeddata,element['id'],false);
                                         },
                                       ),
                                     ],
@@ -350,7 +346,7 @@ class _HotelcustomPackage extends State<HotelcustomPackage> {
                     return Text("");
                   }
                 },
-                future: GetListHotels(widget.Ciudad, widget.userloggeddata),
+                future: GetListHotels(widget.Ciudad, widget.userloggeddata,null,true),
               ),
             ],
           )),
