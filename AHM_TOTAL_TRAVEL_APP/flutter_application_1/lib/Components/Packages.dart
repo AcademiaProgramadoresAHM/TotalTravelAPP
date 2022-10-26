@@ -54,7 +54,8 @@ Future<dynamic> FindPackage(
   }
 }
 
-List<Padding> ListDefaultPackages(List<dynamic> data, BuildContext context) {
+List<Padding> ListDefaultPackages(
+    List<dynamic> data, BuildContext context, user) {
   List<Padding> list = [];
   final _controller = PageController();
 
@@ -245,14 +246,8 @@ List<Padding> ListDefaultPackages(List<dynamic> data, BuildContext context) {
                                         ),
                                       ),
                                       onPressed: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    FeedbackScreen(
-                                                        userloggeddata)));
-                                        // FindPackage(element['id'],
-                                        //     userloggeddata, context);
+                                        FindPackage(
+                                            element['id'], user, context);
                                       },
                                     ),
                                   ],
