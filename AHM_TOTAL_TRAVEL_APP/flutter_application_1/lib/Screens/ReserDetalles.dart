@@ -24,7 +24,7 @@ class Personali2Screen extends StatefulWidget {
 
 class _Personali2ScreenState extends State<Personali2Screen> {
   Future<dynamic> GetListReservationDetails(userloggeddata) async {
-    List<dynamic> dataHotels;
+    List<dynamic> dataReservation;
     String url_list =
         "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
     final headers = {
@@ -35,12 +35,12 @@ class _Personali2ScreenState extends State<Personali2Screen> {
     if (response.statusCode == 200) {
       Map<String, dynamic> userMap = jsonDecode(response.body);
       var Json = Decodificador.fromJson(userMap);
-      dataHotels = Json.data;
-      var Hotel = dataHotels
+      dataReservation = Json.data;
+      var Reservation = dataReservation
           .where((x) => x['id_Cliente'] == userloggeddata.ID)
           .toList();
 
-      return Hotel;
+      return Reservation;
     } else {
       print("Error " + response.statusCode.toString());
     }
@@ -290,7 +290,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                     return Text("No data");
                   }
                 },
-                future: GetListReservationDetails(userloggeddata),
+                future: GetListReservationDetails(widget.userloggeddata),
               ),
             ]),
           )),

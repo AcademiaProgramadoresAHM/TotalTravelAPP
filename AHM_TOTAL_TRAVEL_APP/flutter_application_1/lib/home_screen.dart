@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter_application_1/hotel_booking/calendar_popup_view.dart';
 import 'package:flutter_application_1/hotel_booking/hotel_list_view.dart';
 import 'package:flutter_application_1/hotel_booking/model/hotel_list_data.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_application_1/Components/Decodificador.dart';
+import 'DefaultPackageScreens/DetailsPackage.dart';
 import 'hotel_booking/filters_screen.dart';
 import 'hotel_booking/hotel_app_theme.dart';
 import 'package:flutter_application_1/Components/Packages.dart';
@@ -12,7 +17,8 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_application_1/Components/Packages.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  final UserLoggedModel? userloggeddata;
+  const MyHomePage(this.userloggeddata, {Key? key}) : super(key: key);
 
   @override
   _HotelHomeScreenState createState() => _HotelHomeScreenState();
@@ -26,6 +32,32 @@ class _HotelHomeScreenState extends State<MyHomePage>
 
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now().add(const Duration(days: 5));
+
+  Future<dynamic> FindPackage(idPackage, userloggeddata) async {
+    List<dynamic> datapackage;
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/DefaultPackages/List";
+    final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + userloggeddata!.Token!
+    };
+    final response = await http.get(Uri.parse(url_list), headers: headers);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var Json = Decodificador.fromJson(userMap);
+      datapackage = Json.data;
+      var package = datapackage.where((x) => x['id'] == idPackage).toList();
+
+      print(package);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => DetailPackageScreen(userloggeddata, package)),
+      );
+    } else {
+      print("Error " + response.statusCode.toString());
+    }
+  }
 
   @override
   void initState() {
@@ -109,7 +141,9 @@ class _HotelHomeScreenState extends State<MyHomePage>
                                       verticalDirection: VerticalDirection.down,
                                       clipBehavior: Clip.none,
                                       children: ListDefaultPackages(
-                                          snapshot.data, context));
+                                          snapshot.data,
+                                          context,
+                                          widget.userloggeddata));
                                 } else {
                                   return Text("No data");
                                 }

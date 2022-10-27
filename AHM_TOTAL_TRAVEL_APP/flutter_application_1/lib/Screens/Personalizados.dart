@@ -22,7 +22,7 @@ class PersonaliScreen extends StatefulWidget {
 
 class _PersonaliScreenState extends State<PersonaliScreen> {
   Future<dynamic> GetListReservation(userloggeddata) async {
-    List<dynamic> dataHotels;
+    List<dynamic> dataReservation;
     String url_list =
         "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
     final headers = {
@@ -33,12 +33,12 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
     if (response.statusCode == 200) {
       Map<String, dynamic> userMap = jsonDecode(response.body);
       var Json = Decodificador.fromJson(userMap);
-      dataHotels = Json.data;
-      var Hotel = dataHotels
+      dataReservation = Json.data;
+      var Reservation = dataReservation
           .where((x) => x['id_Cliente'] == userloggeddata.ID)
           .toList();
 
-      return Hotel;
+      return Reservation;
     } else {
       print("Error " + response.statusCode.toString());
     }
@@ -273,8 +273,8 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                           ),
                                         ),
                                         onPressed: () {
-                                          FindReservation(widget.userloggeddata,
-                                              element['id']);
+                                          FindReservation(element['id'],
+                                              widget.userloggeddata);
                                         },
                                       ),
                                     ],
