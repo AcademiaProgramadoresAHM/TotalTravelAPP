@@ -573,45 +573,66 @@ class _Personali2ScreenState extends State<Personali2Screen> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter layout demo',
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-          appBar: AppBar(
-            leading: TextButton(
-              style: TextButton.styleFrom(
-                primary: Color.fromARGB(255, 255, 255, 255),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromRGBO(101, 45, 143, 1),
+        title: Row(
+          children: <Widget>[
+            Expanded(
+              flex: 5,
+              child: Center(
+                child: Text(
+                  'Detalles Reservacion',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
+                ),
               ),
-              onPressed: () {},
-              child: Icon(Icons.arrow_back_ios),
             ),
-            title: Text('   Detalles de la Reservacion'),
-            backgroundColor: Color.fromRGBO(101, 45, 143, 1),
-          ),
-          body: SingleChildScrollView(
-            child: Column(children: [
-              FutureBuilder<dynamic>(
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Wrap(
-                        spacing: 8,
-                        runSpacing: 4,
-                        alignment: WrapAlignment.start,
-                        crossAxisAlignment: WrapCrossAlignment.start,
-                        direction: Axis.horizontal,
-                        runAlignment: WrapAlignment.start,
-                        verticalDirection: VerticalDirection.down,
-                        clipBehavior: Clip.none,
-                        children: ListDetailsReservation(
-                            widget.Reservation, context));
-                  } else {
-                    return Text("No data");
-                  }
-                },
-                future: GetListReservationDetails(widget.userloggeddata),
+            Expanded(
+              flex: 1,
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Image.asset(
+                  'assets/images/logo-AHM-Fondo-Morao.png',
+                  height: 50,
+                ),
               ),
-            ]),
-          )),
+            ),
+          ],
+        ),
+      ),
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: GestureDetector(
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: Column(
+              children: [
+                FutureBuilder<dynamic>(
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Wrap(
+                          spacing: 8,
+                          runSpacing: 4,
+                          alignment: WrapAlignment.start,
+                          crossAxisAlignment: WrapCrossAlignment.start,
+                          direction: Axis.horizontal,
+                          runAlignment: WrapAlignment.start,
+                          verticalDirection: VerticalDirection.down,
+                          clipBehavior: Clip.none,
+                          children: ListDetailsReservation(
+                              widget.Reservation, context));
+                    } else {
+                      return Text("No data");
+                    }
+                  },
+                  future: GetListReservationDetails(widget.userloggeddata),
+                ),
+              ],
+            )),
+      ),
     );
   }
 
