@@ -1,127 +1,400 @@
-import 'package:flutter_application_1/Models/UsersViewModel.dart';
-import 'package:flutter_application_1/Screens/historialcompras.dart';
-import 'package:flutter_application_1/app_theme.dart';
+import 'dart:convert';
+import 'package:flutter_application_1/feedback_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Home_Screen.dart';
-import 'package:flutter_application_1/home_screen.dart';
+import 'package:http/http.dart' as http;
+import 'package:flutter_application_1/Components/Decodificador.dart';
+import 'package:flutter_spinbox/flutter_spinbox.dart';
+import 'package:flutter_application_1/navigation_home_screen.dart';
+import 'package:flutter_application_1/Components/Packages.dart';
+import 'package:flutter_application_1/Models/DefaultPackageViewModel.dart';
+import 'package:flutter_application_1/Models/ReservationViewModel.dart';
+import 'package:flutter_application_1/Models/UsersViewModel.dart';
 
-import '../navigation_home_screen.dart';
+import '../Models/registerpaymentViewModel.dart';
 
-class detalleshistorial extends StatefulWidget {
+class HistorydetailScreen extends StatefulWidget {
+  final UserLoggedModel? userloggeddata;
+  final List<dynamic> Package;
+  HistorydetailScreen(this.userloggeddata, this.Package, {Key? key})
+      : super(key: key);
+
   @override
-  _detalleshistorialState createState() => _detalleshistorialState();
+  State<HistorydetailScreen> createState() => _HistorydetailScreenState();
 }
 
-class _detalleshistorialState extends State<detalleshistorial> {
-  UserLoggedModel? get userloggeddata => null;
+class _HistorydetailScreenState extends State<HistorydetailScreen> {
+  final scaffoldKey = GlobalKey<ScaffoldState>();
+  double people = 2;
+  double _pagos = 1;
+  registerpaymentViewModel? registerpaymentId;
 
-  @override
-  void initState() {
-    super.initState();
+  void SetPay(PayNumber) {
+    setState(() {
+      _pagos = PayNumber;
+    });
+  }
+
+  void SetPeople(peopleNumber) {
+    setState(() {
+      people = peopleNumber;
+    });
+  }
+
+  Future<dynamic> GetListadoHistorydetail() async {
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/RecordPayment/List";
+    final response = await http.get(Uri.parse(url_list));
+    if (response.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var user = Decodificador.fromJson(userMap);
+      return user.data;
+    } else {
+      print("Error " + response.statusCode.toString());
+    }
+  }
+
+  List<Padding> HistoryDetails(List<dynamic> data, BuildContext context) {
+    List<Padding> list = [];
+    final _controller = PageController();
+    List<String> imageUrl;
+    data.forEach((element) {
+      list.add(
+        Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(18, 14, 18, 0),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 4,
+                  color: Color(0x32000000),
+                  offset: Offset(0, 2),
+                )
+              ],
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: <Widget>[
+                Row(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(18, 0, 0, 0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        height: 0,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(16),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 5,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
+                  child: Flexible(
+                    child: Align(
+                      alignment: AlignmentDirectional(0, 0),
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Expanded(
+                              flex: 12,
+                              child: Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(15, 0, 5, 0),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          flex: 6,
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 20, 0, 20),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Flexible(
+                                                      child: new Text(
+                                                          'Nombre del paquete:',
+                                                          style: TextStyle(
+                                                              fontSize: 18,
+                                                              color: Colors
+                                                                  .black)),
+                                                    ),
+                                                    Flexible(
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(10, 0,
+                                                                    0, 0),
+                                                        child: Text(
+                                                            element[
+                                                                'nombre_paquete'],
+                                                            style: TextStyle(
+                                                                fontSize: 18,
+                                                                color: Colors
+                                                                    .black)),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 20, 0, 20),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Flexible(
+                                            child: new Text(
+                                                'Descripcion del paquete:',
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: Colors.black)),
+                                          ),
+                                          Flexible(
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(10, 0, 0, 0),
+                                              child: Text(
+                                                  element[
+                                                      'descripcion_paquete'],
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      color: Colors.black)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 20),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text('Costo:',
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.black)),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    10, 0, 0, 0),
+                                            child: Text(
+                                                element['montoPago']
+                                                        .toString() ??
+                                                    '00.00',
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: Colors.black)),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 20),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Flexible(
+                                            child: Text('Nombre del cliente:',
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: Colors.black)),
+                                          ),
+                                          Flexible(
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(10, 0, 0, 0),
+                                              child: Text(
+                                                  element['nombre_Completo'],
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      color: Colors.black)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 20, 0, 20),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Flexible(
+                                            child: new Text('DNI del cliente:',
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: Colors.black)),
+                                          ),
+                                          Flexible(
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(10, 0, 0, 0),
+                                              child: Text(element['dni'],
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      color: Colors.black)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 20, 0, 20),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Flexible(
+                                            child: new Text(
+                                                'Telefono del cliente:',
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: Colors.black)),
+                                          ),
+                                          Flexible(
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(10, 0, 0, 0),
+                                              child: Text(element['telefono'],
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      color: Colors.black)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      );
+    });
+
+    return list;
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter layout demo',
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          leading: TextButton(
-            style: TextButton.styleFrom(
-              primary: Color.fromARGB(255, 255, 255, 255),
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        Comprashistorial(this.userloggeddata)),
-              );
-            },
-            child: Icon(Icons.arrow_back_ios),
-          ),
-          title: Text('   Detalles de compra'),
-          backgroundColor: Color.fromRGBO(101, 45, 143, 1),
-        ),
-        body: ListView(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Color.fromRGBO(101, 45, 143, 1),
+        title: Row(
           children: <Widget>[
-            Container(
-              child: Card(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(" \n \n "),
-                    const ListTile(
-                      leading: Icon(Icons.verified_user),
-                      title: Text('Usuario'),
-                      subtitle: Text(
-                          'Cliente: Jose Matamodos \nReservación hecha el : 10/09/22 \n\n'),
-                    ),
-                  ],
+            Expanded(
+              flex: 5,
+              child: Center(
+                child: Text(
+                  'Detalles',
+                  style: TextStyle(
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
-            Container(
-              child: Card(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(" \n \n"),
-                    const ListTile(
-                      leading: Icon(Icons.list),
-                      title: Text('Detalles'),
-                      subtitle: Text(
-                          'Viaje: Inglaterra \nHotel de Hospedaje: Hilton Prince \nHabitación: A84 \nTiempo de Hospedaje: 5 dias y 4 noches  \nActividades Reservadas: Nadar con delfines, Nadar con tiburones, Pesca, Caminata \n\n'),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            Container(
-              child: Card(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: <Widget>[
-                    Text(" \n \n "),
-                    const ListTile(
-                      leading: Icon(Icons.info),
-                      title: Text('** Información Adicional **'),
-                      subtitle: Text(
-                          ' Cualquier tipo de cambio, observación o error nos puedes contactar al número telefónico: +504 97979797 o al correo electronico: viajes123@gmail.com  \n\n'),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[],
-                    ),
-                  ],
+            Expanded(
+              flex: 1,
+              child: Align(
+                alignment: Alignment.topRight,
+                child: Image.asset(
+                  'assets/images/logo-AHM-Fondo-Morao.png',
+                  height: 50,
                 ),
               ),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  Column _buildButtonColumn(Color color, IconData icon, String label) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(icon, color: color),
-        Container(
-          margin: const EdgeInsets.only(top: 8),
-          child: Text(
-            label,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-              color: color,
-            ),
-          ),
-        ),
-      ],
+      key: scaffoldKey,
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: GestureDetector(
+            onTap: () => FocusScope.of(context).unfocus(),
+            child: Column(
+              children: [
+                FutureBuilder<dynamic>(
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Wrap(
+                          spacing: 8,
+                          runSpacing: 4,
+                          alignment: WrapAlignment.start,
+                          crossAxisAlignment: WrapCrossAlignment.start,
+                          direction: Axis.horizontal,
+                          runAlignment: WrapAlignment.start,
+                          verticalDirection: VerticalDirection.down,
+                          clipBehavior: Clip.none,
+                          children: HistoryDetails(widget.Package, context));
+                    } else {
+                      return Text("No data");
+                    }
+                  },
+                  future: GetListadoHistorydetail(),
+                ),
+              ],
+            )),
+      ),
     );
   }
 }

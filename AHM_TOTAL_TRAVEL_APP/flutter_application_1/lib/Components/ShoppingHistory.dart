@@ -106,24 +106,6 @@ List<Padding> ListDefaultShoppingHistory(
                                 ],
                               ),
                               Text(
-                                element['nombreCompleto'],
-                                style: TextStyle(
-                                  fontFamily: 'Outfit',
-                                  color: Color.fromRGBO(101, 45, 143, 1),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              Text(
-                                element['dni'],
-                                style: TextStyle(
-                                  fontFamily: 'Outfit',
-                                  color: Color.fromRGBO(101, 45, 143, 1),
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              Text(
                                 element['fechaPago'],
                                 style: TextStyle(
                                   fontFamily: 'Outfit',
@@ -152,6 +134,34 @@ List<Padding> ListDefaultShoppingHistory(
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           2, 12, 24, 12),
+                                    ),
+                                    ElevatedButton(
+                                      style: ButtonStyle(
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Color.fromRGBO(
+                                                    101, 45, 143, 1)),
+                                        shape: MaterialStateProperty.all(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                          ),
+                                        ),
+                                      ),
+                                      child: Text(
+                                        'Ver Detalles',
+                                        style: TextStyle(
+                                          fontFamily: 'Outfit',
+                                          color: Colors.white,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                      onPressed: () {
+                                        // FindShoppingHistory(
+                                        //   widget.userloggeddata,
+                                        // element['id']);
+                                      },
                                     ),
                                   ],
                                 ),

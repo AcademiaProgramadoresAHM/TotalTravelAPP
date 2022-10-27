@@ -1,13 +1,15 @@
 class registerpaymentViewModel {
   int? ID;
-  String? Montopago;
+  String? MontoPago;
   DateTime? fechaPago;
-  int? id_TiPa;
+  int? Id_TipoPago;
   String? TipoPago;
-  int? id_Reservacion;
-  int? id_Paquete;
+  int? Id_Reservacion;
+  int? Id_Paquete;
   String? Descripcion_Paquete;
-  int? id_Cliente;
+  String? nombre_paquete;
+  String? precio_paquete;
+  int? Id_Cliente;
   String? NombreCompleto;
   String? Nombre;
   String? Apellido;
@@ -18,15 +20,17 @@ class registerpaymentViewModel {
 
   registerpaymentViewModel.fromJson(Map<String, dynamic> json)
       : ID = json['id'],
-        Montopago = json['montoPago'],
+        MontoPago = json['montoPago'],
         fechaPago = json['fechaPago'],
-        id_TiPa = json['id_TipoPago'],
+        Id_TipoPago = json['id_TipoPago'],
         TipoPago = json['tipoPago'],
-        id_Reservacion = json['id_Reservacion'],
-        id_Paquete = json['id_Paquete'],
-        Descripcion_Paquete = json['descripcion_Paquete'],
-        id_Cliente = json['idcliente'],
-        NombreCompleto = json['nombreCompleto'],
+        Id_Reservacion = json['id_Reservacion'],
+        Id_Paquete = json['id_Paquete'],
+        Descripcion_Paquete = json['descripcion_paquete'],
+        nombre_paquete = json['nombre_paquete'],
+        precio_paquete = json['precio_paquete'],
+        Id_Cliente = json['id_cliente'],
+        NombreCompleto = json['nombre_Completo'],
         Nombre = json['nombre'],
         Apellido = json['apellido'],
         DNI = json['dni'],

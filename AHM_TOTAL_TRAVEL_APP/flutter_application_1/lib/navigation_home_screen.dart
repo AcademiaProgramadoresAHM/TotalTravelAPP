@@ -61,6 +61,61 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
     }
   }
 
+  Future<dynamic> FindShoppingHistory(userloggeddata) async {
+    List<dynamic> dataShoppingHistory;
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/RecordPayment/List";
+    final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+    final response = await http.get(Uri.parse(url_list), headers: headers);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var Json = Decodificador.fromJson(userMap);
+      dataShoppingHistory = Json.data;
+      var ShoppingHistory = dataShoppingHistory
+          .where((x) => x['id'] == userloggeddata.id)
+          .toList();
+
+      print(ShoppingHistory);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => Comprashistorial(widget.userloggeddata)));
+    } else {
+      print("Error " + response.statusCode.toString());
+    }
+  }
+
+  Future<dynamic> FindPaymentHistory(idPaymentHistory, userloggeddata) async {
+    List<dynamic> dataShoppingHistory;
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/RecordPayment/List";
+    final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+    final response = await http.get(Uri.parse(url_list), headers: headers);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var Json = Decodificador.fromJson(userMap);
+      dataShoppingHistory = Json.data;
+      var ShoppingHistory = dataShoppingHistory
+          .where((x) => x['id'] == idPaymentHistory)
+          .toList();
+
+      print(ShoppingHistory);
+      // Navigator.push(
+      //   context,
+      ///  MaterialPageRoute(
+      //    builder: (context) =>
+      //       HistorydetailScreen(widget.userloggeddata, ShoppingHistory)));
+    } else {
+      print("Error " + response.statusCode.toString());
+    }
+  }
+
   @override
   void initState() {
     drawerIndex = DrawerIndex.HOME;
@@ -134,7 +189,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
           break;
         case DrawerIndex.Historial:
           setState(() {
-            screenView = HistorialScreen();
+            screenView = HistorialScreen(widget.userloggeddata);
           });
           break;
         case DrawerIndex.Support:
