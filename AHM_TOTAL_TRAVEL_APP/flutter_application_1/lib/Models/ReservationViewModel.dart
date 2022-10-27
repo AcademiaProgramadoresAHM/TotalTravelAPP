@@ -47,6 +47,7 @@ class ReservationUserViewModel {
   int? Id_Cliente;
   String? Nombre;
   String? Apellido;
+  String? Nombrecompleto;
   String? DNI;
   String? Email;
   String? Telefono;
@@ -71,11 +72,12 @@ class ReservationUserViewModel {
         Hotel_ID = Json['hotel_ID'],
         Nombre_Hotel = Json['nombre_Hotel'],
         Habitacion = Json['habitacion'],
-        Categoria_Habitacion = Json['Categoria_Habitacion'],
-        Camas = Json['Camas'],
+        Categoria_Habitacion = Json['categoria_Habitacion'],
+        Camas = Json['camas'],
         Id_Cliente = Json['id_Cliente'],
         Nombre = Json['nombre'],
         Apellido = Json['apellido'],
+        Nombrecompleto = Json['nombrecompleto'],
         DNI = Json['dni'],
         Email = Json['email'],
         Telefono = Json['telefono'],
