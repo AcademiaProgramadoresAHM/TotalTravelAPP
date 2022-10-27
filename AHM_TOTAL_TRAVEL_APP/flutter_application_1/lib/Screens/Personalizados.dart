@@ -140,7 +140,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                       style: TextStyle(
                                         fontFamily: 'Outfit',
                                         color: Color.fromRGBO(101, 45, 143, 1),
-                                        fontSize: 25,
+                                        fontSize: 20,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
@@ -160,7 +160,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color.fromRGBO(101, 45, 143, 1),
-                                    fontSize: 25,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -169,7 +169,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color.fromRGBO(101, 45, 143, 1),
-                                    fontSize: 25,
+                                    fontSize: 20,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),

@@ -72,17 +72,6 @@ class _Personali2ScreenState extends State<Personali2Screen> {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 5,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
                   child: Flexible(
                     child: Align(
                       alignment: AlignmentDirectional(0, 0),
@@ -103,6 +92,14 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    /*  Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 20),
+                                      child: Text('Cantidad de Gagos:',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.black)),
+                                    ),*/
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0, 20, 0, 20),
@@ -111,7 +108,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                         children: [
                                           Flexible(
                                             child: new Text(
-                                                'Cantidad personas:',
+                                                'Cantidad Personas:',
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.black)),
@@ -137,7 +134,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          Text('Cantidad de pagos:',
+                                          Text('Cantidad de Gagos:',
                                               style: TextStyle(
                                                   fontSize: 18,
                                                   color: Colors.black)),
@@ -188,7 +185,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Flexible(
-                                            child: Text('Fecha entreda:',
+                                            child: Text('Fecha Entrada:',
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.black)),
@@ -207,27 +204,31 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                         ],
                                       ),
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Flexible(
-                                          child: Text('Fecha Salida:',
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Colors.black)),
-                                        ),
-                                        Flexible(
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    10, 0, 0, 0),
-                                            child: Text(element['fecha_Salida'],
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 20),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Flexible(
+                                            child: Text('Fecha Salida:',
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.black)),
                                           ),
-                                        ),
-                                      ],
+                                          Flexible(
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(10, 0, 0, 0),
+                                              child: Text(
+                                                  element['fecha_Salida'],
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      color: Colors.black)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -267,17 +268,6 @@ class _Personali2ScreenState extends State<Personali2Screen> {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 5,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
                   child: Flexible(
                     child: Align(
                       alignment: AlignmentDirectional(0, 0),
@@ -305,7 +295,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Flexible(
-                                            child: new Text('Hotel:',
+                                            child: new Text('Hotel :',
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.black)),
@@ -330,7 +320,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          Text('Habitacion:',
+                                          Text('Habitacion :',
                                               style: TextStyle(
                                                   fontSize: 18,
                                                   color: Colors.black)),
@@ -353,7 +343,8 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Flexible(
-                                            child: Text('Categoria Habitacion:',
+                                            child: Text(
+                                                'Categoria Habitacion :',
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.black)),
@@ -373,28 +364,31 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                         ],
                                       ),
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Flexible(
-                                          child: Text('Camas:',
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Colors.black)),
-                                        ),
-                                        Flexible(
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    10, 0, 0, 0),
-                                            child: Text(
-                                                element['camas'].toString(),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 20),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Flexible(
+                                            child: Text('Camas :',
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.black)),
                                           ),
-                                        ),
-                                      ],
+                                          Flexible(
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(10, 0, 0, 0),
+                                              child: Text(
+                                                  element['camas'].toString(),
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      color: Colors.black)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -434,17 +428,6 @@ class _Personali2ScreenState extends State<Personali2Screen> {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 5,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
                   child: Flexible(
                     child: Align(
                       alignment: AlignmentDirectional(0, 0),
@@ -472,7 +455,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Flexible(
-                                            child: new Text('Nombre cliente:',
+                                            child: new Text('Nombre Cliente:',
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.black)),
@@ -497,7 +480,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          Text('Dni:',
+                                          Text('Dni :',
                                               style: TextStyle(
                                                   fontSize: 18,
                                                   color: Colors.black)),
@@ -520,7 +503,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Flexible(
-                                            child: Text('Correo electronico:',
+                                            child: Text('Telefono :',
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.black)),
@@ -538,28 +521,30 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                         ],
                                       ),
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Flexible(
-                                          child: Text('Telefono:',
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Colors.black)),
-                                        ),
-                                        Flexible(
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    10, 0, 0, 0),
-                                            child: Text(
-                                                element['telefono'].toString(),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 20),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Flexible(
+                                            child: Text('Correo Electronico:',
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.black)),
                                           ),
-                                        ),
-                                      ],
+                                          Flexible(
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(10, 0, 0, 0),
+                                              child: Text(element['email'],
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      color: Colors.black)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
