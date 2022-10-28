@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
+import 'package:flutter_application_1/Models/RequestsViewModel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_HotelDetails.dart';
 import 'package:http/http.dart' as http;
 import '../Models/CitiesViewModel.dart';
@@ -59,10 +60,20 @@ class _HotelcustomPackage extends State<HotelcustomPackage> {
           }
       }
       else{
-          print("Error " + response.statusCode.toString());
+        print(widget.userloggeddata!.Token);
+          final url_list =Uri.parse("https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
+          final headers = {
+            "Content-type": "application/json",
+            "Authorization": "bearer " + widget.userloggeddata!.Token!
+          };
+          final json = jsonEncode(widget.userloggeddata!.Token);
+          final response = await http.post(url_list, headers: headers, body: json);
+          if (response.body != " ") {
+            print(response.body);
+            widget.userloggeddata!.Token = response.body;
+            GetListHotels(Ciudad, userloggeddata,null, true);
+          }
       }
-     
-    
   }
 
 
@@ -347,10 +358,10 @@ class _HotelcustomPackage extends State<HotelcustomPackage> {
                   }
                 },
                 future: GetListHotels(widget.Ciudad, widget.userloggeddata,null,true),
-              ),
-            ],
-          )),
-        ));
+          ),
+        ],
+      )),
+    ));
   }
 
   Column _buildButtonColumn(Color color, IconData icon, String label) {

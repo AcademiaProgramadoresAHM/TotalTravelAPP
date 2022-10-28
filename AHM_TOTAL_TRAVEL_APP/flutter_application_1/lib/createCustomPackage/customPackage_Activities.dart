@@ -27,6 +27,7 @@ class customActivities extends StatefulWidget {
 
   TimeOfDay time = TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
 class _customActivities extends State<customActivities> {
+  int ActivitiesCount = 0;
 
 
   late List<Hoteles> ListaHoteles;
@@ -50,7 +51,19 @@ class _customActivities extends State<customActivities> {
 
       return activity;
     } else {
-      print("Error " + response.statusCode.toString());
+       print(widget.userloggeddata!.Token);
+          final url_list =Uri.parse("https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
+          final headers = {
+            "Content-type": "application/json",
+            "Authorization": "bearer " + widget.userloggeddata!.Token!
+          };
+          final json = jsonEncode({"token": widget.userloggeddata!.Token});
+          final response = await http.post(url_list, headers: headers, body: json);
+          if (response.body != " ") {
+            print(response.body);
+            widget.userloggeddata!.Token = response.body;
+            GetListActivities(Ciudad, widget.userloggeddata);
+          }
     }
   }
 
@@ -322,9 +335,10 @@ class _customActivities extends State<customActivities> {
                                                            EdgeInsetsDirectional.fromSTEB(0, 10, 0, 20),
                                                            child: 
                                                             SizedBox(
-                                                              width: 200,
+                                                              width: 340,
+                                                              height: 60,
                                                               child: ElevatedButton(
-                                                              child: Text( '${hours}:${minutes}', style:  TextStyle(fontSize: 16)),
+                                                              child: Text( '${hours}:${minutes}', style:  TextStyle(fontSize: 18, color: Color(0xFF652D8F))),
                                                               onPressed: () async{
                                                                 TimeOfDay? newTime = 
                                                                 await showTimePicker(
@@ -338,7 +352,7 @@ class _customActivities extends State<customActivities> {
 
                                                               },
                                                               style: ElevatedButton.styleFrom(
-                                                                backgroundColor: Color(0xFF652D8F)
+                                                                backgroundColor: Color.fromARGB(255, 234, 234, 234),
                                                               ),
                                                               ),
                                                             )
@@ -346,80 +360,15 @@ class _customActivities extends State<customActivities> {
 
                                                        
                                                             SizedBox(
-                                                              width: 300,
+                                                              width: 200,
                                                               height: 40,
                                                               child:
                                                                   ElevatedButton(
                                                                 onPressed: () {
-                                                                  if (2 >
-                                                                      1) {
-                                                                    /*showDialog<
-                                                                        String>(
-                                                                      context:
-                                                                          context,
-                                                                      builder: (BuildContext
-                                                                              context) =>
-                                                                          AlertDialog(
-                                                                        title:
-                                                                            Padding(
-                                                                          padding: EdgeInsets.only(
-                                                                              top: 15,
-                                                                              left: 20,
-                                                                              right: 20),
-                                                                          child:
-                                                                              Text(
-                                                                            'Habitaciones insuficientes',
-                                                                            style: TextStyle(
-                                                                                color: Color.fromARGB(255, 128, 9, 1),
-                                                                                fontSize: 18,
-                                                                                fontFamily: 'Outfit',
-                                                                                fontWeight: FontWeight.w500),
-                                                                          ),
-                                                                        ),
-                                                                        content: Padding(
-                                                                            padding: EdgeInsets.only(top: 10, left: 0, right: 0),
-                                                                            child: Text(
-                                                                              '¿Desea agregar más habitaciones?',
-                                                                              style: TextStyle(
-                                                                                fontFamily: 'Outfit',
-                                                                                color: Color(0xFF7C8791),
-                                                                                fontSize: 16,
-                                                                                fontWeight: FontWeight.w500,
-                                                                              ),
-                                                                            )),
-                                                                        actions: <
-                                                                            Widget>[
-                                                                          TextButton(
-                                                                            onPressed:
-                                                                                () {
-                                                                              Navigator.pop(context, 'Cancel');
-                                                                            },
-                                                                            child:
-                                                                                const Text(
-                                                                              'Cancelar',
-                                                                              style: TextStyle(color: Color(0xFF7C8791)),
-                                                                            ),
-                                                                          ),
-                                                                          TextButton(
-                                                                            onPressed:
-                                                                                () {
-                                                                              Navigator.pop(context, 'OK');
-
-                                                                              Navigator.pop(context);
-                                                                            },
-                                                                            child:
-                                                                                const Text('Aceptar'),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    );*/
-                                                                  } else {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  }
+                                                                    print("aaaa");
                                                                 },
                                                                 child: Text(
-                                                                  'Aplicar',
+                                                                  'Confirmar',
                                                                   style: TextStyle(
                                                                       fontSize:
                                                                           18),
@@ -477,11 +426,35 @@ class _customActivities extends State<customActivities> {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           appBar: AppBar(
-            title: Text('           Actividades'),
             backgroundColor: Color.fromRGBO(101, 45, 143, 1),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Padding(padding: EdgeInsetsDirectional.fromSTEB(120, 0, 0, 0),
+                child:   Text("Actividades"),
+                ),
+                Padding(padding: EdgeInsetsDirectional.fromSTEB(57, 0, 0, 0),
+                      child: Icon(
+                    Icons.directions_run,
+                    size: 30,
+                    color: Color.fromARGB(255, 219, 195, 238),
+                  ),
+                ),
+              IconButton(
+                icon: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black, width: 1),
+                    shape: BoxShape.circle,
+                    color: Color.fromARGB(255, 210, 173, 238)
+                  ),
+              child: Center(
+                child: Text( "${ActivitiesCount}", style: TextStyle(fontSize: 16, color: black),),
+              ),
+              ), onPressed: null)
+            ]),
+           
           ),
           body: SingleChildScrollView(
-
               // color:
               //     HotelAppTheme.buildLightTheme().backgroundColor,
               child: Column(
