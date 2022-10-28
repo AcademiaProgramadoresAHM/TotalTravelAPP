@@ -145,7 +145,7 @@ class _HotelHomeScreenState extends State<MyHomePage>
                                           context,
                                           widget.userloggeddata));
                                 } else {
-                                  return Text("No data");
+                                  return Center(child: Text("Cargando..."));
                                 }
                               },
                               future: GetListadoPackages(),
