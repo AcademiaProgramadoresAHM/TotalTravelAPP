@@ -11,6 +11,7 @@ import '../utils/models.dart';
 import '../utils/AppWidget.dart';
 import '../utils/ListaHoteles.dart';
 import 'package:flutter_application_1/Components/Packages.dart';
+import 'package:flutter_application_1/Screens/LoadingPage.dart';
 
 import 'Models/HotelsViewModel.dart';
 
@@ -22,6 +23,7 @@ class FeedbackScreen extends StatefulWidget {
 }
 
 class _FeedbackScreenState extends State<FeedbackScreen> {
+  bool IsLoading = false;
   HotelViewModel? hotelId;
   @override
   void initState() {
@@ -29,6 +31,12 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   }
 
   Future<dynamic> GetListadoPackageshome(userloggeddata) async {
+    // showDialog(
+    //     context: context,
+    //     builder: (context) {
+    //       return Center(child: CircularProgressIndicator());
+    //     });
+
     //listado paquetes
     String url_list =
         "https://totaltravelapi.azurewebsites.net/API/DefaultPackages/List";
@@ -51,6 +59,8 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     } else {
       print("Error " + response.statusCode.toString());
     }
+
+    // Navigator.of(context).pop();
   }
 
   Future<dynamic> GetListHotels(userloggeddata) async {
@@ -381,7 +391,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       children:
                           ListDefaultPackagesHome(snapshot.data, context));
                 } else {
-                  return Text("No data");
+                  return Center(child: Text("Cargando..."));
                 }
               },
               future: GetListadoPackageshome(widget.userloggeddata),
@@ -390,26 +400,26 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
         ),
       ),
     );
-  }
 
-  Column _buildButtonColumn(Color color, IconData icon, String label) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(icon, color: color),
-        Container(
-          margin: const EdgeInsets.only(top: 8),
-          child: Text(
-            label,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-              color: color,
+    Column _buildButtonColumn(Color color, IconData icon, String label) {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(icon, color: color),
+          Container(
+            margin: const EdgeInsets.only(top: 8),
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.w400,
+                color: color,
+              ),
             ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    }
   }
 }
