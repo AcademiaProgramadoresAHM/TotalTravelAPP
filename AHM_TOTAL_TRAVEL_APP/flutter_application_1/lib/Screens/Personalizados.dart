@@ -151,7 +151,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  10, 0, 0, 0),
+                                                  70, 0, 0, 0),
                                           child: Text(
                                             element['descripcionPaquete'],
                                             style: TextStyle(
@@ -185,7 +185,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  10, 0, 0, 0),
+                                                  100, 0, 0, 0),
                                           child: Text(
                                             'L.' + element['precio'].toString(),
                                             style: TextStyle(
@@ -255,7 +255,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  10, 0, 0, 0),
+                                                  26, 0, 0, 0),
                                           child: Text(
                                             fechasalida,
                                             style: TextStyle(

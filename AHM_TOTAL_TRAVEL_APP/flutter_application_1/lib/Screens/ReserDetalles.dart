@@ -119,7 +119,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(10, 0, 0, 0),
+                                                  .fromSTEB(120, 0, 0, 0),
                                               child: Text(
                                                   element['descripcionPaquete'],
                                                   style: TextStyle(
@@ -146,7 +146,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(10, 0, 0, 0),
+                                                  .fromSTEB(30, 0, 0, 0),
                                               child: Text(
                                                   element['numeroPersonas']
                                                       .toString(),
@@ -164,14 +164,14 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          Text('Cantidad de Gagos:',
+                                          Text('Cantidad de Pagos:',
                                               style: TextStyle(
                                                   fontSize: 20,
                                                   color: Colors.black)),
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    10, 0, 0, 0),
+                                                    30, 0, 0, 0),
                                             child: Text(
                                                 element['cantidadPagos']
                                                     .toString(),
@@ -197,7 +197,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(10, 0, 0, 0),
+                                                  .fromSTEB(140, 0, 0, 0),
                                               child: Text(
                                                   element['precio'].toString(),
                                                   style: TextStyle(
@@ -223,7 +223,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(10, 0, 0, 0),
+                                                  .fromSTEB(70, 0, 0, 0),
                                               child: Text(fechaentrada,
                                                   style: TextStyle(
                                                       fontSize: 18,
@@ -248,7 +248,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(10, 0, 0, 0),
+                                                  .fromSTEB(85, 0, 0, 0),
                                               child: Text(fechasalida,
                                                   style: TextStyle(
                                                       fontSize: 18,
@@ -331,7 +331,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(10, 0, 0, 0),
+                                                  .fromSTEB(142, 0, 0, 0),
                                               child: Text(
                                                   element['nombre_Hotel'],
                                                   style: TextStyle(
@@ -355,7 +355,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    10, 0, 0, 0),
+                                                    95, 0, 0, 0),
                                             child: Text(element['habitacion'],
                                                 style: TextStyle(
                                                     fontSize: 18,
@@ -380,7 +380,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(10, 0, 0, 0),
+                                                  .fromSTEB(0, 0, 0, 0),
                                               child: Text(
                                                   element['categoria_Habitacion']
                                                       .toString(),
@@ -407,7 +407,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(10, 0, 0, 0),
+                                                  .fromSTEB(135, 0, 0, 0),
                                               child: Text(
                                                   element['camas'].toString(),
                                                   style: TextStyle(
@@ -491,7 +491,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(10, 0, 0, 0),
+                                                  .fromSTEB(55, 0, 0, 0),
                                               child: Text(
                                                   element['nombrecompleto'],
                                                   style: TextStyle(
@@ -515,7 +515,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    10, 0, 0, 0),
+                                                    165, 0, 0, 0),
                                             child: Text(element['dni'],
                                                 style: TextStyle(
                                                     fontSize: 18,
@@ -539,7 +539,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(10, 0, 0, 0),
+                                                  .fromSTEB(115, 0, 0, 0),
                                               child: Text(element['telefono'],
                                                   style: TextStyle(
                                                       fontSize: 18,
@@ -564,7 +564,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(10, 0, 0, 0),
+                                                  .fromSTEB(30, 0, 0, 0),
                                               child: Text(element['email'],
                                                   style: TextStyle(
                                                       fontSize: 18,
