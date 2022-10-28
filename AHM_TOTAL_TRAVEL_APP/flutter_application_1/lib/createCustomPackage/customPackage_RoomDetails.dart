@@ -55,7 +55,7 @@ class _RoomDetails extends State<RoomDetails> {
           DateTime.now().year, DateTime.now().month, DateTime.now().day + 1));
   var nights = 1;
   String wordNight = "noche";
-  var price;
+  
 
   List<Padding> HotelDetails(List<dynamic> data, BuildContext context) {
     Future pickDateRange() async {
@@ -73,7 +73,7 @@ class _RoomDetails extends State<RoomDetails> {
         dateRange = newDataRange;
         final difference = dateRange.duration.inDays;
         nights = difference - 1;
-        nights == 0 ? nights = 1: nights = 1;
+        nights == 0 ? nights = 1: nights = difference - 1;
         nights == 1 ? wordNight = "noche" : wordNight = "noches";
       });
     }
@@ -90,21 +90,17 @@ class _RoomDetails extends State<RoomDetails> {
     List<String> imageUrl;
 
     data.forEach((element) {
+      var price;
       for (var i = 1; i <= element['camas']; i++) {
         items.add('${i.toString()}');
-      }
+      }  
 
-      double SetPrice(price){
-        if(price ==null){
-           price = element['precio'];
-        }
-        return price;
-      }
-
+     
 
       String? selectedValue;
 
       List<DropdownMenuItem<String>> _addDividersAfterItems(
+        
           List<String> items) {
         List<DropdownMenuItem<String>> _menuItems = [];
         for (var item in items) {
@@ -133,6 +129,7 @@ class _RoomDetails extends State<RoomDetails> {
         }
         return _menuItems;
       }
+      
 
       List<double> _getCustomItemsHeights() {
         List<double> _itemsHeights = [];
@@ -148,6 +145,17 @@ class _RoomDetails extends State<RoomDetails> {
         return _itemsHeights;
       }
 
+ double SetPrice(price)
+      {
+        if(price == null)
+        {
+            price = element['precio'];
+        }
+
+         return price;
+      }
+
+        
       imageUrl = element['imageUrl'].split(',');
       list.add(
         Padding(
@@ -264,8 +272,7 @@ class _RoomDetails extends State<RoomDetails> {
                                                       "Seleccione su\nfecha de entrada",
                                                       style: TextStyle(
                                                         fontFamily: 'Outfit',
-                                                        color:
-                                                            Color(0xFF7C8791),
+                                                        color: Colors.black,
                                                         fontSize: 15,
                                                         fontWeight:
                                                             FontWeight.w500,
@@ -284,13 +291,14 @@ class _RoomDetails extends State<RoomDetails> {
                                                                 .format(
                                                                     dateRange
                                                                         .start),
+                                                                style: TextStyle(color: Color(0xFF652D8F)),
                                                           ),
                                                           style: ElevatedButton
                                                               .styleFrom(
                                                             elevation: 0.0,
                                                             shadowColor: Colors
                                                                 .transparent,
-                                                            backgroundColor: Color(0xFF652D8F),
+                                                            backgroundColor: Color.fromARGB(255, 234, 234, 234),
                                                             padding:
                                                                 EdgeInsets.zero,
                                                           ),
@@ -313,7 +321,7 @@ class _RoomDetails extends State<RoomDetails> {
                                                   "Seleccione su\nfecha de salida",
                                                   style: TextStyle(
                                                     fontFamily: 'Outfit',
-                                                    color: Color(0xFF7C8791),
+                                                    color: Colors.black,
                                                     fontSize: 15,
                                                     fontWeight: FontWeight.w500,
                                                   ),
@@ -327,16 +335,15 @@ class _RoomDetails extends State<RoomDetails> {
                                                       style: ElevatedButton
                                                           .styleFrom(
                                                         elevation: 0.0,
-                                                        shadowColor:
-                                                            Colors.transparent,
-                                                        backgroundColor: Color(0xFF652D8F),
-                                                        padding:
-                                                            EdgeInsets.zero,
+                                                        shadowColor:Colors.transparent,
+                                                        backgroundColor: Color.fromARGB(255, 234, 234, 234),
+                                                        padding: EdgeInsets.zero,
                                                       ),
                                                       child: Text(
                                                         DateFormat('dd-MM-yyyy')
                                                             .format(
                                                                 dateRange.end),
+                                                                style: TextStyle(color: Color(0xFF652D8F)),
                                                       ),
                                                       onPressed: pickDateRange,
                                                     )),
@@ -352,7 +359,7 @@ class _RoomDetails extends State<RoomDetails> {
                                           "Seleccione habitaciones y personas",
                                           style: TextStyle(
                                             fontFamily: 'Outfit',
-                                            color: Color(0xFF7C8791),
+                                            color: Colors.black,
                                             fontSize: 14,
                                             fontWeight: FontWeight.w500,
                                           ),
@@ -371,12 +378,12 @@ class _RoomDetails extends State<RoomDetails> {
                                             child: ElevatedButton(
                                               child: Text(
                                                 "${nights} ${wordNight}, ${rooms.round().toString()} ${wordRooms}  ${people.round().toString()} ${wordPeople}",
-                                                style: TextStyle(),
+                                                style: TextStyle(color: Color(0xFF652D8F)),
                                               ),
                                               style: ElevatedButton.styleFrom(
                                                 elevation: 0.0,
                                                 shadowColor: Colors.transparent,
-                                                backgroundColor: Color(0xFF652D8F),
+                                                backgroundColor: Color.fromARGB(255, 234, 234, 234),
                                                 padding: EdgeInsets.zero,
                                               ),
                                               onPressed: () {
@@ -386,7 +393,7 @@ class _RoomDetails extends State<RoomDetails> {
                                                       (BuildContext context) {
                                                     return Container(
                                                       height: 300,
-                                                      color: Colors.white,
+                                                      color: Colors.black,
                                                       child: Center(
                                                         child: Column(
                                                           children: <Widget>[
@@ -420,9 +427,7 @@ class _RoomDetails extends State<RoomDetails> {
                                                                 onChanged:
                                                                     (value) {
                                                                   setState(() {
-                                                                    SetRooms(
-                                                                        value);
-                                                                      
+                                                                    SetRooms(value);                                                                      
                                                                   });
                                                                 },
                                                               ),
@@ -463,13 +468,13 @@ class _RoomDetails extends State<RoomDetails> {
                                                                 onChanged:
                                                                     (people) {
                                                                   SetPeople(people);
-                                                                  var price = element['precio'];
-                                                                  for (var i = 1; i <= people -2; i++) {
+                                                                  price = element['precio'];
+                                                                  for (var i = 1; i <= people -2; i++) 
+                                                                  {
                                                                     price = price  * 1.17;
                                                                     print(price);
                                                                   }
                                                                     SetPrice(price);
-                                                                      
                                                                 },
                                                               ),
                                                               padding:
@@ -486,17 +491,10 @@ class _RoomDetails extends State<RoomDetails> {
                                                               child:
                                                                   ElevatedButton(
                                                                 onPressed: () {
-                                                                  var roomMax = people
-                                                                          .toInt() /
-                                                                      (rooms.toInt() *
-                                                                          element[
-                                                                              'capacidad']);
-                                                                  if (roomMax >
-                                                                      1) {
-                                                                    var quantMax = people
-                                                                            .toInt() /
-                                                                        element[
-                                                                            'capacidad'];
+                                                                  var roomMax = people.toInt() /(rooms.toInt() * element['capacidad']);
+                                                                  if (roomMax >1) {
+                                                                    var quantMax = people.toInt() / element['capacidad'];
+                                                                   
                                                                     showDialog<
                                                                         String>(
                                                                       context:
@@ -588,7 +586,7 @@ class _RoomDetails extends State<RoomDetails> {
                                           )),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            100, 10, 0, 0),
+                                            100, 30, 0, 0),
                                         child: Text(
                                           "Total:     "
                                           'HNL ${SetPrice(null)}',
@@ -601,51 +599,12 @@ class _RoomDetails extends State<RoomDetails> {
                                           ),
                                         ),
                                       ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            160, 10, 0, 0),
-                                        child: SizedBox(
-                                          width: 150,
-                                          child: ElevatedButton(
-                                            style: ButtonStyle(
-                                              backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      Color(0xFF652D8F)),
-                                               
-                                              shape: MaterialStateProperty.all(
-                                                RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(4),
-                                                ),
-                                              ),
-                                            ),
-                                            child: Text(
-                                              'Confirmar',
-                                              style: TextStyle(
-                                                fontFamily: 'Outfit',
-                                                color: Colors.white,
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                            ),
-                                            onPressed: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        createCustomPackage(
-                                                            widget.Ciudad,widget.userloggeddata,1)),
-                                              );
-                                            },
-                                          ),
-                                        ),
-                                      ),
                                     ],
                                   )))
                         ],
                       ),
                     ),
-                    Padding(padding: EdgeInsets.only(top: 50)),
+                    Padding(padding: EdgeInsets.only(top: 10)),
                     const Divider(
                       height: 10,
                       thickness: 10,
@@ -724,6 +683,27 @@ class _RoomDetails extends State<RoomDetails> {
           ),
         ],
       )),
+       bottomNavigationBar: Padding(
+        padding: EdgeInsets.all(8.0),
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+                        context,
+                    MaterialPageRoute(
+                    builder: (context) =>
+                         createCustomPackage(
+                      widget.Ciudad,widget.userloggeddata,1)),
+                      );
+          },
+          child: Text(
+            'Confirmar',
+            style: TextStyle(fontSize: 18),
+          ),
+          style: ElevatedButton.styleFrom(
+            primary: Color(0xFF652D8F),
+          ),
+        ),
+      ),
     );
   }
 }

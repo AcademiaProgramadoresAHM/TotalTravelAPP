@@ -244,17 +244,7 @@ class _createCustomPackage extends State<createCustomPackage> {
                                   ),
                                 ),
                                 TextButton(
-                                  onPressed: (){
-                                    if(_currentStep==0){
-                                           Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => createPackage(widget.userloggeddata)),
-                                          );
-                                    }else{
-                                      onStepCancel;
-                                    }
-                                  },
+                                  onPressed: onStepCancel,
                                   child: const Text(
                                       'Cancelar',
                                     style:
