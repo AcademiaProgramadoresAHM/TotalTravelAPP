@@ -4,11 +4,12 @@ import 'dart:convert';
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/ReserDetalles.dart';
+import 'package:flutter_application_1/introduction_animation/components/center_next_button.dart';
 import '../Models/UsersViewModel.dart';
 
 import '../Components/Decodificador.dart';
 import '../Components/Reservation.dart';
-
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 
 class PersonaliScreen extends StatefulWidget {
@@ -77,6 +78,18 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
     final _controller = PageController();
 
     data.forEach((element) {
+      var splitFecha = element['fecha_Entrada'].toString().split('T');
+      print(splitFecha);
+
+      var fechaentrada = splitFecha[0];
+      print(fechaentrada);
+//////////////////////////////////////////////////////////////
+      var splitFechaSalida = element['fecha_Salida'].toString().split('T');
+      print(splitFechaSalida);
+
+      var fechasalida = splitFechaSalida[0];
+      print(fechasalida);
+
       list.add(Padding(
         padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
         child: Container(
@@ -113,121 +126,151 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                           flex: 6,
                           child: Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                                EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    /*Text(
-                                      element['numeroPersonas'].toString() +
-                                          'Personas',
-                                      style: TextStyle(
-                                        fontFamily: 'Outfit',
-                                        color: Color(0xFF090F13),
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.w500,
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 20),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Flexible(
+                                        child: new Text('Paquete :',
+                                            style: TextStyle(
+                                              fontFamily: 'Outfit',
+                                              fontSize: 25,
+                                              color: Color.fromRGBO(
+                                                  101, 45, 143, 1),
+                                            )),
                                       ),
-                                    ),*/
-                                    Text(
-                                      'Paquete: ' +
-                                          element['descripcionPaquete'],
-                                      style: TextStyle(
-                                        fontFamily: 'Outfit',
-                                        color: Color.fromRGBO(101, 45, 143, 1),
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
+                                      Flexible(
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  10, 0, 0, 0),
+                                          child: Text(
+                                            element['descripcionPaquete'],
+                                            style: TextStyle(
+                                              fontFamily: 'Outfit',
+                                              color: Color.fromRGBO(
+                                                  101, 45, 143, 1),
+                                              fontSize: 22,
+                                            ),
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                ),
-                                Text(
-                                  'Precio: L.' + element['precio'].toString(),
-                                  style: TextStyle(
-                                    fontFamily: 'Outfit',
-                                    color: Color.fromRGBO(101, 45, 143, 1),
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                Text(
-                                  'Fecha entrada: ' + element['fecha_Entrada'],
-                                  style: TextStyle(
-                                    fontFamily: 'Outfit',
-                                    color: Color.fromRGBO(101, 45, 143, 1),
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                Text(
-                                  'Fecha Salida:   ' + element['fecha_Salida'],
-                                  style: TextStyle(
-                                    fontFamily: 'Outfit',
-                                    color: Color.fromRGBO(101, 45, 143, 1),
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                /*
-                                Text(
-                                  element['nombre_Hotel'],
-                                  style: TextStyle(
-                                    fontFamily: 'Outfit',
-                                    color: Color.fromRGBO(101, 45, 143, 1),
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                               
-                                Text(
-                                  element['nombre'],
-                                  style: TextStyle(
-                                    fontFamily: 'Outfit',
-                                    color: Color.fromRGBO(101, 45, 143, 1),
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                Text(
-                                  element['apellido'],
-                                  style: TextStyle(
-                                    fontFamily: 'Outfit',
-                                    color: Color.fromRGBO(101, 45, 143, 1),
-                                    fontSize: 25,
-                                    fontWeight: FontWeight.w500,
+                                    ],
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 4, 0, 0),
-                                  child: Text(
-                                    element['email'],
-                                    style: TextStyle(
-                                      fontFamily: 'Outfit',
-                                      color: Color(0xFF7C8791),
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.normal,
-                                    ),
+                                      0, 0, 0, 20),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Flexible(
+                                        child: new Text('Precio :',
+                                            style: TextStyle(
+                                              fontFamily: 'Outfit',
+                                              fontSize: 22,
+                                              color: Color.fromRGBO(
+                                                  101, 45, 143, 1),
+                                            )),
+                                      ),
+                                      Flexible(
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  10, 0, 0, 0),
+                                          child: Text(
+                                            'L.' + element['precio'].toString(),
+                                            style: TextStyle(
+                                              fontFamily: 'Outfit',
+                                              color: Color.fromRGBO(
+                                                  101, 45, 143, 1),
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 4, 0, 0),
-                                  child: Text(
-                                    element['telefono'],
-                                    style: TextStyle(
-                                      fontFamily: 'Outfit',
-                                      color: Color(0xFF7C8791),
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.normal,
-                                    ),
+                                      0, 0, 0, 20),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Flexible(
+                                        child: new Text('Fecha de Entrada :',
+                                            style: TextStyle(
+                                              fontFamily: 'Outfit',
+                                              fontSize: 20,
+                                              color: Color.fromRGBO(
+                                                  101, 45, 143, 1),
+                                            )),
+                                      ),
+                                      Flexible(
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  10, 0, 0, 0),
+                                          child: Text(
+                                            fechaentrada,
+                                            style: TextStyle(
+                                              fontFamily: 'Outfit',
+                                              color: Color.fromRGBO(
+                                                  101, 45, 143, 1),
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),*/
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 20),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Flexible(
+                                        child: new Text('Fecha de salida :',
+                                            style: TextStyle(
+                                              fontFamily: 'Outfit',
+                                              fontSize: 20,
+                                              color: Color.fromRGBO(
+                                                  101, 45, 143, 1),
+                                            )),
+                                      ),
+                                      Flexible(
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  10, 0, 0, 0),
+                                          child: Text(
+                                            fechasalida,
+                                            style: TextStyle(
+                                              fontFamily: 'Outfit',
+                                              color: Color.fromRGBO(
+                                                  101, 45, 143, 1),
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0, 8, 0, 0),
@@ -298,8 +341,15 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
     return list;
   }
 
+  late bool _isLoading;
   @override
   void initState() {
+    _isLoading = true;
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        _isLoading = false;
+      });
+    });
     super.initState();
   }
 

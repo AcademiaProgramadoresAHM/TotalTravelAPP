@@ -14,6 +14,8 @@ import '../utils/AppWidget.dart';
 import '../utils/T2Colors.dart';
 import '../utils/ListaHoteles.dart';
 import '../utils/flutter_rating_bar.dart';
+import 'package:http/http.dart';
+import 'package:flutter_application_1/Components/http_client_default.dart' if (dart.library.html) 'http_client_browser.dart';
 
 class customActivities extends StatefulWidget {
   static var tag = "/DemoT2Cards";
@@ -57,6 +59,12 @@ class _customActivities extends State<customActivities> {
             "Content-type": "application/json",
             "Authorization": "bearer " + widget.userloggeddata!.Token!
           };
+
+            Future<Response> post(Uri url_list, {Map<String, String>? headers}) =>
+            client.post(url_list, headers: headers);
+
+            final clientReponse = client;
+
           final json = jsonEncode({"token": widget.userloggeddata!.Token});
           final response = await http.post(url_list, headers: headers, body: json);
           if (response.body != " ") {
@@ -268,47 +276,7 @@ class _customActivities extends State<customActivities> {
                                                       child: Center(
                                                         child: Column(
                                                           children: <Widget>[
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0,
-                                                                          30,
-                                                                          0,
-                                                                          0),
-                                                              child: Text(
-                                                                "Personas",
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontFamily:
-                                                                      'Outfit',
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontSize: 17,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              child: SpinBox(
-                                                                max: 10,
-                                                                value: 1,
-                                                                onChanged:
-                                                                    (value) {
-                                                                  setState(
-                                                                      () {});
-                                                                },
-                                                              ),
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      left: 30,
-                                                                      right:
-                                                                          30),
-                                                            ),
-                                                               Padding(
+                                                              Padding(
                                                               padding:
                                                                   EdgeInsetsDirectional
                                                                       .fromSTEB(
@@ -357,10 +325,64 @@ class _customActivities extends State<customActivities> {
                                                               ),
                                                             )
                                                            ),
-
-                                                       
-                                                            SizedBox(
-                                                              width: 200,
+                                                            Padding(
+                                                              padding:
+                                                                  EdgeInsetsDirectional .fromSTEB(0,0, 0,0),
+                                                              child: Text(
+                                                                "Personas",
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontFamily:
+                                                                      'Outfit',
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize: 17,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding: EdgeInsetsDirectional.fromSTEB(30, 0, 30, 20),
+                                                              child: SpinBox(
+                                                                max: 10,
+                                                                value: 1,
+                                                                onChanged:
+                                                                    (value) {
+                                                                  setState(
+                                                                      () {});
+                                                                },
+                                                              ),
+                                                             
+                                                            ),
+                                                             
+                                                            Padding(padding: EdgeInsetsDirectional.fromSTEB(40, 0, 0, 0),
+                                                            child: Row(
+                                                              children: [
+                                                                SizedBox(
+                                                              width: 150,
+                                                              height: 40,
+                                                              child:
+                                                                  ElevatedButton(
+                                                                onPressed: () {
+                                                                    print("aaaa");
+                                                                },
+                                                                child: Text(
+                                                                  'Cancelar',
+                                                                  style: TextStyle(
+                                                                      fontSize:18, color:Color(
+                                                                      0xFF652D8F) ),
+                                                                ),
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                  primary:Color.fromARGB(255, 234, 234, 234) ,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Padding(padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                                                              child: SizedBox(
+                                                              width: 150,
                                                               height: 40,
                                                               child:
                                                                   ElevatedButton(
@@ -380,6 +402,15 @@ class _customActivities extends State<customActivities> {
                                                                 ),
                                                               ),
                                                             ),
+                                                            )
+                                                            
+                                                              ],
+                                                            ),
+                                                            )
+                                                            
+
+                                                            
+                                                            
                                                           ],
                                                         ),
                                                       ),
