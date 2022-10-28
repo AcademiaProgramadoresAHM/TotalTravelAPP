@@ -263,15 +263,20 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                                                     fontSize: 18,
                                                     color: Colors.black)),
                                           ),
-                                          Flexible(
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(10, 0, 0, 0),
-                                              child: Text(
-                                                  element['duracion_Paquete'],
-                                                  style: TextStyle(
-                                                      fontSize: 18,
-                                                      color: Colors.black)),
+                                          Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    75, 0, 0, 0),
+                                            child: Flexible(
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(20, 0, 0, 0),
+                                                child: Text(
+                                                    element['duracion_Paquete'],
+                                                    style: TextStyle(
+                                                        fontSize: 18,
+                                                        color: Colors.black)),
+                                              ),
                                             ),
                                           ),
                                         ],
@@ -290,7 +295,7 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    10, 0, 0, 0),
+                                                    120, 0, 0, 0),
                                             child: Text(
                                                 element['precio'].toString() ??
                                                     '00.00',
