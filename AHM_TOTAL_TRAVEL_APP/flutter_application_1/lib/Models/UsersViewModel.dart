@@ -15,6 +15,7 @@ class UserLoggedModel {
   String? Partner;
   int? PartnerID;
   String? Token;
+  String? Password;
 
   UserLoggedModel.fromJson(Map<String, dynamic> json)
       : ID = json['id'],

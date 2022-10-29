@@ -51,7 +51,6 @@ class _HotelcustomPackage extends State<HotelcustomPackage> {
             var Json = DecoderAPI.fromJson(userMap);
             dataHotels = Json.data;
             var Hotel = dataHotels.where((x) => x['id'] == idHotel).toList();
-
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -239,17 +238,17 @@ class _HotelcustomPackage extends State<HotelcustomPackage> {
                                       ),
                                       ElevatedButton(
                                         style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  Color.fromRGBO(
-                                                      101, 45, 143, 1)),
-                                          shape: MaterialStateProperty.all(
-                                            RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                            ),
+                                        backgroundColor:
+                                            MaterialStateProperty.all(
+                                                Color.fromRGBO(
+                                                    101, 45, 143, 1)),
+                                        shape: MaterialStateProperty.all(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(4),
                                           ),
                                         ),
+                                      ),
                                         child: Text(
                                           'Reservar',
                                           style: TextStyle(

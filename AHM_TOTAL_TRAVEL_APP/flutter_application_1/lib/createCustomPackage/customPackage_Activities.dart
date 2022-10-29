@@ -3,8 +3,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_ActivityDetails.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
+import 'package:get/get.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:http/http.dart' as http;
 import '../Models/CitiesViewModel.dart';
@@ -14,8 +17,7 @@ import '../utils/AppWidget.dart';
 import '../utils/T2Colors.dart';
 import '../utils/ListaHoteles.dart';
 import '../utils/flutter_rating_bar.dart';
-import 'package:http/http.dart';
-import 'package:flutter_application_1/Components/http_client_default.dart' if (dart.library.html) 'http_client_browser.dart';
+
 
 class customActivities extends StatefulWidget {
   static var tag = "/DemoT2Cards";
@@ -30,12 +32,13 @@ class customActivities extends StatefulWidget {
   TimeOfDay time = TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
 class _customActivities extends State<customActivities> {
   int ActivitiesCount = 0;
+  
 
 
   late List<Hoteles> ListaHoteles;
   Map<int?, String> HotelsDictionary = Map();
 
-  Future<dynamic> GetListActivities(Ciudad, userloggeddata) async {
+  Future<dynamic> GetListActivities(Ciudad, userloggeddata,idActivity,bool) async {
     List<dynamic> dataActivities;
     String url_list =
         "https://totaltravelapi.azurewebsites.net/API/ActivitiesExtra/List";
@@ -44,14 +47,31 @@ class _customActivities extends State<customActivities> {
       "Authorization": "bearer " + widget.userloggeddata!.Token!
     };
     final response = await http.get(Uri.parse(url_list), headers: headers);
-    if (response.statusCode == 200) {
-      Map<String, dynamic> userMap = jsonDecode(response.body);
-      var Json = DecoderAPI.fromJson(userMap);
-      dataActivities = Json.data;
-      var activity =
-          dataActivities.where((x) => x['ciudadID'] == Ciudad.ID).toList();
+      if(bool == true){
+                if (response.statusCode == 200) 
+              {
+                Map<String, dynamic> userMap = jsonDecode(response.body);
+                var Json = DecoderAPI.fromJson(userMap);
+                dataActivities = Json.data;
+                var activity =
+                    dataActivities.where((x) => x['ciudadID'] == Ciudad.ID).toList();
 
-      return activity;
+                return activity;
+              }
+      }
+      else if(bool == false){
+         if (response.statusCode == 200) 
+         {
+            Map<String, dynamic> userMap = jsonDecode(response.body);
+            var Json = DecoderAPI.fromJson(userMap);
+            dataActivities = Json.data;
+            var Activity = dataActivities.where((x) => x['id'] == idActivity).toList();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ActivityDetails(widget.userloggeddata, Activity,Ciudad)),
+            );
+          }
     } else {
        print(widget.userloggeddata!.Token);
           final url_list =Uri.parse("https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
@@ -60,17 +80,12 @@ class _customActivities extends State<customActivities> {
             "Authorization": "bearer " + widget.userloggeddata!.Token!
           };
 
-            Future<Response> post(Uri url_list, {Map<String, String>? headers}) =>
-            client.post(url_list, headers: headers);
-
-            final clientReponse = client;
-
           final json = jsonEncode({"token": widget.userloggeddata!.Token});
           final response = await http.post(url_list, headers: headers, body: json);
           if (response.body != " ") {
             print(response.body);
             widget.userloggeddata!.Token = response.body;
-            GetListActivities(Ciudad, widget.userloggeddata);
+            GetListActivities(Ciudad, widget.userloggeddata,null,true);
           }
     }
   }
@@ -164,7 +179,7 @@ class _customActivities extends State<customActivities> {
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
-                                    Text(
+                                    /*Text(
                                       '\$' + element['precio'].toString(),
                                       style: TextStyle(
                                         fontFamily: 'Outfit',
@@ -172,7 +187,7 @@ class _customActivities extends State<customActivities> {
                                         fontSize: 24,
                                         fontWeight: FontWeight.w600,
                                       ),
-                                    ),
+                                    ),*/
                                   ],
                                 ),
                                 Text(
@@ -253,7 +268,7 @@ class _customActivities extends State<customActivities> {
                                             width: 100,
                                             child: ElevatedButton(
                                               child: Text(
-                                                "Reservar",
+                                                "Ver Detalles",
                                                 style: TextStyle(),
                                               ),
                                               
@@ -265,158 +280,9 @@ class _customActivities extends State<customActivities> {
                                                 padding: EdgeInsets.zero,
                                                 
                                               ),
-                                              onPressed: () {
-                                                showModalBottomSheet<void>(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return Container(
-                                                      height: 300,
-                                                      color: Colors.white,
-                                                      child: Center(
-                                                        child: Column(
-                                                          children: <Widget>[
-                                                              Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0,
-                                                                          30,
-                                                                          0,
-                                                                          0),
-                                                              child: Text(
-                                                                "Seleccione una hora",
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontFamily:
-                                                                      'Outfit',
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontSize: 17,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                           Padding(padding: 
-                                                           EdgeInsetsDirectional.fromSTEB(0, 10, 0, 20),
-                                                           child: 
-                                                            SizedBox(
-                                                              width: 340,
-                                                              height: 60,
-                                                              child: ElevatedButton(
-                                                              child: Text( '${hours}:${minutes}', style:  TextStyle(fontSize: 18, color: Color(0xFF652D8F))),
-                                                              onPressed: () async{
-                                                                TimeOfDay? newTime = 
-                                                                await showTimePicker(
-                                                                  cancelText: "Cancelar",
-                                                                  confirmText: "Confirmar",
-                                                                  context: context, 
-                                                                  initialTime: time);
+                                              onPressed: (){
+                                               GetListActivities(widget.Ciudad,widget.userloggeddata,element['id'],false);
 
-                                                                if(newTime == null) return;
-                                                                setState(() => time = newTime);
-
-                                                              },
-                                                              style: ElevatedButton.styleFrom(
-                                                                backgroundColor: Color.fromARGB(255, 234, 234, 234),
-                                                              ),
-                                                              ),
-                                                            )
-                                                           ),
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional .fromSTEB(0,0, 0,0),
-                                                              child: Text(
-                                                                "Personas",
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontFamily:
-                                                                      'Outfit',
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontSize: 17,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              padding: EdgeInsetsDirectional.fromSTEB(30, 0, 30, 20),
-                                                              child: SpinBox(
-                                                                max: 10,
-                                                                value: 1,
-                                                                onChanged:
-                                                                    (value) {
-                                                                  setState(
-                                                                      () {});
-                                                                },
-                                                              ),
-                                                             
-                                                            ),
-                                                             
-                                                            Padding(padding: EdgeInsetsDirectional.fromSTEB(40, 0, 0, 0),
-                                                            child: Row(
-                                                              children: [
-                                                                SizedBox(
-                                                              width: 150,
-                                                              height: 40,
-                                                              child:
-                                                                  ElevatedButton(
-                                                                onPressed: () {
-                                                                    print("aaaa");
-                                                                },
-                                                                child: Text(
-                                                                  'Cancelar',
-                                                                  style: TextStyle(
-                                                                      fontSize:18, color:Color(
-                                                                      0xFF652D8F) ),
-                                                                ),
-                                                                style: ElevatedButton
-                                                                    .styleFrom(
-                                                                  primary:Color.fromARGB(255, 234, 234, 234) ,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Padding(padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                                                              child: SizedBox(
-                                                              width: 150,
-                                                              height: 40,
-                                                              child:
-                                                                  ElevatedButton(
-                                                                onPressed: () {
-                                                                    print("aaaa");
-                                                                },
-                                                                child: Text(
-                                                                  'Confirmar',
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          18),
-                                                                ),
-                                                                style: ElevatedButton
-                                                                    .styleFrom(
-                                                                  primary: Color(
-                                                                      0xFF652D8F),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            )
-                                                            
-                                                              ],
-                                                            ),
-                                                            )
-                                                            
-
-                                                            
-                                                            
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                );
                                               },
                                             ),
                                           )),
@@ -507,10 +373,79 @@ class _customActivities extends State<customActivities> {
                     return Text(" ");
                   }
                 },
-                future: GetListActivities(widget.Ciudad, widget.userloggeddata),
+                future: GetListActivities(widget.Ciudad, widget.userloggeddata,null,true),
               ),
             ],
           )),
+            bottomNavigationBar: Row(children: [
+        Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+        child:
+        SizedBox( 
+          width: 175,
+          height: 35,
+          child:     ElevatedButton(
+          onPressed: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+          child: Text('¿Esta seguro que desea continuar?',),
+          ) ,
+          actions: <Widget>[
+          ElevatedButton(onPressed: () {
+            Navigator.pop(context);
+          },
+           style: ElevatedButton.styleFrom(
+            primary:  Color.fromARGB(255, 234, 234, 234),
+          ),
+          child: Text("Cancelar",style: TextStyle(color: Color(0xFF652D8F)),)),
+          ElevatedButton(onPressed: () {
+            Navigator.pop(context);
+             Navigator.pop(context);
+          },
+           style: ElevatedButton.styleFrom(
+            primary: Color(0xFF652D8F),
+          ),
+          child: Text("Aceptar"))
+          ],
+        ),
+      ),
+          child: Text(
+            'Cancelar',
+            style: TextStyle(fontSize: 18,color: Color(0xFF652D8F)),
+          ),
+          style: ElevatedButton.styleFrom(
+            primary: Color.fromARGB(255, 234, 234, 234),
+          ),
+        ),)
+     
+      ),
+      Padding(
+        padding: EdgeInsets.all(8.0),
+        child:
+        SizedBox( 
+          width: 170,
+          child:     ElevatedButton(
+          onPressed: () {
+               Navigator.push(
+                        context,
+                    MaterialPageRoute(
+                    builder: (context) =>
+                         createCustomPackage(
+                      widget.Ciudad,widget.userloggeddata,2)),
+                      );
+          },
+          child: Text(
+            'Confirmar',
+            style: TextStyle(fontSize: 18),
+          ),
+          style: ElevatedButton.styleFrom(
+            primary: Color(0xFF652D8F),
+          ),
+        ),)
+     
+      ),
+       ],)
         ));
   }
 
@@ -532,6 +467,7 @@ class _customActivities extends State<customActivities> {
           ),
         ),
       ],
+      
     );
   }
 }

@@ -57,7 +57,7 @@ class _RoomDetails extends State<RoomDetails> {
   String wordNight = "noche";
   
 
-  List<Padding> HotelDetails(List<dynamic> data, BuildContext context) {
+  List<Padding> RoomDetails(List<dynamic> data, BuildContext context) {
     Future pickDateRange() async {
       DateTimeRange? newDataRange = await showDateRangePicker(
         context: context,
@@ -678,16 +678,62 @@ class _RoomDetails extends State<RoomDetails> {
                   runAlignment: WrapAlignment.start,
                   verticalDirection: VerticalDirection.down,
                   clipBehavior: Clip.none,
-                  children: HotelDetails(widget.Room, context));
+                  children: RoomDetails(widget.Room, context));
             },
           ),
         ],
       )),
-       bottomNavigationBar: Padding(
+       bottomNavigationBar: Row(children: [
+        Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+        child:
+        SizedBox( 
+          width: 175,
+          height: 35,
+          child:     ElevatedButton(
+          onPressed: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+          child: Text('¿Esta seguro que desea continuar?',),
+          ) ,
+          actions: <Widget>[
+          ElevatedButton(onPressed: () {
+            Navigator.pop(context);
+          },
+           style: ElevatedButton.styleFrom(
+            primary:  Color.fromARGB(255, 234, 234, 234),
+          ),
+          child: Text("Cancelar",style: TextStyle(color: Color(0xFF652D8F)),)),
+          ElevatedButton(onPressed: () {
+            Navigator.pop(context);
+             Navigator.pop(context);
+          },
+           style: ElevatedButton.styleFrom(
+            primary: Color(0xFF652D8F),
+          ),
+          child: Text("Aceptar"))
+          ],
+        ),
+      ),
+          child: Text(
+            'Cancelar',
+            style: TextStyle(fontSize: 18,color: Color(0xFF652D8F)),
+          ),
+          style: ElevatedButton.styleFrom(
+            primary: Color.fromARGB(255, 234, 234, 234),
+          ),
+        ),)
+     
+      ),
+      Padding(
         padding: EdgeInsets.all(8.0),
-        child: ElevatedButton(
+        child:
+        SizedBox( 
+          width: 170,
+          child:     ElevatedButton(
           onPressed: () {
-            Navigator.push(
+           Navigator.push(
                         context,
                     MaterialPageRoute(
                     builder: (context) =>
@@ -702,8 +748,11 @@ class _RoomDetails extends State<RoomDetails> {
           style: ElevatedButton.styleFrom(
             primary: Color(0xFF652D8F),
           ),
-        ),
+        ),)
+     
       ),
+       ],)
+     
     );
   }
 }

@@ -268,7 +268,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                         ),
                                       ),
                                       child: Text(
-                                        'Reservar',
+                                        'Ver detalles',
                                         style: TextStyle(
                                           fontFamily: 'Outfit',
                                           color: Colors.white,
