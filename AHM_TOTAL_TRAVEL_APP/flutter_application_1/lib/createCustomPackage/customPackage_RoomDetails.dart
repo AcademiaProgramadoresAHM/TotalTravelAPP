@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_application_1/Models/CitiesViewModel.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
+import 'package:flutter_application_1/Models/customPackageViewModel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_HotelRoomsList.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
@@ -25,6 +26,7 @@ class RoomDetails extends StatefulWidget {
 }
 
 class _RoomDetails extends State<RoomDetails> {
+  customPackageViewModel customPackageModel = new customPackageViewModel();
   final scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController? _QuestController;
   TextEditingController? _RoomsController;
@@ -32,8 +34,7 @@ class _RoomDetails extends State<RoomDetails> {
   double rooms = 1;
   String wordPeople = "personas", wordRooms = "habitación";
 
-
-  void SetRooms(roomsNumber) {
+  void SetRooms(roomsNumber, id) {
     setState(() {
       rooms = roomsNumber;
       rooms == 1 ? wordRooms = "habitación" : wordRooms = "habitaciones";
@@ -393,7 +394,7 @@ class _RoomDetails extends State<RoomDetails> {
                                                       (BuildContext context) {
                                                     return Container(
                                                       height: 300,
-                                                      color: Colors.black,
+                                                      color: Colors.white,
                                                       child: Center(
                                                         child: Column(
                                                           children: <Widget>[
@@ -422,12 +423,13 @@ class _RoomDetails extends State<RoomDetails> {
                                                             ),
                                                             Padding(
                                                               child: SpinBox(
+                                                                min: 1,
                                                                 max: 10,
                                                                 value: rooms,
                                                                 onChanged:
                                                                     (value) {
                                                                   setState(() {
-                                                                    SetRooms(value);                                                                      
+                                                                    SetRooms(value,element['id']);                                                                      
                                                                   });
                                                                 },
                                                               ),
@@ -463,6 +465,7 @@ class _RoomDetails extends State<RoomDetails> {
                                                             ),
                                                             Padding(
                                                               child: SpinBox(
+                                                                min: 1,
                                                                 max: 30.0,
                                                                 value: people,
                                                                 onChanged:
@@ -492,9 +495,12 @@ class _RoomDetails extends State<RoomDetails> {
                                                                   ElevatedButton(
                                                                 onPressed: () {
                                                                   var roomMax = people.toInt() /(rooms.toInt() * element['capacidad']);
+                                                      
                                                                   if (roomMax >1) {
                                                                     var quantMax = people.toInt() / element['capacidad'];
-                                                                   
+                                                                    if(quantMax - quantMax.toInt() < 0.5){
+                                                                      quantMax  = quantMax + 1;
+                                                                    }           
                                                                     showDialog<
                                                                         String>(
                                                                       context:
@@ -548,7 +554,7 @@ class _RoomDetails extends State<RoomDetails> {
                                                                               Navigator.pop(context, 'OK');
 
 
-                                                                              SetRooms(quantMax);
+                                                                              SetRooms(quantMax,element['id']);
                                                                               Navigator.pop(context);
                                                                             },
                                                                             child:

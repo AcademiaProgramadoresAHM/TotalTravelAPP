@@ -8,6 +8,7 @@ import 'package:flutter_application_1/Screens/transporte.dart';
 import 'package:flutter_application_1/Screens/reservaHotel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Activities.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Hotels.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_PayPage.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Restaurants.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Start.dart';
 import 'package:flutter_application_1/hotel_booking/calendar_popup_view.dart';
@@ -402,11 +403,11 @@ class _createCustomPackage extends State<createCustomPackage> {
                             primary: Color.fromARGB(255, 101, 45, 143),
                           ),
                           onPressed: () {
-                           /* Navigator.push(
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => hoteles()),
-                            );*/
+                                  builder: (context) => payPage()),
+                            );
                           },
                         ),
                       ),

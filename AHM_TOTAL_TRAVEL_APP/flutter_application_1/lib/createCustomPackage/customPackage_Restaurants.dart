@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_RestaurantDetails.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:http/http.dart' as http;
@@ -31,26 +32,57 @@ Map<int?, String> HotelsDictionary = Map();
 
 
 
-  Future<dynamic> GetListRestaurants(Ciudad,userloggeddata) async {
-    List<dynamic> dataRestaurants;
-  String url_list =
-      "https://totaltravelapi.azurewebsites.net/API/Restaurants/List";
-       final headers = {
+Future<dynamic> GetListRestaurants(Ciudad, userloggeddata,idRestaurant,bool) async {
+    List<dynamic> dataActivities;
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/Restaurants/List";
+    final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
     };
-  final response = await http.get(Uri.parse(url_list), headers: headers);
-  if (response.statusCode == 200) {
-    Map<String, dynamic> userMap = jsonDecode(response.body);
-     var Json = DecoderAPI.fromJson(userMap);
-     dataRestaurants = Json.data;
-     var Restaurant = dataRestaurants.where((x) => x['ciudadID'] == Ciudad.ID).toList();
-  
-    return Restaurant;
-  } else {
-    print("Error " + response.statusCode.toString());
+    final response = await http.get(Uri.parse(url_list), headers: headers);
+      if(bool == true){
+                if (response.statusCode == 200) 
+              {
+                Map<String, dynamic> userMap = jsonDecode(response.body);
+                var Json = DecoderAPI.fromJson(userMap);
+                dataActivities = Json.data;
+                var activity =
+                    dataActivities.where((x) => x['ciudadID'] == Ciudad.ID).toList();
+
+                return activity;
+              }
+      }
+      else if(bool == false){
+         if (response.statusCode == 200) 
+         {
+            Map<String, dynamic> userMap = jsonDecode(response.body);
+            var Json = DecoderAPI.fromJson(userMap);
+            dataActivities = Json.data;
+            var Activity = dataActivities.where((x) => x['id'] == idRestaurant).toList();
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => RestaurantDetails(widget.userloggeddata, Activity,Ciudad)),
+            );
+          }
+    } else {
+       print(widget.userloggeddata!.Token);
+          final url_list =Uri.parse("https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
+          final headers = {
+            "Content-type": "application/json",
+            "Authorization": "bearer " + widget.userloggeddata!.Token!
+          };
+
+          final json = jsonEncode({"token": widget.userloggeddata!.Token});
+          final response = await http.post(url_list, headers: headers, body: json);
+          if (response.body != " ") {
+            print(response.body);
+            widget.userloggeddata!.Token = response.body;
+            GetListRestaurants(Ciudad, widget.userloggeddata,null,true);
+          }
+    }
   }
-}
 
 
 
@@ -237,7 +269,10 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                           fontWeight: FontWeight.normal,
                                         ),
                                       ),
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        GetListRestaurants(widget.Ciudad, widget.userloggeddata, element['id'], false);
+
+                                      },
                                     ),
                                   ],
                                 ),
@@ -306,7 +341,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                   return Text(" ");
                                 }
                               },
-                              future: GetListRestaurants(widget.Ciudad,widget.userloggeddata),
+                              future: GetListRestaurants(widget.Ciudad,widget.userloggeddata,null,true),
                             ),
                           ],
                         )),
