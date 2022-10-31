@@ -179,8 +179,9 @@ class _HistorialScreenState extends State<HistorialScreen> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     10, 0, 0, 0),
                                             child: Text(
-                                                element['montoPago']
-                                                        .toString() ??
+                                                '\$' +
+                                                        element['montoPago']
+                                                            .toString() ??
                                                     '00.00',
                                                 style: TextStyle(
                                                     fontSize: 20,
@@ -231,7 +232,7 @@ class _HistorialScreenState extends State<HistorialScreen> {
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  10, 0, 0, 0),
+                                                  45, 0, 0, 0),
                                           child: Text(element['tipoPago'],
                                               style: TextStyle(
                                                   fontSize: 20,
@@ -245,7 +246,7 @@ class _HistorialScreenState extends State<HistorialScreen> {
                                   fecha,
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
-                                    color: Color.fromARGB(240, 0, 0, 0),
+                                    color: Color.fromARGB(100, 0, 0, 0),
                                     fontSize: 15,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -265,6 +266,10 @@ class _HistorialScreenState extends State<HistorialScreen> {
                                     ],
                                   ),
                                 ),
+                                Divider(
+                                  thickness: 2,
+                                  color: Color.fromARGB(255, 123, 26, 168),
+                                )
                               ],
                             ),
                           ),
@@ -343,7 +348,12 @@ class _HistorialScreenState extends State<HistorialScreen> {
                       children:
                           ListDefaultPaymentHistorys(snapshot.data, context));
                 } else {
-                  return Text("No data");
+                  return Center(
+                      child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
+                    child: CircularProgressIndicator(
+                        color: Color.fromARGB(255, 101, 45, 144)),
+                  ));
                 }
               },
               future: GetListPaymentHistory(widget.userloggeddata),

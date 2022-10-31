@@ -462,7 +462,7 @@ class _HistorydetailScreenState extends State<HistorydetailScreen> {
               flex: 5,
               child: Center(
                 child: Text(
-                  'Detalles',
+                  'Detalles de compra',
                   style: TextStyle(
                     fontWeight: FontWeight.w500,
                     fontSize: 20,
@@ -505,7 +505,12 @@ class _HistorydetailScreenState extends State<HistorydetailScreen> {
                           clipBehavior: Clip.none,
                           children: HistoryDetails(widget.Package, context));
                     } else {
-                      return Text("No data");
+                      return Center(
+                          child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
+                        child: CircularProgressIndicator(
+                            color: Color.fromARGB(255, 101, 45, 144)),
+                      ));
                     }
                   },
                   future: GetListadoHistorydetail(),
