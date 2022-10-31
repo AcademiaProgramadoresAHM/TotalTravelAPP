@@ -171,131 +171,227 @@ class _HistorydetailScreenState extends State<HistorydetailScreen> {
                                                   ],
                                                 ),
                                               ),
+                                              Divider(
+                                                thickness: 2,
+                                                color: Color.fromARGB(
+                                                    255, 165, 164, 165),
+                                              )
                                             ],
                                           ),
                                         ),
                                       ],
                                     ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 20, 0, 20),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Flexible(
-                                            child: new Text(
-                                                'Descripcion de paquete:',
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    color: Colors.black)),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          flex: 6,
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 20, 0, 20),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Flexible(
+                                                      child: new Text(
+                                                          'Descripcion de paquete:',
+                                                          style: TextStyle(
+                                                              fontSize: 15,
+                                                              color: Colors
+                                                                  .black)),
+                                                    ),
+                                                    Flexible(
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(15, 0,
+                                                                    0, 0),
+                                                        child: Text(
+                                                            element[
+                                                                'descripcion_paquete'],
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                color: Colors
+                                                                    .black)),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Divider(
+                                                thickness: 2,
+                                                color: Color.fromARGB(
+                                                    255, 165, 164, 165),
+                                              )
+                                            ],
                                           ),
-                                          Flexible(
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(15, 0, 0, 0),
-                                              child: Text(
-                                                  element[
-                                                      'descripcion_paquete'],
-                                                  style: TextStyle(
-                                                      fontFamily: 'Poppins',
-                                                      color: Colors.black)),
-                                            ),
-                                          ),
-                                          Divider(
-                                            thickness: 2,
-                                            color: Color(0xFF95A1AC),
-                                          )
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 20),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Text('Costo de paquete:',
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  color: Colors.black)),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    55, 0, 0, 0),
-                                            child: Text(
-                                                '\$' +
-                                                        element['montoPago']
-                                                            .toString() ??
-                                                    '00.00',
-                                                style: TextStyle(
-                                                    fontFamily: 'Poppins',
-                                                    color: Colors.black)),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          flex: 6,
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 0, 0, 20),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Text('Costo de paquete:',
+                                                        style: TextStyle(
+                                                            fontSize: 15,
+                                                            color:
+                                                                Colors.black)),
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  55, 0, 0, 0),
+                                                      child: Text(
+                                                          '\$' +
+                                                                  element['montoPago']
+                                                                      .toString() ??
+                                                              '00.00',
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                                  'Poppins',
+                                                              color: Colors
+                                                                  .black)),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Divider(
+                                                thickness: 2,
+                                                color: Color.fromARGB(
+                                                    255, 165, 164, 165),
+                                              )
+                                            ],
                                           ),
-                                          Divider(
-                                            thickness: 2,
-                                            color: Color(0xFF95A1AC),
-                                          )
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 20),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Flexible(
-                                            child: Text('Nombre del cliente:',
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    color: Colors.black)),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          flex: 6,
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 0, 0, 20),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Flexible(
+                                                      child: Text(
+                                                          'Nombre del cliente:',
+                                                          style: TextStyle(
+                                                              fontSize: 15,
+                                                              color: Colors
+                                                                  .black)),
+                                                    ),
+                                                    Flexible(
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(50, 0,
+                                                                    0, 0),
+                                                        child: Text(
+                                                            element[
+                                                                'nombre_Completo'],
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                color: Colors
+                                                                    .black)),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Divider(
+                                                thickness: 2,
+                                                color: Color.fromARGB(
+                                                    255, 165, 164, 165),
+                                              )
+                                            ],
                                           ),
-                                          Flexible(
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(50, 0, 0, 0),
-                                              child: Text(
-                                                  element['nombre_Completo'],
-                                                  style: TextStyle(
-                                                      fontFamily: 'Poppins',
-                                                      color: Colors.black)),
-                                            ),
-                                          ),
-                                          Divider(
-                                            thickness: 2,
-                                            color: Color(0xFF95A1AC),
-                                          )
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 20, 0, 20),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Flexible(
-                                            child: new Text('DNI del cliente:',
-                                                style: TextStyle(
-                                                    fontSize: 15,
-                                                    color: Colors.black)),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          flex: 6,
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 20, 0, 20),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Flexible(
+                                                      child: new Text(
+                                                          'DNI del cliente:',
+                                                          style: TextStyle(
+                                                              fontSize: 15,
+                                                              color: Colors
+                                                                  .black)),
+                                                    ),
+                                                    Flexible(
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(79, 0,
+                                                                    0, 0),
+                                                        child: Text(
+                                                            element['dni'],
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                color: Colors
+                                                                    .black)),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Divider(
+                                                thickness: 2,
+                                                color: Color.fromARGB(
+                                                    255, 165, 164, 165),
+                                              )
+                                            ],
                                           ),
-                                          Flexible(
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(79, 0, 0, 0),
-                                              child: Text(element['dni'],
-                                                  style: TextStyle(
-                                                      fontFamily: 'Poppins',
-                                                      color: Colors.black)),
-                                            ),
-                                          ),
-                                          Divider(
-                                            thickness: 2,
-                                            color: Color(0xFF95A1AC),
-                                          )
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
@@ -323,6 +419,10 @@ class _HistorydetailScreenState extends State<HistorydetailScreen> {
                                         ],
                                       ),
                                     ),
+                                    Divider(
+                                      thickness: 2,
+                                      color: Color.fromARGB(255, 123, 26, 168),
+                                    )
                                   ],
                                 ),
                               ),
