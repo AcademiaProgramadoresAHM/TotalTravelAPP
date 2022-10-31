@@ -174,7 +174,7 @@ class _HistorydetailScreenState extends State<HistorydetailScreen> {
                                                Divider(
                                 thickness: 2,
                                 color: Color(0xFF95A1AC),
-                                            ],
+                                          )],
                                           ),
                                         ),
                                       ],
@@ -207,37 +207,33 @@ class _HistorydetailScreenState extends State<HistorydetailScreen> {
                                         ],
                                       ),
                                     ),
-                                       Divider(
-                                thickness: 2,
-                                color: Color(0xFF95A1AC),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 20),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Text('Costo de paquete:',
-                                              style: TextStyle(
-                                                  fontSize: 15,
-                                                  color: Colors.black)),
                                           Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    120, 0, 0, 0),
-                                            child: Text(
-                                              '\$'+ element['montoPago']
-                                                        .toString() ??
-                                                    '00.00',
-                                                style: TextStyle(
-                                                      fontFamily: 'Poppins',
-                                                    color: Colors.black)),
+                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                0, 0, 0, 20),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Text('Costo de paquete:',
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        color: Colors.black)),
+                                                Padding(
+                                                  padding:
+                                                      EdgeInsetsDirectional.fromSTEB(
+                                                          120, 0, 0, 0),
+                                                  child: Text(
+                                                    '\$'+ element['montoPago']
+                                                              .toString() ??
+                                                          '00.00',
+                                                      style: TextStyle(
+                                                            fontFamily: 'Poppins',
+                                                          color: Colors.black)),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ],
-                                      ),
-                                    ),
-                                       Divider(
-                                thickness: 2,
-                                color: Color(0xFF95A1AC),
+                                   
+                                 
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0, 0, 0, 20),
@@ -263,11 +259,7 @@ class _HistorydetailScreenState extends State<HistorydetailScreen> {
                                           ),
                                         ],
                                       ),
-                                      
                                     ),
-                                        Divider(
-                                thickness: 2,
-                                color: Color(0xFF95A1AC),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0, 20, 0, 20),
@@ -292,12 +284,9 @@ class _HistorydetailScreenState extends State<HistorydetailScreen> {
                                             ),
                                           ),
                                         ],
-                                      ),                                
-                                    ),
-                                       Divider(
-                                thickness: 2,
-                                color: Color(0xFF95A1AC),
-                                    Padding(
+                                      ),                                                        
+                              ),
+                               Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0, 20, 0, 20),
                                       child: Row(
@@ -322,8 +311,7 @@ class _HistorydetailScreenState extends State<HistorydetailScreen> {
                                           ),
                                         ],
                                       ),
-                                    ),                                  
-                              ),
+                                    ),          
                                   ],
                                 ),
                               ),
