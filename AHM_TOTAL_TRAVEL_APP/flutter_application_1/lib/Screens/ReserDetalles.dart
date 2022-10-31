@@ -656,7 +656,8 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                       return Center(
                           child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(
+                            color: Color.fromARGB(255, 101, 45, 144)),
                       ));
                     }
                   },
