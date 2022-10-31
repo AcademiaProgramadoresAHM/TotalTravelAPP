@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 //import 'dart:js';
 
 import 'package:flutter_application_1/app_theme.dart';
@@ -412,7 +413,11 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                       clipBehavior: Clip.none,
                       children: ListDefaultReservation(snapshot.data, context));
                 } else {
-                  return Text("No data");
+                  return Center(
+                      child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
+                    child: CircularProgressIndicator(),
+                  ));
                 }
               },
               future: GetListReservation(widget.userloggeddata),
