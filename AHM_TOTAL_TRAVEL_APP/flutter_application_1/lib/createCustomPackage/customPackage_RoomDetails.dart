@@ -30,10 +30,10 @@ class _RoomDetails extends State<RoomDetails> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController? _QuestController;
   TextEditingController? _RoomsController;
-  double people = 2;
+  double peopleFinal= 2;
   double rooms = 1;
   String wordPeople = "personas", wordRooms = "habitación";
-
+  bool? ChangeNight;
   void SetRooms(roomsNumber, id) {
     setState(() {
       rooms = roomsNumber;
@@ -43,9 +43,10 @@ class _RoomDetails extends State<RoomDetails> {
 
   void SetPeople(peopleNumber) {
     setState(() {
-      people = peopleNumber;
-      people == 1 ? wordPeople = "persona" : wordPeople = "personas";
+      peopleFinal = peopleNumber;
+      peopleFinal == 1 ? wordPeople = "persona" : wordPeople = "personas";
     });
+    
   }
  
 
@@ -59,6 +60,7 @@ class _RoomDetails extends State<RoomDetails> {
   
 
   List<Padding> RoomDetails(List<dynamic> data, BuildContext context) {
+    
     Future pickDateRange() async {
       DateTimeRange? newDataRange = await showDateRangePicker(
         context: context,
@@ -76,6 +78,7 @@ class _RoomDetails extends State<RoomDetails> {
         nights = difference - 1;
         nights == 0 ? nights = 1: nights = difference - 1;
         nights == 1 ? wordNight = "noche" : wordNight = "noches";
+        ChangeNight = true;
       });
     }
 
@@ -91,15 +94,18 @@ class _RoomDetails extends State<RoomDetails> {
     List<String> imageUrl;
 
     data.forEach((element) {
+      if(ChangeNight == true){
+         element['precio'] = element['precio'] * nights;
+        ChangeNight = false;
+      }
+      print(ChangeNight);
+        
       var price;
       for (var i = 1; i <= element['camas']; i++) {
         items.add('${i.toString()}');
       }  
 
-     
-
       String? selectedValue;
-
       List<DropdownMenuItem<String>> _addDividersAfterItems(
         
           List<String> items) {
@@ -146,17 +152,6 @@ class _RoomDetails extends State<RoomDetails> {
         return _itemsHeights;
       }
 
- double SetPrice(price)
-      {
-        if(price == null)
-        {
-            price = element['precio'];
-        }
-
-         return price;
-      }
-
-        
       imageUrl = element['imageUrl'].split(',');
       list.add(
         Padding(
@@ -378,7 +373,7 @@ class _RoomDetails extends State<RoomDetails> {
                                             width: 300,
                                             child: ElevatedButton(
                                               child: Text(
-                                                "${nights} ${wordNight}, ${rooms.round().toString()} ${wordRooms}  ${people.round().toString()} ${wordPeople}",
+                                                "${nights} ${wordNight}, ${rooms.round().toString()} ${wordRooms}  ${peopleFinal.round().toString()} ${wordPeople}",
                                                 style: TextStyle(color: Color(0xFF652D8F)),
                                               ),
                                               style: ElevatedButton.styleFrom(
@@ -467,17 +462,24 @@ class _RoomDetails extends State<RoomDetails> {
                                                               child: SpinBox(
                                                                 min: 1,
                                                                 max: 30.0,
-                                                                value: people,
+                                                                value: peopleFinal,
                                                                 onChanged:
                                                                     (people) {
-                                                                  SetPeople(people);
                                                                   price = element['precio'];
-                                                                  for (var i = 1; i <= people -2; i++) 
-                                                                  {
-                                                                    price = price  * 1.17;
-                                                                    print(price);
+                                                                  var porcentaje = 350.0;
+
+                                                                  if(peopleFinal > people){
+                                                                     price = price - porcentaje;
+                                                                  } else{
+                                                                     price = price + porcentaje;
                                                                   }
-                                                                    SetPrice(price);
+                                                                 SetPeople(people);
+
+                                                                  setState(() {
+                                                                  element['precio'] = price.toInt();
+                                                                  });
+
+                                                     
                                                                 },
                                                               ),
                                                               padding:
@@ -494,10 +496,10 @@ class _RoomDetails extends State<RoomDetails> {
                                                               child:
                                                                   ElevatedButton(
                                                                 onPressed: () {
-                                                                  var roomMax = people.toInt() /(rooms.toInt() * element['capacidad']);
+                                                                  var roomMax = peopleFinal.toInt() /(rooms.toInt() * element['capacidad']);
                                                       
                                                                   if (roomMax >1) {
-                                                                    var quantMax = people.toInt() / element['capacidad'];
+                                                                    var quantMax = peopleFinal.toInt() / element['capacidad'];
                                                                     if(quantMax - quantMax.toInt() < 0.5){
                                                                       quantMax  = quantMax + 1;
                                                                     }           
@@ -592,10 +594,10 @@ class _RoomDetails extends State<RoomDetails> {
                                           )),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            100, 30, 0, 0),
+                                            70, 30, 0, 0),
                                         child: Text(
                                           "Total:     "
-                                          'HNL ${SetPrice(null)}',
+                                          'HNL ' + element['precio'].toInt().toString() + '.00',
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
                                             fontFamily: 'Lexend Deca',

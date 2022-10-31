@@ -338,7 +338,12 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                       children: ListHotels(
                                           snapshot.data, context));
                                 } else {
-                                  return Text(" ");
+                                  return Center(
+                                            child: Padding(
+                                          padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
+                                          child: CircularProgressIndicator(
+                                              color: Color.fromARGB(255, 101, 45, 144)),
+                                        ));
                                 }
                               },
                               future: GetListRestaurants(widget.Ciudad,widget.userloggeddata,null,true),

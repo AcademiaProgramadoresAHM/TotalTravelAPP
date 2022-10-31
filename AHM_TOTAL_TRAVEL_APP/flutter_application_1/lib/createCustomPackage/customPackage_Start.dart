@@ -418,7 +418,12 @@ final TextEditingController textEditingController = TextEditingController();
                         clipBehavior: Clip.none,
                         children: ListHotels(snapshot.data, context));
                   } else {
-                    return Text("");
+                    return Center(
+                          child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
+                        child: CircularProgressIndicator(
+                            color: Color.fromARGB(255, 101, 45, 144)),
+                      ));
                   }
                 },
                 future: GetListHotels( widget.userloggeddata),
