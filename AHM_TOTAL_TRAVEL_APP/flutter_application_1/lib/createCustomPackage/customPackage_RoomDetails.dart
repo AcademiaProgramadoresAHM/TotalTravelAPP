@@ -33,7 +33,8 @@ class _RoomDetails extends State<RoomDetails> {
   double peopleFinal= 2;
   double rooms = 1;
   String wordPeople = "personas", wordRooms = "habitación";
-  bool? ChangeNight;
+  bool? ChangeNight, basePrice = true, ChangePeople;
+  var priceBase;
   void SetRooms(roomsNumber, id) {
     setState(() {
       rooms = roomsNumber;
@@ -46,6 +47,7 @@ class _RoomDetails extends State<RoomDetails> {
       peopleFinal = peopleNumber;
       peopleFinal == 1 ? wordPeople = "persona" : wordPeople = "personas";
     });
+    ChangePeople = true;
     
   }
  
@@ -55,7 +57,7 @@ class _RoomDetails extends State<RoomDetails> {
           DateTime.now().year, DateTime.now().month, DateTime.now().day),
       end: DateTime(
           DateTime.now().year, DateTime.now().month, DateTime.now().day + 1));
-  var nights = 1;
+  var nights = 1, previousNight = 1;
   String wordNight = "noche";
   
 
@@ -94,13 +96,36 @@ class _RoomDetails extends State<RoomDetails> {
     List<String> imageUrl;
 
     data.forEach((element) {
-      if(ChangeNight == true){
-         element['precio'] = element['precio'] * nights;
-        ChangeNight = false;
+
+      if(basePrice == true){
+         priceBase = element['precio'];
+         basePrice = false;
       }
-      print(ChangeNight);
-        
-      var price;
+     
+
+      if(ChangeNight == true || ChangePeople == true){
+        var percentage = priceBase * 0.17;
+        var price, peopleSerie;
+        peopleSerie = peopleFinal - 2;
+        if(nights < previousNight){
+        var totalNights = previousNight - nights;
+          price = priceBase * totalNights;
+        for (var i = 1; i <= peopleSerie; i++) {
+            price  = price + percentage;
+        }
+        }else{
+          price = priceBase * nights;
+           for (var i = 1; i <= peopleSerie; i++) {
+            price  = price + percentage;
+        }
+      }
+        element['precio'] = price;
+        ChangeNight = false;
+        ChangePeople = false;
+      }
+
+      previousNight = nights;
+
       for (var i = 1; i <= element['camas']; i++) {
         items.add('${i.toString()}');
       }  
@@ -465,21 +490,7 @@ class _RoomDetails extends State<RoomDetails> {
                                                                 value: peopleFinal,
                                                                 onChanged:
                                                                     (people) {
-                                                                  price = element['precio'];
-                                                                  var porcentaje = 350.0;
-
-                                                                  if(peopleFinal > people){
-                                                                     price = price - porcentaje;
-                                                                  } else{
-                                                                     price = price + porcentaje;
-                                                                  }
                                                                  SetPeople(people);
-
-                                                                  setState(() {
-                                                                  element['precio'] = price.toInt();
-                                                                  });
-
-                                                     
                                                                 },
                                                               ),
                                                               padding:
