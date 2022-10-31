@@ -653,7 +653,12 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                           children: ListDetailsReservation(
                               widget.Reservation, context));
                     } else {
-                      return Text("No data");
+                      return Center(
+                          child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
+                        child: CircularProgressIndicator(
+                            color: Color.fromARGB(255, 101, 45, 144)),
+                      ));
                     }
                   },
                   future: GetListReservationDetails(widget.userloggeddata),
