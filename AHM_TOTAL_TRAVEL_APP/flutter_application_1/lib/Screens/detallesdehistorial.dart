@@ -150,31 +150,28 @@ class _HistorydetailScreenState extends State<HistorydetailScreen> {
                                                           style: TextStyle(
                                                               fontSize: 15,
                                                               color: Colors
-                                                                 .black)),
-                                                    ),                                                 
+                                                                  .black)),
+                                                    ),
                                                     Flexible(
                                                       child: Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
-                                                                .fromSTEB(15, 0,
+                                                                .fromSTEB(45, 0,
                                                                     0, 0),
                                                         child: Text(
                                                             element[
                                                                 'nombre_paquete'],
                                                             style: TextStyle(
-                                                                  fontFamily: 'Poppins',
+                                                                fontFamily:
+                                                                    'Poppins',
                                                                 color: Colors
                                                                     .black)),
                                                       ),
-                                                      
                                                     ),
                                                   ],
                                                 ),
                                               ),
-                                               Divider(
-                                thickness: 2,
-                                color: Color(0xFF95A1AC),
-                                          )],
+                                            ],
                                           ),
                                         ),
                                       ],
@@ -195,45 +192,52 @@ class _HistorydetailScreenState extends State<HistorydetailScreen> {
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(10, 0, 0, 0),
+                                                  .fromSTEB(15, 0, 0, 0),
                                               child: Text(
                                                   element[
                                                       'descripcion_paquete'],
                                                   style: TextStyle(
-                                                        fontFamily: 'Poppins',
+                                                      fontFamily: 'Poppins',
                                                       color: Colors.black)),
                                             ),
                                           ),
+                                          Divider(
+                                            thickness: 2,
+                                            color: Color(0xFF95A1AC),
+                                          )
                                         ],
                                       ),
                                     ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 20),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text('Costo de paquete:',
+                                              style: TextStyle(
+                                                  fontSize: 15,
+                                                  color: Colors.black)),
                                           Padding(
-                                            padding: EdgeInsetsDirectional.fromSTEB(
-                                                0, 0, 0, 20),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              children: [
-                                                Text('Costo de paquete:',
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        color: Colors.black)),
-                                                Padding(
-                                                  padding:
-                                                      EdgeInsetsDirectional.fromSTEB(
-                                                          120, 0, 0, 0),
-                                                  child: Text(
-                                                    '\$'+ element['montoPago']
-                                                              .toString() ??
-                                                          '00.00',
-                                                      style: TextStyle(
-                                                            fontFamily: 'Poppins',
-                                                          color: Colors.black)),
-                                                ),
-                                              ],
-                                            ),
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    55, 0, 0, 0),
+                                            child: Text(
+                                                '\$' +
+                                                        element['montoPago']
+                                                            .toString() ??
+                                                    '00.00',
+                                                style: TextStyle(
+                                                    fontFamily: 'Poppins',
+                                                    color: Colors.black)),
                                           ),
-                                   
-                                 
+                                          Divider(
+                                            thickness: 2,
+                                            color: Color(0xFF95A1AC),
+                                          )
+                                        ],
+                                      ),
+                                    ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0, 0, 0, 20),
@@ -249,14 +253,18 @@ class _HistorydetailScreenState extends State<HistorydetailScreen> {
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(18, 0, 0, 0),
+                                                  .fromSTEB(50, 0, 0, 0),
                                               child: Text(
                                                   element['nombre_Completo'],
                                                   style: TextStyle(
-                                                       fontFamily: 'Poppins',
+                                                      fontFamily: 'Poppins',
                                                       color: Colors.black)),
                                             ),
                                           ),
+                                          Divider(
+                                            thickness: 2,
+                                            color: Color(0xFF95A1AC),
+                                          )
                                         ],
                                       ),
                                     ),
@@ -275,18 +283,21 @@ class _HistorydetailScreenState extends State<HistorydetailScreen> {
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(50, 0, 0, 0),
+                                                  .fromSTEB(79, 0, 0, 0),
                                               child: Text(element['dni'],
                                                   style: TextStyle(
-                                                  
-                                                       fontFamily: 'Poppins',
+                                                      fontFamily: 'Poppins',
                                                       color: Colors.black)),
                                             ),
                                           ),
+                                          Divider(
+                                            thickness: 2,
+                                            color: Color(0xFF95A1AC),
+                                          )
                                         ],
-                                      ),                                                        
-                              ),
-                               Padding(
+                                      ),
+                                    ),
+                                    Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0, 20, 0, 20),
                                       child: Row(
@@ -302,16 +313,16 @@ class _HistorydetailScreenState extends State<HistorydetailScreen> {
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(10, 0, 0, 0),
+                                                  .fromSTEB(45, 0, 0, 0),
                                               child: Text(element['telefono'],
                                                   style: TextStyle(
-                                                       fontFamily: 'Poppins',
+                                                      fontFamily: 'Poppins',
                                                       color: Colors.black)),
                                             ),
                                           ),
                                         ],
                                       ),
-                                    ),          
+                                    ),
                                   ],
                                 ),
                               ),
