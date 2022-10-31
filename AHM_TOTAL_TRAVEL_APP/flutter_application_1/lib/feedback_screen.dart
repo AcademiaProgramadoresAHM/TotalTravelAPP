@@ -391,7 +391,12 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       children:
                           ListDefaultPackagesHome(snapshot.data, context));
                 } else {
-                  return Center(child: Text("Cargando..."));
+                  return Center(
+                      child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
+                    child: CircularProgressIndicator(
+                        color: Color.fromARGB(255, 101, 45, 144)),
+                  ));
                 }
               },
               future: GetListadoPackageshome(widget.userloggeddata),
