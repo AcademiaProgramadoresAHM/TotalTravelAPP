@@ -161,9 +161,9 @@ class LandingPageState extends State<LandingPage> {
                       width: 300,
                       height: 100,
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
+                        padding: EdgeInsetsDirectional.fromSTEB(110, 5, 0, 5),
                         child: Image.asset(
-                          'assets/images/AHM-Fondo-Nombre.png',
+                          'assets/images/logo-AHM-Fondo-Morao.png',
                           fit: BoxFit.contain,
                         ),
                       ),
@@ -191,9 +191,10 @@ class LandingPageState extends State<LandingPage> {
                                         builder: (context) => Login()));
                               },
                               child: Icon(
-                                Icons.home,
+                                Icons.account_circle,
                                 color: Colors.white,
                                 size: 24.0,
+                                semanticLabel: 'Sign In',
                               )),
                         )),
                   ],
@@ -224,52 +225,6 @@ class LandingPageState extends State<LandingPage> {
                 }
               },
               future: GetListadoPackages(),
-            ),
-            Container(
-              width: 330,
-              height: 55,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  //backgroundColor: MaterialStateProperty.all(Colors.red),
-                  backgroundColor:
-                      MaterialStateProperty.all(HexColor('#652D90')),
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Login()));
-                },
-                child: const Text('Ingresar', style: TextStyle(fontSize: 20)),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              width: 330,
-              height: 55,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  //backgroundColor: MaterialStateProperty.all(Colors.red),
-                  backgroundColor:
-                      MaterialStateProperty.all(HexColor('#652D90')),
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SignUpView()));
-                },
-                child:
-                    const Text('Registrarse', style: TextStyle(fontSize: 20)),
-              ),
             ),
           ],
         ),
