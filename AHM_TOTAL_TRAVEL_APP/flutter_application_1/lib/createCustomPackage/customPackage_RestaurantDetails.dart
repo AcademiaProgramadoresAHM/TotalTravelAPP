@@ -1,11 +1,14 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/CitiesViewModel.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'package:flutter_application_1/Models/customPackageViewModel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
+import 'package:carousel_slider/carousel_slider.dart';
 // import 'package:flutter_spinbox/flutter_spinbox.dart';
 
 class RestaurantDetails extends StatefulWidget {
@@ -24,6 +27,27 @@ class _RestaurantDetails extends State<RestaurantDetails> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
       DateTime date = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   
+   Future<dynamic> GetListMenus(Restaurant,userloggeddata) async {
+    List<dynamic> dataMenus;
+  String url_list =
+      "https://totaltravel.somee.com/API/Menus/List";
+       final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+  final response = await http.get(Uri.parse(url_list), headers: headers);
+  if (response.statusCode == 200) {
+    var imagesMenus;
+    Map<String, dynamic> userMap = jsonDecode(response.body);
+     var Json = DecoderAPI.fromJson(userMap);
+     dataMenus = Json.data;
+     var Menus = dataMenus.where((x) => x['iD_Restaurante'] == Restaurant.id).toList();
+     Menus.forEach((element) {
+      imagesMenus = element['image_Url'];
+     });
+    return imagesMenus;
+    }
+  }
 
 
   List<Padding> ActivityDetails(List<dynamic> data, BuildContext context) {
@@ -264,11 +288,61 @@ class _RestaurantDetails extends State<RestaurantDetails> {
                                                               ),
                                                              
                                                             ),
+                                                             Padding(
+                                                              padding: EdgeInsetsDirectional.fromSTEB(0, 30, 220, 0),
+                                                              child: Text(
+                                                                "Dirección",
+                                                                style: TextStyle(
+                                                                  fontFamily: 'Outfit',
+                                                                  color: Colors.black,
+                                                                  fontSize: 16,
+                                                                  fontWeight: FontWeight.w600,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Padding(
+                                                              padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 30),
+                                                              child: Text(
+                                                                "Avenida " +
+                                                                    element['avenida'] +
+                                                                    " Calle " +
+                                                                    element['calle'] +
+                                                                    " Colonia " +
+                                                                    element['colonia'] +
+                                                                    ", " +
+                                                                    element[
+                                                                        'ciudad'] /*element['ciudad'] + "\nCol. " + element['colonia'] + ", Calle " + element['calle'] + ", Ave. " + element['avenida']*/,
+                                                                style: TextStyle(
+                                                                  fontFamily: 'Outfit',
+                                                                  color: Color(0xFF7C8791),
+                                                                  fontSize: 16,
+                                                                  fontWeight: FontWeight.w600,
+                                                                ),
+                                                              ),
+                                                            ),
                                             ],
                                           )),
-                                      
+                                  
+                                    CarouselSlider(
+                                        options: CarouselOptions(height: 200.0),
+                                        items: [1,2,3,4,5].map((i) {
+                                          return Builder(
+                                            builder: (BuildContext context) {
+                                              return Container(
+                                                width: MediaQuery.of(context).size.width,
+                                                margin: EdgeInsets.symmetric(horizontal: 5.0),
+                                                decoration: BoxDecoration(
+                                                ),
+                                                child: Image.network(GetListMenus(widget.Restaurant, widget.userloggeddata).toString())
+                                              );
+                                            },
+                                          );
+                                        }).toList(),
+                                      )
+
                                     ],
                                   )))
+                                  
                         ],
                       ),
                     ),
@@ -330,7 +404,6 @@ class _RestaurantDetails extends State<RestaurantDetails> {
         elevation: 2,
       ),
       body: SingleChildScrollView(
-
           // color:
           //     HotelAppTheme.buildLightTheme().backgroundColor,
           child: Column(

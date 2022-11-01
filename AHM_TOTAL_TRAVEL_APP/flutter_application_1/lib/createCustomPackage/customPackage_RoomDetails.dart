@@ -446,11 +446,10 @@ class _RoomDetails extends State<RoomDetails> {
                                                                 min: 1,
                                                                 max: 10,
                                                                 value: rooms,
-                                                                onChanged:
-                                                                    (value) {
-                                                                  setState(() {
-                                                                    SetRooms(value,element['id']);                                                                      
-                                                                  });
+                                                                onChanged: (value) {
+                                                                  if(value <= peopleFinal){
+                                                                     SetRooms(value,element['id']);  
+                                                                  }
                                                                 },
                                                               ),
                                                               padding:
