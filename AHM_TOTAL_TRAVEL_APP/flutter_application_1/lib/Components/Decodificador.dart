@@ -2,7 +2,7 @@ class Decodificador {
   final int code;
   final bool success;
   final String message;
-  final List<dynamic> data;
+  final dynamic data;
 
   Decodificador(this.code, this.success, this.message, this.data);
 

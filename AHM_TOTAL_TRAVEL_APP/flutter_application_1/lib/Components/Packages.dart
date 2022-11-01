@@ -3,12 +3,16 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Components/Decodificador.dart';
 import 'package:flutter_application_1/DefaultPackageScreens/DetailsPackage.dart';
+import 'package:flutter_application_1/Models/RequestsViewModel.dart';
 import 'package:flutter_application_1/feedback_screen.dart';
 import 'package:flutter_application_1/utils/AppWidget.dart';
+import 'package:nb_utils/nb_utils.dart';
 import '../Models/UsersViewModel.dart';
 import 'package:flutter_application_1/utils/prueba2/T2Colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/hotel_booking/model/PlanModal.dart';
+
+import '../Screens/Personalizados.dart';
 
 //-------------LISTADO DE PAQUETES PREDETERMINADOS--------------
 
@@ -269,4 +273,73 @@ List<Padding> ListDefaultPackages(
   });
 
   return list;
+}
+
+Future<void> PostReservertion(
+    int? UsuaID,
+    String PaquID,
+    bool Personalizado,
+    int CantidadPagos,
+    int NumPersonas,
+    bool ConfrimPago,
+    bool ConfirmHotel,
+    bool ConfirmRestaurant,
+    bool ConfirmTrans,
+    int Precio,
+    BuildContext context) async {
+  final headers = {
+    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+  };
+  final uri = Uri.parse("https://totaltravel.somee.com/API/Reservation/Insert");
+  var map = new Map<String, dynamic>();
+  map['usua_ID'] = UsuaID;
+  map['paqu_ID'] = PaquID;
+  map['resv_esPersonalizado'] = Personalizado;
+  map['resv_CantidadPagos'] = CantidadPagos;
+  map['resv_NumeroPersonas'] = NumPersonas;
+  map['resv_ConfirmacionPago'] = ConfrimPago;
+  map['resv_ConfirmacionHotel'] = ConfirmHotel;
+  map['resv_ConfirmacionRestaurante'] = ConfirmRestaurant;
+  map['resv_ConfirmacionTrans'] = ConfirmTrans;
+  map['resv_Precio'] = Precio;
+
+  http.Response response = await http.post(
+    uri,
+    headers: headers,
+    body: map,
+  );
+
+  if (response.body != " ") {
+    Map<String, dynamic> userMap = jsonDecode(response.body);
+    var dataInsert = Decodificador.fromJson(userMap);
+    var status = RequestStatus.fromJson(dataInsert.data);
+    if (status.CodeStatus! >= 0) {
+      if (status.CodeStatus == 0) {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: white,
+          content: Text(
+            textAlign: TextAlign.center,
+            'La Reservacion ya fue Realizada',
+            style: TextStyle(color: redColor, fontSize: 16),
+          ),
+        ));
+      } else {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PersonaliScreen(userloggeddata),
+          ),
+        );
+      }
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        backgroundColor: white,
+        content: Text(
+          textAlign: TextAlign.center,
+          'Ha ocurrido un error.',
+          style: TextStyle(color: redColor, fontSize: 16),
+        ),
+      ));
+    }
+  }
 }

@@ -453,79 +453,19 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                                         height: 40,
                                         child: ElevatedButton(
                                           onPressed: () {
-                                            // var roomMax = people.toInt() /
-                                            //     (_pagos.toInt() *
-                                            //         element['capacidad']);
-                                            // if (roomMax > 1) {
-                                            //   var quantMax = people.toInt() /
-                                            //       element['capacidad'];
-                                            //   showDialog<String>(
-                                            //     context: context,
-                                            //     builder:
-                                            //         (BuildContext context) =>
-                                            //             AlertDialog(
-                                            //       title: Padding(
-                                            //         padding: EdgeInsets.only(
-                                            //             top: 15,
-                                            //             left: 20,
-                                            //             right: 20),
-                                            //         child: Text(
-                                            //           'Habitaciones insuficientes',
-                                            //           style: TextStyle(
-                                            //               color: Color.fromARGB(
-                                            //                   255, 128, 9, 1),
-                                            //               fontSize: 18,
-                                            //               fontFamily: 'Outfit',
-                                            //               fontWeight:
-                                            //                   FontWeight.w500),
-                                            //         ),
-                                            //       ),
-                                            //       content: Padding(
-                                            //           padding: EdgeInsets.only(
-                                            //               top: 10,
-                                            //               left: 0,
-                                            //               right: 0),
-                                            //           child: Text(
-                                            //             '¿Desea agregar más habitaciones?',
-                                            //             style: TextStyle(
-                                            //               fontFamily: 'Outfit',
-                                            //               color:
-                                            //                   Color(0xFF7C8791),
-                                            //               fontSize: 16,
-                                            //               fontWeight:
-                                            //                   FontWeight.w500,
-                                            //             ),
-                                            //           )),
-                                            //       actions: <Widget>[
-                                            //         TextButton(
-                                            //           onPressed: () {
-                                            //             Navigator.pop(
-                                            //                 context, 'Cancel');
-                                            //           },
-                                            //           child: const Text(
-                                            //             'Cancelar',
-                                            //             style: TextStyle(
-                                            //                 color: Color(
-                                            //                     0xFF7C8791)),
-                                            //           ),
-                                            //         ),
-                                            //         TextButton(
-                                            //           onPressed: () {
-                                            //             Navigator.pop(
-                                            //                 context, 'OK');
-
-                                            //             SetPay(quantMax);
-                                            //             Navigator.pop(context);
-                                            //           },
-                                            //           child:
-                                            //               const Text('Aceptar'),
-                                            //         ),
-                                            //       ],
-                                            //     ),
-                                            //   );
-                                            // } else {
-                                            //   Navigator.pop(context);
-                                            // }
+                                            // bool result, result2, result3;
+                                            // PostReservertion(
+                                            //     widget.userloggeddata.ID,
+                                            //     element['id'],
+                                            //     false,
+                                            //     CantidadPagos,
+                                            //     NumPersonas,
+                                            //     false,
+                                            //     false,
+                                            //     false,
+                                            //     false,
+                                            //     element['precio'],
+                                            //     context);
                                           },
                                           child: Text(
                                             'Confirmar',
