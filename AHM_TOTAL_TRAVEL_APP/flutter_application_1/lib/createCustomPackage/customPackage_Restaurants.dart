@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
+import 'package:flutter_application_1/Models/customPackageViewModel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_RestaurantDetails.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -20,8 +21,9 @@ class RestaurantcustomPackage extends StatefulWidget {
   static var tag = "/DemoT2Cards";
   final UserLoggedModel? userloggeddata;
   final CiudadesViewModel? Ciudad;
+  final customPackageViewModel customPackage;
 
-  const RestaurantcustomPackage( this.userloggeddata, this.Ciudad,{super.key});
+  const RestaurantcustomPackage( this.userloggeddata, this.Ciudad,this.customPackage,{super.key});
   @override
   _RestaurantcustomPackage createState() => _RestaurantcustomPackage();
 }
@@ -63,7 +65,7 @@ Future<dynamic> GetListRestaurants(Ciudad, userloggeddata,idRestaurant,bool) asy
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => RestaurantDetails(widget.userloggeddata, Activity,Ciudad)),
+                  builder: (context) => RestaurantDetails(widget.userloggeddata, Activity,Ciudad,widget.customPackage)),
             );
           }
     } else {
@@ -338,7 +340,12 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                       children: ListHotels(
                                           snapshot.data, context));
                                 } else {
-                                  return Text(" ");
+                                  return Center(
+                                            child: Padding(
+                                          padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
+                                          child: CircularProgressIndicator(
+                                              color: Color.fromARGB(255, 101, 45, 144)),
+                                        ));
                                 }
                               },
                               future: GetListRestaurants(widget.Ciudad,widget.userloggeddata,null,true),

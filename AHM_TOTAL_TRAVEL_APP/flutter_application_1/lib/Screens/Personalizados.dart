@@ -178,8 +178,8 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                             style: TextStyle(
                                               fontFamily: 'Outfit',
                                               fontSize: 22,
-                                              color: Color.fromRGBO(
-                                                  101, 45, 143, 1),
+                                              color:
+                                                  Color.fromARGB(255, 3, 3, 3),
                                             )),
                                       ),
                                       Flexible(
@@ -191,8 +191,8 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                             'L.' + element['precio'].toString(),
                                             style: TextStyle(
                                               fontFamily: 'Outfit',
-                                              color: Color.fromRGBO(
-                                                  101, 45, 143, 1),
+                                              color:
+                                                  Color.fromARGB(255, 3, 3, 3),
                                               fontSize: 20,
                                               fontWeight: FontWeight.w500,
                                             ),
@@ -213,8 +213,8 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                             style: TextStyle(
                                               fontFamily: 'Outfit',
                                               fontSize: 20,
-                                              color: Color.fromRGBO(
-                                                  101, 45, 143, 1),
+                                              color:
+                                                  Color.fromARGB(255, 3, 3, 3),
                                             )),
                                       ),
                                       Flexible(
@@ -226,8 +226,8 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                             fechaentrada,
                                             style: TextStyle(
                                               fontFamily: 'Outfit',
-                                              color: Color.fromRGBO(
-                                                  101, 45, 143, 1),
+                                              color:
+                                                  Color.fromARGB(255, 3, 3, 3),
                                               fontSize: 18,
                                               fontWeight: FontWeight.w500,
                                             ),
@@ -248,8 +248,8 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                             style: TextStyle(
                                               fontFamily: 'Outfit',
                                               fontSize: 20,
-                                              color: Color.fromRGBO(
-                                                  101, 45, 143, 1),
+                                              color:
+                                                  Color.fromARGB(255, 3, 3, 3),
                                             )),
                                       ),
                                       Flexible(
@@ -261,8 +261,8 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                             fechasalida,
                                             style: TextStyle(
                                               fontFamily: 'Outfit',
-                                              color: Color.fromRGBO(
-                                                  101, 45, 143, 1),
+                                              color:
+                                                  Color.fromARGB(255, 3, 3, 3),
                                               fontSize: 18,
                                               fontWeight: FontWeight.w500,
                                             ),

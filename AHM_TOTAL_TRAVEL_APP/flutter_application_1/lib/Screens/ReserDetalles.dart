@@ -104,6 +104,10 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    Divider(
+                                      thickness: 2,
+                                      color: Color.fromARGB(255, 123, 26, 168),
+                                    ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0, 0, 0, 20),
@@ -258,6 +262,10 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                         ],
                                       ),
                                     ),
+                                    Divider(
+                                      thickness: 2,
+                                      color: Color.fromARGB(255, 123, 26, 168),
+                                    )
                                   ],
                                 ),
                               ),
@@ -316,6 +324,10 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    Divider(
+                                      thickness: 2,
+                                      color: Color.fromARGB(255, 123, 26, 168),
+                                    ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0, 0, 0, 20),
@@ -418,6 +430,10 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                         ],
                                       ),
                                     ),
+                                    Divider(
+                                      thickness: 2,
+                                      color: Color.fromARGB(255, 123, 26, 168),
+                                    )
                                   ],
                                 ),
                               ),
@@ -476,6 +492,10 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    Divider(
+                                      thickness: 2,
+                                      color: Color.fromARGB(255, 123, 26, 168),
+                                    ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0, 0, 0, 20),
@@ -574,6 +594,10 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                         ],
                                       ),
                                     ),
+                                    Divider(
+                                      thickness: 2,
+                                      color: Color.fromARGB(255, 123, 26, 168),
+                                    )
                                   ],
                                 ),
                               ),
@@ -633,7 +657,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
         ),
       ),
       backgroundColor: Colors.white,
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
             child: Column(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Models/CitiesViewModel.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
+import 'package:flutter_application_1/Models/customPackageViewModel.dart';
 import 'package:flutter_application_1/Screens/Restaurantes.dart';
 import 'package:flutter_application_1/Screens/actividades1.dart';
 import 'package:flutter_application_1/Screens/transporte.dart';
@@ -41,7 +42,8 @@ class createCustomPackage extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final CiudadesViewModel? Ciudad;
   final int? Step;
-  const createCustomPackage(this.Ciudad,this.userloggeddata,this.Step, {Key? key, }) : super(key: key);
+  final customPackageViewModel customPackage;
+  const createCustomPackage(this.Ciudad,this.userloggeddata,this.Step, this.customPackage, {Key? key, }) : super(key: key);
 
   @override
   _createCustomPackage createState() => _createCustomPackage();
@@ -232,28 +234,23 @@ class _createCustomPackage extends State<createCustomPackage> {
             child: Stepper(
               margin: EdgeInsetsDirectional.fromSTEB(70,60,50,60),
                 controlsBuilder: (context, _) {
-                            var onStepContinue = _stepContinue;
-                             var onStepCancel = _stepCancel;
-                            return Row(
-                              children: <Widget>[
-                                TextButton(
-                                  onPressed:null,
+                            return 
+                              Padding(padding: EdgeInsetsDirectional.fromSTEB(15,0,180,0),
+                              child:TextButton(
+                                  onPressed: () {
+                                      if(_currentStep == 0){
+                                          Navigator.push( context, MaterialPageRoute(builder: (context) => createPackage(widget.userloggeddata)),
+                      );
+                                      }else{
+                                         _stepCancel();
+                                      }
+                                  },
                                   child: const Text(
-                                    '',
-                                    style:
-                                      TextStyle(color:Color(0xFF652D8F)),
-                                  ),
-                                ),
-                                TextButton(
-                                  onPressed: onStepCancel,
-                                  child: const Text(
-                                      'Cancelar',
+                                      'Regresar',
                                     style:
                                       TextStyle(color: Color(0xFF652D8F)),
                                   ),
-                                ),
-                              ],
-                            );
+                                ));
                           },
               // vertical or horizontial
               type: _isVerticalStepper
@@ -301,16 +298,15 @@ class _createCustomPackage extends State<createCustomPackage> {
                       ? StepState.complete
                       : StepState.disabled,
                 ),
-                // The second step: Phone number
-                Step(
-                  title: const Text('Elegir actividades'),
+                  /* Step(
+                  title: const Text('Elegir transporte'),
                   content: Column(
                     children: [
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         child: ElevatedButton(
                           child: Text(
-                              '     Seleccionar actividades     ',
+                              '     Seleccionar transportes     ',
                               style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
                             primary: Color.fromARGB(255, 101, 45, 143),
@@ -329,37 +325,35 @@ class _createCustomPackage extends State<createCustomPackage> {
                   state: _currentStep >= 1
                       ? StepState.complete
                       : StepState.disabled,
-                ),
-                // The third step: Verify phone number
-                /*Step(
-                  title: const Text('Elegir transporte'),
+                ),*/
+                Step(
+                  title: const Text('Elegir actividades'),
                   content: Column(
-                    children: <Widget>[
+                    children: [
                       Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                         child: ElevatedButton(
                           child: Text(
-                              '                 Seleccionar transporte                 ',
+                              '     Seleccionar actividades     ',
                               style: TextStyle(fontSize: 18)),
                           style: ElevatedButton.styleFrom(
                             primary: Color.fromARGB(255, 101, 45, 143),
                           ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => transporte()),
-                            );
+                           onPressed: () {
+                             Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) =>  customActivities( widget.userloggeddata,widget.Ciudad,0,widget.customPackage)),
+                                        );
                           },
                         ),
                       ),
                     ],
                   ),
                   isActive: _currentStep >= 0,
-                  state: _currentStep >= 2
+                  state: _currentStep >= 1
                       ? StepState.complete
                       : StepState.disabled,
-                ),*/
+                ),
                 Step(
                   title: const Text('Elegir restaurante'),
                   content: Column(
@@ -376,7 +370,7 @@ class _createCustomPackage extends State<createCustomPackage> {
                           onPressed: () {
                              Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) =>  RestaurantcustomPackage( widget.userloggeddata,widget.Ciudad)),
+                                          MaterialPageRoute(builder: (context) =>  RestaurantcustomPackage( widget.userloggeddata,widget.Ciudad,widget.customPackage)),
                                         );
                           
                           },
@@ -385,7 +379,7 @@ class _createCustomPackage extends State<createCustomPackage> {
                     ],
                   ),
                   isActive: _currentStep >= 0,
-                  state: _currentStep >= 3
+                  state: _currentStep >= 2
                       ? StepState.complete
                       : StepState.disabled,
                 ),
@@ -415,29 +409,14 @@ class _createCustomPackage extends State<createCustomPackage> {
                   ),
                   
                   isActive: _currentStep >= 0,
-                  state: _currentStep >= 4
+                  state: _currentStep >= 3
                       ? StepState.complete
                       : StepState.disabled,
                 ),
               ],
             ),
           ),
-         /* LinearPercentIndicator(
-                percent: 0.5,
-                width: 392,
-                lineHeight: 24,
-                animation: true,
-                progressColor: Color(0xFFFFC36D),
-                backgroundColor: Color(0xFFF1F4F8),
-                center: Text(
-                  '50%',
-                  style: TextStyle(
-                        fontFamily: 'Poppins',
-                        color: Color(0xFF652D8F),
-                      ),
-                ),
-                padding: EdgeInsets.zero,
-              ),*/
+         
         ],
         
       ),

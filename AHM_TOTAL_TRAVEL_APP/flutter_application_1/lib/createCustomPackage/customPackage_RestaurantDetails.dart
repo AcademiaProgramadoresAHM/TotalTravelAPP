@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Models/CitiesViewModel.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
+import 'package:flutter_application_1/Models/customPackageViewModel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +12,8 @@ class RestaurantDetails extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final List<dynamic> Restaurant;
   final CiudadesViewModel Ciudad;
-  const RestaurantDetails(this.userloggeddata, this.Restaurant,this.Ciudad,{Key? key})
+  final customPackageViewModel customPackage;
+  const RestaurantDetails(this.userloggeddata, this.Restaurant,this.Ciudad,this.customPackage,{Key? key})
       : super(key: key);
 
   @override
@@ -263,10 +265,7 @@ class _RestaurantDetails extends State<RestaurantDetails> {
                                                              
                                                             ),
                                             ],
-                                          ))
-                                 
-        
-                                     
+                                          )),
                                       
                                     ],
                                   )))
@@ -407,7 +406,7 @@ class _RestaurantDetails extends State<RestaurantDetails> {
                     MaterialPageRoute(
                     builder: (context) =>
                          createCustomPackage(
-                      widget.Ciudad,widget.userloggeddata,3)),
+                      widget.Ciudad,widget.userloggeddata,3,widget.customPackage)),
                       );
           },
           child: Text(

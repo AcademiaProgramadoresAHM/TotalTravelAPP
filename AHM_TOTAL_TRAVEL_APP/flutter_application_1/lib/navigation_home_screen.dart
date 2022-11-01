@@ -23,7 +23,7 @@ import 'main.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
-  const NavigationHomeScreen(this.userloggeddata,{Key? key}) : super(key: key);
+  const NavigationHomeScreen(this.userloggeddata, {Key? key}) : super(key: key);
 
   @override
   _NavigationHomeScreenState createState() => _NavigationHomeScreenState();
@@ -33,10 +33,8 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   Widget? screenView;
   DrawerIndex? drawerIndex;
   UserLoggedModel? userloggeddata;
-  
 
   Future<dynamic> FindReservation(userloggeddata) async {
-    
     List<dynamic> datapackage;
     String url_list =
         "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
@@ -169,11 +167,11 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
             screenView = FeedbackScreen(widget.userloggeddata);
           });
           break;
-        case DrawerIndex.Compras:
+        /*case DrawerIndex.Compras:
           setState(() {
             screenView = Compras();
           });
-          break;
+          break;*/
         case DrawerIndex.CrearPaquete:
           setState(() {
             screenView = createPackage(widget.userloggeddata);

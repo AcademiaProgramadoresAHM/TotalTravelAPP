@@ -31,20 +31,6 @@ class LandingPageState extends State<LandingPage> {
     List<Container> list = [];
     final _controller = PageController();
     data.forEach((element) {
-      PlanList.add(
-        PlanModal(
-          image: 'assets/images/Argentina.jpg',
-          title: element['nombre'],
-          subTitle: element['descripcion_Paquete'],
-          price: '\$' + element['precio'].toString(),
-          planPriceSubTitle: 'per user/month',
-          optionList: [
-            PlanModal(title: element['hotel']),
-            PlanModal(title: element['restaurante']),
-            PlanModal(title: 'Hoteles 5 Estrellas'),
-          ],
-        ),
-      );
       list.add(
         Container(
           height: 650,
@@ -52,9 +38,6 @@ class LandingPageState extends State<LandingPage> {
           child: Container(
             height: 650,
             child: Container(
-              // margin: EdgeInsets.symmetric(
-              //     vertical: pageIndex == index ? 16 : 50, horizontal: 8),
-              // height: pageIndex == index ? 0.5 : 0.45,
               height: 650,
               width: context.width(),
               decoration: BoxDecoration(
@@ -148,58 +131,6 @@ class LandingPageState extends State<LandingPage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    init();
-  }
-
-  Future<void> init() async {
-    planList.add(
-      PlanModal(
-        image: 'assets/images/Argentina.jpg',
-        title: 'Basico',
-        subTitle: 'Disfruta de un experiencia inolvidable',
-        price: '\$0',
-        planPriceSubTitle: 'per user/month',
-        optionList: [
-          PlanModal(title: 'Viaja hazta con 3 personas mas'),
-          PlanModal(title: 'Transporte hacia tu destino'),
-          PlanModal(title: 'Hoteles 5 Estrellas'),
-        ],
-      ),
-    );
-    planList.add(
-      PlanModal(
-        image: 'assets/images/Argentina.jpg',
-        title: 'Standard',
-        subTitle: 'For Small and medium business',
-        price: '\$15',
-        planPriceSubTitle: 'per user/month',
-        optionList: [
-          PlanModal(title: 'Up to 20 users'),
-          PlanModal(title: 'Up to 200 transaction per month'),
-          PlanModal(title: 'Single Company record'),
-        ],
-        isVisible: true,
-      ),
-    );
-    planList.add(
-      PlanModal(
-        image: 'assets/images/Argentina.jpg',
-        title: 'Enterprise',
-        subTitle: 'Solution for big organization',
-        price: '\$20',
-        planPriceSubTitle: 'per user / month',
-        optionList: [
-          PlanModal(title: 'Unlimited users'),
-          PlanModal(title: 'Unlimited transaction'),
-          PlanModal(title: 'Multiple Company record'),
-        ],
-      ),
-    );
-  }
-
-  @override
   void setState(fn) {
     if (mounted) super.setState(fn);
   }
@@ -218,17 +149,55 @@ class LandingPageState extends State<LandingPage> {
         child: Column(
           children: <Widget>[
             Container(
-              width: double.infinity,
-              height: 100,
-              margin: EdgeInsets.fromLTRB(0.0, 35.0, 1.0, 0.0),
-              decoration: BoxDecoration(
-                color: Color.fromARGB(255, 101, 45, 144),
-              ),
-              child: Image.asset(
-                'assets/images/AHM-Fondo-Nombre.png',
-                fit: BoxFit.contain,
-              ),
-            ),
+                width: double.infinity,
+                height: 100,
+                margin: EdgeInsets.fromLTRB(0.0, 35.0, 1.0, 0.0),
+                decoration: BoxDecoration(
+                  color: Color.fromARGB(255, 101, 45, 144),
+                ),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 300,
+                      height: 100,
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(110, 5, 0, 5),
+                        child: Image.asset(
+                          'assets/images/logo-AHM-Fondo-Morao.png',
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                    Flexible(
+                        flex: 6,
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
+                          child: ElevatedButton(
+                              style: ButtonStyle(
+                                //backgroundColor: MaterialStateProperty.all(Colors.red),
+                                backgroundColor: MaterialStateProperty.all(
+                                    HexColor('#652D90')),
+                                shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Login()));
+                              },
+                              child: Icon(
+                                Icons.account_circle,
+                                color: Colors.white,
+                                size: 24.0,
+                                semanticLabel: 'Sign In',
+                              )),
+                        )),
+                  ],
+                )),
             FutureBuilder<dynamic>(
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
@@ -246,56 +215,15 @@ class LandingPageState extends State<LandingPage> {
                     ),
                   );
                 } else {
-                  return Text("No data");
+                  return Center(
+                      child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 200, 0, 0),
+                    child: CircularProgressIndicator(
+                        color: Color.fromARGB(255, 101, 45, 144)),
+                  ));
                 }
               },
               future: GetListadoPackages(),
-            ),
-            Container(
-              width: 330,
-              height: 55,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  //backgroundColor: MaterialStateProperty.all(Colors.red),
-                  backgroundColor:
-                      MaterialStateProperty.all(HexColor('#652D90')),
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Login()));
-                },
-                child: const Text('Ingresar', style: TextStyle(fontSize: 20)),
-              ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            Container(
-              width: 330,
-              height: 55,
-              child: ElevatedButton(
-                style: ButtonStyle(
-                  //backgroundColor: MaterialStateProperty.all(Colors.red),
-                  backgroundColor:
-                      MaterialStateProperty.all(HexColor('#652D90')),
-                  shape: MaterialStateProperty.all(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(15),
-                    ),
-                  ),
-                ),
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => SignUpView()));
-                },
-                child:
-                    const Text('Registrarse', style: TextStyle(fontSize: 20)),
-              ),
             ),
           ],
         ),

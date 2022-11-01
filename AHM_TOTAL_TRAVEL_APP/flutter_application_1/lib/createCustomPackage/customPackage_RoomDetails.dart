@@ -30,10 +30,12 @@ class _RoomDetails extends State<RoomDetails> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController? _QuestController;
   TextEditingController? _RoomsController;
-  double people = 2;
+  double peopleFinal= 2;
   double rooms = 1;
   String wordPeople = "personas", wordRooms = "habitación";
-
+  bool? ChangeNight, basePrice = true, ChangePeople;
+  customPackageViewModel customPackage = new customPackageViewModel();
+  var priceBase;
   void SetRooms(roomsNumber, id) {
     setState(() {
       rooms = roomsNumber;
@@ -43,9 +45,11 @@ class _RoomDetails extends State<RoomDetails> {
 
   void SetPeople(peopleNumber) {
     setState(() {
-      people = peopleNumber;
-      people == 1 ? wordPeople = "persona" : wordPeople = "personas";
+      peopleFinal = peopleNumber;
+      peopleFinal == 1 ? wordPeople = "persona" : wordPeople = "personas";
     });
+    ChangePeople = true;
+    
   }
  
 
@@ -54,11 +58,12 @@ class _RoomDetails extends State<RoomDetails> {
           DateTime.now().year, DateTime.now().month, DateTime.now().day),
       end: DateTime(
           DateTime.now().year, DateTime.now().month, DateTime.now().day + 1));
-  var nights = 1;
+  var nights = 1, previousNight = 1;
   String wordNight = "noche";
   
 
   List<Padding> RoomDetails(List<dynamic> data, BuildContext context) {
+    
     Future pickDateRange() async {
       DateTimeRange? newDataRange = await showDateRangePicker(
         context: context,
@@ -76,6 +81,7 @@ class _RoomDetails extends State<RoomDetails> {
         nights = difference - 1;
         nights == 0 ? nights = 1: nights = difference - 1;
         nights == 1 ? wordNight = "noche" : wordNight = "noches";
+        ChangeNight = true;
       });
     }
 
@@ -91,15 +97,40 @@ class _RoomDetails extends State<RoomDetails> {
     List<String> imageUrl;
 
     data.forEach((element) {
-      var price;
+
+      if(basePrice == true){
+         priceBase = element['precio'];
+         basePrice = false;
+      }
+    
+      if(ChangeNight == true || ChangePeople == true){
+        var percentage = priceBase * 0.17;
+        var price, peopleSerie;
+        peopleSerie = peopleFinal - 2;
+        if(nights < previousNight){
+        var totalNights = previousNight - nights;
+          price = priceBase * totalNights;
+        for (var i = 1; i <= peopleSerie; i++) {
+            price  = price + percentage;
+        }
+        }else{
+          price = priceBase * nights;
+           for (var i = 1; i <= peopleSerie; i++) {
+            price  = price + percentage;
+        }
+      }
+        element['precio'] = price;
+        ChangeNight = false;
+        ChangePeople = false;
+      }
+
+      previousNight = nights;
+
       for (var i = 1; i <= element['camas']; i++) {
         items.add('${i.toString()}');
       }  
 
-     
-
       String? selectedValue;
-
       List<DropdownMenuItem<String>> _addDividersAfterItems(
         
           List<String> items) {
@@ -146,17 +177,6 @@ class _RoomDetails extends State<RoomDetails> {
         return _itemsHeights;
       }
 
- double SetPrice(price)
-      {
-        if(price == null)
-        {
-            price = element['precio'];
-        }
-
-         return price;
-      }
-
-        
       imageUrl = element['imageUrl'].split(',');
       list.add(
         Padding(
@@ -378,7 +398,7 @@ class _RoomDetails extends State<RoomDetails> {
                                             width: 300,
                                             child: ElevatedButton(
                                               child: Text(
-                                                "${nights} ${wordNight}, ${rooms.round().toString()} ${wordRooms}  ${people.round().toString()} ${wordPeople}",
+                                                "${nights} ${wordNight}, ${rooms.round().toString()} ${wordRooms}  ${peopleFinal.round().toString()} ${wordPeople}",
                                                 style: TextStyle(color: Color(0xFF652D8F)),
                                               ),
                                               style: ElevatedButton.styleFrom(
@@ -467,17 +487,10 @@ class _RoomDetails extends State<RoomDetails> {
                                                               child: SpinBox(
                                                                 min: 1,
                                                                 max: 30.0,
-                                                                value: people,
+                                                                value: peopleFinal,
                                                                 onChanged:
                                                                     (people) {
-                                                                  SetPeople(people);
-                                                                  price = element['precio'];
-                                                                  for (var i = 1; i <= people -2; i++) 
-                                                                  {
-                                                                    price = price  * 1.17;
-                                                                    print(price);
-                                                                  }
-                                                                    SetPrice(price);
+                                                                 SetPeople(people);
                                                                 },
                                                               ),
                                                               padding:
@@ -494,10 +507,10 @@ class _RoomDetails extends State<RoomDetails> {
                                                               child:
                                                                   ElevatedButton(
                                                                 onPressed: () {
-                                                                  var roomMax = people.toInt() /(rooms.toInt() * element['capacidad']);
+                                                                  var roomMax = peopleFinal.toInt() /(rooms.toInt() * element['capacidad']);
                                                       
                                                                   if (roomMax >1) {
-                                                                    var quantMax = people.toInt() / element['capacidad'];
+                                                                    var quantMax = peopleFinal.toInt() / element['capacidad'];
                                                                     if(quantMax - quantMax.toInt() < 0.5){
                                                                       quantMax  = quantMax + 1;
                                                                     }           
@@ -592,10 +605,10 @@ class _RoomDetails extends State<RoomDetails> {
                                           )),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            100, 30, 0, 0),
+                                            70, 30, 0, 0),
                                         child: Text(
                                           "Total:     "
-                                          'HNL ${SetPrice(null)}',
+                                          'HNL ' + element['precio'].toInt().toString() + '.00',
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
                                             fontFamily: 'Lexend Deca',
@@ -625,6 +638,15 @@ class _RoomDetails extends State<RoomDetails> {
           ),
         ),
       );
+
+    customPackage.usua_ID = widget.userloggeddata!.ID;
+    customPackage.hote_ID = element['hotelID'];
+    customPackage.reHo_FechaEntrada =  DateFormat('dd-MM-yyyy').format(dateRange.start);
+    customPackage.reHo_FechaSalida = DateFormat('dd-MM-yyyy').format(dateRange.end);
+    customPackage.reHo_PrecioTotal = element['precio'].toInt().toString();
+    customPackage.hote_numeroPersonas = peopleFinal.toInt();
+    customPackage.habi_ID = [element['id']];
+
     });
     return list;
   }
@@ -739,13 +761,11 @@ class _RoomDetails extends State<RoomDetails> {
           width: 170,
           child:     ElevatedButton(
           onPressed: () {
-           Navigator.push(
+          Navigator.push(
                         context,
                     MaterialPageRoute(
                     builder: (context) =>
-                         createCustomPackage(
-                      widget.Ciudad,widget.userloggeddata,1)),
-                      );
+                         createCustomPackage( widget.Ciudad,widget.userloggeddata,1,customPackage)),);
           },
           child: Text(
             'Confirmar',

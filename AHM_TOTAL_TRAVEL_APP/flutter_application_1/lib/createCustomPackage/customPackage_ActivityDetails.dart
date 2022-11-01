@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Models/CitiesViewModel.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
+import 'package:flutter_application_1/Models/customPackageViewModel.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_Activities.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:intl/intl.dart';
@@ -11,7 +13,9 @@ class ActivityDetails extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final List<dynamic> Activity;
   final CiudadesViewModel Ciudad;
-  const ActivityDetails(this.userloggeddata, this.Activity,this.Ciudad,{Key? key})
+  final int ActivityAdd;
+  final customPackageViewModel customPackage;
+  const ActivityDetails(this.userloggeddata, this.Activity,this.Ciudad,this.ActivityAdd,this.customPackage,{Key? key})
       : super(key: key);
 
   @override
@@ -21,8 +25,8 @@ class ActivityDetails extends StatefulWidget {
 class _ActivityDetails extends State<ActivityDetails> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
       DateTime date = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-  
-
+  bool basePrice = true;
+  var priceBase;
 
   List<Padding> ActivityDetails(List<dynamic> data, BuildContext context) {
   final hours = time.hour.toString().padLeft(2,'0');
@@ -35,6 +39,10 @@ class _ActivityDetails extends State<ActivityDetails> {
     data.forEach((element) {
       String? selectedValue;
 
+      if(basePrice == true){
+        priceBase = element['precio'];
+        basePrice = false;
+      }
       List<double> _getCustomItemsHeights() {
         List<double> _itemsHeights = [];
         for (var i = 0; i < (items.length * 2) - 1; i++) {
@@ -269,15 +277,30 @@ class _ActivityDetails extends State<ActivityDetails> {
                                                                 value: 1,
                                                                 onChanged:
                                                                     (value) {
-                                                                  setState(
-                                                                      () {});
+                                                                  setState(() {
+                                                                    element['precio'] = priceBase * value;
+                                                                  });
                                                                 },
                                                               ),
                                                              
                                                             ),
                                             ],
-                                          ))
-                                 
+                                          )),
+                                       Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                          80, 30, 0, 0),
+                                        child: Text(
+                                          "Total:     "
+                                          'HNL ' + element['precio'].toInt().toString() + '.00',
+                                          textAlign: TextAlign.end,
+                                          style: TextStyle(
+                                            fontFamily: 'Lexend Deca',
+                                            color: Color(0xFF090F13),
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
         
                                      
                                       
@@ -415,7 +438,14 @@ class _ActivityDetails extends State<ActivityDetails> {
           width: 170,
           child:     ElevatedButton(
           onPressed: () {
-            Navigator.pop(context);
+            int ActivitiesCounter = widget.ActivityAdd;
+            ActivitiesCounter = ActivitiesCounter + 1;
+
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => customActivities(widget.userloggeddata, widget.Ciudad,ActivitiesCounter,widget.customPackage)),
+            );
           },
           child: Text(
             'Confirmar',
