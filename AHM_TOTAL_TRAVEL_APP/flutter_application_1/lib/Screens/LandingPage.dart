@@ -168,9 +168,8 @@ class LandingPageState extends State<LandingPage> {
                         ),
                       ),
                     ),
-                    Container(
-                        width: 100,
-                        height: 100,
+                    Flexible(
+                        flex: 6,
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
                           child: ElevatedButton(
