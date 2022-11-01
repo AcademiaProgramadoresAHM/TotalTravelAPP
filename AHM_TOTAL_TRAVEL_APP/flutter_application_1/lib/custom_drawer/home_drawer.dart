@@ -90,11 +90,11 @@ class _HomeDrawerState extends State<HomeDrawer> {
         labelName: 'Historial de transacciones',
         icon: Icon(Icons.history),
       ),
-      DrawerList(
+      /*DrawerList(
         index: DrawerIndex.Compras,
         labelName: 'Compras',
         icon: Icon(Icons.shopping_cart),
-      ),
+      ),*/
       DrawerList(
         index: DrawerIndex.Account,
         labelName: 'Mi Cuenta',
@@ -354,7 +354,7 @@ enum DrawerIndex {
   FeedBack,
   Help,
   Share,
-  Compras,
+  /* Compras,*/
   CrearPaquete,
   Testing,
   Account,

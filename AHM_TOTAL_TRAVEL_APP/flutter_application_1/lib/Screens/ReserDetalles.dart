@@ -657,7 +657,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
         ),
       ),
       backgroundColor: Colors.white,
-      body: SafeArea(
+      body: SingleChildScrollView(
         child: GestureDetector(
             onTap: () => FocusScope.of(context).unfocus(),
             child: Column(
