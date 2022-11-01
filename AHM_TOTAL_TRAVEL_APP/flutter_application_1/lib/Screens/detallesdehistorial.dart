@@ -139,6 +139,43 @@ class _HistorydetailScreenState extends State<HistorydetailScreen> {
                                             children: [
                                               Padding(
                                                 padding: EdgeInsetsDirectional
+                                                    .fromSTEB(125, 20, 0, 20),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Flexible(
+                                                      child: new Text('Compra',
+                                                          style: TextStyle(
+                                                              fontSize: 20,
+                                                              color: Colors
+                                                                  .black)),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              Divider(
+                                                thickness: 2,
+                                                color: Color.fromARGB(
+                                                    255, 123, 26, 168),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          flex: 6,
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
                                                     .fromSTEB(0, 20, 0, 20),
                                                 child: Row(
                                                   mainAxisSize:
