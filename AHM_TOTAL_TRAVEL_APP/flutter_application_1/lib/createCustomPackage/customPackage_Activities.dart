@@ -3,6 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
+import 'package:flutter_application_1/Models/customPackageViewModel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_ActivityDetails.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -23,22 +24,19 @@ class customActivities extends StatefulWidget {
   static var tag = "/DemoT2Cards";
   final UserLoggedModel? userloggeddata;
   final CiudadesViewModel? Ciudad;
-
-  const customActivities(this.userloggeddata, this.Ciudad, {super.key});
+  final int ActivitiesAdd;
+  final customPackageViewModel customPackage;
+  const customActivities(this.userloggeddata, this.Ciudad,this.ActivitiesAdd,this.customPackage, {super.key});
   @override
   _customActivities createState() => _customActivities();
 }
 
   TimeOfDay time = TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
 class _customActivities extends State<customActivities> {
-  int ActivitiesCount = 0;
-  
-
-
   late List<Hoteles> ListaHoteles;
   Map<int?, String> HotelsDictionary = Map();
 
-  Future<dynamic> GetListActivities(Ciudad, userloggeddata,idActivity,bool) async {
+  Future<dynamic> GetListActivities(Ciudad, userloggeddata,idActivity,bool,ActivitiesCount) async {
     List<dynamic> dataActivities;
     String url_list =
         "https://totaltravelapi.azurewebsites.net/API/ActivitiesExtra/List";
@@ -69,7 +67,7 @@ class _customActivities extends State<customActivities> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => ActivityDetails(widget.userloggeddata, Activity,Ciudad)),
+                  builder: (context) => ActivityDetails(widget.userloggeddata, Activity,Ciudad,ActivitiesCount,widget.customPackage)),
             );
           }
     } else {
@@ -85,12 +83,14 @@ class _customActivities extends State<customActivities> {
           if (response.body != " ") {
             print(response.body);
             widget.userloggeddata!.Token = response.body;
-            GetListActivities(Ciudad, widget.userloggeddata,null,true);
+            GetListActivities(Ciudad, widget.userloggeddata,null,true,ActivitiesCount);
           }
     }
   }
 
   List<Padding> ListActivities(List<dynamic> data, BuildContext context) {
+
+
   final hours = time.hour.toString().padLeft(2,'0');
   final minutes = time.minute.toString().padLeft(2,'0');
     List<Padding> list = [];
@@ -281,7 +281,7 @@ class _customActivities extends State<customActivities> {
                                                 
                                               ),
                                               onPressed: (){
-                                               GetListActivities(widget.Ciudad,widget.userloggeddata,element['id'],false);
+                                               GetListActivities(widget.Ciudad,widget.userloggeddata,element['id'],false,widget.ActivitiesAdd);
 
                                               },
                                             ),
@@ -345,7 +345,7 @@ class _customActivities extends State<customActivities> {
                     color: Color.fromARGB(255, 210, 173, 238)
                   ),
               child: Center(
-                child: Text( "${ActivitiesCount}", style: TextStyle(fontSize: 16, color: black),),
+                child: Text( "${widget.ActivitiesAdd}", style: TextStyle(fontSize: 16, color: black),),
               ),
               ), onPressed: null)
             ]),
@@ -378,7 +378,7 @@ class _customActivities extends State<customActivities> {
                       ));
                   }
                 },
-                future: GetListActivities(widget.Ciudad, widget.userloggeddata,null,true),
+                future: GetListActivities(widget.Ciudad, widget.userloggeddata,null,true,widget.ActivitiesAdd),
               ),
             ],
           )),
@@ -437,7 +437,7 @@ class _customActivities extends State<customActivities> {
                     MaterialPageRoute(
                     builder: (context) =>
                          createCustomPackage(
-                      widget.Ciudad,widget.userloggeddata,2)),
+                      widget.Ciudad,widget.userloggeddata,2,widget.customPackage)),
                       );
           },
           child: Text(

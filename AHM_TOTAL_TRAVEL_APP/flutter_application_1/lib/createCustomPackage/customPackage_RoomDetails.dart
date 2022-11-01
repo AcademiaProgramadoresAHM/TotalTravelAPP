@@ -34,6 +34,7 @@ class _RoomDetails extends State<RoomDetails> {
   double rooms = 1;
   String wordPeople = "personas", wordRooms = "habitación";
   bool? ChangeNight, basePrice = true, ChangePeople;
+  customPackageViewModel customPackage = new customPackageViewModel();
   var priceBase;
   void SetRooms(roomsNumber, id) {
     setState(() {
@@ -101,8 +102,7 @@ class _RoomDetails extends State<RoomDetails> {
          priceBase = element['precio'];
          basePrice = false;
       }
-     
-
+    
       if(ChangeNight == true || ChangePeople == true){
         var percentage = priceBase * 0.17;
         var price, peopleSerie;
@@ -638,6 +638,15 @@ class _RoomDetails extends State<RoomDetails> {
           ),
         ),
       );
+
+    customPackage.usua_ID = widget.userloggeddata!.ID;
+    customPackage.hote_ID = element['hotelID'];
+    customPackage.reHo_FechaEntrada =  DateFormat('dd-MM-yyyy').format(dateRange.start);
+    customPackage.reHo_FechaSalida = DateFormat('dd-MM-yyyy').format(dateRange.end);
+    customPackage.reHo_PrecioTotal = element['precio'].toInt().toString();
+    customPackage.hote_numeroPersonas = peopleFinal.toInt();
+    customPackage.habi_ID = [element['id']];
+
     });
     return list;
   }
@@ -752,13 +761,11 @@ class _RoomDetails extends State<RoomDetails> {
           width: 170,
           child:     ElevatedButton(
           onPressed: () {
-           Navigator.push(
+          Navigator.push(
                         context,
                     MaterialPageRoute(
                     builder: (context) =>
-                         createCustomPackage(
-                      widget.Ciudad,widget.userloggeddata,1)),
-                      );
+                         createCustomPackage( widget.Ciudad,widget.userloggeddata,1,customPackage)),);
           },
           child: Text(
             'Confirmar',
