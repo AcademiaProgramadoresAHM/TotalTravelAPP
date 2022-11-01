@@ -1,13 +1,11 @@
 import 'dart:io';
 import 'package:flutter_application_1/Screens/LandingPage.dart';
-
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'navigation_home_screen.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_application_1/Screens/Login.dart';
-
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,4 +51,3 @@ class HexColor extends Color {
     return int.parse(hexColor, radix: 16);
   }
 }
-
