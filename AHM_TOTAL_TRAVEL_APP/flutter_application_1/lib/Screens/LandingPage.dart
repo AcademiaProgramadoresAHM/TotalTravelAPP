@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/utils/AppWidget.dart';
+import 'package:flutter_application_1/utils/prueba2/T2Colors.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -158,10 +159,10 @@ class LandingPageState extends State<LandingPage> {
                 child: Row(
                   children: [
                     Container(
-                      width: 300,
+                      width: 280,
                       height: 100,
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(110, 5, 0, 5),
+                        padding: EdgeInsetsDirectional.fromSTEB(130, 5, 0, 5),
                         child: Image.asset(
                           'assets/images/logo-AHM-Fondo-Morao.png',
                           fit: BoxFit.contain,
@@ -169,7 +170,7 @@ class LandingPageState extends State<LandingPage> {
                       ),
                     ),
                     Flexible(
-                        flex: 6,
+                        flex: 4,
                         child: Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
                           child: ElevatedButton(
@@ -189,11 +190,19 @@ class LandingPageState extends State<LandingPage> {
                                     MaterialPageRoute(
                                         builder: (context) => Login()));
                               },
-                              child: Icon(
-                                Icons.account_circle,
-                                color: Colors.white,
-                                size: 24.0,
-                                semanticLabel: 'Sign In',
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.account_circle,
+                                    size: 20.0,
+                                    color: white,
+                                  ),
+                                  Text(
+                                    ' Sign In',
+                                    style:
+                                        TextStyle(color: white, fontSize: 20.0),
+                                  )
+                                ],
                               )),
                         )),
                   ],
