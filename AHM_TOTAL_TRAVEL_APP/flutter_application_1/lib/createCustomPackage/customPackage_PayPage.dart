@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Models/customPackageViewModel.dart';
 import 'package:flutter_application_1/hotel_booking/hotel_app_theme.dart';
 import 'package:get/get.dart';
 import 'package:flutter_application_1/Screens/prueba.dart';
@@ -6,7 +7,8 @@ import 'package:flutter_application_1/Screens/signUp_view.dart';
 import 'package:flutter_application_1/navigation_home_screen.dart';
 
 class payPage extends StatefulWidget {
-  const payPage({Key? key}) : super(key: key);
+  final customPackageViewModel customPackage;
+  const payPage( this.customPackage,{Key? key}) : super(key: key);
 
   @override
   State<payPage> createState() => _payPage();

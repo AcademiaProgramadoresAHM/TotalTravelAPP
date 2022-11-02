@@ -7,6 +7,7 @@ import 'package:flutter_application_1/createCustomPackage/customPackage_Activiti
 import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:intl/intl.dart';
+import 'package:nb_utils/nb_utils.dart';
 // import 'package:flutter_spinbox/flutter_spinbox.dart';
 
 class ActivityDetails extends StatefulWidget {
@@ -14,8 +15,14 @@ class ActivityDetails extends StatefulWidget {
   final List<dynamic> Activity;
   final CiudadesViewModel Ciudad;
   final int ActivityAdd;
+  final List<int> listActivitiesID;
+  final List<String> listActivities;
+  final List<int> listPeopleNumber;
+  final List<String> listDateReservation;
+  final List<String> listHourReservation;
+  final List<String> listPrices;
   final customPackageViewModel customPackage;
-  const ActivityDetails(this.userloggeddata, this.Activity,this.Ciudad,this.ActivityAdd,this.customPackage,{Key? key})
+  const ActivityDetails(this.userloggeddata, this.Activity,this.Ciudad,this.ActivityAdd,this.customPackage,this.listActivitiesID,this.listActivities,this.listPeopleNumber,this.listDateReservation,this.listHourReservation,this.listPrices,{Key? key})
       : super(key: key);
 
   @override
@@ -25,20 +32,19 @@ class ActivityDetails extends StatefulWidget {
 class _ActivityDetails extends State<ActivityDetails> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
       DateTime date = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-  bool basePrice = true;
+  bool basePrice = true, confirm = false;
   var priceBase;
-
+  var peopleFinal = 1;
   List<Padding> ActivityDetails(List<dynamic> data, BuildContext context) {
   final hours = time.hour.toString().padLeft(2,'0');
   final minutes = time.minute.toString().padLeft(2,'0');
-   
+
 
     List<Padding> list = [];
     List<String> items = [];
     final _controller = PageController();
     data.forEach((element) {
       String? selectedValue;
-
       if(basePrice == true){
         priceBase = element['precio'];
         basePrice = false;
@@ -276,9 +282,11 @@ class _ActivityDetails extends State<ActivityDetails> {
                                                                 min: 1,
                                                                 value: 1,
                                                                 onChanged:
-                                                                    (value) {
+                                                                    (valuePeople) {
                                                                   setState(() {
-                                                                    element['precio'] = priceBase * value;
+                                                                    peopleFinal = valuePeople.toInt();
+                                                                  
+                                                                    element['precio'] = priceBase * valuePeople;
                                                                   });
                                                                 },
                                                               ),
@@ -324,6 +332,19 @@ class _ActivityDetails extends State<ActivityDetails> {
           ),
         ),
       );
+    
+    if(confirm == true){
+       widget.listActivitiesID.insert(widget.ActivityAdd, element['id']);
+      widget.listActivities.insert(widget.ActivityAdd,element['actividad']);
+      widget.listPeopleNumber.insert(widget.ActivityAdd,peopleFinal );
+      widget.listDateReservation.insert(widget.ActivityAdd,DateFormat('dd-MM-yyyy').format(date));
+      widget.listHourReservation.insert(widget.ActivityAdd, DateFormat("HH:mm").format(new DateTime(2000,1,1,time.hour,time.minute)));
+      widget.listPrices.insert(widget.ActivityAdd,element['precio'].toString());
+    }
+   
+
+
+    
     });
     return list;
   }
@@ -440,11 +461,13 @@ class _ActivityDetails extends State<ActivityDetails> {
           onPressed: () {
             int ActivitiesCounter = widget.ActivityAdd;
             ActivitiesCounter = ActivitiesCounter + 1;
-
+              setState(() {
+                confirm = true;
+              });
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => customActivities(widget.userloggeddata, widget.Ciudad,ActivitiesCounter,widget.customPackage)),
+                  builder: (context) => customActivities(widget.userloggeddata, widget.Ciudad,ActivitiesCounter,widget.customPackage,widget.listActivitiesID,widget.listActivities,widget.listPeopleNumber,widget.listDateReservation,widget.listHourReservation,widget.listPrices)),
             );
           },
           child: Text(

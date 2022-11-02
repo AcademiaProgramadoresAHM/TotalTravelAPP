@@ -1,17 +1,23 @@
 class customPackageViewModel {
   int? usua_ID;
   int? hote_ID;
+  String? hote_Descripcion;
   String? reHo_FechaEntrada;
   String? reHo_FechaSalida;
   String? reHo_PrecioTotal;
+  int? hote_numNoches;
   int? hote_numeroPersonas;
   List<int>? habi_ID;
+  String? habi_Descripcion;
   List<int>? acEx_ID;
-  int? acEx_numeroPersonas;
+  List<String>? acEx_Descripcion;
+  List<int>? acEx_numeroPersonas;
   List<String>? reAE_FechaReservacion;
   List<String>? reAE_HoraReservacion;
+  List<String>? reAE_Precios;
   List<int>? rest_ID;
-  int? rest_numeroPersonas;
+  List<String>? restaurantes;
+  List<int>? rest_numeroPersonas;
   List<String>? rest_FechaReservacion;
   List<String>? rest_HoraReservacion;
 

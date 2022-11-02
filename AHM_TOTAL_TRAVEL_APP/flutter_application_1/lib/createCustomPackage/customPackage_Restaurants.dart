@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
 import 'package:flutter_application_1/Models/customPackageViewModel.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_RestaurantDetails.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -22,8 +23,14 @@ class RestaurantcustomPackage extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final CiudadesViewModel? Ciudad;
   final customPackageViewModel customPackage;
+  final int RestaurantsAdd;
+  final List<int> listRestaurantsID;
+  final List<String> listRestaurants;
+  final List<int> listPeopleNumber;
+  final List<String> listDateReservation;
+  final List<String> listHourReservation;
 
-  const RestaurantcustomPackage( this.userloggeddata, this.Ciudad,this.customPackage,{super.key});
+  const RestaurantcustomPackage( this.userloggeddata, this.Ciudad,this.customPackage,this.RestaurantsAdd,this.listRestaurantsID,this.listRestaurants,this.listPeopleNumber,this.listDateReservation,this.listHourReservation,{super.key});
   @override
   _RestaurantcustomPackage createState() => _RestaurantcustomPackage();
 }
@@ -65,7 +72,7 @@ Future<dynamic> GetListRestaurants(Ciudad, userloggeddata,idRestaurant,bool) asy
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => RestaurantDetails(widget.userloggeddata, Activity,Ciudad,widget.customPackage)),
+                  builder: (context) => RestaurantDetails(widget.userloggeddata, Activity,Ciudad,widget.customPackage,widget.RestaurantsAdd,widget.listRestaurantsID,widget.listRestaurants,widget.listPeopleNumber,widget.listDateReservation,widget.listHourReservation)),
             );
           }
     } else {
@@ -352,6 +359,82 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                             ),
                           ],
                         )),
+                         bottomNavigationBar: Row(children: [
+        Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+        child:
+        SizedBox( 
+          width: 175,
+          height: 35,
+          child:     ElevatedButton(
+          onPressed: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+          child: Text('¿Esta seguro que desea continuar?',),
+          ) ,
+          actions: <Widget>[
+          ElevatedButton(onPressed: () {
+            Navigator.pop(context);
+          },
+           style: ElevatedButton.styleFrom(
+            primary:  Color.fromARGB(255, 234, 234, 234),
+          ),
+          child: Text("Cancelar",style: TextStyle(color: Color(0xFF652D8F)),)),
+          ElevatedButton(onPressed: () {
+            Navigator.pop(context);
+             Navigator.pop(context);
+          },
+           style: ElevatedButton.styleFrom(
+            primary: Color(0xFF652D8F),
+          ),
+          child: Text("Aceptar"))
+          ],
+        ),
+      ),
+          child: Text(
+            'Cancelar',
+            style: TextStyle(fontSize: 18,color: Color(0xFF652D8F)),
+          ),
+          style: ElevatedButton.styleFrom(
+            primary: Color.fromARGB(255, 234, 234, 234),
+          ),
+        ),)
+     
+      ),
+      Padding(
+        padding: EdgeInsets.all(8.0),
+        child:
+        SizedBox( 
+          width: 170,
+          child:     ElevatedButton(
+          onPressed: () {
+            
+              widget.customPackage.rest_ID = widget.listRestaurantsID;
+              widget.customPackage.restaurantes = widget.listRestaurants;
+              widget.customPackage.rest_numeroPersonas = widget.listPeopleNumber;
+              widget.customPackage.rest_FechaReservacion = widget.listDateReservation;
+              widget.customPackage.rest_HoraReservacion = widget.listHourReservation;
+
+               Navigator.push(
+                        context,
+                    MaterialPageRoute(
+                    builder: (context) =>
+                         createCustomPackage(
+                      widget.Ciudad,widget.userloggeddata,3,widget.customPackage)),
+              );
+          },
+          child: Text(
+            'Confirmar',
+            style: TextStyle(fontSize: 18),
+          ),
+          style: ElevatedButton.styleFrom(
+            primary: Color(0xFF652D8F),
+          ),
+        ),)
+     
+      ),
+       ],)
       )
     );
   }

@@ -5,6 +5,7 @@ import 'package:flutter_application_1/Models/CitiesViewModel.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'package:flutter_application_1/Models/customPackageViewModel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_Restaurants.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
@@ -16,7 +17,13 @@ class RestaurantDetails extends StatefulWidget {
   final List<dynamic> Restaurant;
   final CiudadesViewModel Ciudad;
   final customPackageViewModel customPackage;
-  const RestaurantDetails(this.userloggeddata, this.Restaurant,this.Ciudad,this.customPackage,{Key? key})
+    final int RestaurantsAdd;
+  final List<int> listRestaurantsID;
+  final List<String> listRestaurants;
+  final List<int> listPeopleNumber;
+  final List<String> listDateReservation;
+  final List<String> listHourReservation;
+  const RestaurantDetails(this.userloggeddata, this.Restaurant,this.Ciudad,this.customPackage,this.RestaurantsAdd,this.listRestaurantsID,this.listRestaurants,this.listPeopleNumber,this.listDateReservation,this.listHourReservation,{Key? key})
       : super(key: key);
 
   @override
@@ -26,7 +33,8 @@ class RestaurantDetails extends StatefulWidget {
 class _RestaurantDetails extends State<RestaurantDetails> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
       DateTime date = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
-  
+  bool confirm = false;
+  var peopleFinal = 1;
    Future<dynamic> GetListMenus(Restaurant,userloggeddata) async {
     List<dynamic> dataMenus;
   String url_list =
@@ -283,7 +291,9 @@ class _RestaurantDetails extends State<RestaurantDetails> {
                                                                 onChanged:
                                                                     (value) {
                                                                   setState(
-                                                                      () {});
+                                                                      () {
+                                                                        peopleFinal = value.toInt();
+                                                                      });
                                                                 },
                                                               ),
                                                              
@@ -361,6 +371,19 @@ class _RestaurantDetails extends State<RestaurantDetails> {
           ),
         ),
       );
+       if(confirm == true){
+      widget.listRestaurantsID.insert(widget.RestaurantsAdd, element['id']);
+      widget.listRestaurants.insert(widget.RestaurantsAdd,element['restaurante']);
+      widget.listPeopleNumber.insert(widget.RestaurantsAdd,peopleFinal );
+      widget.listDateReservation.insert(widget.RestaurantsAdd,DateFormat('dd-MM-yyyy').format(date));
+      widget.listHourReservation.insert(widget.RestaurantsAdd, DateFormat("HH:mm").format(new DateTime(2000,1,1,time.hour,time.minute)));
+
+        print(widget.listRestaurantsID);
+        print(widget.listRestaurants.toString());
+        print(widget.listPeopleNumber);
+        print(widget.listDateReservation);
+        print(widget.listHourReservation);
+      }
     });
     return list;
   }
@@ -474,13 +497,14 @@ class _RestaurantDetails extends State<RestaurantDetails> {
           width: 170,
           child:     ElevatedButton(
           onPressed: () {
+            setState(() {
+              confirm = true;
+            });
              Navigator.push(
-                        context,
-                    MaterialPageRoute(
-                    builder: (context) =>
-                         createCustomPackage(
-                      widget.Ciudad,widget.userloggeddata,3,widget.customPackage)),
-                      );
+              context,
+              MaterialPageRoute(
+                  builder: (context) => RestaurantcustomPackage(widget.userloggeddata, widget.Ciudad,widget.customPackage,widget.RestaurantsAdd,widget.listRestaurantsID,widget.listRestaurants,widget.listPeopleNumber,widget.listDateReservation,widget.listHourReservation)),
+            );
           },
           child: Text(
             'Confirmar',

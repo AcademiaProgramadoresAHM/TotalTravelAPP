@@ -235,7 +235,7 @@ class _createCustomPackage extends State<createCustomPackage> {
               margin: EdgeInsetsDirectional.fromSTEB(70,60,50,60),
                 controlsBuilder: (context, _) {
                             return 
-                              Padding(padding: EdgeInsetsDirectional.fromSTEB(15,0,180,0),
+                              Padding(padding: EdgeInsetsDirectional.fromSTEB(25,0,174,0),
                               child:TextButton(
                                   onPressed: () {
                                       if(_currentStep == 0){
@@ -342,7 +342,7 @@ class _createCustomPackage extends State<createCustomPackage> {
                            onPressed: () {
                              Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) =>  customActivities( widget.userloggeddata,widget.Ciudad,0,widget.customPackage)),
+                                          MaterialPageRoute(builder: (context) =>  customActivities( widget.userloggeddata,widget.Ciudad,0,widget.customPackage,[],[],[],[],[],[])),
                                         );
                           },
                         ),
@@ -370,7 +370,7 @@ class _createCustomPackage extends State<createCustomPackage> {
                           onPressed: () {
                              Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) =>  RestaurantcustomPackage( widget.userloggeddata,widget.Ciudad,widget.customPackage)),
+                                          MaterialPageRoute(builder: (context) =>  RestaurantcustomPackage( widget.userloggeddata,widget.Ciudad,widget.customPackage,0,[],[],[],[],[])),
                                         );
                           
                           },
@@ -397,10 +397,31 @@ class _createCustomPackage extends State<createCustomPackage> {
                             primary: Color.fromARGB(255, 101, 45, 143),
                           ),
                           onPressed: () {
+                                    print("Usuario" + widget.customPackage.usua_ID.toString());
+                                    print("HotelID" + widget.customPackage.hote_ID.toString());
+                                    print("Hotel" + widget.customPackage.hote_Descripcion.toString());
+                                    print("Hotel_FechaEntrada" + widget.customPackage.reHo_FechaEntrada.toString());
+                                    print("Hotel_FechaSalida" + widget.customPackage.reHo_FechaSalida.toString());
+                                    print("Hotel_Noches" + widget.customPackage.hote_numNoches.toString());
+                                    print("Hotel_Personas" + widget.customPackage.hote_numeroPersonas.toString());
+                                    print("HabitacionID" + widget.customPackage.habi_ID.toString());
+                                    print("Habitacion" + widget.customPackage.habi_Descripcion.toString());
+                                    print("Hotel_Precio" + widget.customPackage.reHo_PrecioTotal.toString());
+                                    print("ActividadesID" + widget.customPackage.acEx_ID.toString());
+                                    print("Actividades" + widget.customPackage.acEx_Descripcion.toString());
+                                    print("Actividades_Personas" + widget.customPackage.acEx_numeroPersonas.toString());
+                                    print("Actividades_Fecha" + widget.customPackage.reAE_FechaReservacion.toString());
+                                    print("Actividades_Precios" + widget.customPackage.reAE_Precios.toString());
+                                    print("Restaurantes_Id" + widget.customPackage.rest_ID.toString());
+                                    print("Restaurantes" + widget.customPackage.restaurantes.toString());
+                                    print("Restaurantes_numPersonas" + widget.customPackage.rest_numeroPersonas.toString());
+                                    print("Restaurantes_Fecha" + widget.customPackage.rest_FechaReservacion.toString());
+                                    print("Restaurantes_Hora" + widget.customPackage.rest_HoraReservacion.toString());
+
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => payPage()),
+                                  builder: (context) => payPage(widget.customPackage)),
                             );
                           },
                         ),
@@ -416,7 +437,7 @@ class _createCustomPackage extends State<createCustomPackage> {
               ],
             ),
           ),
-         
+
         ],
         
       ),
