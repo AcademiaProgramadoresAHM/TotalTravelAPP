@@ -328,35 +328,50 @@ class _customActivities extends State<customActivities> {
         title: 'Flutter layout demo',
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-          appBar: AppBar(
+          appBar:PreferredSize(
+            preferredSize: Size.fromHeight(65.0), // here the desired height
+            child: AppBar(
             backgroundColor: Color.fromRGBO(101, 45, 143, 1),
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                Padding(padding: EdgeInsetsDirectional.fromSTEB(120, 0, 0, 0),
+                Padding(padding: EdgeInsetsDirectional.fromSTEB(120, 10, 0, 0),
                 child:   Text("Actividades"),
                 ),
-                Padding(padding: EdgeInsetsDirectional.fromSTEB(57, 0, 0, 0),
-                      child: Icon(
-                    Icons.directions_run,
-                    size: 30,
-                    color: Color.fromARGB(255, 219, 195, 238),
-                  ),
-                ),
-              IconButton(
-                icon: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.black, width: 1),
-                    shape: BoxShape.circle,
-                    color: Color.fromARGB(255, 210, 173, 238)
-                  ),
-              child: Center(
-                child: Text( "${widget.ActivitiesAdd}", style: TextStyle(fontSize: 16, color: black),),
-              ),
-              ), onPressed: null)
+              
+              SizedBox.fromSize(
+                  size: Size(80, 80), // button width and height
+                    child: Material(
+                      color:  Color.fromRGBO(101, 45, 143, 1), // button color
+                      child: InkWell(
+                        splashColor: Color.fromRGBO(101, 45, 143, 1), // splash color
+                        onTap: () {}, // button pressed
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            IconButton(
+                                icon: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.black, width: 1),
+                                    shape: BoxShape.circle,
+                                    color: Color.fromARGB(255, 210, 173, 238)
+                                  ),
+                                  
+                              child: Center(
+                                child: Text( "${widget.ActivitiesAdd}", style: TextStyle(fontSize: 16, color: black),),
+                              ),
+                              ), onPressed: null),
+                              Text("Ver Actividades", style: TextStyle(fontSize: 11.5, color: Colors.white),textAlign: TextAlign.center,),
+                          ],
+                        ),
+                      ),
+                    ),
+                )
             ]),
-           
           ),
+          ),
+
+         
           body: SingleChildScrollView(
               // color:
               //     HotelAppTheme.buildLightTheme().backgroundColor,
@@ -438,6 +453,36 @@ class _customActivities extends State<customActivities> {
           width: 170,
           child:     ElevatedButton(
           onPressed: () {
+          
+            if(widget.listActivitiesID.isEmpty){
+                  showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                      child: Text('No ha seleccionado ninguna actividad.', style: TextStyle(fontWeight: FontWeight.normal), textAlign: TextAlign.center,),
+              ) ,
+              content: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                      child: Text('¿Esta seguro que desea continuar?',style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center,)),
+              actions: <Widget>[
+              ElevatedButton(onPressed: () {
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                primary:  Color.fromARGB(255, 234, 234, 234),
+              ),
+              child: Text("Cancelar",style: TextStyle(color: Color(0xFF652D8F)),)),
+              ElevatedButton(onPressed: () {
+                   Navigator.push(context,MaterialPageRoute(builder: (context) => createCustomPackage(widget.Ciudad,widget.userloggeddata,2,widget.customPackage)),);
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xFF652D8F),
+              ),
+              child: Text("Aceptar"))
+              ],
+            ),
+          );
+
+            }else{
             widget.customPackage.acEx_ID = widget.listActivitiesID;
             widget.customPackage.acEx_Descripcion = widget.listActivities;
             widget.customPackage.acEx_numeroPersonas = widget.listPeopleNumber;
@@ -451,6 +496,7 @@ class _customActivities extends State<customActivities> {
                          createCustomPackage(
                       widget.Ciudad,widget.userloggeddata,2,widget.customPackage)),
                       );
+            }
           },
           child: Text(
             'Confirmar',
