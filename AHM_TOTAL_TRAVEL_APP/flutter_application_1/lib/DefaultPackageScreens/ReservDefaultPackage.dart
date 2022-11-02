@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:intl/intl.dart';
 
+import '../Components/Packages.dart';
 import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
 
@@ -19,6 +20,8 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
   var priceBase;
   String wordPeople = "personas", wordPagos = "Pagos", worldduracion = "Días";
 
+  int? idpackage;
+  int? precio;
   double people = 2;
   double _pagos = 1;
 
@@ -460,19 +463,13 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                                                               child:
                                                                   ElevatedButton(
                                                                 onPressed: () {
-                                                                  // bool result, result2, result3;
-                                                                  // PostReservertion(
-                                                                  //     widget.userloggeddata.ID,
-                                                                  //     element['id'],
-                                                                  //     false,
-                                                                  //     CantidadPagos,
-                                                                  //     NumPersonas,
-                                                                  //     false,
-                                                                  //     false,
-                                                                  //     false,
-                                                                  //     false,
-                                                                  //     element['precio'],
-                                                                  //     context);
+                                                                  idpackage =
+                                                                      element[
+                                                                          'id'];
+                                                                  precio = element[
+                                                                      'precio'];
+                                                                  Navigator.pop(
+                                                                      context);
                                                                 },
                                                                 child: Text(
                                                                   'Confirmar',
@@ -664,15 +661,20 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                   width: 170,
                   child: ElevatedButton(
                     onPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //       builder: (context) => createCustomPackage(
-                      //           widget.Ciudad,
-                      //           widget.userloggeddata,
-                      //           1,
-                      //           customPackage)),
-                      // );
+                      PostReservertion(
+                          widget.userloggeddata?.ID,
+                          idpackage,
+                          false,
+                          _pagos.toInt(),
+                          people.toInt(),
+                          false,
+                          false,
+                          false,
+                          false,
+                          precio,
+                          DateFormat('dd-MM-yyyy').format(dateRange.start),
+                          DateFormat('dd-MM-yyyy').format(dateRange.end),
+                          context);
                     },
                     child: Text(
                       'Confirmar',

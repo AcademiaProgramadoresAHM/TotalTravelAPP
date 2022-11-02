@@ -277,7 +277,7 @@ List<Padding> ListDefaultPackages(
 
 Future<void> PostReservertion(
     int? UsuaID,
-    String PaquID,
+    int? PaquID,
     bool Personalizado,
     int CantidadPagos,
     int NumPersonas,
@@ -285,7 +285,9 @@ Future<void> PostReservertion(
     bool ConfirmHotel,
     bool ConfirmRestaurant,
     bool ConfirmTrans,
-    int Precio,
+    int? Precio,
+    String FechaEntrada,
+    String FechaSalida,
     BuildContext context) async {
   final headers = {
     'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
@@ -302,6 +304,8 @@ Future<void> PostReservertion(
   map['resv_ConfirmacionRestaurante'] = ConfirmRestaurant;
   map['resv_ConfirmacionTrans'] = ConfirmTrans;
   map['resv_Precio'] = Precio;
+  map['reHo_FechaEntrada'] = FechaEntrada;
+  map['reHo_FechaSalida'] = FechaSalida;
 
   http.Response response = await http.post(
     uri,
