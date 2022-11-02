@@ -15,14 +15,9 @@ class ActivityDetails extends StatefulWidget {
   final List<dynamic> Activity;
   final CiudadesViewModel Ciudad;
   final int ActivityAdd;
-  final List<int> listActivitiesID;
-  final List<String> listActivities;
-  final List<int> listPeopleNumber;
-  final List<String> listDateReservation;
-  final List<String> listHourReservation;
-  final List<String> listPrices;
   final customPackageViewModel customPackage;
-  const ActivityDetails(this.userloggeddata, this.Activity,this.Ciudad,this.ActivityAdd,this.customPackage,this.listActivitiesID,this.listActivities,this.listPeopleNumber,this.listDateReservation,this.listHourReservation,this.listPrices,{Key? key})
+  final List<ActivitiesExtra> activityExtra;
+  const ActivityDetails(this.userloggeddata, this.Activity,this.Ciudad,this.ActivityAdd,this.customPackage,this.activityExtra,{Key? key})
       : super(key: key);
 
   @override
@@ -334,12 +329,16 @@ class _ActivityDetails extends State<ActivityDetails> {
       );
     
     if(confirm == true){
-       widget.listActivitiesID.insert(widget.ActivityAdd, element['id']);
-      widget.listActivities.insert(widget.ActivityAdd,element['actividad']);
-      widget.listPeopleNumber.insert(widget.ActivityAdd,peopleFinal );
-      widget.listDateReservation.insert(widget.ActivityAdd,DateFormat('dd-MM-yyyy').format(date));
-      widget.listHourReservation.insert(widget.ActivityAdd, DateFormat("HH:mm").format(new DateTime(2000,1,1,time.hour,time.minute)));
-      widget.listPrices.insert(widget.ActivityAdd,element['precio'].toString());
+      ActivitiesExtra activitiesExtraModel = new ActivitiesExtra();
+      activitiesExtraModel.index = widget.ActivityAdd;
+      activitiesExtraModel.acEx_ID = element['id'];
+      activitiesExtraModel.acEx_Descripcion = element['actividad'];
+      activitiesExtraModel.acEx_numeroPersonas = peopleFinal;
+      activitiesExtraModel.reAE_FechaReservacion = DateFormat('dd-MM-yyyy').format(date);
+      activitiesExtraModel.reAE_HoraReservacion = DateFormat("HH:mm").format(new DateTime(2000,1,1,time.hour,time.minute));
+      activitiesExtraModel.reAE_Precios = element['precio'].toString();
+
+      widget.activityExtra.insert(widget.ActivityAdd, activitiesExtraModel);
     }
    
 
@@ -467,7 +466,7 @@ class _ActivityDetails extends State<ActivityDetails> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => customActivities(widget.userloggeddata, widget.Ciudad,ActivitiesCounter,widget.customPackage,widget.listActivitiesID,widget.listActivities,widget.listPeopleNumber,widget.listDateReservation,widget.listHourReservation,widget.listPrices)),
+                  builder: (context) => customActivities(widget.userloggeddata, widget.Ciudad,ActivitiesCounter,widget.customPackage,widget.activityExtra)),
             );
           },
           child: Text(

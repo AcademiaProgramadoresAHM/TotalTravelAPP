@@ -664,7 +664,7 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                   width: 170,
                   child: ElevatedButton(
                     onPressed: () {
-                      PostReservertion(
+                     /* PostReservertion(
                           widget.userloggeddata?.ID,
                           idpackage,
                           0,
@@ -677,7 +677,7 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                           precio?.toInt(),
                           DateFormat('dd-MM-yyyy').format(dateRange.start),
                           DateFormat('dd-MM-yyyy').format(dateRange.end),
-                          context);
+                          context);*/
                     },
                     child: Text(
                       'Confirmar',

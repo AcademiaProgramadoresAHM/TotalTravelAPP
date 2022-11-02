@@ -342,7 +342,7 @@ class _createCustomPackage extends State<createCustomPackage> {
                            onPressed: () {
                              Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) =>  customActivities( widget.userloggeddata,widget.Ciudad,0,widget.customPackage,[],[],[],[],[],[])),
+                                          MaterialPageRoute(builder: (context) =>  customActivities( widget.userloggeddata,widget.Ciudad,0,widget.customPackage,[])),
                                         );
                           },
                         ),
@@ -407,11 +407,7 @@ class _createCustomPackage extends State<createCustomPackage> {
                                     print("HabitacionID" + widget.customPackage.habi_ID.toString());
                                     print("Habitacion" + widget.customPackage.habi_Descripcion.toString());
                                     print("Hotel_Precio" + widget.customPackage.reHo_PrecioTotal.toString());
-                                    print("ActividadesID" + widget.customPackage.acEx_ID.toString());
-                                    print("Actividades" + widget.customPackage.acEx_Descripcion.toString());
-                                    print("Actividades_Personas" + widget.customPackage.acEx_numeroPersonas.toString());
-                                    print("Actividades_Fecha" + widget.customPackage.reAE_FechaReservacion.toString());
-                                    print("Actividades_Precios" + widget.customPackage.reAE_Precios.toString());
+                                    print("Actividades" + widget.customPackage.actividadesExtra.toString());
                                     print("Restaurantes_Id" + widget.customPackage.rest_ID.toString());
                                     print("Restaurantes" + widget.customPackage.restaurantes.toString());
                                     print("Restaurantes_numPersonas" + widget.customPackage.rest_numeroPersonas.toString());

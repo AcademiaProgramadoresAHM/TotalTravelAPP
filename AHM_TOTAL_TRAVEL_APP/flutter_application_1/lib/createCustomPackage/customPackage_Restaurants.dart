@@ -321,10 +321,51 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
       title: 'Flutter layout demo',
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(
-          title: Text('           Restaurantes'),
-          backgroundColor: Color.fromRGBO(101, 45, 143, 1),
+  appBar:PreferredSize(
+            preferredSize: Size.fromHeight(65.0), // here the desired height
+            child: AppBar(
+            backgroundColor: Color.fromRGBO(101, 45, 143, 1),
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Padding(padding: EdgeInsetsDirectional.fromSTEB(125, 10, 0, 0),
+                child:   Text("Restaurantes"),
+                ),
+              
+              SizedBox.fromSize(
+                  size: Size(80, 80), // button width and height
+                    child: Material(
+                      color:  Color.fromRGBO(101, 45, 143, 1), // button color
+                      child: InkWell(
+                        splashColor: Color.fromRGBO(101, 45, 143, 1), // splash color
+                        onTap: () {}, // button pressed
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            IconButton(
+                                icon: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(color: Colors.black, width: 1),
+                                    shape: BoxShape.circle,
+                                    color: Color.fromARGB(255, 210, 173, 238)
+                                  ),
+                                  
+                              child: Center(
+                                child: Text( "${widget.RestaurantsAdd}", style: TextStyle(fontSize: 16, color: black),),
+                              ),
+                              ), onPressed:() {
+                                 //Navigator.push(context,MaterialPageRoute(builder: (context) => HistoryActivities(widget.userloggeddata,widget.customPackage)),);
+                              },),
+                              Text("Ver Restaurantes", style: TextStyle(fontSize: 10, color: Colors.white),textAlign: TextAlign.center,),
+                          ],
+                        ),
+                      ),
+                    ),
+                )
+            ]),
           ),
+          ),
+
         body: SingleChildScrollView(
                   
                             // color:
@@ -409,7 +450,42 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
           width: 170,
           child:     ElevatedButton(
           onPressed: () {
-            
+                if(widget.listRestaurantsID.isEmpty){
+                  showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                      child: Text('No ha seleccionado ningun restaurante.', style: TextStyle(fontWeight: FontWeight.normal), textAlign: TextAlign.center,),
+              ) ,
+              content: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                      child: Text('¿Esta seguro que desea continuar?',style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center,)),
+              actions: <Widget>[
+              ElevatedButton(onPressed: () {
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                primary:  Color.fromARGB(255, 234, 234, 234),
+              ),
+              child: Text("Cancelar",style: TextStyle(color: Color(0xFF652D8F)),)),
+              ElevatedButton(onPressed: () {
+                  Navigator.push(
+                        context,
+                    MaterialPageRoute(
+                    builder: (context) =>
+                         createCustomPackage(
+                      widget.Ciudad,widget.userloggeddata,3,widget.customPackage)),
+              );
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xFF652D8F),
+              ),
+              child: Text("Aceptar"))
+              ],
+            ),
+          );
+
+            }else{
+           
               widget.customPackage.rest_ID = widget.listRestaurantsID;
               widget.customPackage.restaurantes = widget.listRestaurants;
               widget.customPackage.rest_numeroPersonas = widget.listPeopleNumber;
@@ -423,6 +499,10 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                          createCustomPackage(
                       widget.Ciudad,widget.userloggeddata,3,widget.customPackage)),
               );
+            }
+
+
+
           },
           child: Text(
             'Confirmar',
