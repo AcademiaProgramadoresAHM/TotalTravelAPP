@@ -289,9 +289,7 @@ Future<void> PostReservertion(
     String FechaEntrada,
     String FechaSalida,
     BuildContext context) async {
-  final headers = {
-    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
-  };
+  final headers = {'Content-Type': 'application/json; charset=UTF-8'};
   final uri = Uri.parse("https://totaltravel.somee.com/API/Reservation/Insert");
   var map = new Map<String, dynamic>();
   map['usua_ID'] = UsuaID;
@@ -304,6 +302,7 @@ Future<void> PostReservertion(
   map['resv_ConfirmacionRestaurante'] = ConfirmRestaurant;
   map['resv_ConfirmacionTrans'] = ConfirmTrans;
   map['resv_Precio'] = Precio;
+  map['resv_UsuarioCreacion'] = UsuaID;
   map['reHo_FechaEntrada'] = FechaEntrada;
   map['reHo_FechaSalida'] = FechaSalida;
 

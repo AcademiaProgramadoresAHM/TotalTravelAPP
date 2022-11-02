@@ -159,10 +159,10 @@ class LandingPageState extends State<LandingPage> {
                 child: Row(
                   children: [
                     Container(
-                      width: 280,
+                      width: 270,
                       height: 100,
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(130, 5, 0, 5),
+                        padding: EdgeInsetsDirectional.fromSTEB(140, 5, 0, 5),
                         child: Image.asset(
                           'assets/images/logo-AHM-Fondo-Morao.png',
                           fit: BoxFit.contain,
@@ -170,9 +170,9 @@ class LandingPageState extends State<LandingPage> {
                       ),
                     ),
                     Flexible(
-                        flex: 4,
+                        flex: 6,
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                           child: ElevatedButton(
                               style: ButtonStyle(
                                 //backgroundColor: MaterialStateProperty.all(Colors.red),
@@ -194,13 +194,16 @@ class LandingPageState extends State<LandingPage> {
                                 children: [
                                   Icon(
                                     Icons.account_circle,
-                                    size: 20.0,
+                                    size: 18.0,
                                     color: white,
                                   ),
+                                  SizedBox(
+                                    width: 2,
+                                  ),
                                   Text(
-                                    ' Sign In',
+                                    'Ingresar',
                                     style:
-                                        TextStyle(color: white, fontSize: 20.0),
+                                        TextStyle(color: white, fontSize: 18.0),
                                   )
                                 ],
                               )),

@@ -21,7 +21,7 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
   String wordPeople = "personas", wordPagos = "Pagos", worldduracion = "Días";
 
   int? idpackage;
-  int? precio;
+  double? precio;
   double people = 2;
   double _pagos = 1;
 
@@ -56,6 +56,12 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
       );
 
       if (newDataRange == null) return;
+
+      setState(() {
+        dateRange = newDataRange;
+        final difference = dateRange.duration.inDays;
+        ChangeNight = true;
+      });
     }
 
     int intParse(doubleNum) {
@@ -72,6 +78,8 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
     data.forEach((element) {
       if (basePrice == true) {
         priceBase = element['precio'];
+        idpackage = element['id'];
+        precio = element['precio'];
         basePrice = false;
       }
       String? selectedValue;
@@ -463,11 +471,6 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                                                               child:
                                                                   ElevatedButton(
                                                                 onPressed: () {
-                                                                  idpackage =
-                                                                      element[
-                                                                          'id'];
-                                                                  precio = element[
-                                                                      'precio'];
                                                                   Navigator.pop(
                                                                       context);
                                                                 },
@@ -664,14 +667,14 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                       PostReservertion(
                           widget.userloggeddata?.ID,
                           idpackage,
-                          false,
+                          0,
                           _pagos.toInt(),
                           people.toInt(),
                           false,
                           false,
                           false,
                           false,
-                          precio,
+                          precio?.toInt(),
                           DateFormat('dd-MM-yyyy').format(dateRange.start),
                           DateFormat('dd-MM-yyyy').format(dateRange.end),
                           context);
