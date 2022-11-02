@@ -78,8 +78,8 @@ class _RoomDetails extends State<RoomDetails> {
       setState(() {
         dateRange = newDataRange;
         final difference = dateRange.duration.inDays;
-        nights = difference - 1;
-        nights == 0 ? nights = 1: nights = difference - 1;
+        nights = difference;
+        nights == 0 ? nights = 1: nights = difference;
         nights == 1 ? wordNight = "noche" : wordNight = "noches";
         ChangeNight = true;
       });
@@ -640,11 +640,14 @@ class _RoomDetails extends State<RoomDetails> {
 
     customPackage.usua_ID = widget.userloggeddata!.ID;
     customPackage.hote_ID = element['hotelID'];
+    customPackage.hote_Descripcion = element['hotel'];
     customPackage.reHo_FechaEntrada =  DateFormat('dd-MM-yyyy').format(dateRange.start);
     customPackage.reHo_FechaSalida = DateFormat('dd-MM-yyyy').format(dateRange.end);
     customPackage.reHo_PrecioTotal = element['precio'].toInt().toString();
+    customPackage.hote_numNoches = nights.toInt();
     customPackage.hote_numeroPersonas = peopleFinal.toInt();
     customPackage.habi_ID = [element['id']];
+    customPackage.habi_Descripcion = element['habitacion'];
 
     });
     return list;

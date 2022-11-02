@@ -25,8 +25,14 @@ class customActivities extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final CiudadesViewModel? Ciudad;
   final int ActivitiesAdd;
+  final List<int> listActivitiesID;
+  final List<String> listActivities;
+  final List<int> listPeopleNumber;
+  final List<String> listDateReservation;
+  final List<String> listHourReservation;
+  final List<String> listPrices;
   final customPackageViewModel customPackage;
-  const customActivities(this.userloggeddata, this.Ciudad,this.ActivitiesAdd,this.customPackage, {super.key});
+  const customActivities(this.userloggeddata, this.Ciudad,this.ActivitiesAdd,this.customPackage,this.listActivitiesID,this.listActivities,this.listPeopleNumber,this.listDateReservation,this.listHourReservation,this.listPrices, {super.key});
   @override
   _customActivities createState() => _customActivities();
 }
@@ -67,7 +73,7 @@ class _customActivities extends State<customActivities> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => ActivityDetails(widget.userloggeddata, Activity,Ciudad,ActivitiesCount,widget.customPackage)),
+                  builder: (context) => ActivityDetails(widget.userloggeddata, Activity,Ciudad,ActivitiesCount,widget.customPackage,widget.listActivitiesID,widget.listActivities,widget.listPeopleNumber,widget.listDateReservation,widget.listHourReservation,widget.listPrices)),
             );
           }
     } else {
@@ -432,6 +438,12 @@ class _customActivities extends State<customActivities> {
           width: 170,
           child:     ElevatedButton(
           onPressed: () {
+            widget.customPackage.acEx_ID = widget.listActivitiesID;
+            widget.customPackage.acEx_Descripcion = widget.listActivities;
+            widget.customPackage.acEx_numeroPersonas = widget.listPeopleNumber;
+            widget.customPackage.reAE_FechaReservacion = widget.listDateReservation;
+            widget.customPackage.reAE_HoraReservacion = widget.listHourReservation;
+            widget.customPackage.reAE_Precios = widget.listPrices;
                Navigator.push(
                         context,
                     MaterialPageRoute(
