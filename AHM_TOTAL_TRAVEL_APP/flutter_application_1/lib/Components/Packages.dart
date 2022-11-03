@@ -484,7 +484,10 @@ Future<void> PostReservertion(
     String FechaEntrada,
     String FechaSalida,
     BuildContext context) async {
-  final headers = {'Content-Type': 'application/json'};
+  final headers = {
+    "Content-type": "application/json",
+    "Authorization": "bearer " + userloggeddata!.Token!
+  };
   final uri = Uri.parse(
       "https://totaltravelapi.azurewebsites.net/API/Reservation/Insert");
   var map = new Map<String, dynamic>();
@@ -499,8 +502,8 @@ Future<void> PostReservertion(
   map['resv_ConfirmacionTrans'] = ConfirmTrans;
   map['resv_Precio'] = Precio;
   map['resv_UsuarioCreacion'] = UsuaID;
-  // map['reHo_FechaEntrada'] = FechaEntrada;
-  // map['reHo_FechaSalida'] = FechaSalida;
+  map['reHo_FechaEntrada'] = FechaEntrada;
+  map['reHo_FechaSalida'] = FechaSalida;
 
   final response = await http.post(
     uri,
