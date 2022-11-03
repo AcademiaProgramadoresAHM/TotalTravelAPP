@@ -55,4 +55,6 @@ class MainActivity: FlutterActivity() {
 
         processNotificationActions(this.intent, true)
     }
+
+    @override public void onBackPressed() { }
 }

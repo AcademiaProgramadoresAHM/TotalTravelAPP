@@ -65,33 +65,34 @@ class HexColor extends Color {
 }
 
 void notificationActionTriggered(TotalTravelAction action) {
-  showActionAlert(
-      message: "${action.toString().split(".")[1]} action received");
+  // showActionAlert(
+  //     message: "${action.toString().split(".")[1]} action received");
+  print("${action.toString().split(".")[1]} action received");
 }
 
-Future<void> showActionAlert({message: String}) async {
-  return showDialog<void>(
-    context: navigatorKey.currentState!.overlay!.context,
-    barrierDismissible: false,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Total Travel'),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              Text(message),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          ElevatedButton(
-            child: Text('Ok'),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
-}
+// Future<void> showActionAlert({message: String}) async {
+//   return showDialog<void>(
+//     context: navigatorKey.currentState!.overlay!.context,
+//     barrierDismissible: false,
+//     builder: (BuildContext context) {
+//       return AlertDialog(
+//         title: Text('Total Travel'),
+//         content: SingleChildScrollView(
+//           child: ListBody(
+//             children: <Widget>[
+//               Text(message),
+//             ],
+//           ),
+//         ),
+//         actions: <Widget>[
+//           ElevatedButton(
+//             child: Text('Ok'),
+//             onPressed: () {
+//               Navigator.of(context).pop();
+//             },
+//           ),
+//         ],
+//       );
+//     },
+//   );
+// }
