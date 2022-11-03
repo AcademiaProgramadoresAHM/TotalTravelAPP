@@ -303,14 +303,6 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [],
-                  ),
-                ),
               ],
             ),
           ),
