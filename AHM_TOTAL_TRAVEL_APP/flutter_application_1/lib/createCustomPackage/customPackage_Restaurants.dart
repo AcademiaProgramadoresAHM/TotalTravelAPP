@@ -24,13 +24,9 @@ class RestaurantcustomPackage extends StatefulWidget {
   final CiudadesViewModel? Ciudad;
   final customPackageViewModel customPackage;
   final int RestaurantsAdd;
-  final List<int> listRestaurantsID;
-  final List<String> listRestaurants;
-  final List<int> listPeopleNumber;
-  final List<String> listDateReservation;
-  final List<String> listHourReservation;
+  final List<Restaurants> Restaurante;
 
-  const RestaurantcustomPackage( this.userloggeddata, this.Ciudad,this.customPackage,this.RestaurantsAdd,this.listRestaurantsID,this.listRestaurants,this.listPeopleNumber,this.listDateReservation,this.listHourReservation,{super.key});
+  const RestaurantcustomPackage( this.userloggeddata, this.Ciudad,this.customPackage,this.RestaurantsAdd,this.Restaurante,{super.key});
   @override
   _RestaurantcustomPackage createState() => _RestaurantcustomPackage();
 }
@@ -72,7 +68,7 @@ Future<dynamic> GetListRestaurants(Ciudad, userloggeddata,idRestaurant,bool) asy
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => RestaurantDetails(widget.userloggeddata, Activity,Ciudad,widget.customPackage,widget.RestaurantsAdd,widget.listRestaurantsID,widget.listRestaurants,widget.listPeopleNumber,widget.listDateReservation,widget.listHourReservation)),
+                  builder: (context) => RestaurantDetails(widget.userloggeddata, Activity,Ciudad,widget.customPackage,widget.RestaurantsAdd,widget.Restaurante)),
             );
           }
     } else {
@@ -450,7 +446,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
           width: 170,
           child:     ElevatedButton(
           onPressed: () {
-                if(widget.listRestaurantsID.isEmpty){
+                if(widget.Restaurante.isEmpty){
                   showDialog<String>(
             context: context,
             builder: (BuildContext context) => AlertDialog(
@@ -486,12 +482,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
 
             }else{
            
-              widget.customPackage.rest_ID = widget.listRestaurantsID;
-              widget.customPackage.restaurantes = widget.listRestaurants;
-              widget.customPackage.rest_numeroPersonas = widget.listPeopleNumber;
-              widget.customPackage.rest_FechaReservacion = widget.listDateReservation;
-              widget.customPackage.rest_HoraReservacion = widget.listHourReservation;
-
+              widget.customPackage.Restaurant = widget.Restaurante;
                Navigator.push(
                         context,
                     MaterialPageRoute(

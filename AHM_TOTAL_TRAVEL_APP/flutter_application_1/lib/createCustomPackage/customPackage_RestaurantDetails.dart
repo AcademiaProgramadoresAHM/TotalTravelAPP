@@ -17,13 +17,9 @@ class RestaurantDetails extends StatefulWidget {
   final List<dynamic> Restaurant;
   final CiudadesViewModel Ciudad;
   final customPackageViewModel customPackage;
-    final int RestaurantsAdd;
-  final List<int> listRestaurantsID;
-  final List<String> listRestaurants;
-  final List<int> listPeopleNumber;
-  final List<String> listDateReservation;
-  final List<String> listHourReservation;
-  const RestaurantDetails(this.userloggeddata, this.Restaurant,this.Ciudad,this.customPackage,this.RestaurantsAdd,this.listRestaurantsID,this.listRestaurants,this.listPeopleNumber,this.listDateReservation,this.listHourReservation,{Key? key})
+  final int RestaurantsAdd;
+  final List<Restaurants> Restaurante;
+  const RestaurantDetails(this.userloggeddata, this.Restaurant,this.Ciudad,this.customPackage,this.RestaurantsAdd,this.Restaurante,{Key? key})
       : super(key: key);
 
   @override
@@ -372,17 +368,15 @@ class _RestaurantDetails extends State<RestaurantDetails> {
         ),
       );
        if(confirm == true){
-      widget.listRestaurantsID.insert(widget.RestaurantsAdd, element['id']);
-      widget.listRestaurants.insert(widget.RestaurantsAdd,element['restaurante']);
-      widget.listPeopleNumber.insert(widget.RestaurantsAdd,peopleFinal );
-      widget.listDateReservation.insert(widget.RestaurantsAdd,DateFormat('dd-MM-yyyy').format(date));
-      widget.listHourReservation.insert(widget.RestaurantsAdd, DateFormat("HH:mm").format(new DateTime(2000,1,1,time.hour,time.minute)));
-
-        print(widget.listRestaurantsID);
-        print(widget.listRestaurants.toString());
-        print(widget.listPeopleNumber);
-        print(widget.listDateReservation);
-        print(widget.listHourReservation);
+            Restaurants Restaurant = new Restaurants();
+            Restaurant.index = widget.RestaurantsAdd;
+            Restaurant.rest_ID = element['id'];
+            Restaurant.restaurante = element['restaurante'];
+            Restaurant.rest_numeroPersonas = peopleFinal;
+            Restaurant.rest_FechaReservacion = DateFormat('dd-MM-yyyy').format(date);
+            Restaurant.rest_HoraReservacion = DateFormat("HH:mm").format(new DateTime(2000,1,1,time.hour,time.minute));
+            
+            widget.Restaurante.insert(widget.RestaurantsAdd, Restaurant);
       }
     });
     return list;
@@ -503,7 +497,7 @@ class _RestaurantDetails extends State<RestaurantDetails> {
              Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => RestaurantcustomPackage(widget.userloggeddata, widget.Ciudad,widget.customPackage,widget.RestaurantsAdd,widget.listRestaurantsID,widget.listRestaurants,widget.listPeopleNumber,widget.listDateReservation,widget.listHourReservation)),
+                  builder: (context) => RestaurantcustomPackage(widget.userloggeddata, widget.Ciudad,widget.customPackage,widget.RestaurantsAdd,widget.Restaurante)),
             );
           },
           child: Text(

@@ -1,6 +1,9 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Models/customPackageViewModel.dart';
 import 'package:flutter_application_1/hotel_booking/hotel_app_theme.dart';
+import 'package:flutter_application_1/utils/prueba2/AppWidget.dart';
 import 'package:get/get.dart';
 import 'package:flutter_application_1/Screens/prueba.dart';
 import 'package:flutter_application_1/Screens/signUp_view.dart';
@@ -21,67 +24,58 @@ class _payPage extends State<payPage> {
   TextEditingController? textController3;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
-  @override
-  void initState() {
-    super.initState();
-    textController1 = TextEditingController();
-    textController2 = TextEditingController();
-    textController3 = TextEditingController();
-  }
+ 
 
+  List<Padding> ResumePay(customPackageViewModel data, BuildContext context) {
+    List<Restaurants> restaurante = widget.customPackage.Restaurant!;
+    List<ActivitiesExtra> Activity = widget.customPackage.actividadesExtra!;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      key: scaffoldKey,
-      backgroundColor: Color(0xFFF1F4F8),
-      body: Column(
-        mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          getAppBarUI(),
-          Expanded(
-            child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(1, 0, 0, 0),
-              child: SingleChildScrollView(
-                child: Column(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(5, 12, 5, 1),
-                      child: Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 5,
-                              color: Color(0x44111417),
-                              offset: Offset(0, 2),
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(8),
+    List<Padding> list = [];
+    final _controller = PageController();
+    List<String> imageUrl;
+      list.add(Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 4,
+                color: Color(0x32000000),
+                offset: Offset(0, 2),
+              )
+            ],
+          ),
+          child: Column(
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 16, 12),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Container(
+                          width: 4,
+                          height: 150,
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(101, 45, 143, 1),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
                         ),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(4, 4, 4, 4),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              Padding(
+                        Expanded(
+                          flex: 6,
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                 Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(8, 4, 8, 4),
                                 child: Row(
@@ -100,13 +94,31 @@ class _payPage extends State<payPage> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           12, 0, 0, 0),
                                       child: Text(
-                                        'Ingresa los siguientes datos',
+                                        'Hotel',
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                              Padding(
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(padding: EdgeInsetsDirectional.fromSTEB(43, 0,0,20),
+                                    child:Text(
+                                      data.hote_Descripcion.toString(),
+                                      style: TextStyle(
+                                        fontFamily: 'Outfit',
+                                        color: Color(0xFF090F13),
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),)
+                                    
+                                  ],
+                                ),
+                                      Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     10, 0, 10, 0),
                                 child: Row(
@@ -132,7 +144,7 @@ class _payPage extends State<payPage> {
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
                                     Text(
-                                      'mar, 6 sep 2022\n12:00 - 17:00',
+                                     widget.customPackage.reHo_FechaEntrada.toString(),
                                       style: TextStyle(
                                         fontFamily: 'Poppins',
                                         color: Color(0xFF95A1AC),
@@ -140,9 +152,9 @@ class _payPage extends State<payPage> {
                                     ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          70, 0, 0, 0),
+                                          95, 0, 0, 0),
                                       child: Text(
-                                        'mié, 7 sep 2022\nA 13:00',
+                                        widget.customPackage.reHo_FechaSalida.toString(),
                                         style: TextStyle(
                                           fontFamily: 'Poppins',
                                           color: Color(0xFF95A1AC),
@@ -156,16 +168,18 @@ class _payPage extends State<payPage> {
                                 thickness: 2,
                                 color: Color(0xFF95A1AC),
                               ),
-                              Align(
+                              Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0,10),
+                              child:  Align(
                                 alignment: AlignmentDirectional(-0.9, 0),
                                 child: Text(
                                   'Duración de la estancia:',
                                 ),
                               ),
+                              ),
                               Align(
                                 alignment: AlignmentDirectional(-0.9, 0),
                                 child: Text(
-                                  '2 noches',
+                                   widget.customPackage.hote_numNoches.toString() + ' ' + widget.customPackage.night.toString(),
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
@@ -177,300 +191,187 @@ class _payPage extends State<payPage> {
                                 thickness: 2,
                                 color: Color(0xFF95A1AC),
                               ),
+                               Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0)),
                               Align(
                                 alignment: AlignmentDirectional(-0.9, 0),
                                 child: Text(
                                   'Tu selección:',
+                                  style: TextStyle(
+                                    fontSize: 16
+                                  ),
                                 ),
                               ),
+                              
                               Align(
-                                alignment: AlignmentDirectional(-0.9, 0),
+                                alignment: AlignmentDirectional(-0.6, 0),
                                 child: Text(
-                                  'Habitación Triple',
+                                  widget.customPackage.habi_Descripcion.toString() + '    -     ' + widget.customPackage.habi_Cantidad.toString() + ' ' + widget.customPackage.room.toString(),
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
+                                    fontSize: 16,
                                     color: Color(0xFF95A1AC),
                                   ),
                                 ),
                               ),
+                              Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0)),
                               Align(
                                 alignment: AlignmentDirectional(-0.9, 0),
                                 child: Text(
-                                  'Capacidad máxima',
+                                  'Detalles',
+                                  style: TextStyle(
+                                    fontSize: 16
+                                  ),
                                 ),
                               ),
                               Align(
-                                alignment: AlignmentDirectional(-0.9, 0),
+                                alignment: AlignmentDirectional(-0.8, 0),
                                 child: Text(
-                                  '3 adultos',
+                                  widget.customPackage.hote_numeroPersonas.toString() + ' ' + widget.customPackage.people.toString(),
                                   textAlign: TextAlign.start,
                                   style: TextStyle(
                                     fontFamily: 'Poppins',
                                     color: Color(0xFF95A1AC),
+                                    fontSize: 16
                                   ),
                                 ),
                               ),
                               Divider(),
-                            ],
+                               Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(8, 4, 8, 4),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 2, 0, 0),
+                                      child: Icon(
+                                        Icons.assignment_sharp,
+                                        color: Color(0xFF0F1113),
+                                        size: 24,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          12, 0, 0, 0),
+                                      child: Text(
+                                        'Actividades',
+                                      ),
+                                    ),
+                                    
+                                  ],
+                                ),
+                              ),
+                                   
+                              ],
+                              
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 12, 0, 0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.96,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              blurRadius: 4,
-                              color: Color(0x3A000000),
-                              offset: Offset(0, 2),
-                            )
-                          ],
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16, 16, 16, 12),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Desglose del precio',
-                                    style: TextStyle(
-                                      fontFamily: 'Lexend Deca',
-                                      color: Color(0xFF090F13),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 0, 16, 8),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Habitación Doble',
-                                    style: TextStyle(
-                                      fontFamily: 'Lexend Deca',
-                                      color: Color(0xFF95A1AC),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                  Text(
-                                    'HNL 1000.00',
-                                    textAlign: TextAlign.end,
-                                    style: TextStyle(
-                                      fontFamily: 'Lexend Deca',
-                                      color: Color(0xFF090F13),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 0, 16, 8),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    '16% IVA',
-                                    style: TextStyle(
-                                      fontFamily: 'Lexend Deca',
-                                      color: Color(0xFF95A1AC),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                  Text(
-                                    'HNL 160.00',
-                                    textAlign: TextAlign.end,
-                                    style: TextStyle(
-                                      fontFamily: 'Lexend Deca',
-                                      color: Color(0xFF090F13),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(16, 0, 16, 12),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Subtotal:',
-                                    style: TextStyle(
-                                      fontFamily: 'Lexend Deca',
-                                      color: Color(0xFF95A1AC),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                  Text(
-                                    'HNL 1160.00',
-                                    textAlign: TextAlign.end,
-                                    style: TextStyle(
-                                      fontFamily: 'Lexend Deca',
-                                      color: Color(0xFF090F13),
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w500,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  16, 12, 16, 16),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Total',
-                                    style: TextStyle(
-                                      fontFamily: 'Lexend Deca',
-                                      color: Color(0xFF95A1AC),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                  Text(
-                                    'HNL 1160.00',
-                                    textAlign: TextAlign.end,
-                                    style: TextStyle(
-                                      fontFamily: 'Lexend Deca',
-                                      color: Color(0xFF090F13),
-                                      fontSize: 22,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-               
-                    Divider(
-                      height: 2,
-                      thickness: 1,
-                      indent: 16,
-                      endIndent: 16,
-                      color: Colors.transparent,
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            height: 90,
-            child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 34, 0, 0),
-              child: ElevatedButton(
-                onPressed: () {
-                  print('Button pressed ...');
-                },
-                child: Text(
-                  'Enviar',
-                  style: TextStyle(
-                    fontFamily: 'Lexend Deca',
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w500,
                   ),
-                ),
-                style: ButtonStyle(
-                  fixedSize: MaterialStateProperty.all(
-                      const Size(double.infinity, 50)),
-                  backgroundColor: MaterialStateProperty.all(
-                      const Color.fromRGBO(101, 45, 143, 1)),
-                ),
-              ),
-            ),
+                ],
+              )
+            ],
           ),
-        ],
-      ),
-    );
+        ),
+      ));
+    ;
+
+    return list;
   }
 
-  Widget getAppBarUI() {
-    return Container(
-      decoration: BoxDecoration(
-        color: HotelAppTheme.buildLightTheme().primaryColor,
-        boxShadow: <BoxShadow>[
-          BoxShadow(
-              color: Colors.grey.withOpacity(0.2),
-              offset: const Offset(0, 2),
-              blurRadius: 8.0),
-        ],
-      ),
-      child: Padding(
-        padding: EdgeInsets.only(
-            top: MediaQuery.of(context).padding.top, left: 8, right: 8),
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: Text(
-                '           ',
-              ),
-            ),
-            Expanded(
-              flex: 5,
-              child: Center(
+
+  @override
+  void initState() {
+    super.initState();
+    //GetListHotels(widget.Ciudad,widget.userloggeddata);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    changeStatusColor(appStore.appBarColor);
+    return MaterialApp(
+        title: 'Flutter layout demo',
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Color(0xFF652D8F),
+            automaticallyImplyLeading: false,
+            title: Align(
+              alignment: AlignmentDirectional(0, -0.05),
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(60, 15, 0, 10),
                 child: Text(
-                  'Proceso de pago',
+                  'Resumen de pago',
+                  textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontWeight: FontWeight.w500,
-                    fontSize: 25,
+                    fontFamily: 'Poppins',
                     color: Colors.white,
+                    fontSize: 23,
                   ),
                 ),
               ),
             ),
-            Expanded(
-              flex: 1,
-              child: Align(
-                alignment: Alignment.topRight,
-                child: Image.asset(
-                  'assets/images/logo-AHM-Fondo-Morao.png',
-                  height: 50,
+            actions: [
+              Align(
+                alignment: AlignmentDirectional(-0.05, 0.05),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                  child: Image.asset(
+                    'assets/images/logo-AHM-Fondo-Morao.png',
+                    width: 50,
+                    height: 50,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
+            ],
+            centerTitle: false,
+            elevation: 2,
+          ),
+          body: SingleChildScrollView(
+
+              // color:
+              //     HotelAppTheme.buildLightTheme().backgroundColor,
+              child: Column(
+            children: [
+              Wrap(
+                        spacing: 8,
+                        runSpacing: 4,
+                        alignment: WrapAlignment.start,
+                        crossAxisAlignment: WrapCrossAlignment.start,
+                        direction: Axis.horizontal,
+                        runAlignment: WrapAlignment.start,
+                        verticalDirection: VerticalDirection.down,
+                        clipBehavior: Clip.none,
+                        children: ResumePay(widget.customPackage, context))
+        ],
+      )),
+    ));
+  }
+
+  Column _buildButtonColumn(Color color, IconData icon, String label) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(icon, color: color),
+        Container(
+          margin: const EdgeInsets.only(top: 8),
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+              color: color,
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

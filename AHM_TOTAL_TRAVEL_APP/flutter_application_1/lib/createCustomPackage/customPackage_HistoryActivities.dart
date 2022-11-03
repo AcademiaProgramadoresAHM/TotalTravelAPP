@@ -22,10 +22,9 @@ class HistoryActivities extends StatefulWidget {
   @override
   _HistoryActivities createState() => _HistoryActivities();
 }
-
-class _HistoryActivities extends State<HistoryActivities> {
+    
+class _HistoryActivities extends State<HistoryActivities> { 
   int ActivitiesCounter = 0;
-
   List<Padding> ListActivitiesExtra(List<ActivitiesExtra> data, BuildContext context) {
     List<Padding> list = [];
     final _controller = PageController();
@@ -34,8 +33,9 @@ class _HistoryActivities extends State<HistoryActivities> {
       list.add(Padding(
         padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
         child: Container(
+          height: 248,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8),
+            borderRadius: BorderRadius.circular(2),
             color: Colors.white,
             boxShadow: [
               BoxShadow(
@@ -99,27 +99,30 @@ class _HistoryActivities extends State<HistoryActivities> {
                                       style: TextStyle(
                                         fontFamily: 'Outfit',
                                         color: Color(0xFF090F13),
-                                        fontSize: 20,
+                                        fontSize: 22,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
-                                    Text(
-                                      'Lps.' + element.reAE_Precios.toString(),
-                                      style: TextStyle(
-                                        fontFamily: 'Outfit',
-                                        color: Color.fromRGBO(101, 45, 143, 1),
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
+                                  
                                   ],
                                 ),
+                                Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                                child:Text(
+                                  "Personas: "+element.acEx_numeroPersonas.toString(),
+                                  style: TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Color.fromRGBO(101, 45, 143, 1),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ), ),
+                                
                                 Text(
                                   "Fecha: "+element.reAE_FechaReservacion.toString(),
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color.fromRGBO(101, 45, 143, 1),
-                                    fontSize: 20,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
@@ -128,10 +131,21 @@ class _HistoryActivities extends State<HistoryActivities> {
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color.fromRGBO(101, 45, 143, 1),
-                                    fontSize: 20,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
+                                Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
+                                child:Text(
+                                      'Lps.' + element.reAE_Precios.toString(),
+                                      style: TextStyle(
+                                        fontFamily: 'Outfit',
+                                        color: Color.fromRGBO(101, 45, 143, 1),
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),),
+                                  
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0, 8, 0, 0),
@@ -142,7 +156,7 @@ class _HistoryActivities extends State<HistoryActivities> {
                                     children: [
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            2, 12, 24, 12),
+                                            2, 12, 24, 0),
                                       ),
                                       ElevatedButton(
                                         style: ButtonStyle(
@@ -152,7 +166,7 @@ class _HistoryActivities extends State<HistoryActivities> {
                                           shape: MaterialStateProperty.all(
                                             RoundedRectangleBorder(
                                               borderRadius:
-                                                  BorderRadius.circular(15),
+                                                  BorderRadius.circular(5),
                                             ),
                                           ),
                                         ),
@@ -166,8 +180,11 @@ class _HistoryActivities extends State<HistoryActivities> {
                                           ),
                                         ),
                                         onPressed: () {
-
-                                            ActivitiesCounter = widget.ActivitiesAdd - 1;
+                                          print(ActivitiesCounter);
+                                            setState(() {
+                                               ActivitiesCounter = widget.ActivitiesAdd - 1;
+                                            });
+                                           
 
                                             widget.activityExtra.removeAt(element.index!);
                                         Navigator.push(context,MaterialPageRoute(builder: (context) => HistoryActivities(widget.userloggeddata,widget.activityExtra,ActivitiesCounter,widget.Ciudad,widget.customPackage)),);
@@ -309,7 +326,7 @@ class _HistoryActivities extends State<HistoryActivities> {
           child:     ElevatedButton(
           onPressed: () {
           
-      
+              print(ActivitiesCounter);
                Navigator.push(
                         context,
                     MaterialPageRoute(

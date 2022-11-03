@@ -6,15 +6,15 @@ class customPackageViewModel {
   String? reHo_FechaSalida;
   String? reHo_PrecioTotal;
   int? hote_numNoches;
+  String? night;
   int? hote_numeroPersonas;
-  List<int>? habi_ID;
+  String? people;
+  int? habi_ID;
+  int? habi_Cantidad;
+  String? room;
   String? habi_Descripcion;
   List<ActivitiesExtra>? actividadesExtra;
-  List<int>? rest_ID;
-  List<String>? restaurantes;
-  List<int>? rest_numeroPersonas;
-  List<String>? rest_FechaReservacion;
-  List<String>? rest_HoraReservacion;
+  List<Restaurants>? Restaurant;
 
   Map<String, dynamic> toJson() => {
         'usua_ID': usua_ID,
@@ -25,10 +25,7 @@ class customPackageViewModel {
         'hote_numeroPersonas': hote_numeroPersonas,
         'habi_ID': habi_ID,
         'actividadesExtra': actividadesExtra,
-        'rest_ID': rest_ID,
-        'rest_numeroPersonas': rest_numeroPersonas,
-        'rest_FechaReservacion': rest_FechaReservacion,
-        'rest_HoraReservacion': rest_HoraReservacion,
+        'restaurant': Restaurant,
       };
 }
 
@@ -62,5 +59,13 @@ class ActivitiesExtra{
   String? reAE_FechaReservacion;
   String? reAE_HoraReservacion;
   String? reAE_Precios;
+}
 
+class Restaurants{
+  int? index;
+  int? rest_ID;
+  String? restaurante;
+  int? rest_numeroPersonas;
+  String? rest_FechaReservacion;
+  String? rest_HoraReservacion;
 }

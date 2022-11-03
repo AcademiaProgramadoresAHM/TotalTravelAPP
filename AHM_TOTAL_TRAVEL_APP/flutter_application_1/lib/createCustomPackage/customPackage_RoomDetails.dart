@@ -645,8 +645,12 @@ class _RoomDetails extends State<RoomDetails> {
     customPackage.reHo_FechaSalida = DateFormat('dd-MM-yyyy').format(dateRange.end);
     customPackage.reHo_PrecioTotal = element['precio'].toInt().toString();
     customPackage.hote_numNoches = nights.toInt();
+    customPackage.night = wordNight;
     customPackage.hote_numeroPersonas = peopleFinal.toInt();
-    customPackage.habi_ID = [element['id']];
+    customPackage.people = wordPeople;
+    customPackage.habi_ID = element['id'];
+    customPackage.habi_Cantidad = rooms.round();
+    customPackage.room = wordRooms;
     customPackage.habi_Descripcion = element['habitacion'];
 
     });

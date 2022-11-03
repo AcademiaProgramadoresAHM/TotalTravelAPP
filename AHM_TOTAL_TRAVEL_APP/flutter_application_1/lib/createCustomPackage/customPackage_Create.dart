@@ -370,7 +370,7 @@ class _createCustomPackage extends State<createCustomPackage> {
                           onPressed: () {
                              Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) =>  RestaurantcustomPackage( widget.userloggeddata,widget.Ciudad,widget.customPackage,0,[],[],[],[],[])),
+                                          MaterialPageRoute(builder: (context) =>  RestaurantcustomPackage( widget.userloggeddata,widget.Ciudad,widget.customPackage,0,[])),
                                         );
                           
                           },
@@ -408,16 +408,12 @@ class _createCustomPackage extends State<createCustomPackage> {
                                     print("Habitacion" + widget.customPackage.habi_Descripcion.toString());
                                     print("Hotel_Precio" + widget.customPackage.reHo_PrecioTotal.toString());
                                     print("Actividades" + widget.customPackage.actividadesExtra.toString());
-                                    print("Restaurantes_Id" + widget.customPackage.rest_ID.toString());
-                                    print("Restaurantes" + widget.customPackage.restaurantes.toString());
-                                    print("Restaurantes_numPersonas" + widget.customPackage.rest_numeroPersonas.toString());
-                                    print("Restaurantes_Fecha" + widget.customPackage.rest_FechaReservacion.toString());
-                                    print("Restaurantes_Hora" + widget.customPackage.rest_HoraReservacion.toString());
+                                    print("Restaurante" + widget.customPackage.Restaurant.toString());
 
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => payPage(widget.customPackage)),
+                                  builder: (context) => payPage(widget.customPackage, )),
                             );
                           },
                         ),
