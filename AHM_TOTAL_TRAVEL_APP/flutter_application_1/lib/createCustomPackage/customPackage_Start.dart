@@ -78,11 +78,9 @@ final TextEditingController textEditingController = TextEditingController();
           var JsonList = Json.data.toList();
           CardHoteles.add(JsonList[i]);
         }
-        print(CardHoteles);
           return CardHoteles;
       }
       else{
-          print(widget.userloggeddata!.Token);
           final url_list =Uri.parse("https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
           final headers = {
             "Content-type": "application/json",
@@ -91,7 +89,6 @@ final TextEditingController textEditingController = TextEditingController();
           final json = jsonEncode({"token": widget.userloggeddata!.Token});
           final response = await http.post(url_list, headers: headers, body: json);
           if (response.body != " ") {
-            print(response.body);
             widget.userloggeddata!.Token = response.body;
             GetListHotels( widget.userloggeddata);
           }

@@ -7,6 +7,7 @@ import 'package:flutter_application_1/Models/customPackageViewModel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Restaurants.dart';
 import 'package:flutter_application_1/navigation_home_screen.dart';
+import 'package:flutter_application_1/utils/prueba2/T2Strings.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
@@ -32,7 +33,9 @@ class _RestaurantDetails extends State<RestaurantDetails> {
       DateTime date = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   bool confirm = false;
   var peopleFinal = 1;
-   Future<dynamic> GetListMenus(Restaurant,userloggeddata) async {
+  List<String> menuImages = [];
+
+   Future<void> GetListMenus(id,userloggeddata) async {
     List<dynamic> dataMenus;
   String url_list =
       "https://totaltravel.somee.com/API/Menus/List";
@@ -42,30 +45,36 @@ class _RestaurantDetails extends State<RestaurantDetails> {
     };
   final response = await http.get(Uri.parse(url_list), headers: headers);
   if (response.statusCode == 200) {
-    var imagesMenus;
+  
     Map<String, dynamic> userMap = jsonDecode(response.body);
      var Json = DecoderAPI.fromJson(userMap);
      dataMenus = Json.data;
-     var Menus = dataMenus.where((x) => x['iD_Restaurante'] == Restaurant.id).toList();
+     var Menus = dataMenus.where((x) => x['iD_Restaurante'] == id).toList();
+     
+     var i = 0;
      Menus.forEach((element) {
-      imagesMenus = element['image_Url'];
+        List<String> imageUrl = element['image_Url'].split(',');
+      setState(() {
+          menuImages.insert(i, imageUrl[i].toString());
+      });
+      i = i + 1;
      });
-    return imagesMenus;
     }
   }
+ 
 
 
   List<Padding> ActivityDetails(List<dynamic> data, BuildContext context) {
   final hours = time.hour.toString().padLeft(2,'0');
   final minutes = time.minute.toString().padLeft(2,'0');
-   
+
 
     List<Padding> list = [];
     List<String> items = [];
     final _controller = PageController();
     data.forEach((element) {
       String? selectedValue;
-
+    //GetListMenus(element['id'],widget.userloggeddata);
       List<double> _getCustomItemsHeights() {
         List<double> _itemsHeights = [];
         for (var i = 0; i < (items.length * 2) - 1; i++) {
@@ -329,10 +338,11 @@ class _RestaurantDetails extends State<RestaurantDetails> {
                                                             ),
                                             ],
                                           )),
-                                  
-                                    CarouselSlider(
+                                         
+                                  //CARRUSEL
+                                  /*  CarouselSlider(
                                         options: CarouselOptions(height: 200.0),
-                                        items: [1,2,3,4,5].map((i) {
+                                        items: menuImages.map((item) {
                                           return Builder(
                                             builder: (BuildContext context) {
                                               return Container(
@@ -340,12 +350,12 @@ class _RestaurantDetails extends State<RestaurantDetails> {
                                                 margin: EdgeInsets.symmetric(horizontal: 5.0),
                                                 decoration: BoxDecoration(
                                                 ),
-                                                child: Image.network(GetListMenus(widget.Restaurant, widget.userloggeddata).toString())
+                                                child: Image.network(item)
                                               );
                                             },
                                           );
                                         }).toList(),
-                                      )
+                                      )*/
 
                                     ],
                                   )))

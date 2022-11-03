@@ -397,19 +397,7 @@ class _createCustomPackage extends State<createCustomPackage> {
                             primary: Color.fromARGB(255, 101, 45, 143),
                           ),
                           onPressed: () {
-                                    print("Usuario" + widget.customPackage.usua_ID.toString());
-                                    print("HotelID" + widget.customPackage.hote_ID.toString());
-                                    print("Hotel" + widget.customPackage.hote_Descripcion.toString());
-                                    print("Hotel_FechaEntrada" + widget.customPackage.reHo_FechaEntrada.toString());
-                                    print("Hotel_FechaSalida" + widget.customPackage.reHo_FechaSalida.toString());
-                                    print("Hotel_Noches" + widget.customPackage.hote_numNoches.toString());
-                                    print("Hotel_Personas" + widget.customPackage.hote_numeroPersonas.toString());
-                                    print("HabitacionID" + widget.customPackage.habi_ID.toString());
-                                    print("Habitacion" + widget.customPackage.habi_Descripcion.toString());
-                                    print("Hotel_Precio" + widget.customPackage.reHo_PrecioTotal.toString());
-                                    print("Actividades" + widget.customPackage.actividadesExtra.toString());
-                                    print("Restaurante" + widget.customPackage.Restaurant.toString());
-                                    Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen( payPage(widget.customPackage, ),widget.userloggeddata)),);
+                                    Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen( payPage(widget.customPackage,widget.userloggeddata,widget.Ciudad ),widget.userloggeddata)),);
                            
                           },
                         ),
