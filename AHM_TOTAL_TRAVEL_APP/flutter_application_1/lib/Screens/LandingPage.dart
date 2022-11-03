@@ -66,8 +66,8 @@ class LandingPageState extends State<LandingPage> {
                     child: Column(
                       children: [
                         //ElevatedButton(
-                          //child: Text("Register"),
-                          //onPressed: registerButtonClicked,
+                        //child: Text("Register"),
+                        //onPressed: registerButtonClicked,
                         //),
                         /*
                         ElevatedButton(
@@ -220,10 +220,10 @@ class LandingPageState extends State<LandingPage> {
                 child: Row(
                   children: [
                     Container(
-                      width: 270,
+                      width: 250,
                       height: 100,
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(140, 5, 0, 5),
+                        padding: EdgeInsetsDirectional.fromSTEB(160, 5, 0, 5),
                         child: Image.asset(
                           'assets/images/logo-AHM-Fondo-Morao.png',
                           fit: BoxFit.contain,
@@ -233,7 +233,7 @@ class LandingPageState extends State<LandingPage> {
                     Flexible(
                         flex: 6,
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
                           child: ElevatedButton(
                               style: ButtonStyle(
                                 //backgroundColor: MaterialStateProperty.all(Colors.red),
@@ -302,7 +302,6 @@ class LandingPageState extends State<LandingPage> {
         ),
       ),
     );
-
   }
 
   // Login Button
@@ -327,4 +326,3 @@ class LandingPageState extends State<LandingPage> {
     );
   }
 }
-
