@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../Components/Packages.dart';
 import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
+import 'ReservationPreview.dart';
 
 class ReservDefaultPackage extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
@@ -664,10 +665,10 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                   width: 170,
                   child: ElevatedButton(
                     onPressed: () {
-                     /* PostReservertion(
-                          widget.userloggeddata?.ID,
+                      PostReservertion(
+                          widget.userloggeddata!.ID,
                           idpackage,
-                          0,
+                          false,
                           _pagos.toInt(),
                           people.toInt(),
                           false,
@@ -677,7 +678,13 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                           precio?.toInt(),
                           DateFormat('dd-MM-yyyy').format(dateRange.start),
                           DateFormat('dd-MM-yyyy').format(dateRange.end),
-                          context);*/
+                          context);
+
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  ReservationPreview(userloggeddata)));
                     },
                     child: Text(
                       'Confirmar',
