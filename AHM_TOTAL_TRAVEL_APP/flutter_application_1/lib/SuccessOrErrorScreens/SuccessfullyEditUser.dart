@@ -134,7 +134,8 @@ class _SuccessEditUserViewState extends State<SuccessEditUser> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => NavigationHomeScreen(widget.userloggeddata),
+              builder: (context) => NavigationHomeScreen(
+                  MyHomePage(widget.userloggeddata), widget.userloggeddata),
             ),
           );
         },
