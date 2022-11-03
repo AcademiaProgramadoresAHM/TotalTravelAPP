@@ -8,6 +8,7 @@ import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'package:flutter_application_1/Models/customPackageViewModel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_HotelRoomsList.dart';
+import 'package:flutter_application_1/navigation_home_screen.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
@@ -767,11 +768,8 @@ class _RoomDetails extends State<RoomDetails> {
           width: 170,
           child:     ElevatedButton(
           onPressed: () {
-          Navigator.push(
-                        context,
-                    MaterialPageRoute(
-                    builder: (context) =>
-                         createCustomPackage( widget.Ciudad,widget.userloggeddata,1,customPackage)),);
+             Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen( createCustomPackage( widget.Ciudad,widget.userloggeddata,1,customPackage),widget.userloggeddata)),);
+          
           },
           child: Text(
             'Confirmar',

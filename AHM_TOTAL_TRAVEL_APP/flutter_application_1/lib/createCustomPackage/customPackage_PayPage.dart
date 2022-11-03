@@ -27,8 +27,8 @@ class _payPage extends State<payPage> {
  
 
   List<Padding> ResumePay(customPackageViewModel data, BuildContext context) {
-    List<Restaurants> restaurante = widget.customPackage.Restaurant!;
-    List<ActivitiesExtra> Activity = widget.customPackage.actividadesExtra!;
+    List<Restaurants>? restaurante = widget.customPackage.Restaurant;
+    List<ActivitiesExtra>? Activity = widget.customPackage.actividadesExtra;
 
     List<Padding> list = [];
     final _controller = PageController();

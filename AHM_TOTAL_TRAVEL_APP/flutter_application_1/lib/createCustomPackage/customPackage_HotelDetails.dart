@@ -4,6 +4,7 @@ import 'package:flutter_application_1/Models/CitiesViewModel.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_HotelRoomsList.dart';
+import 'package:flutter_application_1/navigation_home_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
@@ -258,12 +259,7 @@ class _HotelDetails extends State<HotelDetails> {
         padding: EdgeInsets.all(8.0),
         child: ElevatedButton(
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      RoomsListcustomPackage(widget.userloggeddata, hotelId,widget.Ciudad)),
-            );
+            Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(RoomsListcustomPackage(widget.userloggeddata, hotelId,widget.Ciudad),widget.userloggeddata)),);
           },
           child: Text(
             'Selecciona habitaciones',

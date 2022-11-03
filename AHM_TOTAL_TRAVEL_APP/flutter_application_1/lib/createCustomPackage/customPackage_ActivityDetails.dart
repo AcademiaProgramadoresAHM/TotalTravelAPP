@@ -5,6 +5,7 @@ import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'package:flutter_application_1/Models/customPackageViewModel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Activities.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
+import 'package:flutter_application_1/navigation_home_screen.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -463,11 +464,8 @@ class _ActivityDetails extends State<ActivityDetails> {
               setState(() {
                 confirm = true;
               });
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => customActivities(widget.userloggeddata, widget.Ciudad,ActivitiesCounter,widget.customPackage,widget.activityExtra)),
-            );
+                           Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(customActivities(widget.userloggeddata, widget.Ciudad,ActivitiesCounter,widget.customPackage,widget.activityExtra),widget.userloggeddata)),);
+            
           },
           child: Text(
             'Confirmar',
