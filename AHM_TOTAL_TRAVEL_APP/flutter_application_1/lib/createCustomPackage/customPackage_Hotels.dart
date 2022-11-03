@@ -4,6 +4,7 @@ import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
 import 'package:flutter_application_1/Models/RequestsViewModel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_HotelDetails.dart';
+import 'package:flutter_application_1/navigation_home_screen.dart';
 import 'package:http/http.dart' as http;
 import '../Models/CitiesViewModel.dart';
 import '../Models/UsersViewModel.dart';
@@ -54,7 +55,7 @@ class _HotelcustomPackage extends State<HotelcustomPackage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => HotelDetails(widget.userloggeddata, Hotel,Ciudad)),
+                  builder: (context) => NavigationHomeScreen( HotelDetails(widget.userloggeddata, Hotel,Ciudad),widget.userloggeddata)),
             );
           }
       }

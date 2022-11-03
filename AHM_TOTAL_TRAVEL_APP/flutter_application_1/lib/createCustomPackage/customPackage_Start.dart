@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_application_1/ComponentsLogin/Edit.dart';
 import 'package:flutter_application_1/Models/customPackageViewModel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
+import 'package:flutter_application_1/navigation_home_screen.dart';
 import 'package:flutter_application_1/utils/AppWidget.dart';
 import 'package:flutter_application_1/utils/T7Constant.dart';
 import 'package:flutter_application_1/utils/prueba2/T2Colors.dart';
@@ -317,7 +318,7 @@ final TextEditingController textEditingController = TextEditingController();
                                     CiudadesViewModel cityModel = new CiudadesViewModel(CitiesDropDownValue,null,null,null,null);
                                        Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) =>  createCustomPackage(cityModel, widget.userloggeddata, null, customPackage)),
+                                          MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(cityModel, widget.userloggeddata, null, customPackage),widget.userloggeddata)),
                                         );
                                       
                                   }

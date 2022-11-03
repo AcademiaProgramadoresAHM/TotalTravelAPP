@@ -121,7 +121,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   @override
   void initState() {
     drawerIndex = DrawerIndex.HOME;
-    screenView = MyHomePage(widget.userloggeddata);
+    screenView = widget.page;
     super.initState();
   }
 

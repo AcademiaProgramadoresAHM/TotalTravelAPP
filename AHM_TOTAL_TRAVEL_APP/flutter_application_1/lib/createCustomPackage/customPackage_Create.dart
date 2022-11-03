@@ -13,6 +13,7 @@ import 'package:flutter_application_1/createCustomPackage/customPackage_PayPage.
 import 'package:flutter_application_1/createCustomPackage/customPackage_Restaurants.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Start.dart';
 import 'package:flutter_application_1/hotel_booking/calendar_popup_view.dart';
+import 'package:flutter_application_1/navigation_home_screen.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import '../utils/T7Colors.dart';
 import 'package:intl/intl.dart';
@@ -239,8 +240,10 @@ class _createCustomPackage extends State<createCustomPackage> {
                               child:TextButton(
                                   onPressed: () {
                                       if(_currentStep == 0){
-                                          Navigator.push( context, MaterialPageRoute(builder: (context) => createPackage(widget.userloggeddata)),
-                      );
+                                          Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createPackage(widget.userloggeddata),widget.userloggeddata)),
+                                        );
                                       }else{
                                          _stepCancel();
                                       }
@@ -284,10 +287,12 @@ class _createCustomPackage extends State<createCustomPackage> {
                             primary: Color.fromRGBO(101, 45, 143, 1),
                           ),
                           onPressed: () {
+
                              Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) =>  HotelcustomPackage( widget.userloggeddata,widget.Ciudad)),
-                                        );
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => NavigationHomeScreen( HotelcustomPackage( widget.userloggeddata,widget.Ciudad),widget.userloggeddata)),
+                                );
                           },
                         ),
                       ),
@@ -340,10 +345,8 @@ class _createCustomPackage extends State<createCustomPackage> {
                             primary: Color.fromARGB(255, 101, 45, 143),
                           ),
                            onPressed: () {
-                             Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) =>  customActivities( widget.userloggeddata,widget.Ciudad,0,widget.customPackage,[])),
-                                        );
+                               Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen( customActivities( widget.userloggeddata,widget.Ciudad,0,widget.customPackage,[]),widget.userloggeddata)),);
+                            
                           },
                         ),
                       ),
@@ -368,10 +371,7 @@ class _createCustomPackage extends State<createCustomPackage> {
                             primary: Color.fromRGBO(101, 45, 143, 1),
                           ),
                           onPressed: () {
-                             Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) =>  RestaurantcustomPackage( widget.userloggeddata,widget.Ciudad,widget.customPackage,0,[])),
-                                        );
+                             Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen( RestaurantcustomPackage( widget.userloggeddata,widget.Ciudad,widget.customPackage,0,[]),widget.userloggeddata)),);
                           
                           },
                         ),
@@ -409,12 +409,8 @@ class _createCustomPackage extends State<createCustomPackage> {
                                     print("Hotel_Precio" + widget.customPackage.reHo_PrecioTotal.toString());
                                     print("Actividades" + widget.customPackage.actividadesExtra.toString());
                                     print("Restaurante" + widget.customPackage.Restaurant.toString());
-
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => payPage(widget.customPackage, )),
-                            );
+                                    Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen( payPage(widget.customPackage, ),widget.userloggeddata)),);
+                           
                           },
                         ),
                       ),

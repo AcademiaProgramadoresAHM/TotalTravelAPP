@@ -7,6 +7,7 @@ import 'package:flutter_application_1/Models/HotelsViewModel.dart';
 import 'package:flutter_application_1/Models/customPackageViewModel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_RestaurantDetails.dart';
+import 'package:flutter_application_1/navigation_home_screen.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:http/http.dart' as http;
@@ -483,13 +484,8 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
             }else{
            
               widget.customPackage.Restaurant = widget.Restaurante;
-               Navigator.push(
-                        context,
-                    MaterialPageRoute(
-                    builder: (context) =>
-                         createCustomPackage(
-                      widget.Ciudad,widget.userloggeddata,3,widget.customPackage)),
-              );
+               Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,3,widget.customPackage),widget.userloggeddata)),);
+               
             }
 
 

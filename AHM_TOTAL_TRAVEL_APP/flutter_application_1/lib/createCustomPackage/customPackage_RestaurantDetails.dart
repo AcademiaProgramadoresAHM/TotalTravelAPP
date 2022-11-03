@@ -6,6 +6,7 @@ import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'package:flutter_application_1/Models/customPackageViewModel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Restaurants.dart';
+import 'package:flutter_application_1/navigation_home_screen.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
@@ -494,11 +495,7 @@ class _RestaurantDetails extends State<RestaurantDetails> {
             setState(() {
               confirm = true;
             });
-             Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => RestaurantcustomPackage(widget.userloggeddata, widget.Ciudad,widget.customPackage,widget.RestaurantsAdd,widget.Restaurante)),
-            );
+             Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(RestaurantcustomPackage(widget.userloggeddata, widget.Ciudad,widget.customPackage,widget.RestaurantsAdd,widget.Restaurante),widget.userloggeddata)),);
           },
           child: Text(
             'Confirmar',

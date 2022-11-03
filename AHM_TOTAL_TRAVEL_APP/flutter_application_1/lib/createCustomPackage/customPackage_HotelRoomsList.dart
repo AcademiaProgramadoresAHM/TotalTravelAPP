@@ -78,8 +78,7 @@ Future<dynamic> FindRooms(idRoom,userloggeddata) async {
      var Json = DecoderAPI.fromJson(userMap);
      dataRoom = Json.data;
      var Room = dataRoom.where((x) => x['id'] == idRoom).toList();
-  
-       Navigator.push(
+         Navigator.push(
               context,
                MaterialPageRoute(builder: (context) =>  RoomDetails( widget.userloggeddata,Room, widget.Ciudad)),
               );

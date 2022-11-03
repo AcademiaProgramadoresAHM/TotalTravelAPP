@@ -7,6 +7,7 @@ import 'package:flutter_application_1/Models/customPackageViewModel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_ActivityDetails.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_HistoryActivities.dart';
+import 'package:flutter_application_1/navigation_home_screen.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:get/get.dart';
@@ -470,7 +471,7 @@ class _customActivities extends State<customActivities> {
               ),
               child: Text("Cancelar",style: TextStyle(color: Color(0xFF652D8F)),)),
               ElevatedButton(onPressed: () {
-                   Navigator.push(context,MaterialPageRoute(builder: (context) => createCustomPackage(widget.Ciudad,widget.userloggeddata,2,widget.customPackage)),);
+                  Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,2,widget.customPackage),widget.userloggeddata)),);
               },
               style: ElevatedButton.styleFrom(
                 primary: Color(0xFF652D8F),
@@ -482,13 +483,8 @@ class _customActivities extends State<customActivities> {
 
             }else{
             widget.customPackage.actividadesExtra = widget.activityExtra;
-               Navigator.push(
-                        context,
-                    MaterialPageRoute(
-                    builder: (context) =>
-                         createCustomPackage(
-                      widget.Ciudad,widget.userloggeddata,2,widget.customPackage)),
-                      );
+             Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,2,widget.customPackage),widget.userloggeddata)),);
+        
             }
           },
           child: Text(
