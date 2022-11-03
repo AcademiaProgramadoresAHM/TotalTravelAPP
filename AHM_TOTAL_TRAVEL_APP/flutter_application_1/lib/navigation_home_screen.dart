@@ -23,7 +23,9 @@ import 'main.dart';
 
 class NavigationHomeScreen extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
-  const NavigationHomeScreen(this.userloggeddata, {Key? key}) : super(key: key);
+  final Widget page;
+  const NavigationHomeScreen(this.page, this.userloggeddata, {Key? key})
+      : super(key: key);
 
   @override
   _NavigationHomeScreenState createState() => _NavigationHomeScreenState();
@@ -119,7 +121,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   @override
   void initState() {
     drawerIndex = DrawerIndex.HOME;
-    screenView = MyHomePage(widget.userloggeddata);
+    screenView = widget.page;
     super.initState();
   }
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 
-class ReservationInsert {
+class ReservationViewmodel {
   int? resvId;
   int? usuaId;
   int? paquId;
@@ -13,19 +13,25 @@ class ReservationInsert {
   bool? resvConfirmacionRestaurante;
   bool? resvConfirmacionTrans;
   double? resvPrecio;
+  String? reHo_FechaEntrada;
+  String? reHo_FechaSalida;
 
-  // ReservationInsert.fromJson(Map<String, dynamic> json)
-  //     : resvId = json["resv_ID"],
-  //       usuaId = json["usua_ID"],
-  //       paquId = json["paqu_ID"],
-  //       resvEsPersonalizado = json["resv_esPersonalizado"],
-  //       resvCantidadPagos = json["resv_CantidadPagos"],
-  //       resvNumeroPersonas = json["resv_NumeroPersonas"],
-  //       resvConfirmacionPago = json["resv_ConfirmacionPago"],
-  //       resvConfirmacionHotel = json["resv_ConfirmacionHotel"],
-  //       resvConfirmacionRestaurante = json["resv_ConfirmacionRestaurante"],
-  //       resvConfirmacionTrans = json["resv_ConfirmacionTrans"],
-  //       resvPrecio = json["resv_Precio"].toDouble();
+  Map<String, dynamic> toJson() => {
+        'resv_ID': resvId,
+        'usua_ID': usuaId,
+        'paqu_ID': paquId,
+        'resv_esPersonalizado': resvEsPersonalizado,
+        'resv_CantidadPagos': resvCantidadPagos,
+        'resv_NumeroPersonas': resvNumeroPersonas,
+        'resv_ConfirmacionPago': resvConfirmacionPago,
+        'resv_ConfirmacionHotel': resvConfirmacionHotel,
+        'resv_ConfirmacionRestaurante': resvConfirmacionRestaurante,
+        'reAE_FechaReservacion': resvConfirmacionTrans,
+        'resv_ConfirmacionTrans': resvConfirmacionTrans,
+        'resv_Precio': resvPrecio,
+        'reHo_FechaEntrada': reHo_FechaEntrada,
+        'reHo_FechaSalida': reHo_FechaSalida,
+      };
 }
 
 class ReservationUserViewModel {

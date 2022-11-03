@@ -1,0 +1,4 @@
+enum TotalTravelAction {
+  actionA,
+  actionB,
+}

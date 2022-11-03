@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/utils/AppWidget.dart';
+import 'package:flutter_application_1/utils/prueba2/T2Colors.dart';
 import 'package:nb_utils/nb_utils.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -12,6 +13,11 @@ import 'package:flutter_application_1/hotel_booking/hotel_app_theme.dart';
 import 'package:flutter_application_1/hotel_booking/model/PlanModal.dart';
 import 'package:flutter_application_1/Screens/Login.dart';
 import 'package:flutter_application_1/Screens/signUp_view.dart';
+import 'package:flutter_application_1/services/Notification_registration_services.dart';
+import 'package:flutter_application_1/config.dart';
+
+final notificationRegistrationService =
+    NotificationRegistrationService(Config.backendServiceEndpoint);
 
 class LandingPage extends StatefulWidget {
   @override
@@ -27,6 +33,7 @@ class LandingPageState extends State<LandingPage> {
   Color blueButtonAndTextColor = Color.fromARGB(255, 101, 45, 144);
 
   List<Container> LandScreenPackage(List<dynamic> data, BuildContext context) {
+    registerButtonClicked();
     List<PlanModal> PlanList = [];
     List<Container> list = [];
     final _controller = PageController();
@@ -58,6 +65,15 @@ class LandingPageState extends State<LandingPage> {
                   SingleChildScrollView(
                     child: Column(
                       children: [
+                        //ElevatedButton(
+                          //child: Text("Register"),
+                          //onPressed: registerButtonClicked,
+                        //),
+                        /*
+                        ElevatedButton(
+                          child: Text("Deregister"),
+                          onPressed: deregisterButtonClicked,
+                        ),*/
                         Text(element['nombre'], style: boldTextStyle(size: 30)),
                         Text(
                             element['descripcion_Paquete'] ??
@@ -141,6 +157,52 @@ class LandingPageState extends State<LandingPage> {
     super.dispose();
   }
 
+  void registerButtonClicked() async {
+    try {
+      await notificationRegistrationService.registerDevice([]);
+      //await showAlert(message: "Device registered");
+    } catch (e) {
+      //await showAlert(message: e);
+      print(e);
+    }
+  }
+
+  void deregisterButtonClicked() async {
+    try {
+      await notificationRegistrationService.deregisterDevice();
+      await showAlert(message: "Device deregistered");
+    } catch (e) {
+      await showAlert(message: e);
+    }
+  }
+
+  Future<void> showAlert({message: String, BuildContext? context}) async {
+    return showDialog<void>(
+      context: this.context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Total Travel'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text(message),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              child: Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -158,10 +220,10 @@ class LandingPageState extends State<LandingPage> {
                 child: Row(
                   children: [
                     Container(
-                      width: 300,
+                      width: 270,
                       height: 100,
                       child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(110, 5, 0, 5),
+                        padding: EdgeInsetsDirectional.fromSTEB(140, 5, 0, 5),
                         child: Image.asset(
                           'assets/images/logo-AHM-Fondo-Morao.png',
                           fit: BoxFit.contain,
@@ -171,7 +233,7 @@ class LandingPageState extends State<LandingPage> {
                     Flexible(
                         flex: 6,
                         child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 15),
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                           child: ElevatedButton(
                               style: ButtonStyle(
                                 //backgroundColor: MaterialStateProperty.all(Colors.red),
@@ -189,11 +251,22 @@ class LandingPageState extends State<LandingPage> {
                                     MaterialPageRoute(
                                         builder: (context) => Login()));
                               },
-                              child: Icon(
-                                Icons.account_circle,
-                                color: Colors.white,
-                                size: 24.0,
-                                semanticLabel: 'Sign In',
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    Icons.account_circle,
+                                    size: 18.0,
+                                    color: white,
+                                  ),
+                                  SizedBox(
+                                    width: 2,
+                                  ),
+                                  Text(
+                                    'Ingresar',
+                                    style:
+                                        TextStyle(color: white, fontSize: 18.0),
+                                  )
+                                ],
                               )),
                         )),
                   ],
@@ -229,6 +302,7 @@ class LandingPageState extends State<LandingPage> {
         ),
       ),
     );
+
   }
 
   // Login Button
@@ -253,3 +327,4 @@ class LandingPageState extends State<LandingPage> {
     );
   }
 }
+

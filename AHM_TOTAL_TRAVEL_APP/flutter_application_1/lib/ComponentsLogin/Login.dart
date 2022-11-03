@@ -31,7 +31,8 @@ Future<void> PostLogin(
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => NavigationHomeScreen(userLogin),
+          builder: (context) =>
+              NavigationHomeScreen(MyHomePage(userLogin), userLogin),
         ),
       );
     } else {

@@ -1,19 +1,20 @@
 class customPackageViewModel {
   int? usua_ID;
   int? hote_ID;
+  String? hote_Descripcion;
   String? reHo_FechaEntrada;
   String? reHo_FechaSalida;
   String? reHo_PrecioTotal;
+  int? hote_numNoches;
+  String? night;
   int? hote_numeroPersonas;
-  List<int>? habi_ID;
-  List<int>? acEx_ID;
-  int? acEx_numeroPersonas;
-  List<String>? reAE_FechaReservacion;
-  List<String>? reAE_HoraReservacion;
-  List<int>? rest_ID;
-  int? rest_numeroPersonas;
-  List<String>? rest_FechaReservacion;
-  List<String>? rest_HoraReservacion;
+  String? people;
+  int? habi_ID;
+  int? habi_Cantidad;
+  String? room;
+  String? habi_Descripcion;
+  List<ActivitiesExtra>? actividadesExtra;
+  List<Restaurants>? Restaurant;
 
   Map<String, dynamic> toJson() => {
         'usua_ID': usua_ID,
@@ -23,13 +24,48 @@ class customPackageViewModel {
         'reHo_PrecioTotal': reHo_PrecioTotal,
         'hote_numeroPersonas': hote_numeroPersonas,
         'habi_ID': habi_ID,
+        'actividadesExtra': actividadesExtra,
+        'restaurant': Restaurant,
+      };
+}
+
+
+class historyActivities{
+  List<int>? index;
+  List<int>? acEx_ID;
+  List<String>? acEx_Descripcion;
+  List<int>? acEx_numeroPersonas;
+  List<String>? reAE_FechaReservacion;
+  List<String>? reAE_HoraReservacion;
+  List<String>? reAE_Precios;
+
+  Map<String, dynamic> toJson() => {
+        'index': index,
         'acEx_ID': acEx_ID,
+        'acEx_Descripcion': acEx_Descripcion,
         'acEx_numeroPersonas': acEx_numeroPersonas,
         'reAE_FechaReservacion': reAE_FechaReservacion,
         'reAE_HoraReservacion': reAE_HoraReservacion,
-        'rest_ID': rest_ID,
-        'rest_numeroPersonas': rest_numeroPersonas,
-        'rest_FechaReservacion': rest_FechaReservacion,
-        'rest_HoraReservacion': rest_HoraReservacion,
+        'reAE_Precios': reAE_Precios,
       };
+
+}
+
+class ActivitiesExtra{
+  int? index;
+  int? acEx_ID;
+  String? acEx_Descripcion;
+  int? acEx_numeroPersonas;
+  String? reAE_FechaReservacion;
+  String? reAE_HoraReservacion;
+  String? reAE_Precios;
+}
+
+class Restaurants{
+  int? index;
+  int? rest_ID;
+  String? restaurante;
+  int? rest_numeroPersonas;
+  String? rest_FechaReservacion;
+  String? rest_HoraReservacion;
 }

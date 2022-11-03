@@ -14,6 +14,7 @@ import 'package:flutter_application_1/Components/Packages.dart';
 import 'package:flutter_application_1/Screens/LoadingPage.dart';
 
 import 'Models/HotelsViewModel.dart';
+import 'navigation_home_screen.dart';
 
 class FeedbackScreen extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
@@ -63,30 +64,6 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     // Navigator.of(context).pop();
   }
 
-  Future<dynamic> GetListHotels(userloggeddata) async {
-    List<dynamic> dataHotels;
-    String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/Hotels/List";
-    final headers = {
-      "Content-type": "application/json",
-      "Authorization": "bearer " + widget.userloggeddata!.Token!
-    };
-    final response = await http.get(Uri.parse(url_list), headers: headers);
-    if (response.statusCode == 200) {
-      Map<String, dynamic> userMap = jsonDecode(response.body);
-      var Json = Decodificador.fromJson(userMap);
-      List<dynamic> CardHoteles = [];
-      for (var i = 0; i < 1; i++) {
-        var JsonList = Json.data.toList();
-        CardHoteles.add(JsonList[i]);
-      }
-      print(CardHoteles);
-      return CardHoteles;
-    } else {
-      print("Error " + response.statusCode.toString());
-    }
-  }
-
   Future<dynamic> FindPackage(idPackage, userloggeddata) async {
     List<dynamic> datapackage;
     String url_list =
@@ -106,8 +83,9 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                DetailPackageScreen(widget.userloggeddata, package)),
+            builder: (context) => NavigationHomeScreen(
+                DetailPackageScreen(widget.userloggeddata, package),
+                widget.userloggeddata)),
       );
     } else {
       print("Error " + response.statusCode.toString());
@@ -405,26 +383,5 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
         ),
       ),
     );
-
-    Column _buildButtonColumn(Color color, IconData icon, String label) {
-      return Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(icon, color: color),
-          Container(
-            margin: const EdgeInsets.only(top: 8),
-            child: Text(
-              label,
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-                color: color,
-              ),
-            ),
-          ),
-        ],
-      );
-    }
   }
 }

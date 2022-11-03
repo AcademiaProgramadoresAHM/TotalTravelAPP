@@ -10,6 +10,8 @@ import 'package:flutter_application_1/Models/DefaultPackageViewModel.dart';
 import 'package:flutter_application_1/Models/ReservationViewModel.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
 
+import 'ReservDefaultPackage.dart';
+
 class DetailPackageScreen extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final List<dynamic> Package;
@@ -24,8 +26,9 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   double people = 2;
   double _pagos = 1;
+  String worldDuracion = "Días";
   DefaultPackageViewModel? DefaulPackageId;
-  ReservationInsert Reserv = new ReservationInsert();
+  ReservationViewmodel Reserv = new ReservationViewmodel();
 
   void SetPay(PayNumber) {
     setState(() {
@@ -272,7 +275,7 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(20, 0, 0, 0),
                                                 child: Text(
-                                                    element['duracion_Paquete'],
+                                                    "${element['duracion_Paquete']} ${worldDuracion}",
                                                     style: TextStyle(
                                                         fontSize: 18,
                                                         color: Colors.black)),
@@ -389,98 +392,11 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                           ),
                         ),
                         onPressed: () {
-                          showModalBottomSheet<void>(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return Container(
-                                height: 300,
-                                color: Colors.white,
-                                child: Center(
-                                  child: Column(
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 30, 0, 0),
-                                        child: Text(
-                                          "Cantidad de Pagos a Realizar",
-                                          style: TextStyle(
-                                            fontFamily: 'Outfit',
-                                            color: Colors.black,
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        child: SpinBox(
-                                          max: 10,
-                                          value: _pagos,
-                                          onChanged: (value) {
-                                            setState(() {
-                                              SetPay(value);
-                                            });
-                                          },
-                                        ),
-                                        padding: const EdgeInsets.only(
-                                            left: 30, right: 30),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 10, 0, 0),
-                                        child: Text(
-                                          "Personas",
-                                          style: TextStyle(
-                                            fontFamily: 'Outfit',
-                                            color: Colors.black,
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        child: SpinBox(
-                                          max: 30.0,
-                                          value: people,
-                                          onChanged: (people) {
-                                            SetPeople(people);
-                                          },
-                                        ),
-                                        padding: const EdgeInsets.only(
-                                            left: 30, right: 30, bottom: 10),
-                                      ),
-                                      SizedBox(
-                                        width: 300,
-                                        height: 40,
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            // bool result, result2, result3;
-                                            // PostReservertion(
-                                            //     widget.userloggeddata.ID,
-                                            //     element['id'],
-                                            //     false,
-                                            //     CantidadPagos,
-                                            //     NumPersonas,
-                                            //     false,
-                                            //     false,
-                                            //     false,
-                                            //     false,
-                                            //     element['precio'],
-                                            //     context);
-                                          },
-                                          child: Text(
-                                            'Confirmar',
-                                            style: TextStyle(fontSize: 18),
-                                          ),
-                                          style: ElevatedButton.styleFrom(
-                                            primary: Color(0xFF652D8F),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ReservDefaultPackage(
+                                    widget.userloggeddata, widget.Package)),
                           );
                         },
                       ),
