@@ -551,7 +551,7 @@ Future<void> PostReservHotel(
     int PrecioTotal,
     int UsuarioCrea,
     BuildContext context) async {
-  final headers = {'Content-Type': 'application/json; charset=UTF-8'};
+  final headers = {'Content-Type': 'application/json'};
   final uri =
       Uri.parse("https://totaltravel.somee.com/API/ReservationHotels/Insert");
   var map = new Map<String, dynamic>();
