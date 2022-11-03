@@ -216,8 +216,8 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                                       child: Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0, 0, 0, 0),
+                                                                .fromSTEB(15, 0,
+                                                                    0, 0),
                                                         child: Text(
                                                             element['numeroPersonas']
                                                                 .toString(),
@@ -268,7 +268,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                                       child: Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
-                                                                .fromSTEB(30, 0,
+                                                                .fromSTEB(35, 0,
                                                                     0, 0),
                                                         child: Text(
                                                             element['cantidadPagos']
@@ -547,33 +547,56 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                       thickness: 2,
                                       color: Color.fromARGB(255, 123, 26, 168),
                                     ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 20),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Flexible(
-                                            child: new Text('Hotel :',
-                                                style: TextStyle(
-                                                    fontFamily: 'Poppins',
-                                                    fontSize: 18,
-                                                    color: Colors.black)),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          flex: 6,
+                                          child: Column(
+                                            mainAxisSize: MainAxisSize.max,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 20, 0, 20),
+                                                child: Row(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  children: [
+                                                    Flexible(
+                                                      child: new Text('Hotel:',
+                                                          style: TextStyle(
+                                                              fontFamily:
+                                                                  'Poppins',
+                                                              fontSize: 18,
+                                                              color: Colors
+                                                                  .black)),
+                                                    ),
+                                                    Flexible(
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0, 0, 0, 0),
+                                                        child: Text(
+                                                            element[
+                                                                'nombre_Hotel'],
+                                                            style: TextStyle(
+                                                                fontFamily:
+                                                                    'Poppins',
+                                                                fontSize: 16,
+                                                                color: Colors
+                                                                    .black)),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          Flexible(
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(142, 0, 0, 0),
-                                              child: Text(
-                                                  element['nombre_Hotel'],
-                                                  style: TextStyle(
-                                                      fontFamily: 'Poppins',
-                                                      fontSize: 16,
-                                                      color: Colors.black)),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
