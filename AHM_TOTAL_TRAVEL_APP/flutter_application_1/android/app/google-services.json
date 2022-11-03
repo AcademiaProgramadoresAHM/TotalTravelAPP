@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "251918112207",
+    "project_id": "totaltraveldemo-ecb3b",
+    "storage_bucket": "totaltraveldemo-ecb3b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:251918112207:android:03c782a67bca3888396eba",
+        "android_client_info": {
+          "package_name": "com.totaltravel.flutter_application_1"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "251918112207-bahuvh055e36a6l3vmfbtj3p4lvc07c1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChqCqemHjBAMajWQHmyx97pfEFYJmmPlk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "251918112207-bahuvh055e36a6l3vmfbtj3p4lvc07c1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
