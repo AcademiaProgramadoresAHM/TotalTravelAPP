@@ -57,6 +57,7 @@ dependencies:
     flutter_spinbox: ^0.10.0
     flutter_rounded_date_picker: ^3.0.2
     flutter_secure_storage: ^3.3.3
+    requests: ^4.7.0
     
     
 dev_dependencies:
