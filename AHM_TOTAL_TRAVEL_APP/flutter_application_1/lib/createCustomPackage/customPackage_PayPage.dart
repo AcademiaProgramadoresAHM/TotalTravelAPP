@@ -5,6 +5,7 @@ import 'package:flutter_application_1/Models/CitiesViewModel.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'package:flutter_application_1/Models/customPackageViewModel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_PayProcess.dart';
 import 'package:flutter_application_1/hotel_booking/hotel_app_theme.dart';
 import 'package:flutter_application_1/utils/prueba2/AppWidget.dart';
 import 'package:get/get.dart';
@@ -244,7 +245,7 @@ class _payPage extends State<payPage> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           110, 0, 0, 0),
                                       child: Text(
-                                        "LPS. " + widget.customPackage.reHo_PrecioTotal.toString(),
+                                        "LPS. " + widget.customPackage.reHo_PrecioTotal.toString() + '.00',
                                         style: TextStyle(
                                           fontFamily: 'Poppins',
                                           color: Colors.black,
@@ -433,7 +434,7 @@ List<Padding> ResumeActivities(List<ActivitiesExtra>? data, BuildContext context
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           110, 0, 0, 0),
                                       child: Text(
-                                        "LPS. " + element.reAE_Precios.toString(),
+                                        "LPS. " + element.reAE_Precios.toString() + '0',
                                         style: TextStyle(
                                           fontFamily: 'Poppins',
                                           color: Colors.black,
@@ -819,7 +820,7 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           110, 0, 0, 0),
                                       child: Text(
-                                        "LPS. " + widget.customPackage.tprt_Total.toString(),
+                                        "LPS. " + widget.customPackage.tprt_Total.toString() + '.00',
                                         style: TextStyle(
                                           fontFamily: 'Poppins',
                                           color: Colors.black,
@@ -1260,7 +1261,10 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
           width: 170,
           child:     ElevatedButton(
           onPressed: () {
-           
+              
+              widget.customPackage.PackageTotal = Total.toString();
+              Navigator.push(context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(PayProcess(widget.userloggeddata,widget.customPackage),widget.userloggeddata)),);
+
           },
           child: Text(
             'Confirmar',

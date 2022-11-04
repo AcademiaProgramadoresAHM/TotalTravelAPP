@@ -23,7 +23,9 @@ class customPackageViewModel {
   String? horaSalida;
   int? tprt_cantidadPersonas;
   int? tprt_Total;
-
+  String? PackageTotal;
+  int?  tipoPago;
+  int? CantidadPagos;
   Map<String, dynamic> toJson() => {
         'usua_ID': usua_ID,
         'hote_ID': hote_ID,

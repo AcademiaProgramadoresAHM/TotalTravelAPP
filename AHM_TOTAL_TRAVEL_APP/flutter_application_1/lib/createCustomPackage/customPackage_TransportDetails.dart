@@ -244,6 +244,20 @@ class _TransportDetails extends State<TransportDetails> {
                                           ),
                                         ),
                                       ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            75, 20, 0, 0),
+                                        child: Text(
+                                         "Cantidad de personas",
+                                          style: TextStyle(
+                                            fontFamily: 'Outfit',
+                                            color: Colors.black,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                            
+                                          ),
+                                        ),
+                                      ),
                                     Padding(
                                                               padding: EdgeInsetsDirectional.fromSTEB(06, 10, 20, 0),
                                                               child: SpinBox(
