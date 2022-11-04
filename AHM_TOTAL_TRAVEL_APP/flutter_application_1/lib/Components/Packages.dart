@@ -8,6 +8,7 @@ import 'package:flutter_application_1/feedback_screen.dart';
 import 'package:flutter_application_1/utils/AppWidget.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../DefaultPackageScreens/ReservConfirm.dart';
+import '../Home_Screen.dart';
 import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
 import 'package:flutter_application_1/utils/prueba2/T2Colors.dart';
@@ -15,6 +16,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/hotel_booking/model/PlanModal.dart';
 
 import '../Screens/Personalizados.dart';
+import '../SuccessOrErrorScreens/SuccesfullyReserDefaultPackage.dart';
+import '../navigation_home_screen.dart';
 
 //-------------LISTADO DE PAQUETES PREDETERMINADOS--------------
 
@@ -463,94 +466,79 @@ Future<dynamic> FindReservation(idReservation, userloggeddata, context) async {
     var reservation =
         dataReservation.where((x) => x['id'] == idReservation).toList();
 
-    print(reservation);
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ReservConfirm()));
+    // print(reservation);
+    // Navigator.push(
+    //     context, MaterialPageRoute(builder: (context) => ReservConfirm()));
   } else {
     print("Error " + response.statusCode.toString());
   }
 }
 
 Future<void> PostReservertion(
-    int? UsuaID,
-    int? PaquID,
-    bool Personalizado,
-    int CantidadPagos,
-    int NumPersonas,
-    bool ConfrimPago,
-    bool ConfirmHotel,
-    bool ConfirmRestaurant,
-    bool ConfirmTrans,
-    int? Precio,
-    String FechaEntrada,
-    String FechaSalida,
+    // int? UsuaID,
+    // int? PaquID,
+    // bool Personalizado,
+    // int CantidadPagos,
+    // int NumPersonas,
+    // bool ConfrimPago,
+    // bool ConfirmHotel,
+    // bool ConfirmRestaurant,
+    // bool ConfirmTrans,
+    // double Precio,
+    // String FechaEntrada,
+    // String FechaSalida,
+    double? precio,
+    int? reservID,
+    int? HotID,
+    ReservationViewmodel? reservacion,
+    UserLoggedModel? userloggeddata,
     BuildContext context) async {
-  final headers = {'Content-type': 'application/json'};
+  final headers = {
+    "Content-type": "application/json",
+    "Authorization": "bearer " + userloggeddata!.Token!
+  };
   final uri = Uri.parse(
       "https://totaltravelapi.azurewebsites.net/API/Reservation/Insert");
-  var map = new Map<String, dynamic>();
-  map['usua_ID'] = UsuaID;
-  map['paqu_ID'] = PaquID;
-  map['resv_esPersonalizado'] = Personalizado;
-  map['resv_CantidadPagos'] = CantidadPagos;
-  map['resv_NumeroPersonas'] = NumPersonas;
-  map['resv_ConfirmacionPago'] = ConfrimPago;
-  map['resv_ConfirmacionHotel'] = ConfirmHotel;
-  map['resv_ConfirmacionRestaurante'] = ConfirmRestaurant;
-  map['resv_ConfirmacionTrans'] = ConfirmTrans;
-  map['resv_Precio'] = Precio;
-  map['resv_UsuarioCreacion'] = UsuaID;
-  map['reHo_FechaEntrada'] = FechaEntrada;
-  map['reHo_FechaSalida'] = FechaSalida;
 
-  http.Response response = await http.post(
+  final json = jsonEncode(reservacion);
+  final response = await http.post(
     uri,
     headers: headers,
-    body: map,
+    body: json,
   );
 
-  if (response.body != " ") {
-    // GetListadoReservation();
-  }
-
-  if (response.body != " ") {
+  if (response.body != "") {
+    print(response.body);
     Map<String, dynamic> userMap = jsonDecode(response.body);
     var dataInsert = Decodificador.fromJson(userMap);
-    var status = RequestStatus.fromJson(dataInsert.data);
-    if (status.CodeStatus! >= 0) {
-      if (status.CodeStatus == 0) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: white,
-          content: Text(
-            textAlign: TextAlign.center,
-            'La Reservacion ya fue Realizada',
-            style: TextStyle(color: redColor, fontSize: 16),
-          ),
-        ));
-      } else {
-        // PostReservHotel(FechaEntrada,FechaSalida,)
+    if (dataInsert.data != 0) {
+      RequestStatus status = RequestStatus.fromJson(dataInsert.data);
+      print(status.CodeStatus);
+      if (status.CodeStatus! >= 0) {
+        reservID = status.CodeStatus!.toInt();
+        print(reservID);
+        PostReservHotel(
+            reservacion!.reHo_FechaEntrada,
+            reservacion.reHo_FechaSalida,
+            reservID,
+            HotID!,
+            precio!.toInt(),
+            userloggeddata.ID,
+            userloggeddata,
+            context);
       }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        backgroundColor: white,
-        content: Text(
-          textAlign: TextAlign.center,
-          'Ha ocurrido un error.',
-          style: TextStyle(color: redColor, fontSize: 16),
-        ),
-      ));
-      // PostReservHotel(FechaEntrada, FechaSalida, /* id de reservacion */, , Precio, UsuaID, context)
     }
   }
 }
 
 Future<void> PostReservHotel(
-    String FechaEntrada,
-    String FechaSalida,
+    String? FechaEntrada,
+    String? FechaSalida,
     int ResvID,
     int? HotelID,
     int PrecioTotal,
     int? UsuarioCrea,
+    UserLoggedModel? userloggeddata,
     BuildContext context) async {
   ReservHotelModel ReservHotel = new ReservHotelModel();
 
@@ -561,7 +549,10 @@ Future<void> PostReservHotel(
   ReservHotel.reHoPrecioTotal = PrecioTotal;
   ReservHotel.reHoUsuarioCreacion = UsuarioCrea;
 
-  final headers = {'Content-Type': 'application/json'};
+  final headers = {
+    "Content-type": "application/json",
+    "Authorization": "bearer " + userloggeddata!.Token!
+  };
   final uri = Uri.parse(
       "https://totaltravelapi.azurewebsites.net/API/ReservationHotels/Insert");
   final json = jsonEncode(ReservHotel);
@@ -571,6 +562,26 @@ Future<void> PostReservHotel(
     headers: headers,
     body: json,
   );
+
+  if (response.body != "") {
+    print(response.body);
+    print(FechaEntrada);
+    print(FechaSalida);
+    Map<String, dynamic> userMap = jsonDecode(response.body);
+    var dataInsert = Decodificador.fromJson(userMap);
+    if (dataInsert.data != 0) {
+      RequestStatus status = RequestStatus.fromJson(dataInsert.data);
+      if (status.CodeStatus! >= 0) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => NavigationHomeScreen(
+                SuccesReservDefaultPack(userloggeddata), userloggeddata),
+          ),
+        );
+      }
+    }
+  }
 }
 //                                            /
 //                         _,.------....___,.' ',.-.

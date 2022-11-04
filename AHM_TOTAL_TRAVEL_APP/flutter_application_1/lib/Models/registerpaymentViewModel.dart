@@ -36,3 +36,15 @@ class registerpaymentViewModel {
         DNI = json['dni'],
         Telefono = json['telefono'];
 }
+
+class TypePaymentModel {
+  int? id;
+  String? descripcion;
+
+  Map<String, dynamic> toJson() => {"id": id, "descripcion": descripcion};
+  TypePaymentModel(this.id, this.descripcion);
+
+  TypePaymentModel.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        descripcion = json['descripcion'];
+}

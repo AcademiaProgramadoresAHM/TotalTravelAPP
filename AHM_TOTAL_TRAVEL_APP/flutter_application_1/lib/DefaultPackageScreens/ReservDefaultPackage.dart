@@ -83,8 +83,14 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => ReservationPreview(widget.userloggeddata,
-                  reservation, paquete, hotelId, packageDetail)));
+              builder: (context) => ReservationPreview(
+                  widget.userloggeddata,
+                  reservation,
+                  paquete,
+                  packageDetail,
+                  hotelId,
+                  precio,
+                  reservID)));
       // print(package);
       // Navigator.push(
       //   context,
@@ -446,12 +452,12 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                                                             elevation: 0.0,
                                                             shadowColor: Colors
                                                                 .transparent,
-                                                            //  backgroundColor:
-                                                            //    Color.fromARGB(
-                                                            //      255,
-                                                            //    234,
-                                                            //  234,
-                                                            //234),
+                                                            backgroundColor:
+                                                                Color.fromARGB(
+                                                                    255,
+                                                                    234,
+                                                                    234,
+                                                                    234),
                                                             padding:
                                                                 EdgeInsets.zero,
                                                           ),
@@ -490,9 +496,9 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                                                         elevation: 0.0,
                                                         shadowColor:
                                                             Colors.transparent,
-                                                        //         backgroundColor:
-                                                        //           Color.fromARGB(255,
-                                                        //             234, 234, 234),
+                                                        backgroundColor:
+                                                            Color.fromARGB(255,
+                                                                234, 234, 234),
                                                         padding:
                                                             EdgeInsets.zero,
                                                       ),
@@ -543,8 +549,8 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                                               style: ElevatedButton.styleFrom(
                                                 elevation: 0.0,
                                                 shadowColor: Colors.transparent,
-                                                //    backgroundColor: Color.fromARGB(
-                                                //      255, 234, 234, 234),
+                                                backgroundColor: Color.fromARGB(
+                                                    255, 234, 234, 234),
                                                 padding: EdgeInsets.zero,
                                               ),
                                               onPressed: () {
