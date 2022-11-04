@@ -94,3 +94,23 @@ class ReservationUserViewModel {
         UsuarioModifica = Json['usuarioModifica'],
         FechaModifica = Json['fechaModifica'];
 }
+
+class ReservHotelModel {
+  String? reHoFechaEntrada;
+  String? reHoFechaSalida;
+  int? resvId;
+  int? hoteId;
+  int? reHoPrecioTotal;
+  int? reHoUsuarioCreacion;
+  int? reHoUsuarioModifica;
+
+  Map<String, dynamic> toJson() => {
+        "reHo_FechaEntrada": reHoFechaEntrada.toString(),
+        "reHo_FechaSalida": reHoFechaSalida.toString(),
+        "resv_ID": resvId,
+        "hote_ID": hoteId,
+        "reHo_PrecioTotal": reHoPrecioTotal,
+        "reHo_UsuarioCreacion": reHoUsuarioCreacion,
+        "reHo_UsuarioModifica": reHoUsuarioModifica,
+      };
+}

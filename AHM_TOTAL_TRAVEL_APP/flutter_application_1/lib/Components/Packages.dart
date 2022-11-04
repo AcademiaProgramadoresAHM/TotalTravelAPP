@@ -8,6 +8,7 @@ import 'package:flutter_application_1/feedback_screen.dart';
 import 'package:flutter_application_1/utils/AppWidget.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../DefaultPackageScreens/ReservConfirm.dart';
+import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
 import 'package:flutter_application_1/utils/prueba2/T2Colors.dart';
 import 'package:http/http.dart' as http;
@@ -484,10 +485,7 @@ Future<void> PostReservertion(
     String FechaEntrada,
     String FechaSalida,
     BuildContext context) async {
-  final headers = {
-    "Content-type": "application/json",
-    "Authorization": "bearer " + userloggeddata!.Token!
-  };
+  final headers = {'Content-type': 'application/json'};
   final uri = Uri.parse(
       "https://totaltravelapi.azurewebsites.net/API/Reservation/Insert");
   var map = new Map<String, dynamic>();
@@ -505,7 +503,7 @@ Future<void> PostReservertion(
   map['reHo_FechaEntrada'] = FechaEntrada;
   map['reHo_FechaSalida'] = FechaSalida;
 
-  final response = await http.post(
+  http.Response response = await http.post(
     uri,
     headers: headers,
     body: map,
@@ -550,20 +548,29 @@ Future<void> PostReservHotel(
     String FechaEntrada,
     String FechaSalida,
     int ResvID,
-    int HotelID,
+    int? HotelID,
     int PrecioTotal,
-    int UsuarioCrea,
+    int? UsuarioCrea,
     BuildContext context) async {
+  ReservHotelModel ReservHotel = new ReservHotelModel();
+
+  ReservHotel.reHoFechaEntrada = FechaEntrada;
+  ReservHotel.reHoFechaSalida = FechaSalida;
+  ReservHotel.resvId = ResvID;
+  ReservHotel.hoteId = HotelID;
+  ReservHotel.reHoPrecioTotal = PrecioTotal;
+  ReservHotel.reHoUsuarioCreacion = UsuarioCrea;
+
   final headers = {'Content-Type': 'application/json'};
   final uri =
       Uri.parse("https://totaltravel.somee.com/API/ReservationHotels/Insert");
-  var map = new Map<String, dynamic>();
-  map['reHo_FechaEntrada'] = FechaEntrada;
-  map['reHo_FechaSalida'] = FechaSalida;
-  map['resv_ID'] = ResvID;
-  map['hote_ID'] = HotelID;
-  map['reHo_PrecioTotal'] = PrecioTotal;
-  map['reHo_UsuarioCreacion'] = UsuarioCrea;
+  final json = jsonEncode(ReservHotel);
+
+  final response = await http.post(
+    uri,
+    headers: headers,
+    body: json,
+  );
 }
 
 Future<void> PostReservDetail(int habitaID, int ResvHotelID, int usuariocrea,

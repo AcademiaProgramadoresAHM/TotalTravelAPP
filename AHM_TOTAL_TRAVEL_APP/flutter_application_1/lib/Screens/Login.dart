@@ -223,7 +223,7 @@ class _LoginViewState extends State<Login> {
                 SizedBox(
                   height: size.height * 0.01,
                 ),
-               
+
                 SizedBox(
                   height: size.height * 0.10,
                 ),
@@ -285,28 +285,33 @@ class _LoginViewState extends State<Login> {
 
   // Login Button
   Widget _loginButton() {
-    return SizedBox(
-      width: double.infinity,
-      height: 55,
-      child: ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor:
-              MaterialStateProperty.all(Color.fromRGBO(101, 45, 143, 1)),
-          shape: MaterialStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15),
+    return Center(
+      child: SizedBox(
+        width: 200,
+        height: 55,
+        child: ElevatedButton(
+          style: ButtonStyle(
+            backgroundColor:
+                MaterialStateProperty.all(Color.fromRGBO(101, 45, 143, 1)),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
             ),
           ),
-        ),
-        onPressed: () {
-          // Validate returns true if the form is valid, or false otherwise.
+          onPressed: () {
+            // Validate returns true if the form is valid, or false otherwise.
 
-          if (_formKey.currentState!.validate()) {
-            // ... Navigate To your Home Page
-            PostLogin(emailController.text, passwordController.text, context);
-          }
-        },
-        child: const Text('Ingresar'),
+            if (_formKey.currentState!.validate()) {
+              // ... Navigate To your Home Page
+              PostLogin(emailController.text, passwordController.text, context);
+            }
+          },
+          child: const Text(
+            'Ingresar',
+            style: TextStyle(fontSize: 24),
+          ),
+        ),
       ),
     );
   }

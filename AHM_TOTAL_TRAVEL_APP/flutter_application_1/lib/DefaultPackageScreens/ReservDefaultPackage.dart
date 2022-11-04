@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 
+import '../Components/Decodificador.dart';
 import '../Components/Packages.dart';
+import '../Models/RequestsViewModel.dart';
 import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
 import 'ReservationPreview.dart';
@@ -22,9 +27,11 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
   String wordPeople = "personas", wordPagos = "Pagos", worldduracion = "Días";
 
   int? idpackage;
+  int? hotelId;
   double? precio;
   double people = 2;
   double _pagos = 1;
+  int? reservID;
 
   ReservationViewmodel ReservationDefaultPack = new ReservationViewmodel();
 
@@ -38,6 +45,64 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
     setState(() {
       people = peopleNumber;
     });
+  }
+
+  Future<void> PostReservertion1(
+      int? UsuaID,
+      int? PaquID,
+      bool Personalizado,
+      int CantidadPagos,
+      int NumPersonas,
+      bool ConfrimPago,
+      bool ConfirmHotel,
+      bool ConfirmRestaurant,
+      bool ConfirmTrans,
+      double Precio,
+      String FechaEntrada,
+      String FechaSalida,
+      int? HotID,
+      BuildContext context) async {
+    ReservationViewmodel reservation = new ReservationViewmodel();
+    reservation.usuaId = UsuaID;
+    reservation.paquId = PaquID;
+    reservation.resvEsPersonalizado = Personalizado;
+    reservation.resvCantidadPagos = CantidadPagos;
+    reservation.resvNumeroPersonas = NumPersonas;
+    reservation.resvConfirmacionPago = ConfrimPago;
+    reservation.resvConfirmacionHotel = ConfirmHotel;
+    reservation.resvConfirmacionRestaurante = ConfirmRestaurant;
+    reservation.resvConfirmacionTrans = ConfirmTrans;
+    reservation.resvPrecio = Precio;
+    reservation.reHo_FechaEntrada = FechaEntrada;
+    reservation.reHo_FechaSalida = FechaSalida;
+
+    final headers = {
+      "Content-type": "application/json",
+      "Accept": "text/plain"
+    };
+    final uri = Uri.parse(
+        "https://totaltravelapi.azurewebsites.net/API/Reservation/Insert");
+
+    final json = jsonEncode(reservation);
+    http.Response response = await http.post(
+      uri,
+      headers: headers,
+      body: json,
+    );
+
+    if (response.body != " ") {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var dataInsert = Decodificador.fromJson(userMap);
+      if (dataInsert.data != 0) {
+        RequestStatus status = RequestStatus.fromJson(dataInsert.data);
+        print(status.CodeStatus);
+        if (status.CodeStatus! >= 0) {
+          reservID = status.CodeStatus!.toInt();
+          PostReservHotel(FechaEntrada, FechaSalida, reservID!, HotID!,
+              precio!.toInt(), UsuaID!, context);
+        }
+      }
+    }
   }
 
   DateTimeRange dateRange = DateTimeRange(
@@ -80,6 +145,7 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
       if (basePrice == true) {
         priceBase = element['precio'];
         idpackage = element['id'];
+        hotelId = element['iD_Hotel'];
         precio = element['precio'];
         basePrice = false;
       }
@@ -665,7 +731,7 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                   width: 170,
                   child: ElevatedButton(
                     onPressed: () {
-                      PostReservertion(
+                      PostReservertion1(
                           widget.userloggeddata!.ID,
                           idpackage,
                           false,
@@ -675,16 +741,11 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                           false,
                           false,
                           false,
-                          precio?.toInt(),
+                          precio!,
                           DateFormat('dd-MM-yyyy').format(dateRange.start),
                           DateFormat('dd-MM-yyyy').format(dateRange.end),
+                          hotelId,
                           context);
-
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) =>
-                                  ReservationPreview(userloggeddata)));
                     },
                     child: Text(
                       'Confirmar',
