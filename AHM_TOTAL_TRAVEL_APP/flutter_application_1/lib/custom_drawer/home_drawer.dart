@@ -3,6 +3,8 @@ import 'package:flutter_application_1/Screens/Login.dart';
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter_application_1/main.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -222,10 +224,50 @@ class _HomeDrawerState extends State<HomeDrawer> {
                   color: Colors.red,
                 ),
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => Login()),
-                  );
+                  showCupertinoDialog(
+                      context: context,
+                      builder: (BuildContext context) => Theme(
+                            data: ThemeData.light(),
+                            child: CupertinoAlertDialog(
+                              title: Text(
+                                'Cerrar Sesión?',
+                                style: boldTextStyle(
+                                    color: Colors.black, size: 18),
+                              ),
+                              content: Text(
+                                'Seguro de Cerrar la Sesión?',
+                                style: secondaryTextStyle(
+                                    color: Colors.black, size: 16),
+                              ),
+                              actions: [
+                                CupertinoDialogAction(
+                                  child: Text(
+                                    'Cancel',
+                                    style: primaryTextStyle(
+                                        color: dodgerBlue, size: 18),
+                                  ),
+                                  onPressed: () {
+                                    toasty(context, 'Cancel');
+                                    finish(context);
+                                  },
+                                ),
+                                CupertinoDialogAction(
+                                  child: Text(
+                                    'Cerrar Sesión',
+                                    style: primaryTextStyle(
+                                        color: redColor, size: 18),
+                                  ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => Login()),
+                                    );
+                                  },
+                                )
+                              ],
+                            ),
+                          ));
                 },
               ),
               SizedBox(

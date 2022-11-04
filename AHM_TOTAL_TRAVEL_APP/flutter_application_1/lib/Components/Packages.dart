@@ -562,8 +562,8 @@ Future<void> PostReservHotel(
   ReservHotel.reHoUsuarioCreacion = UsuarioCrea;
 
   final headers = {'Content-Type': 'application/json'};
-  final uri =
-      Uri.parse("https://totaltravel.somee.com/API/ReservationHotels/Insert");
+  final uri = Uri.parse(
+      "https://totaltravelapi.azurewebsites.net/API/ReservationHotels/Insert");
   final json = jsonEncode(ReservHotel);
 
   final response = await http.post(
@@ -571,17 +571,6 @@ Future<void> PostReservHotel(
     headers: headers,
     body: json,
   );
-}
-
-Future<void> PostReservDetail(int habitaID, int ResvHotelID, int usuariocrea,
-    BuildContext context) async {
-  final headers = {'Content-Type': 'application/json; charset=UTF-8'};
-  final uri =
-      Uri.parse("https://totaltravel.somee.com/API/ReservationDetails/Insert");
-  var map = new Map<String, dynamic>();
-  map['habi_ID'] = habitaID;
-  map['reHo_ID'] = ResvHotelID;
-  map['reDe_UsuarioCreacion'] = usuariocrea;
 }
 //                                            /
 //                         _,.------....___,.' ',.-.

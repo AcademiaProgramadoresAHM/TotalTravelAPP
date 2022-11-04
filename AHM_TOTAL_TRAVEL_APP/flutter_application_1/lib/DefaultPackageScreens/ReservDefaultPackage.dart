@@ -6,10 +6,10 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
 import '../Components/Decodificador.dart';
-import '../Components/Packages.dart';
 import '../Models/RequestsViewModel.dart';
 import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
+import 'package:flutter_application_1/Models/DefaultPackageViewModel.dart';
 import 'ReservationPreview.dart';
 
 class ReservDefaultPackage extends StatefulWidget {
@@ -26,14 +26,26 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
   var priceBase;
   String wordPeople = "personas", wordPagos = "Pagos", worldduracion = "Días";
 
+//variables de datos del paquete
   int? idpackage;
   int? hotelId;
   double? precio;
+  String? nombrepaque;
+  String? DescripPaque;
+  String? duracionPaque;
+  String? HotelName;
+  String? HotelDescrip;
+  String? Restaurante;
+
+//Variables de datos de la reservacion
   double people = 2;
   double _pagos = 1;
   int? reservID;
 
-  ReservationViewmodel ReservationDefaultPack = new ReservationViewmodel();
+  ReservationViewmodel reservation = new ReservationViewmodel();
+  DefaultPackageModel paquete = new DefaultPackageModel();
+  DefaultPackageDetailsModel paqueteactividades =
+      new DefaultPackageDetailsModel();
 
   void SetPay(PayNumber) {
     setState(() {
@@ -47,50 +59,91 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
     });
   }
 
+  Future<dynamic> FindPackage(idPackage, userloggeddata) async {
+    List<dynamic> datapackage;
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/DefaultPackagesDetails/List";
+    final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+    final response = await http.get(Uri.parse(url_list), headers: headers);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var Json = Decodificador.fromJson(userMap);
+      datapackage = Json.data;
+      var packageDetail =
+          datapackage.where((x) => x['paqueteID'] == idPackage).toList();
+
+      // paqueteactividades.paqueteId = idpackage;
+      // paqueteactividades.nombrePaquete = nombrepaque;
+      // paqueteactividades.descripcionPaquete = DescripPaque;
+      // paqueteactividades.duracionPaquete = duracionPaque;
+
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ReservationPreview(widget.userloggeddata,
+                  reservation, paquete, hotelId, packageDetail)));
+      // print(package);
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //       builder: (context) => NavigationHomeScreen(
+      //           DetailPackageScreen(widget.userloggeddata, package),
+      //           widget.userloggeddata)),
+      // );
+    } else {
+      print("Error " + response.statusCode.toString());
+    }
+  }
+
   Future<void> PostReservertion1(
-      int? UsuaID,
-      int? PaquID,
-      bool Personalizado,
-      int CantidadPagos,
-      int NumPersonas,
-      bool ConfrimPago,
-      bool ConfirmHotel,
-      bool ConfirmRestaurant,
-      bool ConfirmTrans,
-      double Precio,
-      String FechaEntrada,
-      String FechaSalida,
+      // int? UsuaID,
+      // int? PaquID,
+      // bool Personalizado,
+      // int CantidadPagos,
+      // int NumPersonas,
+      // bool ConfrimPago,
+      // bool ConfirmHotel,
+      // bool ConfirmRestaurant,
+      // bool ConfirmTrans,
+      // double Precio,
+      // String FechaEntrada,
+      // String FechaSalida,
       int? HotID,
+      ReservationViewmodel reservacion,
       BuildContext context) async {
-    ReservationViewmodel reservation = new ReservationViewmodel();
-    reservation.usuaId = UsuaID;
-    reservation.paquId = PaquID;
-    reservation.resvEsPersonalizado = Personalizado;
-    reservation.resvCantidadPagos = CantidadPagos;
-    reservation.resvNumeroPersonas = NumPersonas;
-    reservation.resvConfirmacionPago = ConfrimPago;
-    reservation.resvConfirmacionHotel = ConfirmHotel;
-    reservation.resvConfirmacionRestaurante = ConfirmRestaurant;
-    reservation.resvConfirmacionTrans = ConfirmTrans;
-    reservation.resvPrecio = Precio;
-    reservation.reHo_FechaEntrada = FechaEntrada;
-    reservation.reHo_FechaSalida = FechaSalida;
+    // reservation.usuaId = UsuaID;
+    // reservation.paquId = PaquID;
+    // reservation.resvEsPersonalizado = Personalizado;
+    // reservation.resvCantidadPagos = CantidadPagos;
+    // reservation.resvNumeroPersonas = NumPersonas;
+    // reservation.resvConfirmacionPago = ConfrimPago;
+    // reservation.resvConfirmacionHotel = ConfirmHotel;
+    // reservation.resvConfirmacionRestaurante = ConfirmRestaurant;
+    // reservation.resvConfirmacionTrans = ConfirmTrans;
+    // reservation.resvPrecio = Precio;
+    // reservation.UsuarioCrea = widget.userloggeddata!.ID;
+    // reservation.reHo_FechaEntrada = FechaEntrada;
+    // reservation.reHo_FechaSalida = FechaSalida;
 
     final headers = {
       "Content-type": "application/json",
-      "Accept": "text/plain"
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
     };
     final uri = Uri.parse(
         "https://totaltravelapi.azurewebsites.net/API/Reservation/Insert");
 
-    final json = jsonEncode(reservation);
-    http.Response response = await http.post(
+    final json = jsonEncode(reservacion);
+    final response = await http.post(
       uri,
       headers: headers,
       body: json,
     );
 
-    if (response.body != " ") {
+    if (response.body != "") {
+      print(response.body);
       Map<String, dynamic> userMap = jsonDecode(response.body);
       var dataInsert = Decodificador.fromJson(userMap);
       if (dataInsert.data != 0) {
@@ -98,9 +151,59 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
         print(status.CodeStatus);
         if (status.CodeStatus! >= 0) {
           reservID = status.CodeStatus!.toInt();
-          PostReservHotel(FechaEntrada, FechaSalida, reservID!, HotID!,
-              precio!.toInt(), UsuaID!, context);
+          print(reservID);
+          PostReservHotel(
+              reservacion.reHo_FechaEntrada,
+              reservacion.reHo_FechaSalida,
+              reservID!,
+              HotID!,
+              precio!.toInt(),
+              widget.userloggeddata!.ID,
+              context);
         }
+      }
+    }
+  }
+
+  Future<void> PostReservHotel(
+      String? FechaEntrada,
+      String? FechaSalida,
+      int ResvID,
+      int? HotelID,
+      int PrecioTotal,
+      int? UsuarioCrea,
+      BuildContext context) async {
+    ReservHotelModel ReservHotel = new ReservHotelModel();
+
+    ReservHotel.reHoFechaEntrada = FechaEntrada;
+    ReservHotel.reHoFechaSalida = FechaSalida;
+    ReservHotel.resvId = ResvID;
+    ReservHotel.hoteId = HotelID;
+    ReservHotel.reHoPrecioTotal = PrecioTotal;
+    ReservHotel.reHoUsuarioCreacion = UsuarioCrea;
+
+    final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+    final uri = Uri.parse(
+        "https://totaltravelapi.azurewebsites.net/API/ReservationHotels/Insert");
+    final json = jsonEncode(ReservHotel);
+
+    final response = await http.post(
+      uri,
+      headers: headers,
+      body: json,
+    );
+
+    if (response.body != "") {
+      print(response.body);
+      print(FechaEntrada);
+      print(FechaSalida);
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var dataInsert = Decodificador.fromJson(userMap);
+      if (dataInsert.data != 0) {
+        RequestStatus status = RequestStatus.fromJson(dataInsert.data);
       }
     }
   }
@@ -147,6 +250,12 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
         idpackage = element['id'];
         hotelId = element['iD_Hotel'];
         precio = element['precio'];
+        nombrepaque = element['nombre'];
+        DescripPaque = element['descripcion_Paquete'];
+        duracionPaque = element['duracion_Paquete'];
+        HotelName = element['hotel'];
+        HotelDescrip = element['descripcion_Hotel'];
+        Restaurante = element['restaurante'];
         basePrice = false;
       }
       String? selectedValue;
@@ -603,14 +712,30 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
         ),
       );
 
-      ReservationDefaultPack.usuaId = widget.userloggeddata!.ID;
-      ReservationDefaultPack.paquId = element['id'];
-      ReservationDefaultPack.reHo_FechaEntrada =
-          DateFormat('dd-MM-yyyy').format(dateRange.start);
-      ReservationDefaultPack.reHo_FechaSalida =
-          DateFormat('dd-MM-yyyy').format(dateRange.end);
-      ReservationDefaultPack.resvPrecio = element['precio'];
-      ReservationDefaultPack.resvCantidadPagos = people.toInt();
+      reservation.usuaId = widget.userloggeddata!.ID;
+      reservation.paquId = element['id'];
+      reservation.resvEsPersonalizado = false;
+      reservation.resvCantidadPagos = _pagos.toInt();
+      reservation.resvNumeroPersonas = people.toInt();
+      reservation.resvConfirmacionPago = false;
+      reservation.resvConfirmacionHotel = true;
+      reservation.resvConfirmacionRestaurante = false;
+      reservation.resvConfirmacionTrans = false;
+      reservation.resvPrecio = element['precio'];
+      reservation.UsuarioCrea = widget.userloggeddata!.ID;
+      reservation.reHo_FechaEntrada =
+          DateFormat('yyyy-MM-dd').format(dateRange.start);
+      reservation.reHo_FechaSalida =
+          DateFormat('yyyy-MM-dd').format(dateRange.end);
+
+      paquete.id = idpackage;
+      paquete.nombre = nombrepaque;
+      paquete.descripcionPaquete = DescripPaque;
+      paquete.duracionPaquete = duracionPaque;
+      paquete.precio = precio;
+      paquete.hotel = HotelName;
+      paquete.descripcionHotel = HotelDescrip;
+      paquete.restaurante = Restaurante;
     });
     return list;
   }
@@ -731,21 +856,22 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                   width: 170,
                   child: ElevatedButton(
                     onPressed: () {
-                      PostReservertion1(
-                          widget.userloggeddata!.ID,
-                          idpackage,
-                          false,
-                          _pagos.toInt(),
-                          people.toInt(),
-                          false,
-                          false,
-                          false,
-                          false,
-                          precio!,
-                          DateFormat('dd-MM-yyyy').format(dateRange.start),
-                          DateFormat('dd-MM-yyyy').format(dateRange.end),
-                          hotelId,
-                          context);
+                      FindPackage(idpackage, widget.userloggeddata);
+                      // PostReservertion1(
+                      //     widget.userloggeddata!.ID,
+                      //     idpackage,
+                      //     false,
+                      //     _pagos.toInt(),
+                      //     people.toInt(),
+                      //     false,
+                      //     false,
+                      //     false,
+                      //     false,
+                      //     precio!,
+                      //     DateFormat('yyyy-MM-dd').format(dateRange.start),
+                      //     DateFormat('yyyy-MM-dd').format(dateRange.end),
+                      //     hotelId,
+                      //     context);
                     },
                     child: Text(
                       'Confirmar',
