@@ -19,7 +19,7 @@ class RoomDetails extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final List<dynamic> Room;
   final CiudadesViewModel Ciudad;
-  const RoomDetails(this.userloggeddata, this.Room,this.Ciudad,{Key? key})
+  const RoomDetails(this.userloggeddata, this.Room, this.Ciudad, {Key? key})
       : super(key: key);
 
   @override
@@ -31,7 +31,7 @@ class _RoomDetails extends State<RoomDetails> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController? _QuestController;
   TextEditingController? _RoomsController;
-  double peopleFinal= 2;
+  double peopleFinal = 2;
   double rooms = 1;
   String wordPeople = "personas", wordRooms = "habitación";
   bool? ChangeNight, basePrice = true, ChangePeople;
@@ -50,9 +50,7 @@ class _RoomDetails extends State<RoomDetails> {
       peopleFinal == 1 ? wordPeople = "persona" : wordPeople = "personas";
     });
     ChangePeople = true;
-    
   }
- 
 
   DateTimeRange dateRange = DateTimeRange(
       start: DateTime(
@@ -61,10 +59,8 @@ class _RoomDetails extends State<RoomDetails> {
           DateTime.now().year, DateTime.now().month, DateTime.now().day + 1));
   var nights = 1, previousNight = 1;
   String wordNight = "noche";
-  
 
   List<Padding> RoomDetails(List<dynamic> data, BuildContext context) {
-    
     Future pickDateRange() async {
       DateTimeRange? newDataRange = await showDateRangePicker(
         context: context,
@@ -80,7 +76,7 @@ class _RoomDetails extends State<RoomDetails> {
         dateRange = newDataRange;
         final difference = dateRange.duration.inDays;
         nights = difference;
-        nights == 0 ? nights = 1: nights = difference;
+        nights == 0 ? nights = 1 : nights = difference;
         nights == 1 ? wordNight = "noche" : wordNight = "noches";
         ChangeNight = true;
       });
@@ -98,28 +94,27 @@ class _RoomDetails extends State<RoomDetails> {
     List<String> imageUrl;
 
     data.forEach((element) {
-
-      if(basePrice == true){
-         priceBase = element['precio'];
-         basePrice = false;
+      if (basePrice == true) {
+        priceBase = element['precio'];
+        basePrice = false;
       }
-    
-      if(ChangeNight == true || ChangePeople == true){
+
+      if (ChangeNight == true || ChangePeople == true) {
         var percentage = priceBase * 0.17;
         var price, peopleSerie;
         peopleSerie = peopleFinal - 2;
-        if(nights < previousNight){
-        var totalNights = previousNight - nights;
+        if (nights < previousNight) {
+          var totalNights = previousNight - nights;
           price = priceBase * totalNights;
-        for (var i = 1; i <= peopleSerie; i++) {
-            price  = price + percentage;
-        }
-        }else{
+          for (var i = 1; i <= peopleSerie; i++) {
+            price = price + percentage;
+          }
+        } else {
           price = priceBase * nights;
-           for (var i = 1; i <= peopleSerie; i++) {
-            price  = price + percentage;
+          for (var i = 1; i <= peopleSerie; i++) {
+            price = price + percentage;
+          }
         }
-      }
         element['precio'] = price;
         ChangeNight = false;
         ChangePeople = false;
@@ -129,11 +124,10 @@ class _RoomDetails extends State<RoomDetails> {
 
       for (var i = 1; i <= element['camas']; i++) {
         items.add('${i.toString()}');
-      }  
+      }
 
       String? selectedValue;
       List<DropdownMenuItem<String>> _addDividersAfterItems(
-        
           List<String> items) {
         List<DropdownMenuItem<String>> _menuItems = [];
         for (var item in items) {
@@ -162,7 +156,6 @@ class _RoomDetails extends State<RoomDetails> {
         }
         return _menuItems;
       }
-      
 
       List<double> _getCustomItemsHeights() {
         List<double> _itemsHeights = [];
@@ -313,14 +306,16 @@ class _RoomDetails extends State<RoomDetails> {
                                                                 .format(
                                                                     dateRange
                                                                         .start),
-                                                                style: TextStyle(color: Color(0xFF652D8F)),
+                                                            style: TextStyle(
+                                                                color: Color(
+                                                                    0xFF652D8F)),
                                                           ),
                                                           style: ElevatedButton
                                                               .styleFrom(
                                                             elevation: 0.0,
                                                             shadowColor: Colors
                                                                 .transparent,
-                                                            backgroundColor: Color.fromARGB(255, 234, 234, 234),
+                                                            //      backgroundColor: Color.fromARGB(255, 234, 234, 234),
                                                             padding:
                                                                 EdgeInsets.zero,
                                                           ),
@@ -357,15 +352,19 @@ class _RoomDetails extends State<RoomDetails> {
                                                       style: ElevatedButton
                                                           .styleFrom(
                                                         elevation: 0.0,
-                                                        shadowColor:Colors.transparent,
-                                                        backgroundColor: Color.fromARGB(255, 234, 234, 234),
-                                                        padding: EdgeInsets.zero,
+                                                        shadowColor:
+                                                            Colors.transparent,
+                                                        //           backgroundColor: Color.fromARGB(255, 234, 234, 234),
+                                                        padding:
+                                                            EdgeInsets.zero,
                                                       ),
                                                       child: Text(
                                                         DateFormat('dd-MM-yyyy')
                                                             .format(
                                                                 dateRange.end),
-                                                                style: TextStyle(color: Color(0xFF652D8F)),
+                                                        style: TextStyle(
+                                                            color: Color(
+                                                                0xFF652D8F)),
                                                       ),
                                                       onPressed: pickDateRange,
                                                     )),
@@ -400,12 +399,13 @@ class _RoomDetails extends State<RoomDetails> {
                                             child: ElevatedButton(
                                               child: Text(
                                                 "${nights} ${wordNight}, ${rooms.round().toString()} ${wordRooms}  ${peopleFinal.round().toString()} ${wordPeople}",
-                                                style: TextStyle(color: Color(0xFF652D8F)),
+                                                style: TextStyle(
+                                                    color: Color(0xFF652D8F)),
                                               ),
                                               style: ElevatedButton.styleFrom(
                                                 elevation: 0.0,
                                                 shadowColor: Colors.transparent,
-                                                backgroundColor: Color.fromARGB(255, 234, 234, 234),
+                                                //   backgroundColor: Color.fromARGB(255, 234, 234, 234),
                                                 padding: EdgeInsets.zero,
                                               ),
                                               onPressed: () {
@@ -447,9 +447,14 @@ class _RoomDetails extends State<RoomDetails> {
                                                                 min: 1,
                                                                 max: 10,
                                                                 value: rooms,
-                                                                onChanged: (value) {
-                                                                  if(value <= peopleFinal){
-                                                                     SetRooms(value,element['id']);  
+                                                                onChanged:
+                                                                    (value) {
+                                                                  if (value <=
+                                                                      peopleFinal) {
+                                                                    SetRooms(
+                                                                        value,
+                                                                        element[
+                                                                            'id']);
                                                                   }
                                                                 },
                                                               ),
@@ -487,10 +492,12 @@ class _RoomDetails extends State<RoomDetails> {
                                                               child: SpinBox(
                                                                 min: 1,
                                                                 max: 30.0,
-                                                                value: peopleFinal,
+                                                                value:
+                                                                    peopleFinal,
                                                                 onChanged:
                                                                     (people) {
-                                                                 SetPeople(people);
+                                                                  SetPeople(
+                                                                      people);
                                                                 },
                                                               ),
                                                               padding:
@@ -507,13 +514,25 @@ class _RoomDetails extends State<RoomDetails> {
                                                               child:
                                                                   ElevatedButton(
                                                                 onPressed: () {
-                                                                  var roomMax = peopleFinal.toInt() /(rooms.toInt() * element['capacidad']);
-                                                      
-                                                                  if (roomMax >1) {
-                                                                    var quantMax = peopleFinal.toInt() / element['capacidad'];
-                                                                    if(quantMax - quantMax.toInt() < 0.5){
-                                                                      quantMax  = quantMax + 1;
-                                                                    }           
+                                                                  var roomMax = peopleFinal
+                                                                          .toInt() /
+                                                                      (rooms.toInt() *
+                                                                          element[
+                                                                              'capacidad']);
+
+                                                                  if (roomMax >
+                                                                      1) {
+                                                                    var quantMax = peopleFinal
+                                                                            .toInt() /
+                                                                        element[
+                                                                            'capacidad'];
+                                                                    if (quantMax -
+                                                                            quantMax.toInt() <
+                                                                        0.5) {
+                                                                      quantMax =
+                                                                          quantMax +
+                                                                              1;
+                                                                    }
                                                                     showDialog<
                                                                         String>(
                                                                       context:
@@ -566,8 +585,7 @@ class _RoomDetails extends State<RoomDetails> {
                                                                                 () {
                                                                               Navigator.pop(context, 'OK');
 
-
-                                                                              SetRooms(quantMax,element['id']);
+                                                                              SetRooms(quantMax, element['id']);
                                                                               Navigator.pop(context);
                                                                             },
                                                                             child:
@@ -608,7 +626,11 @@ class _RoomDetails extends State<RoomDetails> {
                                             70, 30, 0, 0),
                                         child: Text(
                                           "Total:     "
-                                          'HNL ' + element['precio'].toInt().toString() + '.00',
+                                                  'HNL ' +
+                                              element['precio']
+                                                  .toInt()
+                                                  .toString() +
+                                              '.00',
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
                                             fontFamily: 'Lexend Deca',
@@ -639,21 +661,22 @@ class _RoomDetails extends State<RoomDetails> {
         ),
       );
 
-    customPackage.usua_ID = widget.userloggeddata!.ID;
-    customPackage.hote_ID = element['hotelID'];
-    customPackage.hote_Descripcion = element['hotel'];
-    customPackage.reHo_FechaEntrada =  DateFormat('dd-MM-yyyy').format(dateRange.start);
-    customPackage.reHo_FechaSalida = DateFormat('dd-MM-yyyy').format(dateRange.end);
-    customPackage.reHo_PrecioTotal = element['precio'].toInt().toString();
-    customPackage.hote_numNoches = nights.toInt();
-    customPackage.night = wordNight;
-    customPackage.hote_numeroPersonas = peopleFinal.toInt();
-    customPackage.people = wordPeople;
-    customPackage.habi_ID = element['id'];
-    customPackage.habi_Cantidad = rooms.round();
-    customPackage.room = wordRooms;
-    customPackage.habi_Descripcion = element['habitacion'];
-
+      customPackage.usua_ID = widget.userloggeddata!.ID;
+      customPackage.hote_ID = element['hotelID'];
+      customPackage.hote_Descripcion = element['hotel'];
+      customPackage.reHo_FechaEntrada =
+          DateFormat('dd-MM-yyyy').format(dateRange.start);
+      customPackage.reHo_FechaSalida =
+          DateFormat('dd-MM-yyyy').format(dateRange.end);
+      customPackage.reHo_PrecioTotal = element['precio'].toInt().toString();
+      customPackage.hote_numNoches = nights.toInt();
+      customPackage.night = wordNight;
+      customPackage.hote_numeroPersonas = peopleFinal.toInt();
+      customPackage.people = wordPeople;
+      customPackage.habi_ID = element['id'];
+      customPackage.habi_Cantidad = rooms.round();
+      customPackage.room = wordRooms;
+      customPackage.habi_Descripcion = element['habitacion'];
     });
     return list;
   }
@@ -661,128 +684,138 @@ class _RoomDetails extends State<RoomDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF652D8F),
-        automaticallyImplyLeading: false,
-        title: Align(
-          alignment: AlignmentDirectional(0.5, -0.05),
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 10, 10, 10),
-            child: Text(
-              'Agencia Total Travel',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                color: Colors.white,
-                fontSize: 24,
-              ),
-            ),
-          ),
-        ),
-        actions: [
-          Align(
-            alignment: AlignmentDirectional(-0.05, 0.05),
+        appBar: AppBar(
+          backgroundColor: Color(0xFF652D8F),
+          automaticallyImplyLeading: false,
+          title: Align(
+            alignment: AlignmentDirectional(0.5, -0.05),
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-              child: Image.asset(
-                'assets/images/logo-AHM-Fondo-Morao.png',
-                width: 50,
-                height: 50,
-                fit: BoxFit.cover,
+              padding: EdgeInsetsDirectional.fromSTEB(0, 10, 10, 10),
+              child: Text(
+                'Agencia Total Travel',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
               ),
             ),
           ),
-        ],
-        centerTitle: false,
-        elevation: 2,
-      ),
-      body: SingleChildScrollView(
-
-          // color:
-          //     HotelAppTheme.buildLightTheme().backgroundColor,
-          child: Column(
-        children: [
-          FutureBuilder<dynamic>(
-            builder: (context, snapshot) {
-              return Wrap(
-                  spacing: 8,
-                  runSpacing: 4,
-                  alignment: WrapAlignment.start,
-                  crossAxisAlignment: WrapCrossAlignment.start,
-                  direction: Axis.horizontal,
-                  runAlignment: WrapAlignment.start,
-                  verticalDirection: VerticalDirection.down,
-                  clipBehavior: Clip.none,
-                  children: RoomDetails(widget.Room, context));
-            },
-          ),
-        ],
-      )),
-       bottomNavigationBar: Row(children: [
-        Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
-        child:
-        SizedBox( 
-          width: 175,
-          height: 35,
-          child:     ElevatedButton(
-          onPressed: () => showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-          child: Text('¿Esta seguro que desea continuar?',),
-          ) ,
-          actions: <Widget>[
-          ElevatedButton(onPressed: () {
-            Navigator.pop(context);
-          },
-           style: ElevatedButton.styleFrom(
-            primary:  Color.fromARGB(255, 234, 234, 234),
-          ),
-          child: Text("Cancelar",style: TextStyle(color: Color(0xFF652D8F)),)),
-          ElevatedButton(onPressed: () {
-            Navigator.pop(context);
-             Navigator.pop(context);
-          },
-           style: ElevatedButton.styleFrom(
-            primary: Color(0xFF652D8F),
-          ),
-          child: Text("Aceptar"))
+          actions: [
+            Align(
+              alignment: AlignmentDirectional(-0.05, 0.05),
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                child: Image.asset(
+                  'assets/images/logo-AHM-Fondo-Morao.png',
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
           ],
+          centerTitle: false,
+          elevation: 2,
         ),
-      ),
-          child: Text(
-            'Cancelar',
-            style: TextStyle(fontSize: 18,color: Color(0xFF652D8F)),
-          ),
-          style: ElevatedButton.styleFrom(
-            primary: Color.fromARGB(255, 234, 234, 234),
-          ),
-        ),)
-     
-      ),
-      Padding(
-        padding: EdgeInsets.all(8.0),
-        child:
-        SizedBox( 
-          width: 170,
-          child:     ElevatedButton(
-          onPressed: () {
-             Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen( createCustomPackage( widget.Ciudad,widget.userloggeddata,1,customPackage),widget.userloggeddata)),);
-          
-          },
-          child: Text(
-            'Confirmar',
-            style: TextStyle(fontSize: 18),
-          ),
-          style: ElevatedButton.styleFrom(
-            primary: Color(0xFF652D8F),
-          ),
-        ),)
-     
-      ),
-       ],)
-     
-    );
+        body: SingleChildScrollView(
+
+            // color:
+            //     HotelAppTheme.buildLightTheme().backgroundColor,
+            child: Column(
+          children: [
+            FutureBuilder<dynamic>(
+              builder: (context, snapshot) {
+                return Wrap(
+                    spacing: 8,
+                    runSpacing: 4,
+                    alignment: WrapAlignment.start,
+                    crossAxisAlignment: WrapCrossAlignment.start,
+                    direction: Axis.horizontal,
+                    runAlignment: WrapAlignment.start,
+                    verticalDirection: VerticalDirection.down,
+                    clipBehavior: Clip.none,
+                    children: RoomDetails(widget.Room, context));
+              },
+            ),
+          ],
+        )),
+        bottomNavigationBar: Row(
+          children: [
+            Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                child: SizedBox(
+                  width: 175,
+                  height: 35,
+                  child: ElevatedButton(
+                    onPressed: () => showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                          child: Text(
+                            '¿Esta seguro que desea continuar?',
+                          ),
+                        ),
+                        actions: <Widget>[
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Color.fromARGB(255, 234, 234, 234),
+                              ),
+                              child: Text(
+                                "Cancelar",
+                                style: TextStyle(color: Color(0xFF652D8F)),
+                              )),
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Color(0xFF652D8F),
+                              ),
+                              child: Text("Aceptar"))
+                        ],
+                      ),
+                    ),
+                    child: Text(
+                      'Cancelar',
+                      style: TextStyle(fontSize: 18, color: Color(0xFF652D8F)),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromARGB(255, 234, 234, 234),
+                    ),
+                  ),
+                )),
+            Padding(
+                padding: EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: 170,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => NavigationHomeScreen(
+                                createCustomPackage(widget.Ciudad,
+                                    widget.userloggeddata, 1, customPackage),
+                                widget.userloggeddata)),
+                      );
+                    },
+                    child: Text(
+                      'Confirmar',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xFF652D8F),
+                    ),
+                  ),
+                )),
+          ],
+        ));
   }
 }
