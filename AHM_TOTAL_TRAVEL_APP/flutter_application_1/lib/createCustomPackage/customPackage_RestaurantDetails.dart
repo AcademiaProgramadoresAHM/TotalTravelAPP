@@ -453,7 +453,7 @@ class _RestaurantDetails extends State<RestaurantDetails> {
           centerTitle: false,
           elevation: 2,
         ),
-        body: SingleChildScrollView(
+         body: SingleChildScrollView(
             // color:
             //     HotelAppTheme.buildLightTheme().backgroundColor,
             child: Column(
@@ -474,7 +474,7 @@ class _RestaurantDetails extends State<RestaurantDetails> {
             ),
           ],
         )),
-        bottomNavigationBar: Row(
+         bottomNavigationBar: Row(
           children: [
             Padding(
                 padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
@@ -517,34 +517,27 @@ class _RestaurantDetails extends State<RestaurantDetails> {
                     ),
                     child: Text(
                       'Cancelar',
-                      style: TextStyle(fontSize: 18, color: Color(0xFF652D8F)),
+                      style: TextStyle(fontSize: 18,color: Color(0xFF652D8F)),
                     ),
                     style: ElevatedButton.styleFrom(
                       primary: Color.fromARGB(255, 234, 234, 234),
                     ),
-                  ),
-                )),
-            Padding(
-                padding: EdgeInsets.all(8.0),
-                child: SizedBox(
-                  width: 170,
-                  child: ElevatedButton(
+                  ),)
+              
+                ),
+             Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child:
+                  SizedBox( 
+                    width: 170,
+                    child:     ElevatedButton(
                     onPressed: () {
+                      int RestaurantCounter = widget.RestaurantsAdd;
+                      RestaurantCounter = RestaurantCounter + 1;
                       setState(() {
                         confirm = true;
                       });
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => NavigationHomeScreen(
-                                RestaurantcustomPackage(
-                                    widget.userloggeddata,
-                                    widget.Ciudad,
-                                    widget.customPackage,
-                                    widget.RestaurantsAdd,
-                                    widget.Restaurante),
-                                widget.userloggeddata)),
-                      );
+                      Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(RestaurantcustomPackage(widget.userloggeddata, widget.Ciudad,widget.customPackage,RestaurantCounter,widget.Restaurante),widget.userloggeddata)),);
                     },
                     child: Text(
                       'Confirmar',
@@ -553,9 +546,10 @@ class _RestaurantDetails extends State<RestaurantDetails> {
                     style: ElevatedButton.styleFrom(
                       primary: Color(0xFF652D8F),
                     ),
-                  ),
-                )),
+                  ),)
+                ),
           ],
-        ));
+        )
+      );
   }
 }

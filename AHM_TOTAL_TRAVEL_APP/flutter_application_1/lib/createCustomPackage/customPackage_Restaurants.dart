@@ -470,7 +470,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                     MaterialPageRoute(
                     builder: (context) =>
                          createCustomPackage(
-                      widget.Ciudad,widget.userloggeddata,3,widget.customPackage)),
+                      widget.Ciudad,widget.userloggeddata,4,widget.customPackage)),
               );
               },
               style: ElevatedButton.styleFrom(
@@ -484,7 +484,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
             }else{
            
               widget.customPackage.Restaurant = widget.Restaurante;
-               Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,3,widget.customPackage),widget.userloggeddata)),);
+               Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,4,widget.customPackage),widget.userloggeddata)),);
                
             }
 

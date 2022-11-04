@@ -1,4 +1,10 @@
+import 'dart:convert';
+import 'dart:math';
+
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
+import 'package:flutter_application_1/ComponentsLogin/constants.dart';
 import 'package:flutter_application_1/Models/CitiesViewModel.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
@@ -12,12 +18,13 @@ import 'package:flutter_application_1/createCustomPackage/customPackage_Hotels.d
 import 'package:flutter_application_1/createCustomPackage/customPackage_PayPage.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Restaurants.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Start.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_Transport.dart';
 import 'package:flutter_application_1/hotel_booking/calendar_popup_view.dart';
 import 'package:flutter_application_1/navigation_home_screen.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 import '../utils/T7Colors.dart';
 import 'package:intl/intl.dart';
-
+import 'package:http/http.dart' as http;
 void main() {
   runApp(const MyApp());
 }
@@ -46,15 +53,27 @@ class createCustomPackage extends StatefulWidget {
   final customPackageViewModel customPackage;
   const createCustomPackage(this.Ciudad,this.userloggeddata,this.Step, this.customPackage, {Key? key, }) : super(key: key);
 
+
+
   @override
   _createCustomPackage createState() => _createCustomPackage();
 }
 int _currentStep = 0;
 class _createCustomPackage extends State<createCustomPackage> {
-  // the current step
+ int? selectedCity;
+  String? selectedValue;
+final TextEditingController textEditingController = TextEditingController();
+  String? dropDownValue;
+  TextEditingController? textController;
+  final scaffoldKey = GlobalKey<ScaffoldState>();
 
+
+
+
+  // the current step
 @override
   void initState() {
+     GetCities(null,true);
       StepSet(widget.Step);
     //GetListHotels(widget.Ciudad,widget.userloggeddata);
   }
@@ -81,12 +100,51 @@ class _createCustomPackage extends State<createCustomPackage> {
         _currentStep = 3;
       });
         break;
+         case 4:
+        setState(() {
+        _currentStep = 4;
+      });
+        break;
       default:
         setState(() {
         _currentStep = 0;
       });
     }
     
+  }
+
+//Dropdown cities
+
+  int? CitiesDropDownValue;
+
+  Map<int?, String> CitiesDictionary = Map();
+
+  Future<dynamic> GetCities(idCiudad, bool) async {
+    var data;
+    String url_list = "https://totaltravel.somee.com/API/Cities/List";
+    var respuesta = await http.get(Uri.parse(url_list));
+    if(bool == true){
+        if (respuesta.statusCode == 200) {
+      Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
+      var Json = DecoderAPI.fromJson(ServerResponse);
+      data = Json.data;
+      // rellena diccionario de datos
+      data.forEach((x) {
+        CiudadesViewModel element = CiudadesViewModel.fromJson(x);
+        var descripcion = element.Ciudad!;
+        CitiesDictionary[element.ID] = descripcion;
+      });
+
+      return Json.data;
+    } else {
+      print("Error: " + respuesta.statusCode.toString());
+    }
+    }else{
+
+            CiudadesViewModel element = new CiudadesViewModel(idCiudad, null, null, null, null);
+           Navigator.push(context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(TransportcustomPackage(widget.userloggeddata,element,widget.Ciudad,widget.customPackage),widget.userloggeddata)),);
+
+    }
   }
 
   DateTime startDate = DateTime.now();
@@ -303,7 +361,7 @@ class _createCustomPackage extends State<createCustomPackage> {
                       ? StepState.complete
                       : StepState.disabled,
                 ),
-                  /* Step(
+                  Step(
                   title: const Text('Elegir transporte'),
                   content: Column(
                     children: [
@@ -317,10 +375,145 @@ class _createCustomPackage extends State<createCustomPackage> {
                             primary: Color.fromARGB(255, 101, 45, 143),
                           ),
                            onPressed: () {
-                             Navigator.push(
+                              showModalBottomSheet<void>(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) {
+                                                    return Container(
+                                                      height: 180,
+                                                      color: Colors.white,
+                                                      child: Center(
+                                                        child: Column(
+                                                          children: <Widget>[
+                                  
+
+                                                                  Container(
+                                                                      height: 65,
+                                                                    decoration: BoxDecoration(color: Colors.white),
+                                                                    child:  DropdownButtonHideUnderline(
+                                                                            child: DropdownButton2(
+                                                                              isExpanded: true,                             
+                                                                              hint: Padding(
+                                                                                padding: const EdgeInsets.only(left: 30,),
+                                                                                child: TextFormField(
+                                                                                  style: kTextFormFieldStyle(),
+                                                                                  decoration: const InputDecoration(
+                                                                                    
+                                                                                  // prefixIcon: Icon(Icons.location_on_outlined),
+                                                                                    hintText: 'Seleccione una ciudad de salida', hintStyle: TextStyle(fontWeight: FontWeight.bold)
+                                                                                  ),
+                                                                                ),
+                                                                              ),
+                                                                              items: CitiesDictionary.keys.map((id) {
+                                                                                      return DropdownMenuItem(
+                                                                                        value: id,
+                                                                                        child: Padding(padding: EdgeInsetsDirectional.fromSTEB(40, 0, 0, 0),
+                                                                                        child:  Text(CitiesDictionary[id].toString(),), 
+                                                                                        ) 
+                                                                                      
+                                                                                      );
+                                                                                    }).toList(),
+                                                                                    value: selectedCity,
+                                                                              onChanged: (value) {
+                                                                                setState(() {
+                                                                                  selectedCity = value as int?;
+                                                                                  CitiesDropDownValue = value;
+                                                                                });
+                                                                                GetCities(CitiesDropDownValue, false);
+                                                                              },
+                                                                              buttonHeight: 100,
+                                                                              buttonWidth: 300,
+                                                                              itemHeight: 50,
+                                                                              dropdownMaxHeight: 120,
+                                                                              searchController: textEditingController,
+                                                                              searchInnerWidget: Padding(
+                                                                                padding: const EdgeInsets.only(
+                                                                                  top: 0,
+                                                                                  bottom: 4,
+                                                                                  right: 8,
+                                                                                  left: 10,
+                                                                                ),
+                                                                                
+                                                                              ),
+                                                                            
+                                                                  )),
+                                                                  ),
+                                                         /*         Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0)),
+                                                            SizedBox(
+                                                              width: 300,
+                                                              height: 40,
+                                                              child:
+                                                                  ElevatedButton(
+                                                                onPressed: () {
+                                                                  if (CitiesDropDownValue == null) {
+                                                                          
+                                                                    showDialog<
+                                                                        String>(
+                                                                      context:
+                                                                          context,
+                                                                      builder: (BuildContext
+                                                                              context) =>
+                                                                          AlertDialog(
+                                                                        title:
+                                                                            Padding(
+                                                                          padding: EdgeInsets.only(
+                                                                              top: 15,
+                                                                              left: 20,
+                                                                              right: 20),
+                                                                          child:
+                                                                              Text(
+                                                                            'Seleccione una ciudad',
+                                                                            style: TextStyle(
+                                                                                color: Color.fromARGB(255, 128, 9, 1),
+                                                                                fontSize: 18,
+                                                                                fontFamily: 'Outfit',
+                                                                                fontWeight: FontWeight.w500),
+                                                                          ),
+                                                                        ),
+                                                                
+                                                                        actions: <
+                                                                            Widget>[
+                                                                          TextButton(
+                                                                            onPressed:
+                                                                                () {
+                                                                              Navigator.pop(context, 'OK');
+                                                                            },
+                                                                            child:
+                                                                                const Text('Aceptar'),
+                                                                          ),
+                                                                        ],
+                                                                      ),
+                                                                    );
+                                                                  } else {
+                                                                    Navigator.pop(
+                                                                        context);
+                                                                  }
+                                                                },
+                                                                child: Text(
+                                                                  'Confirmar',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          18),
+                                                                ),
+                                                                style: ElevatedButton
+                                                                    .styleFrom(
+                                                                  primary: Color(
+                                                                      0xFF652D8F),
+                                                                ),
+                                                              ),
+                                                            ),*/
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    );
+                                                  },
+                                                );
+
+
+                             /*Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) =>  customActivities( widget.userloggeddata,widget.Ciudad)),
-                                        );
+                                          MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(TransportcustomPackage(widget.userloggeddata,widget.Ciudad,widget.customPackage),widget.userloggeddata)),
+                                        );*/
                           },
                         ),
                       ),
@@ -330,7 +523,7 @@ class _createCustomPackage extends State<createCustomPackage> {
                   state: _currentStep >= 1
                       ? StepState.complete
                       : StepState.disabled,
-                ),*/
+                ),
                 Step(
                   title: const Text('Elegir actividades'),
                   content: Column(

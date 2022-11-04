@@ -28,11 +28,21 @@ class _payPage extends State<payPage> {
   TextEditingController? textController2;
   TextEditingController? textController3;
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  num Total = 0;
+  num SubTotal = 0;
+  num Iva = 0;
+ 
 
  
 
-  List<Padding> ResumePay(customPackageViewModel data, BuildContext context) {
+  List<Padding> ResumeHotel(customPackageViewModel data, BuildContext context) {
     List<Padding> list = [];
+      if(SubTotal == null){
+        SubTotal = 0;  
+      }
+          setState(() {
+            SubTotal = SubTotal + int.parse(data.reHo_PrecioTotal.toString());
+      });
     final _controller = PageController();
     List<String> imageUrl;
       list.add(
@@ -240,7 +250,7 @@ class _payPage extends State<payPage> {
                                           color: Colors.black,
                                           fontWeight: FontWeight.bold,
                                           fontSize: 15
-      
+                                            
                                         ),
                                       ),
                                     ),
@@ -274,6 +284,10 @@ List<Padding> ResumeActivities(List<ActivitiesExtra>? data, BuildContext context
     final _controller = PageController();
 
     data?.forEach((element) {
+
+      setState(() {
+        SubTotal = SubTotal + num.parse(element.reAE_Precios.toString());
+      });
       list.add(Padding(
         padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
         child: Container(
@@ -452,10 +466,6 @@ List<Padding> ResumeActivities(List<ActivitiesExtra>? data, BuildContext context
   }
 
 
-
-
-
-
 List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
     List<Padding> list = [];
     final _controller = PageController();
@@ -602,19 +612,6 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
                                         color: Color(0xFF95A1AC),
                                       ),
                                     ),
-                                    /*Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          110, 0, 0, 0),
-                                      child: Text(
-                                        "LPS. " + element..toString(),
-                                        style: TextStyle(
-                                          fontFamily: 'Poppins',
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15
-                                        ),
-                                      ),
-                                    ),*/
                                   ],
                                 ),
                               ),
@@ -636,6 +633,234 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
     });
 
     return list;
+  }
+
+
+  List<Padding> ResumeTransport(customPackageViewModel data, BuildContext context) {
+    List<Padding> list = [];
+    final _controller = PageController();
+    List<String> imageUrl;
+       setState(() {
+        SubTotal = SubTotal + num.parse(data.tprt_Total.toString());
+      });
+
+      list.add(
+        Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(0),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 0,
+                color: Color(0x32000000),
+                offset: Offset(0, 2),
+              )
+            ],
+          ),
+          child: Column(
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 16, 12),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Container(
+                          width: 4,
+                          height: 250,
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(101, 45, 143, 1),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 6,
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                 Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(8, 4, 8, 4),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                  ],
+                                ),
+                              ),
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(padding: EdgeInsetsDirectional.fromSTEB(10, 0,0,20),
+                                    child:Text(
+                                      data.partner.toString(),
+                                      style: TextStyle(
+                                        fontFamily: 'Outfit',
+                                        color: Color(0xFF090F13),
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),)
+                                    
+                                  ],
+                                ),
+                                      Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    10, 0, 10, 0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Text(
+                                      'Salida',
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          120, 0, 0, 0),
+                                      child: Text(
+                                        'Llegada',
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    10, 0, 10, 2),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Text(
+                                     widget.customPackage.ciudadSalida.toString(),
+                                      style: TextStyle(
+                                        fontFamily: 'Poppins',
+                                        color: Color(0xFF95A1AC),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          95, 0, 0, 0),
+                                      child: Text(
+                                        widget.customPackage.ciudadLlegada.toString(),
+                                        style: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          color: Color(0xFF95A1AC),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Divider(
+                                thickness: 2,
+                                color: Color(0xFF95A1AC),
+                              ),
+                              Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0,10),
+                              child:  Align(
+                                alignment: AlignmentDirectional(-0.9, 0),
+                                child: Text(
+                                  'Hora salida',
+                                ),
+                              ),
+                              ),
+                              Align(
+                                alignment: AlignmentDirectional(-0.9, 0),
+                                child: Text(
+                                   widget.customPackage.horaSalida.toString(),
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    color: Color(0xFF95A1AC),
+                                  ),
+                                ),
+                              ),
+                              Divider(
+                                thickness: 2,
+                                color: Color(0xFF95A1AC),
+                              ),
+                              Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0)),
+                              Align(
+                                alignment: AlignmentDirectional(-0.9, 0),
+                                child: Text(
+                                  'Detalles',
+                                  style: TextStyle(
+                                    fontSize: 16
+                                  ),
+                                ),
+                              ),
+                                  Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    10, 10, 10, 2),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Align(
+                                alignment: AlignmentDirectional(-0.8, 0),
+                                child: Text(
+                                  widget.customPackage.tprt_cantidadPersonas.toString() + " personas",
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    color: Color(0xFF95A1AC),
+                                    fontSize: 16
+                                  ),
+                                ),
+                              ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          110, 0, 0, 0),
+                                      child: Text(
+                                        "LPS. " + widget.customPackage.tprt_Total.toString(),
+                                        style: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15
+      
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                          
+                             
+                              ],      
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ));
+    return list;
+  }
+
+
+  int setIva(price){
+    double priceD = price * 0.15;
+
+    setState(() {
+      Total = SubTotal + priceD.toInt();
+    });
+
+
+
+    return priceD.toInt();
   }
 
 
@@ -693,7 +918,7 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
               //     HotelAppTheme.buildLightTheme().backgroundColor,
               child: Column(
             children: [
-               Padding(
+                         Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(30, 4, 8, 4),
                                 child: Row(
@@ -727,7 +952,7 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
                         runAlignment: WrapAlignment.start,
                         verticalDirection: VerticalDirection.down,
                         clipBehavior: Clip.none,
-                        children: ResumePay(widget.customPackage, context)),
+                        children: ResumeHotel(widget.customPackage, context)),
                              Padding(
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(30, 4, 8, 4),
@@ -783,13 +1008,13 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           12, 20, 0, 0),
                                       child: Text(
-                                        'Restaurante',style: TextStyle(fontSize: 18)
+                                        'Restaurantes',style: TextStyle(fontSize: 18)
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                         Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 60),
+                         Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                          child: Wrap(
                         spacing: 8,
                         runSpacing: 4,
@@ -799,7 +1024,190 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
                         runAlignment: WrapAlignment.start,
                         verticalDirection: VerticalDirection.down,
                         clipBehavior: Clip.none,
-                        children: ResumeRestaurant(widget.customPackage.Restaurant, context))),       
+                        children: ResumeRestaurant(widget.customPackage.Restaurant, context))),
+                          Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(30, 4, 8, 4),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 20, 0, 0),
+                                      child: Icon(
+                                        Icons.assignment_sharp,
+                                        color: Color(0xFF0F1113),
+                                        size: 24,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          12, 20, 0, 0),
+                                      child: Text(
+                                        'Transporte',style: TextStyle(fontSize: 18)
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),     
+                               Wrap(
+                        spacing: 8,
+                        runSpacing: 4,
+                        alignment: WrapAlignment.start,
+                        crossAxisAlignment: WrapCrossAlignment.start,
+                        direction: Axis.horizontal,
+                        runAlignment: WrapAlignment.start,
+                        verticalDirection: VerticalDirection.down,
+                        clipBehavior: Clip.none,
+                        children: ResumeTransport(widget.customPackage, context)),
+                        Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 30),),    
+
+                              Wrap(
+                        spacing: 8,
+                        runSpacing: 4,
+                        alignment: WrapAlignment.start,
+                        crossAxisAlignment: WrapCrossAlignment.start,
+                        direction: Axis.horizontal,
+                        runAlignment: WrapAlignment.start,
+                        verticalDirection: VerticalDirection.down,
+                        clipBehavior: Clip.none,
+                        children:[
+                      
+                        ]),
+                         Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
+                      child: Container(
+                        width: MediaQuery.of(context).size.width * 0.96,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 4,
+                              color: Color(0x3A000000),
+                              offset: Offset(0, 2),
+                            )
+                          ],
+                          borderRadius: BorderRadius.circular(2),
+                        ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16, 16, 16, 12),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Desglose del precio',
+                                    style: TextStyle(
+                                      fontFamily: 'Lexend Deca',
+                                      color: Color(0xFF090F13),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                           
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 0, 16, 8),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    '15% IVA',
+                                    style: TextStyle(
+                                      fontFamily: 'Lexend Deca',
+                                      color: Color(0xFF95A1AC),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                  Text(
+                                    'HNL ' + setIva(SubTotal).toString() + '.00',
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(
+                                      fontFamily: 'Lexend Deca',
+                                      color: Color(0xFF090F13),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(16, 0, 16, 12),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Subtotal:',
+                                    style: TextStyle(
+                                      fontFamily: 'Lexend Deca',
+                                      color: Color(0xFF95A1AC),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                  Text(
+                                    'HNL ' +SubTotal.toString()+'0',
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(
+                                      fontFamily: 'Lexend Deca',
+                                      color: Color(0xFF090F13),
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16, 12, 16, 16),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Total',
+                                    style: TextStyle(
+                                      fontFamily: 'Lexend Deca',
+                                      color: Color(0xFF95A1AC),
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                  Text(
+                                    'HNL '+  Total.toString() + "0",
+                                    textAlign: TextAlign.end,
+                                    style: TextStyle(
+                                      fontFamily: 'Lexend Deca',
+                                      color: Color(0xFF090F13),
+                                      fontSize: 22,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                        Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 40),),    
+                         
                          
         ],
       )),

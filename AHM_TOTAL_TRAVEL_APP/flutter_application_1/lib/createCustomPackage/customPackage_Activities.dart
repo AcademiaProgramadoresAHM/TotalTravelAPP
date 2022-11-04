@@ -427,157 +427,109 @@ class _customActivities extends State<customActivities> {
                         child: CircularProgressIndicator(
                             color: Color.fromARGB(255, 101, 45, 144)),
                       ));
-                    }
-                  },
-                  future: GetListActivities(widget.Ciudad,
-                      widget.userloggeddata, null, true, widget.ActivitiesAdd),
-                ),
+                  }
+                },
+                future: GetListActivities(widget.Ciudad, widget.userloggeddata,null,true,widget.ActivitiesAdd),
+              ),
+            ],
+          )),
+            bottomNavigationBar: Row(children: [
+        Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+        child:
+        SizedBox( 
+          width: 175,
+          height: 35,
+          child:     ElevatedButton(
+          onPressed: () => showDialog<String>(
+        context: context,
+        builder: (BuildContext context) => AlertDialog(
+          title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+          child: Text('¿Esta seguro que desea continuar?',),
+          ) ,
+          actions: <Widget>[
+          ElevatedButton(onPressed: () {
+            Navigator.pop(context);
+          },
+           style: ElevatedButton.styleFrom(
+            primary:  Color.fromARGB(255, 234, 234, 234),
+          ),
+          child: Text("Cancelar",style: TextStyle(color: Color(0xFF652D8F)),)),
+          ElevatedButton(onPressed: () {
+            Navigator.pop(context);
+             Navigator.pop(context);
+          },
+           style: ElevatedButton.styleFrom(
+            primary: Color(0xFF652D8F),
+          ),
+          child: Text("Aceptar"))
+          ],
+        ),
+      ),
+          child: Text(
+            'Cancelar',
+            style: TextStyle(fontSize: 18,color: Color(0xFF652D8F)),
+          ),
+          style: ElevatedButton.styleFrom(
+            primary: Color.fromARGB(255, 234, 234, 234),
+          ),
+        ),)
+     
+      ),
+      Padding(
+        padding: EdgeInsets.all(8.0),
+        child:
+        SizedBox( 
+          width: 170,
+          child:     ElevatedButton(
+          onPressed: () {
+          
+            if(widget.activityExtra.isEmpty){
+                  showDialog<String>(
+            context: context,
+            builder: (BuildContext context) => AlertDialog(
+              title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                      child: Text('No ha seleccionado ninguna actividad.', style: TextStyle(fontWeight: FontWeight.normal), textAlign: TextAlign.center,),
+              ) ,
+              content: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                      child: Text('¿Esta seguro que desea continuar?',style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center,)),
+              actions: <Widget>[
+              ElevatedButton(onPressed: () {
+                Navigator.pop(context);
+              },
+              style: ElevatedButton.styleFrom(
+                primary:  Color.fromARGB(255, 234, 234, 234),
+              ),
+              child: Text("Cancelar",style: TextStyle(color: Color(0xFF652D8F)),)),
+              ElevatedButton(onPressed: () {
+                  Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,3,widget.customPackage),widget.userloggeddata)),);
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xFF652D8F),
+              ),
+              child: Text("Aceptar"))
               ],
-            )),
-            bottomNavigationBar: Row(
-              children: [
-                Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
-                    child: SizedBox(
-                      width: 175,
-                      height: 35,
-                      child: ElevatedButton(
-                        onPressed: () => showDialog<String>(
-                          context: context,
-                          builder: (BuildContext context) => AlertDialog(
-                            title: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                              child: Text(
-                                '¿Esta seguro que desea continuar?',
-                              ),
-                            ),
-                            actions: <Widget>[
-                              ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Color.fromARGB(255, 234, 234, 234),
-                                  ),
-                                  child: Text(
-                                    "Cancelar",
-                                    style: TextStyle(color: Color(0xFF652D8F)),
-                                  )),
-                              ElevatedButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    Navigator.pop(context);
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    primary: Color(0xFF652D8F),
-                                  ),
-                                  child: Text("Aceptar"))
-                            ],
-                          ),
-                        ),
-                        child: Text(
-                          'Cancelar',
-                          style:
-                              TextStyle(fontSize: 18, color: Color(0xFF652D8F)),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          primary: Color.fromARGB(255, 234, 234, 234),
-                        ),
-                      ),
-                    )),
-                Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      width: 170,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if (widget.activityExtra.isEmpty) {
-                            showDialog<String>(
-                              context: context,
-                              builder: (BuildContext context) => AlertDialog(
-                                title: Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 20, 0, 0),
-                                  child: Text(
-                                    'No ha seleccionado ninguna actividad.',
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.normal),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                                content: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 10, 0, 0),
-                                    child: Text(
-                                      '¿Esta seguro que desea continuar?',
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold),
-                                      textAlign: TextAlign.center,
-                                    )),
-                                actions: <Widget>[
-                                  ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        primary:
-                                            Color.fromARGB(255, 234, 234, 234),
-                                      ),
-                                      child: Text(
-                                        "Cancelar",
-                                        style:
-                                            TextStyle(color: Color(0xFF652D8F)),
-                                      )),
-                                  ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  NavigationHomeScreen(
-                                                      createCustomPackage(
-                                                          widget.Ciudad,
-                                                          widget.userloggeddata,
-                                                          2,
-                                                          widget.customPackage),
-                                                      widget.userloggeddata)),
-                                        );
-                                      },
-                                      style: ElevatedButton.styleFrom(
-                                        primary: Color(0xFF652D8F),
-                                      ),
-                                      child: Text("Aceptar"))
-                                ],
-                              ),
-                            );
-                          } else {
-                            widget.customPackage.actividadesExtra =
-                                widget.activityExtra;
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => NavigationHomeScreen(
-                                      createCustomPackage(
-                                          widget.Ciudad,
-                                          widget.userloggeddata,
-                                          2,
-                                          widget.customPackage),
-                                      widget.userloggeddata)),
-                            );
-                          }
-                        },
-                        child: Text(
-                          'Confirmar',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          primary: Color(0xFF652D8F),
-                        ),
-                      ),
-                    )),
-              ],
-            )));
+            ),
+          );
+
+            }else{
+            widget.customPackage.actividadesExtra = widget.activityExtra;
+             Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,3,widget.customPackage),widget.userloggeddata)),);
+        
+            }
+          },
+          child: Text(
+            'Confirmar',
+            style: TextStyle(fontSize: 18),
+          ),
+          style: ElevatedButton.styleFrom(
+            primary: Color(0xFF652D8F),
+          ),
+        ),)
+     
+      ),
+       ],)
+        ));
   }
 
   Column _buildButtonColumn(Color color, IconData icon, String label) {
