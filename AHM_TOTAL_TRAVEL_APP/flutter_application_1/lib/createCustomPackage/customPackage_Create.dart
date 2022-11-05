@@ -287,10 +287,13 @@ final TextEditingController textEditingController = TextEditingController();
             thickness: 2,
             height: 20,
           ),
-
-          Expanded(
+            Theme(data: ThemeData(
+          colorScheme: Theme.of(context).colorScheme.copyWith(primary: Colors.deepPurple,),
+              ), 
+            child:  Expanded(
             // the Stepper widget
-            child: Stepper(
+            child: 
+            Stepper(
               margin: EdgeInsetsDirectional.fromSTEB(70,60,50,60),
                 controlsBuilder: (context, _) {
                             return 
@@ -357,9 +360,7 @@ final TextEditingController textEditingController = TextEditingController();
                     ],
                   ),
                   isActive: _currentStep >= 0,
-                  state: _currentStep >= 0
-                      ? StepState.complete
-                      : StepState.disabled,
+                  state: _currentStep == 1? StepState.disabled : StepState.complete 
                 ),
                   Step(
                   title: const Text('Elegir transporte'),
@@ -422,7 +423,7 @@ final TextEditingController textEditingController = TextEditingController();
                                                                                 GetCities(CitiesDropDownValue, false);
                                                                               },
                                                                               buttonHeight: 100,
-                                                                              buttonWidth: 300,
+                                                                              buttonWidth: 350,
                                                                               itemHeight: 50,
                                                                               dropdownMaxHeight: 120,
                                                                               searchController: textEditingController,
@@ -438,70 +439,7 @@ final TextEditingController textEditingController = TextEditingController();
                                                                             
                                                                   )),
                                                                   ),
-                                                         /*         Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 50, 0, 0)),
-                                                            SizedBox(
-                                                              width: 300,
-                                                              height: 40,
-                                                              child:
-                                                                  ElevatedButton(
-                                                                onPressed: () {
-                                                                  if (CitiesDropDownValue == null) {
-                                                                          
-                                                                    showDialog<
-                                                                        String>(
-                                                                      context:
-                                                                          context,
-                                                                      builder: (BuildContext
-                                                                              context) =>
-                                                                          AlertDialog(
-                                                                        title:
-                                                                            Padding(
-                                                                          padding: EdgeInsets.only(
-                                                                              top: 15,
-                                                                              left: 20,
-                                                                              right: 20),
-                                                                          child:
-                                                                              Text(
-                                                                            'Seleccione una ciudad',
-                                                                            style: TextStyle(
-                                                                                color: Color.fromARGB(255, 128, 9, 1),
-                                                                                fontSize: 18,
-                                                                                fontFamily: 'Outfit',
-                                                                                fontWeight: FontWeight.w500),
-                                                                          ),
-                                                                        ),
-                                                                
-                                                                        actions: <
-                                                                            Widget>[
-                                                                          TextButton(
-                                                                            onPressed:
-                                                                                () {
-                                                                              Navigator.pop(context, 'OK');
-                                                                            },
-                                                                            child:
-                                                                                const Text('Aceptar'),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    );
-                                                                  } else {
-                                                                    Navigator.pop(
-                                                                        context);
-                                                                  }
-                                                                },
-                                                                child: Text(
-                                                                  'Confirmar',
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          18),
-                                                                ),
-                                                                style: ElevatedButton
-                                                                    .styleFrom(
-                                                                  primary: Color(
-                                                                      0xFF652D8F),
-                                                                ),
-                                                              ),
-                                                            ),*/
+                                                       
                                                           ],
                                                         ),
                                                       ),
@@ -510,10 +448,7 @@ final TextEditingController textEditingController = TextEditingController();
                                                 );
 
 
-                             /*Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(TransportcustomPackage(widget.userloggeddata,widget.Ciudad,widget.customPackage),widget.userloggeddata)),
-                                        );*/
+                           
                           },
                         ),
                       ),
@@ -605,7 +540,10 @@ final TextEditingController textEditingController = TextEditingController();
                 ),
               ],
             ),
-          ),
+          ),),
+
+
+         
 
         ],
         

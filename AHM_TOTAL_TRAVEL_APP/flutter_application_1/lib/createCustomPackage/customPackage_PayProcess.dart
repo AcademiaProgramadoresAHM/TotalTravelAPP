@@ -201,7 +201,7 @@ class _PayProcess extends State<PayProcess> {
                                                               prefixIcon: Icon(Icons
                                                                   .monetization_on),
                                                               hintText:
-                                                                  'Primer Pago',
+                                                                  '0',
                                                               border:
                                                                   OutlineInputBorder(
                                                                 borderRadius: BorderRadius
@@ -209,9 +209,7 @@ class _PayProcess extends State<PayProcess> {
                                                                         .circular(
                                                                             15)),
                                                               ),
-                                                            ),
-
-                                                            initialValue: '0',
+                                                            ),                                                      
                                                             // The validator receives the text that the user has entered.
                                                             validator: (value) {
                                                               if (value ==
@@ -324,7 +322,7 @@ class _PayProcess extends State<PayProcess> {
                 flex: 5,
                 child: Center(
                   child: Text(
-                    'Paquetes Predeterminados',
+                    '',
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 20,

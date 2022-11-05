@@ -203,7 +203,7 @@ class _RestaurantDetails extends State<RestaurantDetails> {
                                                             elevation: 0.0,
                                                             shadowColor: Colors
                                                                 .transparent,
-                                                            //      backgroundColor: Color.fromARGB(255, 234, 234, 234),
+                                                               backgroundColor: Color.fromARGB(255, 234, 234, 234),
                                                             padding:
                                                                 EdgeInsets.zero,
                                                           ),
@@ -289,7 +289,7 @@ class _RestaurantDetails extends State<RestaurantDetails> {
                                                             },
                                                             style: ElevatedButton
                                                                 .styleFrom(
-                                                                    //       backgroundColor: Color.fromARGB(255, 234, 234, 234),
+                                                                         backgroundColor: Color.fromARGB(255, 234, 234, 234),
                                                                     ),
                                                           ),
                                                         )),

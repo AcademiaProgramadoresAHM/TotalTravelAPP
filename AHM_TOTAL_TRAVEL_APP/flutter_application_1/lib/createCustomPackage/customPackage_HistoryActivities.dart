@@ -22,9 +22,9 @@ class HistoryActivities extends StatefulWidget {
   @override
   _HistoryActivities createState() => _HistoryActivities();
 }
-    
+      int ActivitiesCounter = 0;
 class _HistoryActivities extends State<HistoryActivities> { 
-  int ActivitiesCounter = 0;
+
   List<Padding> ListActivitiesExtra(List<ActivitiesExtra> data, BuildContext context) {
     List<Padding> list = [];
     final _controller = PageController();
@@ -180,11 +180,9 @@ class _HistoryActivities extends State<HistoryActivities> {
                                           ),
                                         ),
                                         onPressed: () {
-                                          print(ActivitiesCounter);
-                                            setState(() {
+
+                                          
                                                ActivitiesCounter = widget.ActivitiesAdd - 1;
-                                            });
-                                           
 
                                             widget.activityExtra.removeAt(element.index!);
                                         Navigator.push(context,MaterialPageRoute(builder: (context) => HistoryActivities(widget.userloggeddata,widget.activityExtra,ActivitiesCounter,widget.Ciudad,widget.customPackage)),);
@@ -326,7 +324,6 @@ class _HistoryActivities extends State<HistoryActivities> {
           child:     ElevatedButton(
           onPressed: () {
           
-              print(ActivitiesCounter);
                Navigator.push(
                         context,
                     MaterialPageRoute(

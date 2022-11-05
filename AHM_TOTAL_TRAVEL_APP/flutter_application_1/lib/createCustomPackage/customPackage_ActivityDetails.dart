@@ -190,7 +190,7 @@ class _ActivityDetails extends State<ActivityDetails> {
                                                             elevation: 0.0,
                                                             shadowColor: Colors
                                                                 .transparent,
-                                                            //  backgroundColor: Color.fromARGB(255, 234, 234, 234),
+                                                             backgroundColor: Color.fromARGB(255, 234, 234, 234),
                                                             padding:
                                                                 EdgeInsets.zero,
                                                           ),
@@ -276,7 +276,7 @@ class _ActivityDetails extends State<ActivityDetails> {
                                                             },
                                                             style: ElevatedButton
                                                                 .styleFrom(
-                                                                    //   backgroundColor: Color.fromARGB(255, 234, 234, 234),
+                                                                       backgroundColor: Color.fromARGB(255, 234, 234, 234),
                                                                     ),
                                                           ),
                                                         )),

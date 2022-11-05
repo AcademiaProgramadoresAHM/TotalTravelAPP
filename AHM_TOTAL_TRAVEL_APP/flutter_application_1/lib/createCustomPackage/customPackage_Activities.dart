@@ -285,8 +285,8 @@ class _customActivities extends State<customActivities> {
                                               style: ElevatedButton.styleFrom(
                                                 elevation: 0.0,
                                                 shadowColor: Colors.transparent,
-                                                //        backgroundColor:
-                                                //          Color(0xFF652D8F),
+                                                        backgroundColor:
+                                                         Color(0xFF652D8F),
                                                 padding: EdgeInsets.zero,
                                               ),
                                               onPressed: () {
@@ -375,6 +375,7 @@ class _customActivities extends State<customActivities> {
                                     ),
                                   ),
                                   onPressed: () {
+                                    print(widget.ActivitiesAdd);
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
