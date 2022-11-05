@@ -376,7 +376,8 @@ class _customActivities extends State<customActivities> {
                                   ),
                                   onPressed: () {
                                     print(widget.ActivitiesAdd);
-                                    Navigator.push(
+                                    if(widget.ActivitiesAdd != 0){
+                                         Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
@@ -387,6 +388,27 @@ class _customActivities extends State<customActivities> {
                                                   widget.Ciudad,
                                                   widget.customPackage)),
                                     );
+                                    }else{
+                                      showDialog<String>(
+                                          context: context,
+                                          builder: (BuildContext context) => AlertDialog(
+                                            title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                                            child: Text('Seleccione una actividad',),
+                                            ) ,
+                                            actions: <Widget>[
+                                        
+                                            ElevatedButton(onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              primary: Color(0xFF652D8F),
+                                            ),
+                                            child: Text("Aceptar"))
+                                            ],
+                                          ),
+                                        );
+
+                                    } 
                                   },
                                 ),
                                 Text(

@@ -6,6 +6,7 @@ import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
 import 'package:flutter_application_1/Models/customPackageViewModel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_HistoryRestaurants.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_RestaurantDetails.dart';
 import 'package:flutter_application_1/navigation_home_screen.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -351,7 +352,30 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                 child: Text( "${widget.RestaurantsAdd}", style: TextStyle(fontSize: 16, color: black),),
                               ),
                               ), onPressed:() {
-                                 //Navigator.push(context,MaterialPageRoute(builder: (context) => HistoryActivities(widget.userloggeddata,widget.customPackage)),);
+                                    if(widget.RestaurantsAdd != 0){
+                                       Navigator.push(context,MaterialPageRoute(builder: (context) => HistoryRestaurants(widget.userloggeddata,widget.Restaurante,widget.RestaurantsAdd,widget.Ciudad,widget.customPackage)),);
+                                    }else{
+                                      showDialog<String>(
+                                          context: context,
+                                          builder: (BuildContext context) => AlertDialog(
+                                            title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                                            child: Text('Seleccione un restaurante',),
+                                            ) ,
+                                            actions: <Widget>[
+                                        
+                                            ElevatedButton(onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              primary: Color(0xFF652D8F),
+                                            ),
+                                            child: Text("Aceptar"))
+                                            ],
+                                          ),
+                                        );
+
+                                    } 
+                                 
                               },),
                               Text("Ver Restaurantes", style: TextStyle(fontSize: 10, color: Colors.white),textAlign: TextAlign.center,),
                           ],

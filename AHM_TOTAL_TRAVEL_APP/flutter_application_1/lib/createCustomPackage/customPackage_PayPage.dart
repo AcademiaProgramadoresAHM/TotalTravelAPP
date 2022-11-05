@@ -245,7 +245,7 @@ class _payPage extends State<payPage> {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           110, 0, 0, 0),
                                       child: Text(
-                                        "LPS. " + widget.customPackage.reHo_PrecioTotal.toString() + '.00',
+                                        "HNL. " + widget.customPackage.reHo_PrecioTotal.toString() + '.00',
                                         style: TextStyle(
                                           fontFamily: 'Poppins',
                                           color: Colors.black,
@@ -434,7 +434,7 @@ List<Padding> ResumeActivities(List<ActivitiesExtra>? data, BuildContext context
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           110, 0, 0, 0),
                                       child: Text(
-                                        "LPS. " + element.reAE_Precios.toString() + '0',
+                                        "HNL. " + element.reAE_Precios.toString() + '0',
                                         style: TextStyle(
                                           fontFamily: 'Poppins',
                                           color: Colors.black,
@@ -820,7 +820,7 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           110, 0, 0, 0),
                                       child: Text(
-                                        "LPS. " + widget.customPackage.tprt_Total.toString() + '.00',
+                                        "HNL. " + widget.customPackage.tprt_Total.toString() + '.00',
                                         style: TextStyle(
                                           fontFamily: 'Poppins',
                                           color: Colors.black,
@@ -1161,7 +1161,7 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
                                     ),
                                   ),
                                   Text(
-                                    'HNL ' +SubTotal.toString()+'0',
+                                    'HNL ' +SubTotal.toString() + '0',
                                     textAlign: TextAlign.end,
                                     style: TextStyle(
                                       fontFamily: 'Lexend Deca',
@@ -1191,7 +1191,7 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
                                     ),
                                   ),
                                   Text(
-                                    'HNL '+  Total.toString() + "0",
+                                    'HNL '+  Total.toString() + '0',
                                     textAlign: TextAlign.end,
                                     style: TextStyle(
                                       fontFamily: 'Lexend Deca',
