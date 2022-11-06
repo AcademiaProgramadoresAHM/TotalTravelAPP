@@ -22,11 +22,9 @@ import '../Models/HotelsViewModel.dart';
 import '../Models/UsersViewModel.dart';
 import '../main.dart';
 
-
 class createPackage extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   const createPackage(this.userloggeddata, {Key? key}) : super(key: key);
-
 
   @override
   _createPackage createState() => _createPackage();
@@ -35,32 +33,29 @@ class createPackage extends StatefulWidget {
 class _createPackage extends State<createPackage> {
   int? selectedCity;
   String? selectedValue;
-final TextEditingController textEditingController = TextEditingController();
+  final TextEditingController textEditingController = TextEditingController();
   String? dropDownValue;
   TextEditingController? textController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
   customPackageViewModel customPackage = new customPackageViewModel();
- @override
+  @override
   void initState() {
     super.initState();
     GetCities();
   }
 
-
-
 //Dropdown cities
 
   int? CitiesDropDownValue;
   bool _isVisible1 = false;
-  
+
   void showToast1(bool result) {
     setState(() {
       _isVisible1 = result;
     });
   }
 
-
- Future<dynamic> GetListHotels( userloggeddata) async {
+  Future<dynamic> GetListHotels(userloggeddata) async {
     List<dynamic> dataHotels;
     String url_list =
         "https://totaltravelapi.azurewebsites.net/API/Hotels/List";
@@ -68,31 +63,30 @@ final TextEditingController textEditingController = TextEditingController();
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
     };
-    final response = await http.get(Uri.parse(url_list), headers: headers);   
-    if (response.statusCode == 200) 
-      {
-          Map<String, dynamic> userMap = jsonDecode(response.body);
-          var Json = DecoderAPI.fromJson(userMap);
-          List<dynamic> CardHoteles = [];
-        for (var i = 0; i < 4; i++) {
-          var JsonList = Json.data.toList();
-          CardHoteles.add(JsonList[i]);
-        }
-          return CardHoteles;
+    final response = await http.get(Uri.parse(url_list), headers: headers);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var Json = DecoderAPI.fromJson(userMap);
+      List<dynamic> CardHoteles = [];
+      for (var i = 0; i < 4; i++) {
+        var JsonList = Json.data.toList();
+        CardHoteles.add(JsonList[i]);
       }
-      else{
-          final url_list =Uri.parse("https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
-          final headers = {
-            "Content-type": "application/json",
-            "Authorization": "bearer " + widget.userloggeddata!.Token!
-          };
-          final json = jsonEncode({"token": widget.userloggeddata!.Token});
-          final response = await http.post(url_list, headers: headers, body: json);
-          if (response.body != " ") {
-            widget.userloggeddata!.Token = response.body;
-            GetListHotels( widget.userloggeddata);
-          }
+      return CardHoteles;
+    } else {
+      final url_list = Uri.parse(
+          "https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
+      final headers = {
+        "Content-type": "application/json",
+        "Authorization": "bearer " + widget.userloggeddata!.Token!
+      };
+      final json = jsonEncode({"token": widget.userloggeddata!.Token});
+      final response = await http.post(url_list, headers: headers, body: json);
+      if (response.body != " ") {
+        widget.userloggeddata!.Token = response.body;
+        GetListHotels(widget.userloggeddata);
       }
+    }
   }
 
   Map<int?, String> CitiesDictionary = Map();
@@ -118,15 +112,12 @@ final TextEditingController textEditingController = TextEditingController();
     }
   }
 
-
-
-  
   List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
     List<Padding> list = [];
     final _controller = PageController();
     List<String> imageUrl;
 
-       data.forEach((element) {
+    data.forEach((element) {
       imageUrl = element['image_URL'].split(',');
       list.add(Padding(
         padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
@@ -163,7 +154,6 @@ final TextEditingController textEditingController = TextEditingController();
                       ),
                     ),
                   ),
-                 
                 ],
               )
             ],
@@ -171,13 +161,10 @@ final TextEditingController textEditingController = TextEditingController();
         ),
       ));
     });
- 
-   
 
     return list;
   }
 
- 
   @override
   void dispose() {
     textController?.dispose();
@@ -189,7 +176,7 @@ final TextEditingController textEditingController = TextEditingController();
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 246, 246, 246),
-          resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomInset: false,
       key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: Color(0xFF652D8F),
@@ -202,10 +189,10 @@ final TextEditingController textEditingController = TextEditingController();
               'Agencia Total Travel',
               textAlign: TextAlign.center,
               style: TextStyle(
-                    fontFamily: 'Poppins',
-                    color: Colors.white,
-                    fontSize: 23,
-                  ),
+                fontFamily: 'Poppins',
+                color: Colors.white,
+                fontSize: 23,
+              ),
             ),
           ),
         ),
@@ -226,208 +213,227 @@ final TextEditingController textEditingController = TextEditingController();
         centerTitle: false,
         elevation: 2,
       ),
-      body:  
-      SingleChildScrollView(
+      body: SingleChildScrollView(
 
-              // color:
-              //     HotelAppTheme.buildLightTheme().backgroundColor,
-              child: Column(
-            children: [
-              Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 20,),
-                  child: SafeArea(
-        child: GestureDetector(
-          onTap: () => FocusScope.of(context).unfocus(),
-          child: Stack(
-            children: [
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Align(
-                    alignment: AlignmentDirectional(-0.5, 0),
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
-                      child: Text(
-                        'Reserva tu nueva',
-                        style: TextStyle(
+          // color:
+          //     HotelAppTheme.buildLightTheme().backgroundColor,
+          child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(
+              0,
+              20,
+              0,
+              20,
+            ),
+            child: SafeArea(
+              child: GestureDetector(
+                onTap: () => FocusScope.of(context).unfocus(),
+                child: Stack(
+                  children: [
+                    Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Align(
+                          alignment: AlignmentDirectional(-0.5, 0),
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 60, 0, 0),
+                            child: Text(
+                              'Reserva tu nueva',
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 32,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: AlignmentDirectional(-0.7, 0),
+                          child: Text(
+                            'experiencia',
+                            style: TextStyle(
                               fontFamily: 'Poppins',
                               fontSize: 32,
-                              fontWeight: FontWeight.w300,
+                              fontWeight: FontWeight.bold,
                             ),
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: AlignmentDirectional(-0.7, 0),
-                    child: Text(
-                      'experiencia',
-                      style: TextStyle(
-                            fontFamily: 'Poppins',
-                            fontSize: 32,
-                            fontWeight: FontWeight.bold,
                           ),
-                    ),
-                  ),
-                  Align(
-                    alignment: AlignmentDirectional(-0.30, 0),
-                    child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                      child: Text(
-                        'Descubre más de tu destino y haz de tu \nviaje lo máximo',
-                        style: TextStyle(
-                              fontFamily: 'Poppins',
-                              fontSize: 16,
-                            ),
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                    child: Container(
-                      width: 330,
-                      height: 138,
-                      decoration: BoxDecoration(
-                        color: Color(0x00FFFFFF),
-                        shape: BoxShape.rectangle,
-                        border: Border.all(
-                          color: Color(0xFFFFC36D),
-                          width: 5,
                         ),
-                      ),
-                      child: Stack(
-                        children: [
-                          Align(
-                            alignment: AlignmentDirectional(0, 1.00),
-                            child: Container(
-                              width: 330,
-                              height: 60,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Color(0xFFFFC36D),
-                                  width: 6,
-                                ),
+                        Align(
+                          alignment: AlignmentDirectional(-0.30, 0),
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                            child: Text(
+                              'Descubre más de tu destino y haz de tu \nviaje lo máximo',
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontSize: 16,
                               ),
-                             child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  primary: Color(0xFF652D8F), // backgroundforeground
-                                ),
-                                onPressed: () async { 
-                                  if(CitiesDropDownValue != null){
-                                    CiudadesViewModel cityModel = new CiudadesViewModel(CitiesDropDownValue,null,null,null,null);
-                                       Navigator.push(
-                                          context,
-                                          MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(cityModel, widget.userloggeddata, null, customPackage),widget.userloggeddata)),
-                                        );
-                                      
-                                  }
-                                  
-
-                                },
-                                child: Text('Buscar'),
-                              ),
-                            
                             ),
                           ),
-                       Container(
-                          height: 65,
-                        decoration: BoxDecoration(color: Colors.white),
-                         child:  DropdownButtonHideUnderline(
-                                child: DropdownButton2(
-                                  isExpanded: true,                             
-                                  hint: Padding(
-                                    padding: const EdgeInsets.only(left: 30),
-                                    child: TextFormField(
-                                      style: kTextFormFieldStyle(),
-                                      decoration: const InputDecoration(
-                                        border: InputBorder.none,
-                                       // prefixIcon: Icon(Icons.location_on_outlined),
-                                        hintText: 'Destino',
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                          child: Container(
+                            width: 330,
+                            height: 138,
+                            decoration: BoxDecoration(
+                              color: Color(0x00FFFFFF),
+                              shape: BoxShape.rectangle,
+                              border: Border.all(
+                                color: Color(0xFFFFC36D),
+                                width: 5,
+                              ),
+                            ),
+                            child: Stack(
+                              children: [
+                                Align(
+                                  alignment: AlignmentDirectional(0, 1.00),
+                                  child: Container(
+                                    width: 330,
+                                    height: 60,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(
+                                        color: Color(0xFFFFC36D),
+                                        width: 6,
                                       ),
                                     ),
-                                  ),
-                                   items: CitiesDictionary.keys.map((id) {
-                                          return DropdownMenuItem(
-                                            value: id,
-                                            child: Padding(padding: EdgeInsetsDirectional.fromSTEB(30, 0, 0, 0),
-                                            child:  Text(CitiesDictionary[id].toString(),), 
-                                            ) 
-                                           
+                                    child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Color(
+                                            0xFF652D8F), // backgroundforeground
+                                      ),
+                                      onPressed: () async {
+                                        if (CitiesDropDownValue != null) {
+                                          CiudadesViewModel cityModel =
+                                              new CiudadesViewModel(
+                                                  CitiesDropDownValue,
+                                                  null,
+                                                  null,
+                                                  null,
+                                                  null);
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    NavigationHomeScreen(
+                                                        createCustomPackage(
+                                                            cityModel,
+                                                            widget
+                                                                .userloggeddata,
+                                                            null,
+                                                            customPackage),
+                                                        widget.userloggeddata)),
                                           );
-                                        }).toList(),
-                                         value: selectedCity,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      selectedCity = value as int?;
-                                       CitiesDropDownValue = value;
-                                    });
-                                  },
-                                  buttonHeight: 100,
-                                  buttonWidth: 400,
-                                  itemHeight: 50,
-                                  dropdownMaxHeight: 200,
-                                  searchController: textEditingController,
-                                  searchInnerWidget: Padding(
-                                    padding: const EdgeInsets.only(
-                                      top: 0,
-                                      bottom: 4,
-                                      right: 8,
-                                      left: 10,
+                                        }
+                                      },
+                                      child: Text('Buscar'),
                                     ),
-                                    
                                   ),
-                                 
-                      )),
-                       )],
-                        
-                      ),
-                      
-                    ),
-                    
-                  ),
-                  Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 60, 200, 0),
-                      child: Text(
-                        'Top destinos',
-                        style: TextStyle(
+                                ),
+                                Container(
+                                  height: 65,
+                                  decoration:
+                                      BoxDecoration(color: Colors.white),
+                                  child: DropdownButtonHideUnderline(
+                                      child: DropdownButton2(
+                                    isExpanded: true,
+                                    hint: Padding(
+                                      padding: const EdgeInsets.only(left: 30),
+                                      child: TextFormField(
+                                        style: kTextFormFieldStyle(),
+                                        decoration: const InputDecoration(
+                                          border: InputBorder.none,
+                                          // prefixIcon: Icon(Icons.location_on_outlined),
+                                          hintText: 'Destino',
+                                        ),
+                                      ),
+                                    ),
+                                    items: CitiesDictionary.keys.map((id) {
+                                      return DropdownMenuItem(
+                                          value: id,
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    30, 0, 0, 0),
+                                            child: Text(
+                                              CitiesDictionary[id].toString(),
+                                            ),
+                                          ));
+                                    }).toList(),
+                                    value: selectedCity,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        selectedCity = value as int?;
+                                        CitiesDropDownValue = value;
+                                      });
+                                    },
+                                    buttonHeight: 100,
+                                    buttonWidth: 400,
+                                    itemHeight: 50,
+                                    dropdownMaxHeight: 200,
+                                    searchController: textEditingController,
+                                    searchInnerWidget: Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: 0,
+                                        bottom: 4,
+                                        right: 8,
+                                        left: 10,
+                                      ),
+                                    ),
+                                  )),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(0, 60, 200, 0),
+                          child: Text(
+                            'Top destinos',
+                            style: TextStyle(
                               fontFamily: 'Poppins',
-                              fontWeight:FontWeight.bold,
+                              fontWeight: FontWeight.bold,
                               fontSize: 24,
                             ),
-                      ),
+                          ),
+                        ),
+                      ],
                     ),
-                ],
-              ),
-              
-            ],
-          ),
-        ),
-      ),
+                  ],
                 ),
-              FutureBuilder<dynamic>(
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Wrap(
-                        spacing: 8,
-                        runSpacing: 4,
-                        alignment: WrapAlignment.start,
-                        crossAxisAlignment: WrapCrossAlignment.start,
-                        direction: Axis.horizontal,
-                        runAlignment: WrapAlignment.start,
-                        verticalDirection: VerticalDirection.down,
-                        clipBehavior: Clip.none,
-                        children: ListHotels(snapshot.data, context));
-                  } else {
-                    return Center(
-                          child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
-                        child: CircularProgressIndicator(
-                            color: Color.fromARGB(255, 101, 45, 144)),
-                      ));
-                  }
-                },
-                future: GetListHotels( widget.userloggeddata),
               ),
-            ],
-          )),
+            ),
+          ),
+          FutureBuilder<dynamic>(
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return Wrap(
+                    spacing: 8,
+                    runSpacing: 4,
+                    alignment: WrapAlignment.start,
+                    crossAxisAlignment: WrapCrossAlignment.start,
+                    direction: Axis.horizontal,
+                    runAlignment: WrapAlignment.start,
+                    verticalDirection: VerticalDirection.down,
+                    clipBehavior: Clip.none,
+                    children: ListHotels(snapshot.data, context));
+              } else {
+                return Center(
+                    child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
+                  child: CircularProgressIndicator(
+                      color: Color.fromARGB(255, 101, 45, 144)),
+                ));
+              }
+            },
+            future: GetListHotels(widget.userloggeddata),
+          ),
+        ],
+      )),
     );
   }
 }

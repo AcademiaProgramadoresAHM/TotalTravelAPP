@@ -15,7 +15,17 @@ class customPackageViewModel {
   String? habi_Descripcion;
   List<ActivitiesExtra>? actividadesExtra;
   List<Restaurants>? Restaurant;
-
+  String? partner;
+  int? ciudadSalida_ID;
+  String? ciudadSalida;
+  int? ciudadLlegada_ID;
+  String? ciudadLlegada;
+  String? horaSalida;
+  int? tprt_cantidadPersonas;
+  int? tprt_Total;
+  String? PackageTotal;
+  int?  tipoPago;
+  int? CantidadPagos;
   Map<String, dynamic> toJson() => {
         'usua_ID': usua_ID,
         'hote_ID': hote_ID,

@@ -21,7 +21,6 @@ import '../utils/T2Colors.dart';
 import '../utils/ListaHoteles.dart';
 import '../utils/flutter_rating_bar.dart';
 
-
 class customActivities extends StatefulWidget {
   static var tag = "/DemoT2Cards";
   final UserLoggedModel? userloggeddata;
@@ -29,17 +28,22 @@ class customActivities extends StatefulWidget {
   final int ActivitiesAdd;
   final List<ActivitiesExtra> activityExtra;
   final customPackageViewModel customPackage;
-  const customActivities(this.userloggeddata, this.Ciudad,this.ActivitiesAdd,this.customPackage,this.activityExtra, {super.key});
+  const customActivities(this.userloggeddata, this.Ciudad, this.ActivitiesAdd,
+      this.customPackage, this.activityExtra,
+      {super.key});
   @override
   _customActivities createState() => _customActivities();
 }
 
-  TimeOfDay time = TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
+TimeOfDay time =
+    TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
+
 class _customActivities extends State<customActivities> {
   late List<Hoteles> ListaHoteles;
   Map<int?, String> HotelsDictionary = Map();
 
-  Future<dynamic> GetListActivities(Ciudad, userloggeddata,idActivity,bool,ActivitiesCount) async {
+  Future<dynamic> GetListActivities(
+      Ciudad, userloggeddata, idActivity, bool, ActivitiesCount) async {
     List<dynamic> dataActivities;
     String url_list =
         "https://totaltravelapi.azurewebsites.net/API/ActivitiesExtra/List";
@@ -48,54 +52,58 @@ class _customActivities extends State<customActivities> {
       "Authorization": "bearer " + widget.userloggeddata!.Token!
     };
     final response = await http.get(Uri.parse(url_list), headers: headers);
-      if(bool == true){
-                if (response.statusCode == 200) 
-              {
-                Map<String, dynamic> userMap = jsonDecode(response.body);
-                var Json = DecoderAPI.fromJson(userMap);
-                dataActivities = Json.data;
-                var activity =
-                    dataActivities.where((x) => x['ciudadID'] == Ciudad.ID).toList();
+    if (bool == true) {
+      if (response.statusCode == 200) {
+        Map<String, dynamic> userMap = jsonDecode(response.body);
+        var Json = DecoderAPI.fromJson(userMap);
+        dataActivities = Json.data;
+        var activity =
+            dataActivities.where((x) => x['ciudadID'] == Ciudad.ID).toList();
 
-                return activity;
-              }
+        return activity;
       }
-      else if(bool == false){
-         if (response.statusCode == 200) 
-         {
-            Map<String, dynamic> userMap = jsonDecode(response.body);
-            var Json = DecoderAPI.fromJson(userMap);
-            dataActivities = Json.data;
-            var Activity = dataActivities.where((x) => x['id'] == idActivity).toList();
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ActivityDetails(widget.userloggeddata, Activity,Ciudad,ActivitiesCount,widget.customPackage,widget.activityExtra)),
-            );
-          }
+    } else if (bool == false) {
+      if (response.statusCode == 200) {
+        Map<String, dynamic> userMap = jsonDecode(response.body);
+        var Json = DecoderAPI.fromJson(userMap);
+        dataActivities = Json.data;
+        var Activity =
+            dataActivities.where((x) => x['id'] == idActivity).toList();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ActivityDetails(
+                  widget.userloggeddata,
+                  Activity,
+                  Ciudad,
+                  ActivitiesCount,
+                  widget.customPackage,
+                  widget.activityExtra)),
+        );
+      }
     } else {
-       print(widget.userloggeddata!.Token);
-          final url_list =Uri.parse("https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
-          final headers = {
-            "Content-type": "application/json",
-            "Authorization": "bearer " + widget.userloggeddata!.Token!
-          };
+      print(widget.userloggeddata!.Token);
+      final url_list = Uri.parse(
+          "https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
+      final headers = {
+        "Content-type": "application/json",
+        "Authorization": "bearer " + widget.userloggeddata!.Token!
+      };
 
-          final json = jsonEncode({"token": widget.userloggeddata!.Token});
-          final response = await http.post(url_list, headers: headers, body: json);
-          if (response.body != " ") {
-            print(response.body);
-            widget.userloggeddata!.Token = response.body;
-            GetListActivities(Ciudad, widget.userloggeddata,null,true,ActivitiesCount);
-          }
+      final json = jsonEncode({"token": widget.userloggeddata!.Token});
+      final response = await http.post(url_list, headers: headers, body: json);
+      if (response.body != " ") {
+        print(response.body);
+        widget.userloggeddata!.Token = response.body;
+        GetListActivities(
+            Ciudad, widget.userloggeddata, null, true, ActivitiesCount);
+      }
     }
   }
 
   List<Padding> ListActivities(List<dynamic> data, BuildContext context) {
-
-
-  final hours = time.hour.toString().padLeft(2,'0');
-  final minutes = time.minute.toString().padLeft(2,'0');
+    final hours = time.hour.toString().padLeft(2, '0');
+    final minutes = time.minute.toString().padLeft(2, '0');
     List<Padding> list = [];
     final _controller = PageController();
     List<String> imageUrl;
@@ -274,18 +282,20 @@ class _customActivities extends State<customActivities> {
                                                 "Ver Detalles",
                                                 style: TextStyle(),
                                               ),
-                                              
                                               style: ElevatedButton.styleFrom(
                                                 elevation: 0.0,
                                                 shadowColor: Colors.transparent,
-                                                backgroundColor:
-                                                    Color(0xFF652D8F),
+                                                        backgroundColor:
+                                                         Color(0xFF652D8F),
                                                 padding: EdgeInsets.zero,
-                                                
                                               ),
-                                              onPressed: (){
-                                               GetListActivities(widget.Ciudad,widget.userloggeddata,element['id'],false,widget.ActivitiesAdd);
-
+                                              onPressed: () {
+                                                GetListActivities(
+                                                    widget.Ciudad,
+                                                    widget.userloggeddata,
+                                                    element['id'],
+                                                    false,
+                                                    widget.ActivitiesAdd);
                                               },
                                             ),
                                           )),
@@ -325,72 +335,116 @@ class _customActivities extends State<customActivities> {
         title: 'Flutter layout demo',
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-          appBar:PreferredSize(
-            preferredSize: Size.fromHeight(65.0), // here the desired height
-            child: AppBar(
-            backgroundColor: Color.fromRGBO(101, 45, 143, 1),
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Padding(padding: EdgeInsetsDirectional.fromSTEB(125, 10, 0, 0),
-                child:   Text("Actividades"),
-                ),
-              
-              SizedBox.fromSize(
-                  size: Size(80, 80), // button width and height
-                    child: Material(
-                      color:  Color.fromRGBO(101, 45, 143, 1), // button color
-                      child: InkWell(
-                        splashColor: Color.fromRGBO(101, 45, 143, 1), // splash color
-                        onTap: () {}, // button pressed
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            IconButton(
-                                icon: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(color: Colors.black, width: 1),
-                                    shape: BoxShape.circle,
-                                    color: Color.fromARGB(255, 210, 173, 238)
-                                  ),
-                                  
-                              child: Center(
-                                child: Text( "${widget.ActivitiesAdd}", style: TextStyle(fontSize: 16, color: black),),
-                              ),
-                              ), onPressed:() {
-                                 Navigator.push(context,MaterialPageRoute(builder: (context) => HistoryActivities(widget.userloggeddata,widget.activityExtra,widget.ActivitiesAdd,widget.Ciudad,widget.customPackage)),);
-                              },),
-                              Text("Ver Actividades", style: TextStyle(fontSize: 11.5, color: Colors.white),textAlign: TextAlign.center,),
-                          ],
-                        ),
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(65.0), // here the desired height
+              child: AppBar(
+                backgroundColor: Color.fromRGBO(101, 45, 143, 1),
+                title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(125, 10, 0, 0),
+                        child: Text("Actividades"),
                       ),
-                    ),
-                )
-            ]),
-          ),
-          ),
+                      SizedBox.fromSize(
+                        size: Size(80, 80), // button width and height
+                        child: Material(
+                          color:
+                              Color.fromRGBO(101, 45, 143, 1), // button color
+                          child: InkWell(
+                            splashColor:
+                                Color.fromRGBO(101, 45, 143, 1), // splash color
+                            onTap: () {}, // button pressed
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                IconButton(
+                                  icon: Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.black, width: 1),
+                                        shape: BoxShape.circle,
+                                        color:
+                                            Color.fromARGB(255, 210, 173, 238)),
+                                    child: Center(
+                                      child: Text(
+                                        "${widget.ActivitiesAdd}",
+                                        style: TextStyle(
+                                            fontSize: 16, color: black),
+                                      ),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    print(widget.ActivitiesAdd);
+                                    if(widget.ActivitiesAdd != 0){
+                                         Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              HistoryActivities(
+                                                  widget.userloggeddata,
+                                                  widget.activityExtra,
+                                                  widget.ActivitiesAdd,
+                                                  widget.Ciudad,
+                                                  widget.customPackage)),
+                                    );
+                                    }else{
+                                      showDialog<String>(
+                                          context: context,
+                                          builder: (BuildContext context) => AlertDialog(
+                                            title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                                            child: Text('Seleccione una actividad',),
+                                            ) ,
+                                            actions: <Widget>[
+                                        
+                                            ElevatedButton(onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              primary: Color(0xFF652D8F),
+                                            ),
+                                            child: Text("Aceptar"))
+                                            ],
+                                          ),
+                                        );
 
-         
-          body: SingleChildScrollView(
-              // color:
-              //     HotelAppTheme.buildLightTheme().backgroundColor,
-              child: Column(
-            children: [
-              FutureBuilder<dynamic>(
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Wrap(
-                        spacing: 8,
-                        runSpacing: 4,
-                        alignment: WrapAlignment.start,
-                        crossAxisAlignment: WrapCrossAlignment.start,
-                        direction: Axis.horizontal,
-                        runAlignment: WrapAlignment.start,
-                        verticalDirection: VerticalDirection.down,
-                        clipBehavior: Clip.none,
-                        children: ListActivities(snapshot.data, context));
-                  } else {
-                    return Center(
+                                    } 
+                                  },
+                                ),
+                                Text(
+                                  "Ver Actividades",
+                                  style: TextStyle(
+                                      fontSize: 11.5, color: Colors.white),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    ]),
+              ),
+            ),
+            body: SingleChildScrollView(
+                // color:
+                //     HotelAppTheme.buildLightTheme().backgroundColor,
+                child: Column(
+              children: [
+                FutureBuilder<dynamic>(
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Wrap(
+                          spacing: 8,
+                          runSpacing: 4,
+                          alignment: WrapAlignment.start,
+                          crossAxisAlignment: WrapCrossAlignment.start,
+                          direction: Axis.horizontal,
+                          runAlignment: WrapAlignment.start,
+                          verticalDirection: VerticalDirection.down,
+                          clipBehavior: Clip.none,
+                          children: ListActivities(snapshot.data, context));
+                    } else {
+                      return Center(
                           child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
                         child: CircularProgressIndicator(
@@ -471,7 +525,7 @@ class _customActivities extends State<customActivities> {
               ),
               child: Text("Cancelar",style: TextStyle(color: Color(0xFF652D8F)),)),
               ElevatedButton(onPressed: () {
-                  Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,2,widget.customPackage),widget.userloggeddata)),);
+                  Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,3,widget.customPackage),widget.userloggeddata)),);
               },
               style: ElevatedButton.styleFrom(
                 primary: Color(0xFF652D8F),
@@ -483,7 +537,7 @@ class _customActivities extends State<customActivities> {
 
             }else{
             widget.customPackage.actividadesExtra = widget.activityExtra;
-             Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,2,widget.customPackage),widget.userloggeddata)),);
+             Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,3,widget.customPackage),widget.userloggeddata)),);
         
             }
           },
@@ -519,7 +573,6 @@ class _customActivities extends State<customActivities> {
           ),
         ),
       ],
-      
     );
   }
 }

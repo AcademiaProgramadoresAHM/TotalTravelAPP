@@ -8,12 +8,17 @@ import 'package:flutter_application_1/feedback_screen.dart';
 import 'package:flutter_application_1/utils/AppWidget.dart';
 import 'package:nb_utils/nb_utils.dart';
 import '../DefaultPackageScreens/ReservConfirm.dart';
+import '../Home_Screen.dart';
+import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
 import 'package:flutter_application_1/utils/prueba2/T2Colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/hotel_booking/model/PlanModal.dart';
 
+import '../Models/registerpaymentViewModel.dart';
 import '../Screens/Personalizados.dart';
+import '../SuccessOrErrorScreens/SuccesfullyReserDefaultPackage.dart';
+import '../navigation_home_screen.dart';
 
 //-------------LISTADO DE PAQUETES PREDETERMINADOS--------------
 
@@ -462,27 +467,21 @@ Future<dynamic> FindReservation(idReservation, userloggeddata, context) async {
     var reservation =
         dataReservation.where((x) => x['id'] == idReservation).toList();
 
-    print(reservation);
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => ReservConfirm()));
+    // print(reservation);
+    // Navigator.push(
+    //     context, MaterialPageRoute(builder: (context) => ReservConfirm()));
   } else {
     print("Error " + response.statusCode.toString());
   }
 }
 
 Future<void> PostReservertion(
-    int? UsuaID,
-    int? PaquID,
-    bool Personalizado,
-    int CantidadPagos,
-    int NumPersonas,
-    bool ConfrimPago,
-    bool ConfirmHotel,
-    bool ConfirmRestaurant,
-    bool ConfirmTrans,
-    int? Precio,
-    String FechaEntrada,
-    String FechaSalida,
+    double? precio,
+    int? reservID,
+    int? HotID,
+    ReservationViewmodel? reservacion,
+    ModelDataRecordPayment payment,
+    UserLoggedModel? userloggeddata,
     BuildContext context) async {
   final headers = {
     "Content-type": "application/json",
@@ -490,91 +489,138 @@ Future<void> PostReservertion(
   };
   final uri = Uri.parse(
       "https://totaltravelapi.azurewebsites.net/API/Reservation/Insert");
-  var map = new Map<String, dynamic>();
-  map['usua_ID'] = UsuaID;
-  map['paqu_ID'] = PaquID;
-  map['resv_esPersonalizado'] = Personalizado;
-  map['resv_CantidadPagos'] = CantidadPagos;
-  map['resv_NumeroPersonas'] = NumPersonas;
-  map['resv_ConfirmacionPago'] = ConfrimPago;
-  map['resv_ConfirmacionHotel'] = ConfirmHotel;
-  map['resv_ConfirmacionRestaurante'] = ConfirmRestaurant;
-  map['resv_ConfirmacionTrans'] = ConfirmTrans;
-  map['resv_Precio'] = Precio;
-  map['resv_UsuarioCreacion'] = UsuaID;
-  map['reHo_FechaEntrada'] = FechaEntrada;
-  map['reHo_FechaSalida'] = FechaSalida;
 
+  final json = jsonEncode(reservacion);
   final response = await http.post(
     uri,
     headers: headers,
-    body: map,
+    body: json,
   );
 
-  if (response.body != " ") {
-    // GetListadoReservation();
-  }
-
-  if (response.body != " ") {
+  if (response.body != "") {
+    print(response.body);
     Map<String, dynamic> userMap = jsonDecode(response.body);
     var dataInsert = Decodificador.fromJson(userMap);
-    var status = RequestStatus.fromJson(dataInsert.data);
-    if (status.CodeStatus! >= 0) {
-      if (status.CodeStatus == 0) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          backgroundColor: white,
-          content: Text(
-            textAlign: TextAlign.center,
-            'La Reservacion ya fue Realizada',
-            style: TextStyle(color: redColor, fontSize: 16),
-          ),
-        ));
-      } else {
-        // PostReservHotel(FechaEntrada,FechaSalida,)
+    if (dataInsert.data != 0) {
+      RequestStatus status = RequestStatus.fromJson(dataInsert.data);
+      print(status.CodeStatus);
+      if (status.CodeStatus! >= 0) {
+        reservID = status.CodeStatus!.toInt();
+        print(reservID);
+        PostReservHotel(
+            reservacion!.reHo_FechaEntrada,
+            reservacion.reHo_FechaSalida,
+            reservID,
+            HotID!,
+            precio!.toInt(),
+            userloggeddata.ID,
+            payment,
+            userloggeddata,
+            context);
       }
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        backgroundColor: white,
-        content: Text(
-          textAlign: TextAlign.center,
-          'Ha ocurrido un error.',
-          style: TextStyle(color: redColor, fontSize: 16),
-        ),
-      ));
-      // PostReservHotel(FechaEntrada, FechaSalida, /* id de reservacion */, , Precio, UsuaID, context)
     }
   }
 }
 
+int? res;
+
 Future<void> PostReservHotel(
-    String FechaEntrada,
-    String FechaSalida,
+    String? FechaEntrada,
+    String? FechaSalida,
     int ResvID,
-    int HotelID,
+    int? HotelID,
     int PrecioTotal,
-    int UsuarioCrea,
+    int? UsuarioCrea,
+    ModelDataRecordPayment payment,
+    UserLoggedModel? userloggeddata,
     BuildContext context) async {
-  final headers = {'Content-Type': 'application/json'};
-  final uri =
-      Uri.parse("https://totaltravel.somee.com/API/ReservationHotels/Insert");
-  var map = new Map<String, dynamic>();
-  map['reHo_FechaEntrada'] = FechaEntrada;
-  map['reHo_FechaSalida'] = FechaSalida;
-  map['resv_ID'] = ResvID;
-  map['hote_ID'] = HotelID;
-  map['reHo_PrecioTotal'] = PrecioTotal;
-  map['reHo_UsuarioCreacion'] = UsuarioCrea;
+  ReservHotelModel ReservHotel = new ReservHotelModel();
+  res = ResvID;
+  ReservHotel.reHoFechaEntrada = FechaEntrada;
+  ReservHotel.reHoFechaSalida = FechaSalida;
+  ReservHotel.resvId = ResvID;
+  ReservHotel.hoteId = HotelID;
+  ReservHotel.reHoPrecioTotal = PrecioTotal;
+  ReservHotel.reHoUsuarioCreacion = UsuarioCrea;
+
+  final headers = {
+    "Content-type": "application/json",
+    "Authorization": "bearer " + userloggeddata!.Token!
+  };
+  final uri = Uri.parse(
+      "https://totaltravelapi.azurewebsites.net/API/ReservationHotels/Insert");
+  final json = jsonEncode(ReservHotel);
+
+  final response = await http.post(
+    uri,
+    headers: headers,
+    body: json,
+  );
+
+  if (response.body != "") {
+    print(response.body);
+    print(FechaEntrada);
+    print(FechaSalida);
+
+    Map<String, dynamic> userMap = jsonDecode(response.body);
+    var dataInsert = Decodificador.fromJson(userMap);
+    if (dataInsert.data != 0) {
+      RequestStatus status = RequestStatus.fromJson(dataInsert.data);
+      if (status.CodeStatus! >= 0) {
+        PostRecordPayment(res, payment.idpayment, payment.monto,
+            payment.formatted, userloggeddata, context);
+      }
+    }
+  }
 }
 
-Future<void> PostReservDetail(int habitaID, int ResvHotelID, int usuariocrea,
+Future<void> PostRecordPayment(
+    int? reservID,
+    int? tipopagoID,
+    double? monto,
+    String? fechaPago,
+    UserLoggedModel? userloggeddata,
     BuildContext context) async {
-  final headers = {'Content-Type': 'application/json; charset=UTF-8'};
-  final uri =
-      Uri.parse("https://totaltravel.somee.com/API/ReservationDetails/Insert");
-  var map = new Map<String, dynamic>();
-  map['habi_ID'] = habitaID;
-  map['reHo_ID'] = ResvHotelID;
-  map['reDe_UsuarioCreacion'] = usuariocrea;
+  RecordPaymentModel RegistroPago = new RecordPaymentModel();
+
+  RegistroPago.resvId = reservID;
+  RegistroPago.tiPaId = tipopagoID;
+  RegistroPago.rePaMonto = monto;
+  RegistroPago.rePaFechaPago = fechaPago;
+  RegistroPago.rePaUsuarioCreacion = userloggeddata!.ID;
+
+  final headers = {
+    "Content-type": "application/json",
+    "Authorization": "bearer " + userloggeddata.Token!
+  };
+
+  final uri = Uri.parse(
+      "https://totaltravelapi.azurewebsites.net/API/RecordPayment/Insert");
+  final json = jsonEncode(RegistroPago);
+
+  final response = await http.post(
+    uri,
+    headers: headers,
+    body: json,
+  );
+  if (response.body != "") {
+    print(response.body);
+
+    Map<String, dynamic> userMap = jsonDecode(response.body);
+    var dataInsert = Decodificador.fromJson(userMap);
+    if (dataInsert.data != 0) {
+      RequestStatus status = RequestStatus.fromJson(dataInsert.data);
+      if (status.CodeStatus! >= 0) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => NavigationHomeScreen(
+                SuccesReservDefaultPack(userloggeddata), userloggeddata),
+          ),
+        );
+      }
+    }
+  }
 }
 //                                            /
 //                         _,.------....___,.' ',.-.

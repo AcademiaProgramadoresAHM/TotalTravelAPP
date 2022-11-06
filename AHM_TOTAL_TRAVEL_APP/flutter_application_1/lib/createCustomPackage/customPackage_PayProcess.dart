@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_application_1/Components/Packages.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_application_1/Models/customPackageViewModel.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_Success.dart';
+import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import 'package:flutter/material.dart';
@@ -13,34 +15,21 @@ import '../Components/Decodificador.dart';
 import '../ComponentsLogin/constants.dart';
 import '../Models/DefaultPackageViewModel.dart';
 import '../Models/ReservationViewModel.dart';
-import '../Models/UsersViewModel.dart';
-import '../Models/registerpaymentViewModel.dart'; //https://pub.dev/packages/nb_utils
+import '../Models/UsersViewModel.dart'; //https://pub.dev/packages/nb_utils
 
-class ReservConfirm extends StatefulWidget {
+class PayProcess extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
-  final ReservationViewmodel Reservation;
-  final DefaultPackageModel? package;
-  final List<dynamic> paqueteactividades;
-  final int? HotelID;
-  final double? precio;
-  final int? reservID;
-
-  const ReservConfirm(this.userloggeddata, this.Reservation, this.package,
-      this.paqueteactividades, this.HotelID, this.precio, this.reservID,
-      {super.key});
+  final customPackageViewModel customPackage;
+  const PayProcess(this.userloggeddata,this.customPackage,{super.key});
 
   static String tag = '/ReservConfirm';
 
   @override
-  ReservConfirmState createState() => ReservConfirmState();
+  _PayProcess createState() => _PayProcess();
 }
 
-class ReservConfirmState extends State<ReservConfirm> {
+class _PayProcess extends State<PayProcess> {
   TextEditingController MontoPago = TextEditingController();
-  ModelDataRecordPayment dataPayment = new ModelDataRecordPayment();
-  static final DateTime now = DateTime.now();
-  static final DateFormat formatter = DateFormat('yyyy-MM-dd');
-  final String formatted = formatter.format(now);
 
   Future<dynamic> GetPaymentType() async {
     String url_list =
@@ -54,41 +43,7 @@ class ReservConfirmState extends State<ReservConfirm> {
       print("Error " + response.statusCode.toString());
     }
   }
-
-  Future<dynamic> FindPayment(idPayment, userloggeddata) async {
-    List<dynamic> datapayment;
-    String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/PaymentTypes/List";
-    final headers = {
-      "Content-type": "application/json",
-      "Authorization": "bearer " + widget.userloggeddata!.Token!
-    };
-    final response = await http.get(Uri.parse(url_list), headers: headers);
-    if (response.statusCode == 200) {
-      Map<String, dynamic> userMap = jsonDecode(response.body);
-      var Json = Decodificador.fromJson(userMap);
-      datapayment = Json.data;
-      var payment = datapayment.where((x) => x['id'] == idPayment).toList();
-
-      dataPayment.idpayment = idPayment;
-      dataPayment.monto = MontoPago.text.toDouble();
-      dataPayment.formatted = formatted;
-
-      PostReservertion(widget.precio, widget.reservID, widget.HotelID,
-          widget.Reservation, dataPayment, widget.userloggeddata, context);
-      // print(package);
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //       builder: (context) => NavigationHomeScreen(
-      //           DetailPackageScreen(widget.userloggeddata, package),
-      //           widget.userloggeddata)),
-      // );
-      return payment;
-    } else {
-      print("Error " + response.statusCode.toString());
-    }
-  }
+  var cantidadFinal = 1;
 
   List<Padding> ListPaymenttype(
       List<dynamic> data, BuildContext context, user) {
@@ -154,7 +109,7 @@ class ReservConfirmState extends State<ReservConfirm> {
                                     ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          20, 0, 20, 0),
+                                          10, 0, 10, 0),
                                       child: Container(
                                         width: 120,
                                         decoration: BoxDecoration(
@@ -170,7 +125,7 @@ class ReservConfirmState extends State<ReservConfirm> {
                                         child: CupertinoButton(
                                           child: Text('Elegir',
                                               style: primaryTextStyle(
-                                                  color: white, size: 18)),
+                                                  color: white, size: 15)),
                                           onPressed: () {
                                             showModalBottomSheet<void>(
                                               context: context,
@@ -182,12 +137,42 @@ class ReservConfirmState extends State<ReservConfirm> {
                                                     child: Column(
                                                       children: <Widget>[
                                                         Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 20, 0, 0),
+                                        child: Text(
+                                         "Cantidad de pagos",
+                                          style: TextStyle(
+                                            fontFamily: 'Outfit',
+                                            color: Colors.black,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                            
+                                          ),
+                                        ),
+                                      ),
+                                         Padding(
+                                                              padding: EdgeInsetsDirectional.fromSTEB(20, 10, 20, 0),
+                                                              child: SpinBox(
+                                                                max: 10,
+                                                                min: 1,
+                                                                value: 1,
+                                                                onChanged:
+                                                                    (valuePeople) {
+                                                                  setState(() {
+                                                                    cantidadFinal = valuePeople.toInt();
+                                                                  
+                                                                  });
+                                                                },
+                                                              ),
+                                                             
+                                                            ),
+                                                        Padding(
                                                           padding:
                                                               EdgeInsetsDirectional
                                                                   .fromSTEB(0,
                                                                       30, 0, 0),
                                                           child: Text(
-                                                            "Primero Pago a realizar",
+                                                            "Indique el monto a pagar para reservar",
                                                             style: TextStyle(
                                                               fontFamily:
                                                                   'Outfit',
@@ -203,8 +188,8 @@ class ReservConfirmState extends State<ReservConfirm> {
                                                         Padding(
                                                           padding:
                                                               EdgeInsetsDirectional
-                                                                  .fromSTEB(30,
-                                                                      5, 30, 0),
+                                                                  .fromSTEB(20,
+                                                                      5, 20, 0),
                                                           child: TextFormField(
                                                             style:
                                                                 kTextFormFieldStyle(),
@@ -216,7 +201,7 @@ class ReservConfirmState extends State<ReservConfirm> {
                                                               prefixIcon: Icon(Icons
                                                                   .monetization_on),
                                                               hintText:
-                                                                  'Primer Pago',
+                                                                  '0',
                                                               border:
                                                                   OutlineInputBorder(
                                                                 borderRadius: BorderRadius
@@ -224,7 +209,7 @@ class ReservConfirmState extends State<ReservConfirm> {
                                                                         .circular(
                                                                             15)),
                                                               ),
-                                                            ),
+                                                            ),                                                      
                                                             // The validator receives the text that the user has entered.
                                                             validator: (value) {
                                                               if (value ==
@@ -252,11 +237,10 @@ class ReservConfirmState extends State<ReservConfirm> {
                                                             child:
                                                                 ElevatedButton(
                                                               onPressed: () {
-                                                                FindPayment(
-                                                                    element[
-                                                                        'id'],
-                                                                    widget
-                                                                        .userloggeddata);
+                                                                widget.customPackage.tipoPago = element['id'];
+                                                                widget.customPackage.CantidadPagos = cantidadFinal;
+
+                                                                 Navigator.push( context,MaterialPageRoute(builder: (context) =>   SuccessCustomPackage(widget.userloggeddata,widget.customPackage)));
                                                               },
                                                               child: Text(
                                                                 'Confirmar',
@@ -338,7 +322,7 @@ class ReservConfirmState extends State<ReservConfirm> {
                 flex: 5,
                 child: Center(
                   child: Text(
-                    'Paquetes Predeterminados',
+                    '',
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 20,

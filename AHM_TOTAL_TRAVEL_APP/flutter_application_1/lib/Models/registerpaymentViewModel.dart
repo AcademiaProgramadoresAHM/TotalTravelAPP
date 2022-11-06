@@ -36,3 +36,39 @@ class registerpaymentViewModel {
         DNI = json['dni'],
         Telefono = json['telefono'];
 }
+
+class TypePaymentModel {
+  int? id;
+  String? descripcion;
+
+  Map<String, dynamic> toJson() => {"id": id, "descripcion": descripcion};
+  TypePaymentModel(this.id, this.descripcion);
+
+  TypePaymentModel.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        descripcion = json['descripcion'];
+}
+
+class RecordPaymentModel {
+  int? resvId;
+  int? tiPaId;
+  double? rePaMonto;
+  String? rePaFechaPago;
+  int? rePaUsuarioCreacion;
+  int? rePaUsuarioModifica;
+
+  Map<String, dynamic> toJson() => {
+        "resv_ID": resvId,
+        "tiPa_ID": tiPaId,
+        "rePa_Monto": rePaMonto,
+        "rePa_FechaPago": rePaFechaPago.toString(),
+        "rePa_UsuarioCreacion": rePaUsuarioCreacion,
+        "rePa_UsuarioModifica": rePaUsuarioModifica,
+      };
+}
+
+class ModelDataRecordPayment {
+  int? idpayment;
+  double? monto;
+  String? formatted;
+}

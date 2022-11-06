@@ -217,8 +217,8 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                                       child: Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
-                                                                .fromSTEB(15, 0,
-                                                                    0, 0),
+                                                                .fromSTEB(
+                                                                    0, 0, 0, 0),
                                                         child: Text(
                                                             element['numeroPersonas']
                                                                 .toString(),
@@ -269,8 +269,8 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                                       child: Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
-                                                                .fromSTEB(35, 0,
-                                                                    0, 0),
+                                                                .fromSTEB(
+                                                                    0, 0, 0, 0),
                                                         child: Text(
                                                             element['cantidadPagos']
                                                                 .toString(),
@@ -578,8 +578,8 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                                       child: Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0, 0, 0, 0),
+                                                                .fromSTEB(120,
+                                                                    0, 0, 0),
                                                         child: Text(
                                                             element[
                                                                 'nombre_Hotel'],
@@ -615,7 +615,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(70, 0, 0, 0),
+                                                  .fromSTEB(40, 0, 0, 0),
                                               child: Text(fechaentrada,
                                                   style: TextStyle(
                                                       fontFamily: 'Poppins',
@@ -642,7 +642,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(85, 0, 0, 0),
+                                                  .fromSTEB(55, 0, 0, 0),
                                               child: Text(fechasalida,
                                                   style: TextStyle(
                                                       fontFamily: 'Poppins',
@@ -735,7 +735,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(55, 0, 0, 0),
+                                                  .fromSTEB(30, 0, 0, 0),
                                               child: Text(
                                                   element['nombrecompleto'],
                                                   style: TextStyle(
@@ -760,7 +760,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    160, 0, 0, 0),
+                                                    130, 0, 0, 0),
                                             child: Text(element['dni'],
                                                 style: TextStyle(
                                                     fontFamily: 'Poppins',
@@ -786,7 +786,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(113, 0, 0, 0),
+                                                  .fromSTEB(85, 0, 0, 0),
                                               child: Text(element['telefono'],
                                                   style: TextStyle(
                                                       fontFamily: 'Poppins',
@@ -812,7 +812,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                           Flexible(
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(30, 0, 0, 0),
+                                                  .fromSTEB(0, 0, 0, 0),
                                               child: Text(element['email'],
                                                   style: TextStyle(
                                                       fontFamily: 'Poppins',

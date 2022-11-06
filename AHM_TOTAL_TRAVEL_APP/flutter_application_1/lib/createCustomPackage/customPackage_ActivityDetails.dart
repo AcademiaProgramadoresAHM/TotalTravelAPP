@@ -18,30 +18,35 @@ class ActivityDetails extends StatefulWidget {
   final int ActivityAdd;
   final customPackageViewModel customPackage;
   final List<ActivitiesExtra> activityExtra;
-  const ActivityDetails(this.userloggeddata, this.Activity,this.Ciudad,this.ActivityAdd,this.customPackage,this.activityExtra,{Key? key})
+  const ActivityDetails(this.userloggeddata, this.Activity, this.Ciudad,
+      this.ActivityAdd, this.customPackage, this.activityExtra,
+      {Key? key})
       : super(key: key);
 
   @override
   _ActivityDetails createState() => _ActivityDetails();
 }
-  TimeOfDay time = TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
+
+TimeOfDay time =
+    TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
+
 class _ActivityDetails extends State<ActivityDetails> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
-      DateTime date = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  DateTime date =
+      DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
   bool basePrice = true, confirm = false;
   var priceBase;
   var peopleFinal = 1;
   List<Padding> ActivityDetails(List<dynamic> data, BuildContext context) {
-  final hours = time.hour.toString().padLeft(2,'0');
-  final minutes = time.minute.toString().padLeft(2,'0');
-
+    final hours = time.hour.toString().padLeft(2, '0');
+    final minutes = time.minute.toString().padLeft(2, '0');
 
     List<Padding> list = [];
     List<String> items = [];
     final _controller = PageController();
     data.forEach((element) {
       String? selectedValue;
-      if(basePrice == true){
+      if (basePrice == true) {
         priceBase = element['precio'];
         basePrice = false;
       }
@@ -58,8 +63,8 @@ class _ActivityDetails extends State<ActivityDetails> {
         }
         return _itemsHeights;
       }
-      
-            list.add(
+
+      list.add(
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(18, 14, 18, 0),
           child: Container(
@@ -175,37 +180,49 @@ class _ActivityDetails extends State<ActivityDetails> {
                                                         width: 130,
                                                         child: ElevatedButton(
                                                           child: Text(
-                                                                '${date.day}-${date.month}-${date.year}',
-                                                                style: TextStyle(color: Color(0xFF652D8F)),
+                                                            '${date.day}-${date.month}-${date.year}',
+                                                            style: TextStyle(
+                                                                color: Color(
+                                                                    0xFF652D8F)),
                                                           ),
                                                           style: ElevatedButton
                                                               .styleFrom(
                                                             elevation: 0.0,
                                                             shadowColor: Colors
                                                                 .transparent,
-                                                            backgroundColor: Color.fromARGB(255, 234, 234, 234),
+                                                             backgroundColor: Color.fromARGB(255, 234, 234, 234),
                                                             padding:
                                                                 EdgeInsets.zero,
                                                           ),
-                                                          onPressed: () async{
-                                                             DateTime? newDate = await showDatePicker(
-                                                                context: context, 
-                                                                initialDate: date, 
-                                                                firstDate: DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day),
-                                                                lastDate: DateTime(2100),);
+                                                          onPressed: () async {
+                                                            DateTime? newDate =
+                                                                await showDatePicker(
+                                                              context: context,
+                                                              initialDate: date,
+                                                              firstDate: DateTime(
+                                                                  DateTime.now()
+                                                                      .year,
+                                                                  DateTime.now()
+                                                                      .month,
+                                                                  DateTime.now()
+                                                                      .day),
+                                                              lastDate:
+                                                                  DateTime(
+                                                                      2100),
+                                                            );
 
-                                                                if(newDate == null) return;
-                                                                setState(() => date = newDate);
+                                                            if (newDate == null)
+                                                              return;
+                                                            setState(() =>
+                                                                date = newDate);
                                                           },
-
                                                         )),
-                                                        
                                                   ],
                                                 ),
                                               )
                                             ],
                                           )),
-                                           Padding(
+                                      Padding(
                                           padding: EdgeInsets.only(top: 0),
                                           child: Column(
                                             children: [
@@ -224,78 +241,92 @@ class _ActivityDetails extends State<ActivityDetails> {
                                                             FontWeight.w500,
                                                       ),
                                                     ),
-                                                 Padding(padding: 
-                                                           EdgeInsetsDirectional.fromSTEB(0, 10, 0, 20),
-                                                           child: 
-                                                            SizedBox(
-                                                              width: 130,
-                                                              child: ElevatedButton(
-                                                              child: Text( '${hours}:${minutes}', style:  TextStyle(color: Color(0xFF652D8F))),
-                                                              onPressed: () async{
-                                                                TimeOfDay? newTime = 
-                                                                await showTimePicker(
-                                                                  cancelText: "Cancelar",
-                                                                  confirmText: "Confirmar",
-                                                                  context: context, 
-                                                                  initialTime: time);
+                                                    Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(0, 10,
+                                                                    0, 20),
+                                                        child: SizedBox(
+                                                          width: 130,
+                                                          child: ElevatedButton(
+                                                            child: Text(
+                                                                '${hours}:${minutes}',
+                                                                style: TextStyle(
+                                                                    color: Color(
+                                                                        0xFF652D8F))),
+                                                            onPressed:
+                                                                () async {
+                                                              TimeOfDay?
+                                                                  newTime =
+                                                                  await showTimePicker(
+                                                                      cancelText:
+                                                                          "Cancelar",
+                                                                      confirmText:
+                                                                          "Confirmar",
+                                                                      context:
+                                                                          context,
+                                                                      initialTime:
+                                                                          time);
 
-                                                                if(newTime == null) return;
-                                                                setState(() => time = newTime);
-
-                                                              },
-                                                              style: ElevatedButton.styleFrom(
-                                                                backgroundColor: Color.fromARGB(255, 234, 234, 234),
-                                                              ),
-                                                              ),
-                                                            )
-                                                           ),
-                                                        
+                                                              if (newTime ==
+                                                                  null) return;
+                                                              setState(() =>
+                                                                  time =
+                                                                      newTime);
+                                                            },
+                                                            style: ElevatedButton
+                                                                .styleFrom(
+                                                                       backgroundColor: Color.fromARGB(255, 234, 234, 234),
+                                                                    ),
+                                                          ),
+                                                        )),
                                                   ],
                                                 ),
                                               ),
                                               Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional .fromSTEB(0,0, 0,0),
-                                                              child: Text(
-                                                                "Cantidad de personas",
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontFamily:
-                                                                      'Outfit',
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontSize: 15,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                           Padding(
-                                                              padding: EdgeInsetsDirectional.fromSTEB(06, 10, 20, 0),
-                                                              child: SpinBox(
-                                                                max: 10,
-                                                                min: 1,
-                                                                value: 1,
-                                                                onChanged:
-                                                                    (valuePeople) {
-                                                                  setState(() {
-                                                                    peopleFinal = valuePeople.toInt();
-                                                                  
-                                                                    element['precio'] = priceBase * valuePeople;
-                                                                  });
-                                                                },
-                                                              ),
-                                                             
-                                                            ),
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 0, 0, 0),
+                                                child: Text(
+                                                  "Cantidad de personas",
+                                                  style: TextStyle(
+                                                    fontFamily: 'Outfit',
+                                                    color: Colors.black,
+                                                    fontSize: 15,
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(06, 10, 20, 0),
+                                                child: SpinBox(
+                                                  max: 10,
+                                                  min: 1,
+                                                  value: 1,
+                                                  onChanged: (valuePeople) {
+                                                    setState(() {
+                                                      peopleFinal =
+                                                          valuePeople.toInt();
+
+                                                      element['precio'] =
+                                                          priceBase *
+                                                              valuePeople;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
                                             ],
                                           )),
-                                       Padding(
+                                      Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                          80, 30, 0, 0),
+                                            80, 30, 0, 0),
                                         child: Text(
                                           "Total:     "
-                                          'HNL ' + element['precio'].toInt().toString() + '.00',
+                                                  'HNL ' +
+                                              element['precio']
+                                                  .toInt()
+                                                  .toString() +
+                                              '.00',
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
                                             fontFamily: 'Lexend Deca',
@@ -305,9 +336,6 @@ class _ActivityDetails extends State<ActivityDetails> {
                                           ),
                                         ),
                                       ),
-        
-                                     
-                                      
                                     ],
                                   )))
                         ],
@@ -328,23 +356,21 @@ class _ActivityDetails extends State<ActivityDetails> {
           ),
         ),
       );
-    
-    if(confirm == true){
-      ActivitiesExtra activitiesExtraModel = new ActivitiesExtra();
-      activitiesExtraModel.index = widget.ActivityAdd;
-      activitiesExtraModel.acEx_ID = element['id'];
-      activitiesExtraModel.acEx_Descripcion = element['actividad'];
-      activitiesExtraModel.acEx_numeroPersonas = peopleFinal;
-      activitiesExtraModel.reAE_FechaReservacion = DateFormat('dd-MM-yyyy').format(date);
-      activitiesExtraModel.reAE_HoraReservacion = DateFormat("HH:mm").format(new DateTime(2000,1,1,time.hour,time.minute));
-      activitiesExtraModel.reAE_Precios = element['precio'].toString();
 
-      widget.activityExtra.insert(widget.ActivityAdd, activitiesExtraModel);
-    }
-   
+      if (confirm == true) {
+        ActivitiesExtra activitiesExtraModel = new ActivitiesExtra();
+        activitiesExtraModel.index = widget.ActivityAdd;
+        activitiesExtraModel.acEx_ID = element['id'];
+        activitiesExtraModel.acEx_Descripcion = element['actividad'];
+        activitiesExtraModel.acEx_numeroPersonas = peopleFinal;
+        activitiesExtraModel.reAE_FechaReservacion =
+            DateFormat('dd-MM-yyyy').format(date);
+        activitiesExtraModel.reAE_HoraReservacion = DateFormat("HH:mm")
+            .format(new DateTime(2000, 1, 1, time.hour, time.minute));
+        activitiesExtraModel.reAE_Precios = element['precio'].toString();
 
-
-    
+        widget.activityExtra.insert(widget.ActivityAdd, activitiesExtraModel);
+      }
     });
     return list;
   }
@@ -352,132 +378,147 @@ class _ActivityDetails extends State<ActivityDetails> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF652D8F),
-        automaticallyImplyLeading: false,
-        title: Align(
-          alignment: AlignmentDirectional(0.5, -0.05),
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 10, 10, 10),
-            child: Text(
-              'Agencia Total Travel',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                color: Colors.white,
-                fontSize: 24,
-              ),
-            ),
-          ),
-        ),
-        actions: [
-          Align(
-            alignment: AlignmentDirectional(-0.05, 0.05),
+        appBar: AppBar(
+          backgroundColor: Color(0xFF652D8F),
+          automaticallyImplyLeading: false,
+          title: Align(
+            alignment: AlignmentDirectional(0.5, -0.05),
             child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-              child: Image.asset(
-                'assets/images/logo-AHM-Fondo-Morao.png',
-                width: 50,
-                height: 50,
-                fit: BoxFit.cover,
+              padding: EdgeInsetsDirectional.fromSTEB(0, 10, 10, 10),
+              child: Text(
+                'Agencia Total Travel',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontFamily: 'Poppins',
+                  color: Colors.white,
+                  fontSize: 24,
+                ),
               ),
             ),
           ),
-        ],
-        centerTitle: false,
-        elevation: 2,
-      ),
-      body: SingleChildScrollView(
-
-          // color:
-          //     HotelAppTheme.buildLightTheme().backgroundColor,
-          child: Column(
-        children: [
-          FutureBuilder<dynamic>(
-            builder: (context, snapshot) {
-              return Wrap(
-                  spacing: 8,
-                  runSpacing: 4,
-                  alignment: WrapAlignment.start,
-                  crossAxisAlignment: WrapCrossAlignment.start,
-                  direction: Axis.horizontal,
-                  runAlignment: WrapAlignment.start,
-                  verticalDirection: VerticalDirection.down,
-                  clipBehavior: Clip.none,
-                  children: ActivityDetails(widget.Activity, context));
-            },
-          ),
-        ],
-      )),
-       bottomNavigationBar: Row(children: [
-        Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
-        child:
-        SizedBox( 
-          width: 175,
-          height: 35,
-          child:     ElevatedButton(
-          onPressed: () => showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-          child: Text('¿Esta seguro que desea continuar?',),
-          ) ,
-          actions: <Widget>[
-          ElevatedButton(onPressed: () {
-            Navigator.pop(context);
-          },
-           style: ElevatedButton.styleFrom(
-            primary:  Color.fromARGB(255, 234, 234, 234),
-          ),
-          child: Text("Cancelar",style: TextStyle(color: Color(0xFF652D8F)),)),
-          ElevatedButton(onPressed: () {
-            Navigator.pop(context);
-             Navigator.pop(context);
-          },
-           style: ElevatedButton.styleFrom(
-            primary: Color(0xFF652D8F),
-          ),
-          child: Text("Aceptar"))
+          actions: [
+            Align(
+              alignment: AlignmentDirectional(-0.05, 0.05),
+              child: Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
+                child: Image.asset(
+                  'assets/images/logo-AHM-Fondo-Morao.png',
+                  width: 50,
+                  height: 50,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
           ],
+          centerTitle: false,
+          elevation: 2,
         ),
-      ),
-          child: Text(
-            'Cancelar',
-            style: TextStyle(fontSize: 18,color: Color(0xFF652D8F)),
-          ),
-          style: ElevatedButton.styleFrom(
-            primary: Color.fromARGB(255, 234, 234, 234),
-          ),
-        ),)
-     
-      ),
-      Padding(
-        padding: EdgeInsets.all(8.0),
-        child:
-        SizedBox( 
-          width: 170,
-          child:     ElevatedButton(
-          onPressed: () {
-            int ActivitiesCounter = widget.ActivityAdd;
-            ActivitiesCounter = ActivitiesCounter + 1;
-              setState(() {
-                confirm = true;
-              });
-                           Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(customActivities(widget.userloggeddata, widget.Ciudad,ActivitiesCounter,widget.customPackage,widget.activityExtra),widget.userloggeddata)),);
-            
-          },
-          child: Text(
-            'Confirmar',
-            style: TextStyle(fontSize: 18),
-          ),
-          style: ElevatedButton.styleFrom(
-            primary: Color(0xFF652D8F),
-          ),
-        ),)
-     
-      ),
-       ],)
-    );
+        body: SingleChildScrollView(
+
+            // color:
+            //     HotelAppTheme.buildLightTheme().backgroundColor,
+            child: Column(
+          children: [
+            FutureBuilder<dynamic>(
+              builder: (context, snapshot) {
+                return Wrap(
+                    spacing: 8,
+                    runSpacing: 4,
+                    alignment: WrapAlignment.start,
+                    crossAxisAlignment: WrapCrossAlignment.start,
+                    direction: Axis.horizontal,
+                    runAlignment: WrapAlignment.start,
+                    verticalDirection: VerticalDirection.down,
+                    clipBehavior: Clip.none,
+                    children: ActivityDetails(widget.Activity, context));
+              },
+            ),
+          ],
+        )),
+        bottomNavigationBar: Row(
+          children: [
+            Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                child: SizedBox(
+                  width: 175,
+                  height: 35,
+                  child: ElevatedButton(
+                    onPressed: () => showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                          child: Text(
+                            '¿Esta seguro que desea continuar?',
+                          ),
+                        ),
+                        actions: <Widget>[
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Color.fromARGB(255, 234, 234, 234),
+                              ),
+                              child: Text(
+                                "Cancelar",
+                                style: TextStyle(color: Color(0xFF652D8F)),
+                              )),
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Color(0xFF652D8F),
+                              ),
+                              child: Text("Aceptar"))
+                        ],
+                      ),
+                    ),
+                    child: Text(
+                      'Cancelar',
+                      style: TextStyle(fontSize: 18, color: Color(0xFF652D8F)),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromARGB(255, 234, 234, 234),
+                    ),
+                  ),
+                )),
+            Padding(
+                padding: EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: 170,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      int ActivitiesCounter = widget.ActivityAdd;
+                      ActivitiesCounter = ActivitiesCounter + 1;
+                      setState(() {
+                        confirm = true;
+                      });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => NavigationHomeScreen(
+                                customActivities(
+                                    widget.userloggeddata,
+                                    widget.Ciudad,
+                                    ActivitiesCounter,
+                                    widget.customPackage,
+                                    widget.activityExtra),
+                                widget.userloggeddata)),
+                      );
+                    },
+                    child: Text(
+                      'Confirmar',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xFF652D8F),
+                    ),
+                  ),
+                )),
+          ],
+        ));
   }
 }

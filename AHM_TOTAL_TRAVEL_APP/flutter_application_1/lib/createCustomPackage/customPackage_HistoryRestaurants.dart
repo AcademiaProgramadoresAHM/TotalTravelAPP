@@ -8,24 +8,25 @@ import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/detallesdehistorial.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Activities.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_Restaurants.dart';
 import 'package:http/http.dart' as http;
 import '../Components/Decodificador.dart';
 import '../hotel_booking/hotel_app_theme.dart';
 
-class HistoryActivities extends StatefulWidget {
+class HistoryRestaurants extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
-  final List<ActivitiesExtra> activityExtra;
-  final int ActivitiesAdd;
+  final List<Restaurants> Restaurant;
+  final int RestaurantAdd;
   final CiudadesViewModel? Ciudad;
   final customPackageViewModel customPackage;
-  const HistoryActivities(this.userloggeddata,this.activityExtra,this.ActivitiesAdd,this.Ciudad,this.customPackage, {Key? key}) : super(key: key);
+  const HistoryRestaurants(this.userloggeddata,this.Restaurant,this.RestaurantAdd,this.Ciudad,this.customPackage, {Key? key}) : super(key: key);
   @override
-  _HistoryActivities createState() => _HistoryActivities();
+  _HistoryRestaurants createState() => _HistoryRestaurants();
 }
-      int ActivitiesCounter = 1;
-class _HistoryActivities extends State<HistoryActivities> { 
+      int RestaurantCounter = 1;
+class _HistoryRestaurants extends State<HistoryRestaurants> { 
 
-  List<Padding> ListActivitiesExtra(List<ActivitiesExtra> data, BuildContext context) {
+  List<Padding> ListActivitiesExtra(List<Restaurants> data, BuildContext context) {
     List<Padding> list = [];
     final _controller = PageController();
 
@@ -95,7 +96,7 @@ class _HistoryActivities extends State<HistoryActivities> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      element.acEx_Descripcion.toString(),
+                                      element.restaurante.toString(),
                                       style: TextStyle(
                                         fontFamily: 'Outfit',
                                         color: Color(0xFF090F13),
@@ -108,7 +109,7 @@ class _HistoryActivities extends State<HistoryActivities> {
                                 ),
                                 Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
                                 child:Text(
-                                  "Personas: "+element.acEx_numeroPersonas.toString(),
+                                  "Personas: "+element.rest_numeroPersonas.toString(),
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color.fromRGBO(101, 45, 143, 1),
@@ -118,7 +119,7 @@ class _HistoryActivities extends State<HistoryActivities> {
                                 ), ),
                                 
                                 Text(
-                                  "Fecha: "+element.reAE_FechaReservacion.toString(),
+                                  "Fecha: "+element.rest_FechaReservacion.toString(),
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color.fromRGBO(101, 45, 143, 1),
@@ -127,7 +128,7 @@ class _HistoryActivities extends State<HistoryActivities> {
                                   ),
                                 ),
                                 Text(
-                                  "Hora: " + element.reAE_HoraReservacion.toString(),
+                                  "Hora: " + element.rest_HoraReservacion.toString(),
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color.fromRGBO(101, 45, 143, 1),
@@ -135,16 +136,7 @@ class _HistoryActivities extends State<HistoryActivities> {
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                                Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 30, 0, 0),
-                                child:Text(
-                                      'Lps.' + element.reAE_Precios.toString(),
-                                      style: TextStyle(
-                                        fontFamily: 'Outfit',
-                                        color: Color.fromRGBO(101, 45, 143, 1),
-                                        fontSize: 22,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),),
+                               
                                   
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
@@ -181,13 +173,13 @@ class _HistoryActivities extends State<HistoryActivities> {
                                         ),
                                         onPressed: () {
 
-                                              if(widget.ActivitiesAdd != 0){
-                                                ActivitiesCounter = widget.ActivitiesAdd - 1;
+                                              if(widget.RestaurantAdd != 0){
+                                                RestaurantCounter = widget.RestaurantAdd - 1;
                                               }
                                                
 
-                                            widget.activityExtra.removeAt(element.index!);
-                                        Navigator.push(context,MaterialPageRoute(builder: (context) => HistoryActivities(widget.userloggeddata,widget.activityExtra,ActivitiesCounter,widget.Ciudad,widget.customPackage)),);
+                                            widget.Restaurant.removeAt(element.index!);
+                                        Navigator.push(context,MaterialPageRoute(builder: (context) => HistoryRestaurants(widget.userloggeddata,widget.Restaurant,RestaurantCounter,widget.Ciudad,widget.customPackage)),);
 
                                         },
                                       ),
@@ -237,7 +229,7 @@ class _HistoryActivities extends State<HistoryActivities> {
                 flex: 5,
                 child: Center(
                   child: Text(
-                    'Tus actividades',
+                    'Tus restaurantes',
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 25,
@@ -272,7 +264,7 @@ class _HistoryActivities extends State<HistoryActivities> {
                       verticalDirection: VerticalDirection.down,
                       clipBehavior: Clip.none,
                       children:
-                          ListActivitiesExtra(widget.activityExtra, context)),
+                          ListActivitiesExtra(widget.Restaurant, context)),
           ],
         )),
              bottomNavigationBar: Row(children: [
@@ -325,12 +317,12 @@ class _HistoryActivities extends State<HistoryActivities> {
           width: 170,
           child:     ElevatedButton(
           onPressed: () {
-            print(ActivitiesCounter);
+           
                Navigator.push(
                         context,
                     MaterialPageRoute(
                     builder: (context) =>
-                         customActivities(widget.userloggeddata,widget.Ciudad,ActivitiesCounter,widget.customPackage,widget.activityExtra)),
+                         RestaurantcustomPackage(widget.userloggeddata,widget.Ciudad,widget.customPackage,RestaurantCounter,widget.Restaurant)),
                       );
           },
           child: Text(
