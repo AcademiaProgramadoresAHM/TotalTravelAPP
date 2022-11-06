@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_application_1/DefaultPackageScreens/ReservConfirm.dart';
 
 import '../Components/Decodificador.dart';
 import '../Models/RequestsViewModel.dart';
@@ -84,13 +85,14 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
           context,
           MaterialPageRoute(
               builder: (context) => ReservationPreview(
-                  widget.userloggeddata,
-                  reservation,
-                  paquete,
-                  packageDetail,
-                  hotelId,
-                  precio,
-                  reservID)));
+                    widget.userloggeddata,
+                    reservation,
+                    paquete,
+                    packageDetail,
+                    hotelId,
+                    precio,
+                    reservID,
+                  )));
       // print(package);
       // Navigator.push(
       //   context,
@@ -104,36 +106,8 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
     }
   }
 
-  Future<void> PostReservertion1(
-      // int? UsuaID,
-      // int? PaquID,
-      // bool Personalizado,
-      // int CantidadPagos,
-      // int NumPersonas,
-      // bool ConfrimPago,
-      // bool ConfirmHotel,
-      // bool ConfirmRestaurant,
-      // bool ConfirmTrans,
-      // double Precio,
-      // String FechaEntrada,
-      // String FechaSalida,
-      int? HotID,
-      ReservationViewmodel reservacion,
+  Future<void> PostReservertion1(int? HotID, ReservationViewmodel reservacion,
       BuildContext context) async {
-    // reservation.usuaId = UsuaID;
-    // reservation.paquId = PaquID;
-    // reservation.resvEsPersonalizado = Personalizado;
-    // reservation.resvCantidadPagos = CantidadPagos;
-    // reservation.resvNumeroPersonas = NumPersonas;
-    // reservation.resvConfirmacionPago = ConfrimPago;
-    // reservation.resvConfirmacionHotel = ConfirmHotel;
-    // reservation.resvConfirmacionRestaurante = ConfirmRestaurant;
-    // reservation.resvConfirmacionTrans = ConfirmTrans;
-    // reservation.resvPrecio = Precio;
-    // reservation.UsuarioCrea = widget.userloggeddata!.ID;
-    // reservation.reHo_FechaEntrada = FechaEntrada;
-    // reservation.reHo_FechaSalida = FechaSalida;
-
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -210,6 +184,7 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
       var dataInsert = Decodificador.fromJson(userMap);
       if (dataInsert.data != 0) {
         RequestStatus status = RequestStatus.fromJson(dataInsert.data);
+        if (status.CodeStatus! >= 0) {}
       }
     }
   }

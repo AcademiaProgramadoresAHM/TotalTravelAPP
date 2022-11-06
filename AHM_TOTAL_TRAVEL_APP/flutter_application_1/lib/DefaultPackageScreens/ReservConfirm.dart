@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_application_1/Components/Packages.dart';
+import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import 'package:flutter/material.dart';
@@ -12,7 +13,8 @@ import '../Components/Decodificador.dart';
 import '../ComponentsLogin/constants.dart';
 import '../Models/DefaultPackageViewModel.dart';
 import '../Models/ReservationViewModel.dart';
-import '../Models/UsersViewModel.dart'; //https://pub.dev/packages/nb_utils
+import '../Models/UsersViewModel.dart';
+import '../Models/registerpaymentViewModel.dart'; //https://pub.dev/packages/nb_utils
 
 class ReservConfirm extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
@@ -35,6 +37,10 @@ class ReservConfirm extends StatefulWidget {
 
 class ReservConfirmState extends State<ReservConfirm> {
   TextEditingController MontoPago = TextEditingController();
+  ModelDataRecordPayment dataPayment = new ModelDataRecordPayment();
+  static final DateTime now = DateTime.now();
+  static final DateFormat formatter = DateFormat('yyyy-MM-dd');
+  final String formatted = formatter.format(now);
 
   Future<dynamic> GetPaymentType() async {
     String url_list =
@@ -64,9 +70,12 @@ class ReservConfirmState extends State<ReservConfirm> {
       datapayment = Json.data;
       var payment = datapayment.where((x) => x['id'] == idPayment).toList();
 
-      PostReservertion(widget.precio, widget.reservID, widget.HotelID,
-          widget.Reservation, widget.userloggeddata, context);
+      dataPayment.idpayment = idPayment;
+      dataPayment.monto = MontoPago.text.toDouble();
+      dataPayment.formatted = formatted;
 
+      PostReservertion(widget.precio, widget.reservID, widget.HotelID,
+          widget.Reservation, dataPayment, widget.userloggeddata, context);
       // print(package);
       // Navigator.push(
       //   context,
@@ -216,8 +225,6 @@ class ReservConfirmState extends State<ReservConfirm> {
                                                                             15)),
                                                               ),
                                                             ),
-
-                                                            initialValue: '0',
                                                             // The validator receives the text that the user has entered.
                                                             validator: (value) {
                                                               if (value ==

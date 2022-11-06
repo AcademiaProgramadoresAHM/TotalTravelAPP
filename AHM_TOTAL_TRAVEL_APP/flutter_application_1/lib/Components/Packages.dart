@@ -15,6 +15,7 @@ import 'package:flutter_application_1/utils/prueba2/T2Colors.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/hotel_booking/model/PlanModal.dart';
 
+import '../Models/registerpaymentViewModel.dart';
 import '../Screens/Personalizados.dart';
 import '../SuccessOrErrorScreens/SuccesfullyReserDefaultPackage.dart';
 import '../navigation_home_screen.dart';
@@ -475,22 +476,11 @@ Future<dynamic> FindReservation(idReservation, userloggeddata, context) async {
 }
 
 Future<void> PostReservertion(
-    // int? UsuaID,
-    // int? PaquID,
-    // bool Personalizado,
-    // int CantidadPagos,
-    // int NumPersonas,
-    // bool ConfrimPago,
-    // bool ConfirmHotel,
-    // bool ConfirmRestaurant,
-    // bool ConfirmTrans,
-    // double Precio,
-    // String FechaEntrada,
-    // String FechaSalida,
     double? precio,
     int? reservID,
     int? HotID,
     ReservationViewmodel? reservacion,
+    ModelDataRecordPayment payment,
     UserLoggedModel? userloggeddata,
     BuildContext context) async {
   final headers = {
@@ -524,12 +514,15 @@ Future<void> PostReservertion(
             HotID!,
             precio!.toInt(),
             userloggeddata.ID,
+            payment,
             userloggeddata,
             context);
       }
     }
   }
 }
+
+int? res;
 
 Future<void> PostReservHotel(
     String? FechaEntrada,
@@ -538,10 +531,11 @@ Future<void> PostReservHotel(
     int? HotelID,
     int PrecioTotal,
     int? UsuarioCrea,
+    ModelDataRecordPayment payment,
     UserLoggedModel? userloggeddata,
     BuildContext context) async {
   ReservHotelModel ReservHotel = new ReservHotelModel();
-
+  res = ResvID;
   ReservHotel.reHoFechaEntrada = FechaEntrada;
   ReservHotel.reHoFechaSalida = FechaSalida;
   ReservHotel.resvId = ResvID;
@@ -567,6 +561,51 @@ Future<void> PostReservHotel(
     print(response.body);
     print(FechaEntrada);
     print(FechaSalida);
+
+    Map<String, dynamic> userMap = jsonDecode(response.body);
+    var dataInsert = Decodificador.fromJson(userMap);
+    if (dataInsert.data != 0) {
+      RequestStatus status = RequestStatus.fromJson(dataInsert.data);
+      if (status.CodeStatus! >= 0) {
+        PostRecordPayment(res, payment.idpayment, payment.monto,
+            payment.formatted, userloggeddata, context);
+      }
+    }
+  }
+}
+
+Future<void> PostRecordPayment(
+    int? reservID,
+    int? tipopagoID,
+    double? monto,
+    String? fechaPago,
+    UserLoggedModel? userloggeddata,
+    BuildContext context) async {
+  RecordPaymentModel RegistroPago = new RecordPaymentModel();
+
+  RegistroPago.resvId = reservID;
+  RegistroPago.tiPaId = tipopagoID;
+  RegistroPago.rePaMonto = monto;
+  RegistroPago.rePaFechaPago = fechaPago;
+  RegistroPago.rePaUsuarioCreacion = userloggeddata!.ID;
+
+  final headers = {
+    "Content-type": "application/json",
+    "Authorization": "bearer " + userloggeddata.Token!
+  };
+
+  final uri = Uri.parse(
+      "https://totaltravelapi.azurewebsites.net/API/RecordPayment/Insert");
+  final json = jsonEncode(RegistroPago);
+
+  final response = await http.post(
+    uri,
+    headers: headers,
+    body: json,
+  );
+  if (response.body != "") {
+    print(response.body);
+
     Map<String, dynamic> userMap = jsonDecode(response.body);
     var dataInsert = Decodificador.fromJson(userMap);
     if (dataInsert.data != 0) {
