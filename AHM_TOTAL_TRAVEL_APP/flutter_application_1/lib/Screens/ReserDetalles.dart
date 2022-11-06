@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_application_1/Account_screen.dart';
 import 'package:flutter_application_1/Screens/Personalizados.dart';
+import 'package:flutter_application_1/Screens/Timeline.dart';
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Home_Screen.dart';
@@ -151,7 +152,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                                       MainAxisSize.max,
                                                   children: [
                                                     Flexible(
-                                                      child: new Text(
+                                                      child: Text(
                                                           'Descripcion de paquete:',
                                                           style: TextStyle(
                                                               fontFamily:
@@ -203,7 +204,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                                       MainAxisSize.max,
                                                   children: [
                                                     Flexible(
-                                                      child: new Text(
+                                                      child: Text(
                                                           'Cantidad de Personas:',
                                                           style: TextStyle(
                                                               fontFamily:
@@ -255,7 +256,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                                       MainAxisSize.max,
                                                   children: [
                                                     Flexible(
-                                                      child: new Text(
+                                                      child: Text(
                                                           'Cantidad de Pagos:',
                                                           style: TextStyle(
                                                               fontFamily:
@@ -292,7 +293,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                     Divider(
                                       thickness: 2,
                                       color: Color.fromARGB(255, 123, 26, 168),
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),
@@ -376,7 +377,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Flexible(
-                                            child: new Text('Paquete :',
+                                            child: Text('Paquete :',
                                                 style: TextStyle(
                                                     fontSize: 20,
                                                     color: Colors.black)),
@@ -402,7 +403,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Flexible(
-                                            child: new Text(
+                                            child: Text(
                                                 'Cantidad Personas:',
                                                 style: TextStyle(
                                                     fontSize: 20,
@@ -565,7 +566,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                                       MainAxisSize.max,
                                                   children: [
                                                     Flexible(
-                                                      child: new Text('Hotel:',
+                                                      child: Text('Hotel:',
                                                           style: TextStyle(
                                                               fontFamily:
                                                                   'Poppins',
@@ -725,7 +726,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Flexible(
-                                            child: new Text('Nombre Cliente:',
+                                            child: Text('Nombre Cliente:',
                                                 style: TextStyle(
                                                     fontFamily: 'Poppins',
                                                     fontSize: 18,

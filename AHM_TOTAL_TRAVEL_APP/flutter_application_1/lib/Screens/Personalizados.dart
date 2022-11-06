@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 //import 'dart:js';
 
+import 'package:flutter_application_1/Screens/Timeline.dart';
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/ReserDetalles.dart';
@@ -72,6 +73,35 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
       print("Error " + response.statusCode.toString());
     }
   }
+
+  Future<dynamic> TimeReservation(idReservation, userloggeddata) async {
+    List<dynamic> dataReservation;
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
+    final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+    final response = await http.get(Uri.parse(url_list), headers: headers);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var Json = Decodificador.fromJson(userMap);
+      dataReservation = Json.data;
+      var reservation =
+      dataReservation.where((x) => x['id'] == idReservation).toList();
+
+      print(reservation);
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  Timeline(widget.userloggeddata, reservation)));
+    } else {
+      print("Error " + response.statusCode.toString());
+    }
+  }
+
+
 
   List<Padding> ListDefaultReservation(
       List<dynamic> data, BuildContext context) {
@@ -318,6 +348,18 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                         ),
                                         onPressed: () {
                                           FindReservation(element['id'],
+                                              widget.userloggeddata);
+                                        },
+                                      ),
+                                      ElevatedButton(
+                                        child: Text(
+                                            'Timeline',
+                                            style: TextStyle(fontSize: 12)),
+                                        style: ElevatedButton.styleFrom(
+                                          primary: Color.fromRGBO(101, 45, 143, 1),
+                                        ),
+                                        onPressed: () {
+                                          TimeReservation(element['id'],
                                               widget.userloggeddata);
                                         },
                                       ),

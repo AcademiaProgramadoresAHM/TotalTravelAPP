@@ -25,6 +25,8 @@ class LandingPage extends StatefulWidget {
 }
 
 class LandingPageState extends State<LandingPage> {
+
+
   List<PlanModal> planList = [];
   PageController controller =
       PageController(initialPage: 0, viewportFraction: 0.85);
@@ -166,7 +168,7 @@ class LandingPageState extends State<LandingPage> {
       print(e);
     }
   }
-
+/*
   void deregisterButtonClicked() async {
     try {
       await notificationRegistrationService.deregisterDevice();
@@ -175,7 +177,7 @@ class LandingPageState extends State<LandingPage> {
       await showAlert(message: e);
     }
   }
-
+*/
   Future<void> showAlert({message: String, BuildContext? context}) async {
     return showDialog<void>(
       context: this.context,
@@ -205,7 +207,9 @@ class LandingPageState extends State<LandingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+      home: Scaffold(
       backgroundColor: context.scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Column(
@@ -301,6 +305,7 @@ class LandingPageState extends State<LandingPage> {
           ],
         ),
       ),
+      )
     );
   }
 
