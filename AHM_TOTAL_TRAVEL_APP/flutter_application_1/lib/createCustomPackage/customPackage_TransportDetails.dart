@@ -311,7 +311,11 @@ class _TransportDetails extends State<TransportDetails> {
           ),
         ),
       );
+      reservacionTransporte transporte = new reservacionTransporte();
 
+      transporte.detr_ID = element['id'];
+      transporte.reTr_CantidadAsientos = peopleFinal.toInt();
+      widget.customPackage.reservacionTransportes = jsonEncode(transporte);
       widget.customPackage.partner = element['parter'];
       widget.customPackage.ciudadSalida_ID = element['ciudad_Salida_ID'];
       widget.customPackage.ciudadSalida = element['ciudad_Salida'];

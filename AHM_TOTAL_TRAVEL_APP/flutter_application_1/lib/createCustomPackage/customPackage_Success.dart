@@ -1,21 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/ComponentsLogin/Register.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'package:flutter_application_1/Models/customPackageViewModel.dart';
-import 'package:flutter_application_1/Screens/Login.dart';
-import 'package:flutter_application_1/Screens/recoverPass.dart';
-import 'package:flutter_application_1/Screens/signIn_screen.dart';
-import 'package:flutter_application_1/Support_Screen.dart';
 import 'package:flutter_application_1/home_screen.dart';
 import 'package:get/get.dart';
-import 'package:flutter_application_1/Screens/prueba.dart';
-import 'package:flutter_application_1/Screens/signUp_view.dart';
 import 'package:flutter_application_1/navigation_home_screen.dart';
-
 import '../ComponentsLogin/constants.dart';
 import '../ComponentsLogin/controller/simple_ui_controller.dart';
-import 'package:hexcolor/hexcolor.dart';
-import 'package:flutter_application_1/ComponentsLogin/Login.dart';
 
 class SuccessCustomPackage extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
@@ -35,34 +27,6 @@ class _SuccessCustomPackage extends State<SuccessCustomPackage> {
   void dispose() {
     super.dispose();
   }
-
-  void printCustomPackage(){
-    print("UsuarioID: " + widget.customPackage.usua_ID.toString());
-    print("HoteID: " + widget.customPackage.hote_ID.toString());
-    print("FechaEntrada: " + widget.customPackage.reHo_FechaEntrada.toString());
-    print("FechaSalida: " + widget.customPackage.reHo_FechaSalida.toString());
-    print("Noches: " + widget.customPackage.hote_numNoches.toString());
-    print("Personas: " + widget.customPackage.hote_numeroPersonas.toString());
-    print("HabitacionID: " + widget.customPackage.habi_ID.toString());
-    print("Cantidad Habitaciones: " + widget.customPackage.habi_Cantidad.toString());
-    print("Total: " + widget.customPackage.reHo_PrecioTotal.toString());
-
-    print("ActividadesExtra: " + widget.customPackage.actividadesExtra.toString());
-    print("Restaurantes: " + widget.customPackage.Restaurant.toString());
-
-    print("TransportePartner: " + widget.customPackage.partner.toString());
-    print("CiudadSalidaID: " + widget.customPackage.ciudadSalida_ID.toString());
-    print("CiudadLlegadaID: " + widget.customPackage.ciudadLlegada_ID.toString());
-    print("HoraSalida: " + widget.customPackage.horaSalida.toString());
-    print("Personas: " + widget.customPackage.tprt_cantidadPersonas.toString());
-    print("Total: " + widget.customPackage.tprt_Total.toString());
-
-    print("TotalPaquete: " + widget.customPackage.PackageTotal.toString());
-    print("TipoPago: " + widget.customPackage.tipoPago.toString());
-    print("CantidadPagos: " + widget.customPackage.CantidadPagos.toString());
-
-  }
-
 
   @override
   Widget build(BuildContext context) {
@@ -164,7 +128,7 @@ class _SuccessCustomPackage extends State<SuccessCustomPackage> {
           ),
         ),
         onPressed: () {
-          print("UsuarioID: " + widget.customPackage.usua_ID.toString());
+  /*        print("UsuarioID: " + widget.customPackage.usua_ID.toString());
     print("HoteID: " + widget.customPackage.hote_ID.toString());
     print("FechaEntrada: " + widget.customPackage.reHo_FechaEntrada.toString());
     print("FechaSalida: " + widget.customPackage.reHo_FechaSalida.toString());
@@ -186,7 +150,14 @@ class _SuccessCustomPackage extends State<SuccessCustomPackage> {
 
     print("TotalPaquete: " + widget.customPackage.PackageTotal.toString());
     print("TipoPago: " + widget.customPackage.tipoPago.toString());
-    print("CantidadPagos: " + widget.customPackage.CantidadPagos.toString());
+    print("CantidadPagos: " + widget.customPackage.CantidadPagos.toString());*/
+
+  
+    print(widget.customPackage.toJson().toString());
+    print(widget.customPackage.actividadesExtras.toString());
+    print(widget.customPackage.restaurantes.toString());
+    print(widget.customPackage.reservacionTransportes.toString());
+      
           Navigator.push(
             context,
             MaterialPageRoute(

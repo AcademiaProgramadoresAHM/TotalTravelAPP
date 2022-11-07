@@ -405,7 +405,7 @@ class _RestaurantDetails extends State<RestaurantDetails> {
         Restaurant.restaurante = element['restaurante'];
         Restaurant.rest_numeroPersonas = peopleFinal;
         Restaurant.rest_FechaReservacion =
-            DateFormat('dd-MM-yyyy').format(date);
+            DateFormat('yyyy-MM-dd').format(date);
         Restaurant.rest_HoraReservacion = DateFormat("HH:mm")
             .format(new DateTime(2000, 1, 1, time.hour, time.minute));
 

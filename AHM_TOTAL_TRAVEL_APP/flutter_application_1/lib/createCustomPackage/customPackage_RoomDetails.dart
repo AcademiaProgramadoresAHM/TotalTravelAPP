@@ -663,10 +663,8 @@ class _RoomDetails extends State<RoomDetails> {
       customPackage.usua_ID = widget.userloggeddata!.ID;
       customPackage.hote_ID = element['hotelID'];
       customPackage.hote_Descripcion = element['hotel'];
-      customPackage.reHo_FechaEntrada =
-          DateFormat('dd-MM-yyyy').format(dateRange.start);
-      customPackage.reHo_FechaSalida =
-          DateFormat('dd-MM-yyyy').format(dateRange.end);
+      customPackage.reHo_FechaEntrada = DateFormat('yyyy-MM-dd').format(dateRange.start);
+      customPackage.reHo_FechaSalida = DateFormat('yyyy-MM-dd').format(dateRange.end);
       customPackage.reHo_PrecioTotal = element['precio'].toInt().toString();
       customPackage.hote_numNoches = nights.toInt();
       customPackage.night = wordNight;
