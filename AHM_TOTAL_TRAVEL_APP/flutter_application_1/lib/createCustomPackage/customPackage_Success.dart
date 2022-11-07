@@ -153,10 +153,10 @@ class _SuccessCustomPackage extends State<SuccessCustomPackage> {
     print("CantidadPagos: " + widget.customPackage.CantidadPagos.toString());*/
 
   
-    print(widget.customPackage.toJson().toString());
-    print(widget.customPackage.actividadesExtras.toString());
-    print(widget.customPackage.restaurantes.toString());
-    print(widget.customPackage.reservacionTransportes.toString());
+    //print(widget.customPackage.toJson().toString());
+   // print(widget.customPackage.actividadesExtras.toString());
+    //print(widget.customPackage.restaurantes.toString());
+    //print(widget.customPackage.reservacionTransportes.toString());
       
           Navigator.push(
             context,

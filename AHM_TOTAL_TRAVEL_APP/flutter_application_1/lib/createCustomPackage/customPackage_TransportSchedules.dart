@@ -64,7 +64,7 @@ final TextEditingController textEditingController = TextEditingController();
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => NavigationHomeScreen( TransportDetails(widget.userloggeddata,widget.customPackage,widget.CiudadSalida, Transport),widget.userloggeddata)),
+                  builder: (context) => NavigationHomeScreen( TransportDetails(widget.userloggeddata,widget.customPackage,widget.CiudadSalida, Transport,[]),widget.userloggeddata)),
             );
        }
      

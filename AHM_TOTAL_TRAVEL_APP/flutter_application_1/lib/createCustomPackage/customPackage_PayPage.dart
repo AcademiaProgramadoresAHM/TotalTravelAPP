@@ -1262,7 +1262,7 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
           child:     ElevatedButton(
           onPressed: () {
               
-              widget.customPackage.PackageTotal = Total.toString();
+              widget.customPackage.PackageTotal = Total.toDouble();
               Navigator.push(context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(PayProcess(widget.userloggeddata,widget.customPackage),widget.userloggeddata)),);
 
           },

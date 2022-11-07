@@ -41,7 +41,6 @@ class _PayProcess extends State<PayProcess> {
       var user = Decodificador.fromJson(userMap);
       return user.data;
     } else {
-      print("Error " + response.statusCode.toString());
     }
   }
   var cantidadFinal = 1;
@@ -50,19 +49,18 @@ class _PayProcess extends State<PayProcess> {
 
 Future<void> PostCustomPackages(customPackageViewModel customPackage, UserLoggedModel userloggeddata)async {
 
-  final url = Uri.parse("https://totaltravel.somee.com/API/Reservation/Insert");
+  final url = Uri.parse("https://totaltravelapi.azurewebsites.net/API/Reservation/Insert");
 final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
     };
   final json = jsonEncode(customPackage);
-  print("json " + json.toString());
   final response = await post(url, headers: headers, body: json);
     print("response" + response.body.toString());
   if (response.body != " ") {
     Map<String, dynamic> userMap = jsonDecode(response.body);
     var data = DecoderAPI.fromJson(userMap);
-    print(data.data);
+
     if (data.data != null) {
        Navigator.push( context,MaterialPageRoute(builder: (context) =>   SuccessCustomPackage(widget.userloggeddata,widget.customPackage)));
     } else {
@@ -77,10 +75,6 @@ final headers = {
     }
   }
 }
-
-
-
-
 
 
 

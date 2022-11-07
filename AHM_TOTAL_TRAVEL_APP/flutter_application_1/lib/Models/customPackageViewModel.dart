@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 class customPackageViewModel {
   int? usua_ID;//*
   int? hote_ID;//*
@@ -26,47 +28,36 @@ class customPackageViewModel {
   String? horaSalida;
   int? tprt_cantidadPersonas;//*
   int? tprt_Total;//*
-  String? PackageTotal;//*
+  double? PackageTotal;//*
   int?  tipoPago;//*
   int? CantidadPagos;//*
+  List<reservacionTransporte>? transporteReservacion;
   Map<String, dynamic> toJson() => {
-        '"resv_ID"': 0,
-        '"usua_ID"': usua_ID,
-        '"paqu_ID"': 0,
-        '"resv_esPersonalizado"': true,
-        '"resv_CantidadPagos"': CantidadPagos,
-        '"resv_NumeroPersonas"': hote_numeroPersonas,
-        '"resv_ConfirmacionPago"': false,
-        '"resv_ConfirmacionHotel"': false,
-        '"resv_ConfirmacionRestaurante"': false,
-        '"resv_ConfirmacionTrans"': false,
-        '"resv_Precio"': PackageTotal,
-        '"resv_UsuarioCreacion"': usua_ID,
-        '"resv_UsuarioModifica"': 0,
-        '"reHo_FechaEntrada"': '"' + reHo_FechaEntrada.toString() + '"',
-        '"reHo_FechaSalida"': '"' +reHo_FechaSalida.toString()+ '"',
-        '"hote_ID"': hote_ID,
-        '"actividadesExtras"': actividadesExtras,
-        '"restaurantes"': restaurantes,
-        '"ReHo_PrecioTotal"': reHo_PrecioTotal,
-        '"Hote_numNoches"': hote_numNoches,
-        '"actividadesHoteles"': [
-           {
-            "reAH_ID": 0,
-            "resv_ID": 0,
-            "hoAc_ID": 0,
-            "reAH_Precio": 0,
-            "reAH_Cantidad": 0,
-            "reAH_FechaReservacion": "1976-08-22T03:23:43.534Z",
-            "reAH_HoraReservacion": "in sunt qui ",
-            "reAH_UsuarioCreacion": 0,
-            "reAH_UsuarioModifica": 0
-          }
-        ],
-         '"tipoPago"': tipoPago,
-        '"habi_ID"': habi_ID,
-        '"habi_Cantidad"': habi_Cantidad,
-        '"reservacionTransportes"': "[" + reservacionTransportes.toString() +"]"
+        'resv_ID': 0,
+        'usua_ID': usua_ID,
+        'paqu_ID': 1017,
+        'resv_esPersonalizado': true,
+        'resv_CantidadPagos': CantidadPagos,
+        'resv_NumeroPersonas': hote_numeroPersonas,
+        'resv_ConfirmacionPago': false,
+        'resv_ConfirmacionHotel': false,
+        'resv_ConfirmacionRestaurante': false,
+        'resv_ConfirmacionTrans': false,
+        'resv_Precio': PackageTotal,
+        'resv_UsuarioCreacion': usua_ID,
+        'resv_UsuarioModifica': 0,
+        'reHo_FechaEntrada': reHo_FechaEntrada.toString(),
+        'reHo_FechaSalida': reHo_FechaSalida.toString(),
+        'hote_ID': hote_ID,
+        'actividadesExtras': actividadesExtra,
+        'restaurantes': Restaurant,
+        'ReHo_PrecioTotal': reHo_PrecioTotal,
+        'Hote_numNoches': hote_numNoches,
+        'actividadesHoteles': [],
+        'tipoPago': tipoPago,
+        'habi_ID': habi_ID,
+        'habi_Cantidad': habi_Cantidad,
+        'reservacionTransportes': transporteReservacion
       };
 }
 
@@ -116,7 +107,6 @@ class reservacionTransporte{
       Map<String, dynamic> toJson() => {
         'detr_ID': detr_ID,
         'reTr_CantidadAsientos': reTr_CantidadAsientos,
-
       };
 
 }

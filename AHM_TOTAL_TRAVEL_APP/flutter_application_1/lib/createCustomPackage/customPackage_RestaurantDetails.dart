@@ -399,6 +399,7 @@ class _RestaurantDetails extends State<RestaurantDetails> {
         ),
       );
       if (confirm == true) {
+        String hour = DateFormat("HH:mm").format(new DateTime(2000, 1, 1, time.hour, time.minute));
         Restaurants Restaurant = new Restaurants();
         Restaurant.index = widget.RestaurantsAdd;
         Restaurant.rest_ID = element['id'];
@@ -406,8 +407,7 @@ class _RestaurantDetails extends State<RestaurantDetails> {
         Restaurant.rest_numeroPersonas = peopleFinal;
         Restaurant.rest_FechaReservacion =
             DateFormat('yyyy-MM-dd').format(date);
-        Restaurant.rest_HoraReservacion = DateFormat("HH:mm")
-            .format(new DateTime(2000, 1, 1, time.hour, time.minute));
+        Restaurant.rest_HoraReservacion = hour.substring(1,2) + hour.substring(3,4);
 
         widget.Restaurante.insert(widget.RestaurantsAdd, Restaurant);
       }
