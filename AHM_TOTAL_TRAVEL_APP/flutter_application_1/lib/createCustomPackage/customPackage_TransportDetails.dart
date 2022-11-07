@@ -140,7 +140,7 @@ class _TransportDetails extends State<TransportDetails> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(2),
                           child: Image.network(
-                            "https://totaltravel.somee.com/Images/"+imageUrl[0].toString(),
+                            "https://totaltravelapi.azurewebsites.net/Images/"+imageUrl[0].toString(),
                             width: 100,
                             height: 300,
                             fit: BoxFit.contain,

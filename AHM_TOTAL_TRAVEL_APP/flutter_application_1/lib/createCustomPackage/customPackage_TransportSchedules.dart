@@ -47,7 +47,7 @@ final TextEditingController textEditingController = TextEditingController();
    
     List<dynamic> dataTransport;
     String url_list =
-        "https://totaltravel.somee.com/API/DetailsTransportation/List";
+        "https://totaltravelapi.azurewebsites.net/API/DetailsTransportation/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!

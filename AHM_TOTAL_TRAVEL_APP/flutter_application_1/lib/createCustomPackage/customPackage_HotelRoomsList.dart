@@ -31,7 +31,7 @@ Map<int?, String> HotelsDictionary = Map();
   Future<dynamic> GetListRooms(Hotel,userloggeddata) async {
     List<dynamic> dataRooms;
   String url_list =
-      "https://totaltravel.somee.com/API/Rooms/List";
+      "https://totaltravelapi.azurewebsites.net/API/Rooms/List";
        final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!

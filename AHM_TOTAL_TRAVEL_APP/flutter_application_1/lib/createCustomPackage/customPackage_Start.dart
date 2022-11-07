@@ -93,7 +93,7 @@ class _createPackage extends State<createPackage> {
 
   Future<dynamic> GetCities() async {
     var data;
-    String url_list = "https://totaltravel.somee.com/API/Cities/List";
+    String url_list = "https://totaltravelapi.azurewebsites.net/API/Cities/List";
     var respuesta = await http.get(Uri.parse(url_list));
     if (respuesta.statusCode == 200) {
       Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);

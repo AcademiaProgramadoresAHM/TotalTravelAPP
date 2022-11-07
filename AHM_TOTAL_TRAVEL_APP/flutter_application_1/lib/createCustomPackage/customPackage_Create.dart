@@ -121,7 +121,7 @@ final TextEditingController textEditingController = TextEditingController();
 
   Future<dynamic> GetCities(idCiudad, bool) async {
     var data;
-    String url_list = "https://totaltravel.somee.com/API/Cities/List";
+    String url_list = "https://totaltravelapi.azurewebsites.net/API/Cities/List";
     var respuesta = await http.get(Uri.parse(url_list));
     if(bool == true){
         if (respuesta.statusCode == 200) {
