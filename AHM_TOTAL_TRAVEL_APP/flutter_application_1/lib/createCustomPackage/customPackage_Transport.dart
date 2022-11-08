@@ -54,7 +54,7 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
             Map<String, dynamic> userMap = jsonDecode(response.body);
             var Json = DecoderAPI.fromJson(userMap);
             dataTransport = Json.data;
-            var Transport = dataTransport.where((x) => x['partner_ID'] == idPartner).toList();
+            var Transport = dataTransport.where((x) => x['ciudad_Llegada_ID'] == CiudadLlegada.ID && x['ciudad_Salida_ID'] == CiudadSalida.ID).toList();
             Navigator.push(
               context,
               MaterialPageRoute(

@@ -134,7 +134,7 @@ class _ActivityDetails extends State<ActivityDetails> {
                                             style: TextStyle(
                                               fontFamily: 'Outfit',
                                               color: Color(0xFF090F13),
-                                              fontSize: 25,
+                                              fontSize: 20,
                                               fontWeight: FontWeight.w700,
                                             ),
                                           ),
@@ -142,13 +142,13 @@ class _ActivityDetails extends State<ActivityDetails> {
                                       ),
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 20, 0, 0),
+                                            0, 20, 40, 0),
                                         child: Text(
                                           element['descripcion'],
                                           style: TextStyle(
                                             fontFamily: 'Outfit',
                                             color: Color(0xFF7C8791),
-                                            fontSize: 20,
+                                            fontSize: 18,
                                             fontWeight: FontWeight.w500,
                                           ),
                                         ),

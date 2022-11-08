@@ -257,7 +257,7 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                                             style: TextStyle(
                                               fontFamily: 'Outfit',
                                               color: Color(0xFF090F13),
-                                              fontSize: 25,
+                                              fontSize: 20,
                                               fontWeight: FontWeight.w700,
                                             ),
                                           ),

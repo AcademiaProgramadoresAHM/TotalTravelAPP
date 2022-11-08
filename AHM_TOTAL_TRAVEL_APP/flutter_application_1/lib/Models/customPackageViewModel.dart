@@ -35,7 +35,7 @@ class customPackageViewModel {
   Map<String, dynamic> toJson() => {
         'resv_ID': 0,
         'usua_ID': usua_ID,
-        'paqu_ID': 1017,
+        'paqu_ID': 1,
         'resv_esPersonalizado': true,
         'resv_CantidadPagos': CantidadPagos,
         'resv_NumeroPersonas': hote_numeroPersonas,

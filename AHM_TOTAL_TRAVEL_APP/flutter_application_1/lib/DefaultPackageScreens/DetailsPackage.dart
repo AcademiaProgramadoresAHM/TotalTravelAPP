@@ -163,7 +163,7 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                                                 element['nombre'],
                                                 style: TextStyle(
                                                   fontFamily: 'Poppins',
-                                                  fontSize: 22,
+                                                  fontSize: 20,
                                                 ),
                                               ),
                                               Padding(

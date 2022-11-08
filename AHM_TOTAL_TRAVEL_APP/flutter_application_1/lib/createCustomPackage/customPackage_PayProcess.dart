@@ -56,7 +56,6 @@ final headers = {
     };
   final json = jsonEncode(customPackage);
   final response = await post(url, headers: headers, body: json);
-    print("response" + response.body.toString());
   if (response.body != " ") {
     Map<String, dynamic> userMap = jsonDecode(response.body);
     var data = DecoderAPI.fromJson(userMap);
@@ -139,7 +138,7 @@ final headers = {
                                       style: TextStyle(
                                         fontFamily: 'Outfit',
                                         color: Color(0xFF090F13),
-                                        fontSize: 26,
+                                        fontSize: 17,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
@@ -353,7 +352,7 @@ final headers = {
               Expanded(
                 flex: 1,
                 child: Text(
-                  '  ',
+                  '',
                 ),
               ),
               Expanded(

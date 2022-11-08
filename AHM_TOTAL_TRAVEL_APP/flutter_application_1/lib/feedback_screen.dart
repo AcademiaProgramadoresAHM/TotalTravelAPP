@@ -177,7 +177,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                       style: TextStyle(
                                         fontFamily: 'Outfit',
                                         color: Color(0xFF090F13),
-                                        fontSize: 26,
+                                        fontSize: 20,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
@@ -186,7 +186,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                       style: TextStyle(
                                         fontFamily: 'Outfit',
                                         color: Color.fromRGBO(101, 45, 143, 1),
-                                        fontSize: 24,
+                                        fontSize: 16,
                                         fontWeight: FontWeight.w600,
                                       ),
                                     ),
