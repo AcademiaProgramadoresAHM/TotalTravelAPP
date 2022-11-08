@@ -455,24 +455,28 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
               children: [
                 FutureBuilder<dynamic>(
                   builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return Wrap(
-                          spacing: 8,
-                          runSpacing: 4,
-                          alignment: WrapAlignment.start,
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          direction: Axis.horizontal,
-                          runAlignment: WrapAlignment.start,
-                          verticalDirection: VerticalDirection.down,
-                          clipBehavior: Clip.none,
-                          children: PackageDetails(widget.Package, context));
-                    } else {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(
                           child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
                         child: CircularProgressIndicator(
                             color: Color.fromARGB(255, 101, 45, 144)),
                       ));
+                    } else {
+                      if (snapshot.hasData) {
+                        return Wrap(
+                            spacing: 8,
+                            runSpacing: 4,
+                            alignment: WrapAlignment.start,
+                            crossAxisAlignment: WrapCrossAlignment.start,
+                            direction: Axis.horizontal,
+                            runAlignment: WrapAlignment.start,
+                            verticalDirection: VerticalDirection.down,
+                            clipBehavior: Clip.none,
+                            children: PackageDetails(widget.Package, context));
+                      } else {
+                        return Center(child: Text('No Data'));
+                      }
                     }
                   },
                   future: GetListadoPackageshome(),

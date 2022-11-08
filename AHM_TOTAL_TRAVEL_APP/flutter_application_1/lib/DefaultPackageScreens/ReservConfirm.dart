@@ -21,12 +21,9 @@ class ReservConfirm extends StatefulWidget {
   final ReservationViewmodel Reservation;
   final DefaultPackageModel? package;
   final List<dynamic> paqueteactividades;
-  final int? HotelID;
-  final double? precio;
-  final int? reservID;
 
   const ReservConfirm(this.userloggeddata, this.Reservation, this.package,
-      this.paqueteactividades, this.HotelID, this.precio, this.reservID,
+      this.paqueteactividades,
       {super.key});
 
   static String tag = '/ReservConfirm';
@@ -74,16 +71,13 @@ class ReservConfirmState extends State<ReservConfirm> {
       dataPayment.monto = MontoPago.text.toDouble();
       dataPayment.formatted = formatted;
 
-      PostReservertion(widget.precio, widget.reservID, widget.HotelID,
-          widget.Reservation, dataPayment, widget.userloggeddata, context);
-      // print(package);
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //       builder: (context) => NavigationHomeScreen(
-      //           DetailPackageScreen(widget.userloggeddata, package),
-      //           widget.userloggeddata)),
-      // );
+      PostReservertion(
+          widget.Reservation.resvPrecio,
+          widget.Reservation.hotelid,
+          widget.Reservation,
+          dataPayment,
+          widget.userloggeddata,
+          context);
       return payment;
     } else {
       print("Error " + response.statusCode.toString());
