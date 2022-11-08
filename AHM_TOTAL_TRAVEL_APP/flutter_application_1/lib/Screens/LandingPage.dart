@@ -25,8 +25,6 @@ class LandingPage extends StatefulWidget {
 }
 
 class LandingPageState extends State<LandingPage> {
-
-
   List<PlanModal> planList = [];
   PageController controller =
       PageController(initialPage: 0, viewportFraction: 0.85);
@@ -67,20 +65,22 @@ class LandingPageState extends State<LandingPage> {
                   SingleChildScrollView(
                     child: Column(
                       children: [
-                        //ElevatedButton(
-                        //child: Text("Register"),
-                        //onPressed: registerButtonClicked,
-                        //),
-                        /*
-                        ElevatedButton(
-                          child: Text("Deregister"),
-                          onPressed: deregisterButtonClicked,
-                        ),*/
-                        Text(element['nombre'], style: boldTextStyle(size: 30)),
-                        Text(
-                            element['descripcion_Paquete'] ??
-                                'No descripcion Disponible',
-                            style: secondaryTextStyle()),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(15, 0, 10, 0),
+                          child: Align(
+                            child: Text(element['nombre'],
+                                style: boldTextStyle(size: 30)),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(25, 0, 10, 0),
+                          child: Align(
+                            child: Text(
+                                element['descripcion_Paquete'] ??
+                                    'No descripcion Disponible',
+                                style: secondaryTextStyle()),
+                          ),
+                        ),
                         24.height,
                         Text('\$' + element['precio'].toString(),
                             style: boldTextStyle(
@@ -107,9 +107,7 @@ class LandingPageState extends State<LandingPage> {
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600)),
-                                Text(
-                                    element['duracion_Paquete'] ??
-                                        'No Disponibles',
+                                Text("${element['duracion_Paquete']} Días",
                                     style: TextStyle(
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600)),
@@ -168,6 +166,7 @@ class LandingPageState extends State<LandingPage> {
       print(e);
     }
   }
+
 /*
   void deregisterButtonClicked() async {
     try {
@@ -209,104 +208,114 @@ class LandingPageState extends State<LandingPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-      home: Scaffold(
-      backgroundColor: context.scaffoldBackgroundColor,
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Container(
-                width: double.infinity,
-                height: 100,
-                margin: EdgeInsets.fromLTRB(0.0, 35.0, 1.0, 0.0),
-                decoration: BoxDecoration(
-                  color: Color.fromARGB(255, 101, 45, 144),
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 250,
-                      height: 100,
-                      child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(160, 5, 0, 5),
-                        child: Image.asset(
-                          'assets/images/logo-AHM-Fondo-Morao.png',
-                          fit: BoxFit.contain,
+        home: Scaffold(
+          backgroundColor: context.scaffoldBackgroundColor,
+          body: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Container(
+                    width: double.infinity,
+                    height: 100,
+                    margin: EdgeInsets.fromLTRB(0.0, 35.0, 1.0, 0.0),
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 101, 45, 144),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 250,
+                          height: 100,
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(160, 5, 0, 5),
+                            child: Image.asset(
+                              'assets/images/logo-AHM-Fondo-Morao.png',
+                              fit: BoxFit.contain,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    Flexible(
-                        flex: 6,
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
-                          child: ElevatedButton(
-                              style: ButtonStyle(
-                                //backgroundColor: MaterialStateProperty.all(Colors.red),
-                                backgroundColor: MaterialStateProperty.all(
-                                    HexColor('#652D90')),
-                                shape: MaterialStateProperty.all(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(15),
+                        Flexible(
+                            flex: 6,
+                            child: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
+                              child: ElevatedButton(
+                                  style: ButtonStyle(
+                                    //backgroundColor: MaterialStateProperty.all(Colors.red),
+                                    backgroundColor: MaterialStateProperty.all(
+                                        HexColor('#652D90')),
+                                    shape: MaterialStateProperty.all(
+                                      RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                              onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Login()));
-                              },
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    Icons.account_circle,
-                                    size: 18.0,
-                                    color: white,
-                                  ),
-                                  SizedBox(
-                                    width: 2,
-                                  ),
-                                  Text(
-                                    'Ingresar',
-                                    style:
-                                        TextStyle(color: white, fontSize: 18.0),
-                                  )
-                                ],
-                              )),
-                        )),
-                  ],
-                )),
-            FutureBuilder<dynamic>(
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Container(
-                    height: 550,
-                    child: CarouselSlider(
-                      options: CarouselOptions(
-                        height: 530,
-                        // aspectRatio: 1.0,
-                        enlargeCenterPage: true,
-                        scrollDirection: Axis.horizontal,
-                        autoPlay: true,
-                      ),
-                      items: LandScreenPackage(snapshot.data, context),
-                    ),
-                  );
-                } else {
-                  return Center(
-                      child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 200, 0, 0),
-                    child: CircularProgressIndicator(
-                        color: Color.fromARGB(255, 101, 45, 144)),
-                  ));
-                }
-              },
-              future: GetListadoPackages(),
+                                  onPressed: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => Login()));
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        Icons.account_circle,
+                                        size: 18.0,
+                                        color: white,
+                                      ),
+                                      SizedBox(
+                                        width: 2,
+                                      ),
+                                      Text(
+                                        'Ingresar',
+                                        style: TextStyle(
+                                            color: white, fontSize: 18.0),
+                                      )
+                                    ],
+                                  )),
+                            )),
+                      ],
+                    )),
+                FutureBuilder<dynamic>(
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                          child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 200, 0, 0),
+                        child: CircularProgressIndicator(
+                            color: Color.fromARGB(255, 101, 45, 144)),
+                      ));
+                    } else {
+                      if (snapshot.hasData) {
+                        return Container(
+                          height: 550,
+                          child: CarouselSlider(
+                            options: CarouselOptions(
+                              height: 530,
+                              // aspectRatio: 1.0,
+                              enlargeCenterPage: true,
+                              scrollDirection: Axis.horizontal,
+                              autoPlay: true,
+                            ),
+                            items: LandScreenPackage(snapshot.data, context),
+                          ),
+                        );
+                      } else {
+                        return Center(
+                            child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 200, 0, 0),
+                          child: CircularProgressIndicator(
+                              color: Color.fromARGB(255, 101, 45, 144)),
+                        ));
+                      }
+                    }
+                  },
+                  future: GetListadoPackages(),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
-      )
-    );
+          ),
+        ));
   }
 
   // Login Button

@@ -119,32 +119,6 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                    child: Container(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      height: 120,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(0),
-                          bottomRight: Radius.circular(0),
-                          topLeft: Radius.circular(12),
-                          topRight: Radius.circular(12),
-                        ),
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Image.network(
-                          'https://media-cdn.tripadvisor.com/media/photo-s/25/fb/8c/46/hotel-exterior.jpg',
-                          //imageUrl[0].toString(),
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(10, 10, 16, 12),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
@@ -172,6 +146,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
+<<<<<<< Updated upstream
                                     Text(
                                       element['nombre'],
                                       style: TextStyle(
@@ -188,15 +163,49 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                         color: Color.fromRGBO(101, 45, 143, 1),
                                         fontSize: 16,
                                         fontWeight: FontWeight.w600,
+=======
+                                    Flexible(
+                                      flex: 4,
+                                      child: Text(
+                                        element['nombre'],
+                                        style: TextStyle(
+                                          fontFamily: 'Outfit',
+                                          color: Color(0xFF090F13),
+                                          fontSize: 26,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      flex: 2,
+                                      child: Text(
+                                        '\$' + element['precio'].toString(),
+                                        style: TextStyle(
+                                          fontFamily: 'Outfit',
+                                          color:
+                                              Color.fromRGBO(101, 45, 143, 1),
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+>>>>>>> Stashed changes
                                       ),
                                     ),
                                   ],
                                 ),
                                 Text(
-                                  element['hotel'],
+                                  element['ciudad'],
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color.fromRGBO(101, 45, 143, 1),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Text(
+                                  element['hotel'],
+                                  style: TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Color.fromARGB(255, 116, 78, 146),
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
                                   ),

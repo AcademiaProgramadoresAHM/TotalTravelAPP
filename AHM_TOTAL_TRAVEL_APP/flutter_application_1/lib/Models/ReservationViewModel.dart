@@ -1,6 +1,8 @@
 import "package:flutter/material.dart";
 import "dart:convert";
 
+import 'customPackageViewModel.dart';
+
 class ReservationViewmodel {
   int? usuaId;
   int? paquId;
@@ -14,6 +16,7 @@ class ReservationViewmodel {
   double? resvPrecio;
   String? reHo_FechaEntrada;
   String? reHo_FechaSalida;
+  List<ActivitiesExtra>? actividadesExtra;
   int? UsuarioCrea;
   int? hotelid;
 
@@ -33,6 +36,7 @@ class ReservationViewmodel {
         "reHo_FechaEntrada": reHo_FechaEntrada,
         "reHo_FechaSalida": reHo_FechaSalida,
         "hote_ID": hotelid,
+        'actividadesExtras': actividadesExtra,
       };
 }
 

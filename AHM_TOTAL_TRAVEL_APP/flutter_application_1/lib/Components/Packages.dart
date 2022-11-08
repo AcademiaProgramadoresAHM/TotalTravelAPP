@@ -141,6 +141,7 @@ List<Padding> ListDefaultPackages(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
+<<<<<<< Updated upstream
                                   Text(
                                     element['nombre'],
                                     style: TextStyle(
@@ -157,6 +158,30 @@ List<Padding> ListDefaultPackages(
                                       color: Color.fromRGBO(101, 45, 143, 1),
                                       fontSize: 16,
                                       fontWeight: FontWeight.w600,
+=======
+                                  Flexible(
+                                    flex: 4,
+                                    child: Text(
+                                      element['nombre'],
+                                      style: TextStyle(
+                                        fontFamily: 'Outfit',
+                                        color: Color(0xFF090F13),
+                                        fontSize: 26,
+                                        fontWeight: FontWeight.w500,
+                                      ),
+                                    ),
+                                  ),
+                                  Flexible(
+                                    flex: 2,
+                                    child: Text(
+                                      '\$' + element['precio'].toString(),
+                                      style: TextStyle(
+                                        fontFamily: 'Outfit',
+                                        color: Color.fromRGBO(101, 45, 143, 1),
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+>>>>>>> Stashed changes
                                     ),
                                   ),
                                 ],

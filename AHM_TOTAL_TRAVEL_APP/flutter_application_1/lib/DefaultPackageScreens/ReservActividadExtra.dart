@@ -2,22 +2,28 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Components/Decodificador.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 import '../Models/DefaultPackageViewModel.dart';
 import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
 import 'package:http/http.dart' as http;
 
+import '../Models/customPackageViewModel.dart';
 import '../createCustomPackage/customPackage_Activities.dart';
+import '../navigation_home_screen.dart';
+import '../utils/AppWidget.dart';
+import 'ReservationPreview.dart';
 
 class ReservActivitiesExtra extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final ReservationViewmodel Reservation;
   final DefaultPackageModel? package;
+  final List<ActivitiesExtra>? activityExtra;
   final List<dynamic> paqueteactividades;
 
   const ReservActivitiesExtra(this.userloggeddata, this.Reservation,
-      this.package, this.paqueteactividades,
+      this.package, this.paqueteactividades, this.activityExtra,
       {super.key});
   @override
   State<ReservActivitiesExtra> createState() => _ReservActivitiesExtraState();
@@ -268,12 +274,12 @@ class _ReservActivitiesExtraState extends State<ReservActivitiesExtra> {
                                                 padding: EdgeInsets.zero,
                                               ),
                                               onPressed: () {
-                                                // GetListActivitiesExtras(
-                                                //     widget.Ciudad,
-                                                //     widget.userloggeddata,
-                                                //     element['id'],
-                                                //     false,
-                                                //     widget.ActivitiesAdd);
+                                                GetListActivitiesExtras(
+                                                    widget.package!.ciudadID,
+                                                    widget.userloggeddata,
+                                                    element['id'],
+                                                    false,
+                                                    widget.Reservation);
                                               },
                                             ),
                                           )),
@@ -300,18 +306,294 @@ class _ReservActivitiesExtraState extends State<ReservActivitiesExtra> {
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    changeStatusColor(appStore.appBarColor);
     return MaterialApp(
-      title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Material App Bar'),
-        ),
-        body: Center(
-          child: Container(
-            child: Text('Hello World'),
-          ),
-        ),
-      ),
-    );
+        title: 'Flutter layout demo',
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(65.0), // here the desired height
+              child: AppBar(
+                backgroundColor: Color.fromRGBO(101, 45, 143, 1),
+                title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(125, 10, 0, 0),
+                        child: Text("Actividades"),
+                      ),
+                      SizedBox.fromSize(
+                        size: Size(80, 80), // button width and height
+                        child: Material(
+                          color:
+                              Color.fromRGBO(101, 45, 143, 1), // button color
+                          child: InkWell(
+                            splashColor:
+                                Color.fromRGBO(101, 45, 143, 1), // splash color
+                            onTap: () {}, // button pressed
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                IconButton(
+                                  icon: Container(
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: Colors.black, width: 1),
+                                        shape: BoxShape.circle,
+                                        color:
+                                            Color.fromARGB(255, 210, 173, 238)),
+                                    child: Center(
+                                      child: Text(
+                                        "0",
+                                        style: TextStyle(
+                                            fontSize: 16, color: black),
+                                      ),
+                                    ),
+                                  ),
+                                  onPressed: () {
+                                    // print(widget.ActivitiesAdd);
+                                    // if (widget.ActivitiesAdd != 0) {
+                                    //   Navigator.push(
+                                    //     context,
+                                    //     MaterialPageRoute(
+                                    //         builder: (context) =>
+                                    //             HistoryActivities(
+                                    //                 widget.userloggeddata,
+                                    //                 widget.activityExtra,
+                                    //                 widget.ActivitiesAdd,
+                                    //                 widget.Ciudad,
+                                    //                 widget.customPackage)),
+                                    //   );
+                                    // } else {
+                                    //   showDialog<String>(
+                                    //     context: context,
+                                    //     builder: (BuildContext context) =>
+                                    //         AlertDialog(
+                                    //       title: Padding(
+                                    //         padding:
+                                    //             EdgeInsetsDirectional.fromSTEB(
+                                    //                 0, 20, 0, 0),
+                                    //         child: Text(
+                                    //           'Seleccione una actividad',
+                                    //         ),
+                                    //       ),
+                                    //       actions: <Widget>[
+                                    //         ElevatedButton(
+                                    //             onPressed: () {
+                                    //               Navigator.pop(context);
+                                    //             },
+                                    //             style: ElevatedButton.styleFrom(
+                                    //               primary: Color(0xFF652D8F),
+                                    //             ),
+                                    //             child: Text("Aceptar"))
+                                    //       ],
+                                    //     ),
+                                    //   );
+                                    // }
+                                  },
+                                ),
+                                Text(
+                                  "Ver Actividades",
+                                  style: TextStyle(
+                                      fontSize: 11.5, color: Colors.white),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      )
+                    ]),
+              ),
+            ),
+            body: SingleChildScrollView(
+                // color:
+                //     HotelAppTheme.buildLightTheme().backgroundColor,
+                child: Column(
+              children: [
+                FutureBuilder<dynamic>(
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                          child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
+                        child: CircularProgressIndicator(
+                            color: Color.fromARGB(255, 101, 45, 144)),
+                      ));
+                    } else {
+                      if (snapshot.hasData) {
+                        return Wrap(
+                            spacing: 8,
+                            runSpacing: 4,
+                            alignment: WrapAlignment.start,
+                            crossAxisAlignment: WrapCrossAlignment.start,
+                            direction: Axis.horizontal,
+                            runAlignment: WrapAlignment.start,
+                            verticalDirection: VerticalDirection.down,
+                            clipBehavior: Clip.none,
+                            children: ListActivities(snapshot.data, context));
+                      } else {
+                        return Center(
+                            child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
+                          child: CircularProgressIndicator(
+                              color: Color.fromARGB(255, 101, 45, 144)),
+                        ));
+                      }
+                    }
+                  },
+                  future: GetListActivitiesExtras(widget.package!.ciudadID,
+                      widget.userloggeddata, null, true, widget.Reservation),
+                ),
+              ],
+            )),
+            bottomNavigationBar: Row(
+              children: [
+                Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                    child: SizedBox(
+                      width: 175,
+                      height: 35,
+                      child: ElevatedButton(
+                        onPressed: () => showDialog<String>(
+                          context: context,
+                          builder: (BuildContext context) => AlertDialog(
+                            title: Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                              child: Text(
+                                '¿Esta seguro que desea continuar?',
+                              ),
+                            ),
+                            actions: <Widget>[
+                              ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Color.fromARGB(255, 234, 234, 234),
+                                  ),
+                                  child: Text(
+                                    "Cancelar",
+                                    style: TextStyle(color: Color(0xFF652D8F)),
+                                  )),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    Navigator.pop(context);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    primary: Color(0xFF652D8F),
+                                  ),
+                                  child: Text("Aceptar"))
+                            ],
+                          ),
+                        ),
+                        child: Text(
+                          'Cancelar',
+                          style:
+                              TextStyle(fontSize: 18, color: Color(0xFF652D8F)),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Color.fromARGB(255, 234, 234, 234),
+                        ),
+                      ),
+                    )),
+                Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      width: 170,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (widget.Reservation.actividadesExtra!.isEmpty) {
+                            showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 20, 0, 0),
+                                  child: Text(
+                                    'No ha seleccionado ninguna actividad.',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.normal),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                content: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 10, 0, 0),
+                                    child: Text(
+                                      '¿Esta seguro que desea continuar?',
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                      textAlign: TextAlign.center,
+                                    )),
+                                actions: <Widget>[
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        primary:
+                                            Color.fromARGB(255, 234, 234, 234),
+                                      ),
+                                      child: Text(
+                                        "Cancelar",
+                                        style:
+                                            TextStyle(color: Color(0xFF652D8F)),
+                                      )),
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        // Navigator.push(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //       builder: (context) =>
+                                        //           NavigationHomeScreen(
+                                        //               ReservationPreview(
+                                        //         widget.userloggeddata,
+                                        //         widget.Reservation,
+                                        //         widget.package,
+                                        //         packageDetail,
+                                        //       )),
+                                        //     ));
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        primary: Color(0xFF652D8F),
+                                      ),
+                                      child: Text("Aceptar"))
+                                ],
+                              ),
+                            );
+                          } else {
+                            widget.Reservation.actividadesExtra =
+                                widget.activityExtra;
+                            widget.Reservation.actividadesExtra =
+                                jsonEncode(widget.activityExtra)
+                                    as List<ActivitiesExtra>?;
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => NavigationHomeScreen(
+                            //           createCustomPackage(
+                            //               widget.Ciudad,
+                            //               widget.userloggeddata,
+                            //               3,
+                            //               widget.customPackage),
+                            //           widget.userloggeddata)),
+                            // );
+                          }
+                        },
+                        child: Text(
+                          'Confirmar',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Color(0xFF652D8F),
+                        ),
+                      ),
+                    )),
+              ],
+            )));
   }
 }

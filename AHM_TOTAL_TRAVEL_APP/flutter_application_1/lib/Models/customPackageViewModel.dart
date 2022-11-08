@@ -1,36 +1,36 @@
 import 'dart:ffi';
 
 class customPackageViewModel {
-  int? usua_ID;//*
-  int? hote_ID;//*
+  int? usua_ID; //*
+  int? hote_ID; //*
   String? hote_Descripcion;
-  String? reHo_FechaEntrada;//*
-  String? reHo_FechaSalida;//*
-  String? reHo_PrecioTotal;//*
-  int? hote_numNoches;//*
+  String? reHo_FechaEntrada; //*
+  String? reHo_FechaSalida; //*
+  String? reHo_PrecioTotal; //*
+  int? hote_numNoches; //*
   String? night;
-  int? hote_numeroPersonas;//*
+  int? hote_numeroPersonas; //*
   String? people;
-  int? habi_ID;//*
-  int? habi_Cantidad;//*
+  int? habi_ID; //*
+  int? habi_Cantidad; //*
   String? room;
   String? habi_Descripcion;
-  List<ActivitiesExtra>? actividadesExtra;//*
-  List<Restaurants>? Restaurant;//*
+  List<ActivitiesExtra>? actividadesExtra; //*
+  List<Restaurants>? Restaurant; //*
   String? actividadesExtras;
   String? restaurantes;
   String? reservacionTransportes;
   String? partner;
-  int? ciudadSalida_ID;//*
+  int? ciudadSalida_ID; //*
   String? ciudadSalida;
-  int? ciudadLlegada_ID;//*
+  int? ciudadLlegada_ID; //*
   String? ciudadLlegada;
   String? horaSalida;
-  int? tprt_cantidadPersonas;//*
-  int? tprt_Total;//*
-  double? PackageTotal;//*
-  int?  tipoPago;//*
-  int? CantidadPagos;//*
+  int? tprt_cantidadPersonas; //*
+  int? tprt_Total; //*
+  double? PackageTotal; //*
+  int? tipoPago; //*
+  int? CantidadPagos; //*
   List<reservacionTransporte>? transporteReservacion;
   Map<String, dynamic> toJson() => {
         'resv_ID': 0,
@@ -61,8 +61,7 @@ class customPackageViewModel {
       };
 }
 
-
-class ActivitiesExtra{
+class ActivitiesExtra {
   int? index;
   int? acEx_ID;
   String? acEx_Descripcion;
@@ -71,7 +70,7 @@ class ActivitiesExtra{
   String? reAE_HoraReservacion;
   String? reAE_Precios;
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         'index': index,
         'acEx_ID': acEx_ID,
         'acEx_Descripcion': acEx_Descripcion,
@@ -82,7 +81,7 @@ class ActivitiesExtra{
       };
 }
 
-class Restaurants{
+class Restaurants {
   int? index;
   int? rest_ID;
   String? restaurante;
@@ -90,7 +89,7 @@ class Restaurants{
   String? rest_FechaReservacion;
   String? rest_HoraReservacion;
 
-   Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         'index': index,
         'rest_ID': rest_ID,
         'restaurante': restaurante,
@@ -100,13 +99,12 @@ class Restaurants{
       };
 }
 
-class reservacionTransporte{
-    int? detr_ID;
-    int? reTr_CantidadAsientos;
+class reservacionTransporte {
+  int? detr_ID;
+  int? reTr_CantidadAsientos;
 
-      Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         'detr_ID': detr_ID,
         'reTr_CantidadAsientos': reTr_CantidadAsientos,
       };
-
 }

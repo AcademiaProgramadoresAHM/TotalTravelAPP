@@ -1,16 +1,20 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/DefaultPackageScreens/ReservConfirm.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 import '../Components/Decodificador.dart';
 import '../Models/RequestsViewModel.dart';
 import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
 import 'package:flutter_application_1/Models/DefaultPackageViewModel.dart';
+import '../navigation_home_screen.dart';
+import 'ReservActividadExtra.dart';
 import 'ReservationPreview.dart';
 
 class ReservDefaultPackage extends StatefulWidget {
@@ -32,7 +36,7 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
 //variables de datos del paquete
   int? idpackage;
   int? hotelId;
-  int? ciudadID;
+  int? ciudadId;
   double? precio;
   String? nombrepaque;
   String? DescripPaque;
@@ -40,11 +44,10 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
   String? HotelName;
   String? HotelDescrip;
   String? Restaurante;
-
+  bool? boleano;
 //Variables de datos de la reservacion
   double people = 2;
   double _pagos = 1;
-  int? reservID;
 
   ReservationViewmodel reservation = new ReservationViewmodel();
   DefaultPackageModel paquete = new DefaultPackageModel();
@@ -57,13 +60,19 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
     });
   }
 
+  void Setbool(bool) {
+    setState(() {
+      boleano = bool;
+    });
+  }
+
   void SetPeople(peopleNumber) {
     setState(() {
       people = peopleNumber;
     });
   }
 
-  Future<dynamic> FindPackage(paquete, userloggeddata) async {
+  Future<dynamic> FindPackage(idpackage, bool, userloggeddata) async {
     List<dynamic> datapackage;
     String url_list =
         "https://totaltravelapi.azurewebsites.net/API/DefaultPackagesDetails/List";
@@ -77,16 +86,27 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
       var Json = Decodificador.fromJson(userMap);
       datapackage = Json.data;
       var packageDetail =
-          datapackage.where((x) => x['paqueteID'] == paquete.ID).toList();
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => ReservationPreview(
-                    widget.userloggeddata,
-                    reservation,
-                    paquete,
-                    packageDetail,
-                  )));
+          datapackage.where((x) => x['paqueteID'] == idpackage).toList();
+      if (bool == false) {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ReservationPreview(
+                      widget.userloggeddata,
+                      reservation,
+                      paquete,
+                      packageDetail,
+                    )));
+      } else {
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => NavigationHomeScreen(
+                  ReservActivitiesExtra(widget.userloggeddata, reservation,
+                      paquete, packageDetail, []),
+                  widget.userloggeddata),
+            ));
+      }
     } else {
       print("Error " + response.statusCode.toString());
     }
@@ -140,6 +160,7 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
         HotelName = element['hotel'];
         HotelDescrip = element['descripcion_Hotel'];
         Restaurante = element['restaurante'];
+        ciudadId = element['ciudad_ID'];
         basePrice = false;
       }
       String? selectedValue;
@@ -562,9 +583,7 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                                         child: Text(
                                           "Total:     "
                                                   'HNL ' +
-                                              element['precio']
-                                                  .toInt()
-                                                  .toString() +
+                                              element['precio'].toString() +
                                               '.00',
                                           textAlign: TextAlign.end,
                                           style: TextStyle(
@@ -621,6 +640,7 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
       paquete.hotel = HotelName;
       paquete.descripcionHotel = HotelDescrip;
       paquete.restaurante = Restaurante;
+      paquete.ciudadID = ciudadId;
     });
     return list;
   }
@@ -745,7 +765,47 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                   width: 170,
                   child: ElevatedButton(
                     onPressed: () {
-                      FindPackage(idpackage, widget.userloggeddata);
+                      showCupertinoDialog(
+                          context: context,
+                          builder: (BuildContext context) => Theme(
+                                data: ThemeData.light(),
+                                child: CupertinoAlertDialog(
+                                  title: Text(
+                                    'Desea Alguna Actividad Extra?',
+                                    style: boldTextStyle(
+                                        color: Colors.black, size: 18),
+                                  ),
+                                  content: Text(
+                                    'Puede Incluir mas Actividades a su reservacion para disfrutar todo lo que quiera',
+                                    style: secondaryTextStyle(
+                                        color: Colors.black, size: 16),
+                                  ),
+                                  actions: [
+                                    CupertinoDialogAction(
+                                      child: Text(
+                                        'No, Gracias',
+                                        style: primaryTextStyle(
+                                            color: dodgerBlue, size: 18),
+                                      ),
+                                      onPressed: () {
+                                        FindPackage(idpackage, false,
+                                            widget.userloggeddata);
+                                      },
+                                    ),
+                                    CupertinoDialogAction(
+                                      child: Text(
+                                        'Agregar',
+                                        style: primaryTextStyle(
+                                            color: redColor, size: 18),
+                                      ),
+                                      onPressed: () {
+                                        FindPackage(idpackage, true,
+                                            widget.userloggeddata);
+                                      },
+                                    )
+                                  ],
+                                ),
+                              ));
                     },
                     child: Text(
                       'Confirmar',
