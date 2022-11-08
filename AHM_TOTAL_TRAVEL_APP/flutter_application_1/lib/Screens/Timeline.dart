@@ -31,7 +31,7 @@ class _TimelineState extends State<Timeline> {
   Future<dynamic> GetListReservationDetails(userloggeddata) async {
     List<dynamic> dataReservation;
     String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
+        "https://totaltravelapi.azurewebsites.net/API/Reservation/Find/Timeline";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -44,14 +44,13 @@ class _TimelineState extends State<Timeline> {
       var Reservation = dataReservation
           .where((x) => x['id_Cliente'] == userloggeddata.ID)
           .toList();
-      setState(() {
-        _reserData = dataReservation;
-      });
       return Reservation;
     } else {
       print("Error " + response.statusCode.toString());
     }
   }
+
+  List<Padding>
 
   List<ProcessCard> _getProcess(){
     List<ProcessCard> processCard = [];

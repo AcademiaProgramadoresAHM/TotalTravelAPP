@@ -116,7 +116,7 @@ class _EditAccountState extends State<EditAccount> {
 
   Future<dynamic> GetCities() async {
     var citiesData;
-    String url_list = "https://totaltravel.somee.com/API/Cities/List";
+    String url_list = "https://totaltravelapi.azurewebsites.net/API/Cities/List";
     final respuesta = await http.get(Uri.parse(url_list));
     if (respuesta.statusCode == 200) {
       Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
@@ -139,7 +139,7 @@ class _EditAccountState extends State<EditAccount> {
 
   Future<dynamic> GetSuburbs() async {
     var suburbsData;
-    String url_list = "https://totaltravel.somee.com/API/Suburbs/List";
+    String url_list = "https://totaltravelapi.azurewebsites.net/API/Suburbs/List";
     final respuesta = await http.get(Uri.parse(url_list));
     if (respuesta.statusCode == 200) {
       Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
@@ -167,7 +167,7 @@ class _EditAccountState extends State<EditAccount> {
     adressView.Dire_Avenida = avenida;
     adressView.Dire_UsuarioCreacion = 1;
 
-    final url = Uri.parse("https://totaltravel.somee.com/API/Address/Insert");
+    final url = Uri.parse("https://totaltravelapi.azurewebsites.net/API/Address/Insert");
     final headers = {
       "Content-type": "application/json",
       "Accept": "text/plain"
@@ -206,7 +206,7 @@ class _EditAccountState extends State<EditAccount> {
     final headers = {
       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
     };
-    final uri = Uri.parse("https://totaltravel.somee.com/API/Users/Update?id=" +
+    final uri = Uri.parse("https://totaltravelapi.azurewebsites.net/API/Users/Update?id=" +
         widget.userloggeddata!.ID.toString());
     var map = new Map<String, dynamic>();
     map['usua_DNI'] = DNI;
