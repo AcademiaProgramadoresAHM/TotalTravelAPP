@@ -98,14 +98,14 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                       packageDetail,
                     )));
       } else {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => NavigationHomeScreen(
-                  ReservActivitiesExtra(widget.userloggeddata, reservation,
-                      paquete, packageDetail, []),
-                  widget.userloggeddata),
-            ));
+        // Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => NavigationHomeScreen(
+        //           ReservActivitiesExtra(widget.userloggeddata, reservation,
+        //               paquete, packageDetail,),
+        //           widget.userloggeddata),
+        //     ));
       }
     } else {
       print("Error " + response.statusCode.toString());
@@ -640,7 +640,6 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
       paquete.hotel = HotelName;
       paquete.descripcionHotel = HotelDescrip;
       paquete.restaurante = Restaurante;
-      paquete.ciudadID = ciudadId;
     });
     return list;
   }

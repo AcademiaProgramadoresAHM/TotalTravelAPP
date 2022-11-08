@@ -78,7 +78,6 @@ class ReservConfirmState extends State<ReservConfirm> {
           dataPayment,
           widget.userloggeddata,
           context);
-      return payment;
     } else {
       print("Error " + response.statusCode.toString());
     }
@@ -137,13 +136,16 @@ class ReservConfirmState extends State<ReservConfirm> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      element['descripcion'],
-                                      style: TextStyle(
-                                        fontFamily: 'Outfit',
-                                        color: Color(0xFF090F13),
-                                        fontSize: 26,
-                                        fontWeight: FontWeight.w500,
+                                    Flexible(
+                                      flex: 6,
+                                      child: Text(
+                                        element['descripcion'],
+                                        style: TextStyle(
+                                          fontFamily: 'Outfit',
+                                          color: Color(0xFF090F13),
+                                          fontSize: 26,
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                       ),
                                     ),
                                     Padding(
