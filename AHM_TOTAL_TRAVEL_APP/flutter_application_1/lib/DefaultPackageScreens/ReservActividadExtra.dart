@@ -40,7 +40,7 @@ class _ReservActivitiesExtraState extends State<ReservActivitiesExtra> {
         var Json = Decodificador.fromJson(userMap);
         dataActivities = Json.data;
         var activity =
-            dataActivities.where((x) => x['ciudadID'] == Ciudad.ID).toList();
+            dataActivities.where((x) => x['ciudad_ID'] == Ciudad.ID).toList();
 
         return activity;
       }

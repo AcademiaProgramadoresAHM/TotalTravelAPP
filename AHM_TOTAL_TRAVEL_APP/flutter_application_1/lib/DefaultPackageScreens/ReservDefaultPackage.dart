@@ -16,7 +16,9 @@ import 'ReservationPreview.dart';
 class ReservDefaultPackage extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final List<dynamic> package;
-  const ReservDefaultPackage(this.userloggeddata, this.package, {Key? key})
+  final CiudadViewModel? CiudadData;
+  const ReservDefaultPackage(this.userloggeddata, this.package, this.CiudadData,
+      {Key? key})
       : super(key: key);
   @override
   State<ReservDefaultPackage> createState() => _ReservDefaultPackageState();
@@ -30,7 +32,7 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
 //variables de datos del paquete
   int? idpackage;
   int? hotelId;
-  List<dynamic>? ciudadID;
+  int? ciudadID;
   double? precio;
   String? nombrepaque;
   String? DescripPaque;
@@ -55,12 +57,6 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
     });
   }
 
-  void SetCiudadID(ciudad) {
-    setState(() {
-      ciudadID = ciudad;
-    });
-  }
-
   void SetPeople(peopleNumber) {
     setState(() {
       people = peopleNumber;
@@ -82,9 +78,6 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
       datapackage = Json.data;
       var packageDetail =
           datapackage.where((x) => x['paqueteID'] == paquete.ID).toList();
-
-      FindCiudadeHoteles(paquete.hotelID, userloggeddata);
-
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -94,28 +87,6 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                     paquete,
                     packageDetail,
                   )));
-    } else {
-      print("Error " + response.statusCode.toString());
-    }
-  }
-
-//sacar la ciudad del hotel del paquete predeterminado
-  Future<dynamic> FindCiudadeHoteles(idHotel, userloggeddata) async {
-    List<dynamic> datahotel;
-    String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/Hotels/List";
-    final headers = {
-      "Content-type": "application/json",
-      "Authorization": "bearer " + widget.userloggeddata!.Token!
-    };
-    final response = await http.get(Uri.parse(url_list), headers: headers);
-    if (response.statusCode == 200) {
-      Map<String, dynamic> userMap = jsonDecode(response.body);
-      var Json = Decodificador.fromJson(userMap);
-      datahotel = Json.data;
-      var HotelDetail = datahotel.where((x) => x['id'] == idHotel).toList();
-
-      return HotelDetail;
     } else {
       print("Error " + response.statusCode.toString());
     }
@@ -169,7 +140,6 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
         HotelName = element['hotel'];
         HotelDescrip = element['descripcion_Hotel'];
         Restaurante = element['restaurante'];
-        FindCiudadeHoteles(hotelId, widget.userloggeddata);
         basePrice = false;
       }
       String? selectedValue;
