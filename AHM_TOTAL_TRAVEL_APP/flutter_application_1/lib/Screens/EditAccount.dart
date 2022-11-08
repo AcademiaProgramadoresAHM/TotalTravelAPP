@@ -299,7 +299,6 @@ class _EditAccountState extends State<EditAccount> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var theme = Theme.of(context);
-
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
@@ -371,6 +370,8 @@ class _EditAccountState extends State<EditAccount> {
                           ? MainAxisAlignment.center
                           : MainAxisAlignment.start,
                       children: [
+                        CircularProgressIndicator(
+                          color: Color.fromARGB(255, 101, 45, 144)),
                         SizedBox(
                           height: size.height * 0.03,
                         ),

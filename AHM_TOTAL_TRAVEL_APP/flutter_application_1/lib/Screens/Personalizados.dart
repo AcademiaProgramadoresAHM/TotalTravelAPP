@@ -77,7 +77,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
   Future<dynamic> TimeReservation(idReservation, userloggeddata) async {
     List<dynamic> dataReservation;
     String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
+        "https://totaltravelapi.azurewebsites.net/API/Reservation/Find/Timeline";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!

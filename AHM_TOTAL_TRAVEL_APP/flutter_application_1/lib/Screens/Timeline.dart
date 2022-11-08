@@ -28,7 +28,7 @@ class _TimelineState extends State<Timeline> {
 
   var _reserData;
 
-  Future<dynamic> GetListReservationDetails(userloggeddata) async {
+  Future<dynamic> GetListTimelineRservation(userloggeddata) async {
     List<dynamic> dataReservation;
     String url_list =
         "https://totaltravelapi.azurewebsites.net/API/Reservation/Find/Timeline";
@@ -50,20 +50,9 @@ class _TimelineState extends State<Timeline> {
     }
   }
 
-  List<Padding>
 
   List<ProcessCard> _getProcess(){
     List<ProcessCard> processCard = [];
-
-
-    //print(_reserData['fecha_Entrada']);
-/*
-    var splitFecha = _reserData['fecha_Entrada'].toString().split('T');
-    print(splitFecha);
-
-    var fechaentrada = splitFecha[0];
-    print(fechaentrada);
-    */
 
     processCard.add(ProcessCard("Punto de Transporte", "20 de septiembre del 2022, se abordará en los servicios de Los Bobinos a las 16:00 y llegara a su destino a las 21:00", Icons.adjust_rounded));
     processCard.add(ProcessCard("Llegada al hotel", "20 de septiembre de 2022, Se alojara en el hotel Hyatt Place", Icons.check));
