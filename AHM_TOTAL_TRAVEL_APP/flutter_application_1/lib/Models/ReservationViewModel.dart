@@ -15,6 +15,7 @@ class ReservationViewmodel {
   String? reHo_FechaEntrada;
   String? reHo_FechaSalida;
   int? UsuarioCrea;
+  int? hotelid;
 
   Map<String, dynamic> toJson() => {
         "usua_ID": usuaId,
@@ -31,6 +32,7 @@ class ReservationViewmodel {
         "resv_UsuarioCreacion": UsuarioCrea,
         "reHo_FechaEntrada": reHo_FechaEntrada,
         "reHo_FechaSalida": reHo_FechaSalida,
+        "hote_ID": hotelid,
       };
 }
 

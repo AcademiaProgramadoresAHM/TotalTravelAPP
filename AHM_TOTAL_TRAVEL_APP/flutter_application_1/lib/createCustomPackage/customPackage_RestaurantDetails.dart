@@ -43,7 +43,7 @@ class _RestaurantDetails extends State<RestaurantDetails> {
 
   Future<void> GetListMenus(id, userloggeddata) async {
     List<dynamic> dataMenus;
-    String url_list = "https://totaltravel.somee.com/API/Menus/List";
+    String url_list = "https://totaltravelapi.azurewebsites.net/API/Menus/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -399,15 +399,15 @@ class _RestaurantDetails extends State<RestaurantDetails> {
         ),
       );
       if (confirm == true) {
+        String hour = DateFormat("HH:mm").format(new DateTime(2000, 1, 1, time.hour, time.minute));
         Restaurants Restaurant = new Restaurants();
         Restaurant.index = widget.RestaurantsAdd;
         Restaurant.rest_ID = element['id'];
         Restaurant.restaurante = element['restaurante'];
         Restaurant.rest_numeroPersonas = peopleFinal;
         Restaurant.rest_FechaReservacion =
-            DateFormat('dd-MM-yyyy').format(date);
-        Restaurant.rest_HoraReservacion = DateFormat("HH:mm")
-            .format(new DateTime(2000, 1, 1, time.hour, time.minute));
+            DateFormat('yyyy-MM-dd').format(date);
+        Restaurant.rest_HoraReservacion = hour.substring(1,2) + hour.substring(3,4);
 
         widget.Restaurante.insert(widget.RestaurantsAdd, Restaurant);
       }

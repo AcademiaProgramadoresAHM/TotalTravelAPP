@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_application_1/Components/Packages.dart';
+import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/customPackageViewModel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Success.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
@@ -10,7 +11,7 @@ import 'package:nb_utils/nb_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:nb_utils/nb_utils.dart';
-
+import 'package:http/http.dart';
 import '../Components/Decodificador.dart';
 import '../ComponentsLogin/constants.dart';
 import '../Models/DefaultPackageViewModel.dart';
@@ -40,10 +41,45 @@ class _PayProcess extends State<PayProcess> {
       var user = Decodificador.fromJson(userMap);
       return user.data;
     } else {
-      print("Error " + response.statusCode.toString());
     }
   }
   var cantidadFinal = 1;
+
+
+
+Future<void> PostCustomPackages(customPackageViewModel customPackage, UserLoggedModel userloggeddata)async {
+
+  final url = Uri.parse("https://totaltravelapi.azurewebsites.net/API/Reservation/Insert");
+final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+  final json = jsonEncode(customPackage);
+  final response = await post(url, headers: headers, body: json);
+    print("response" + response.body.toString());
+  if (response.body != " ") {
+    Map<String, dynamic> userMap = jsonDecode(response.body);
+    var data = DecoderAPI.fromJson(userMap);
+
+    if (data.data != null) {
+       Navigator.push( context,MaterialPageRoute(builder: (context) =>   SuccessCustomPackage(widget.userloggeddata,widget.customPackage)));
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        backgroundColor: white,
+        content: Text(
+          textAlign: TextAlign.center,
+          'Ha ocurrido un error, intentelo denuevo más tarde.',
+          style: TextStyle(color: redColor, fontSize: 16),
+        ),
+      ));
+    }
+  }
+}
+
+
+
+
+
 
   List<Padding> ListPaymenttype(
       List<dynamic> data, BuildContext context, user) {
@@ -239,8 +275,10 @@ class _PayProcess extends State<PayProcess> {
                                                               onPressed: () {
                                                                 widget.customPackage.tipoPago = element['id'];
                                                                 widget.customPackage.CantidadPagos = cantidadFinal;
+                                                              
 
-                                                                 Navigator.push( context,MaterialPageRoute(builder: (context) =>   SuccessCustomPackage(widget.userloggeddata,widget.customPackage)));
+                                                                PostCustomPackages(widget.customPackage, widget.userloggeddata!);
+                                                                
                                                               },
                                                               child: Text(
                                                                 'Confirmar',

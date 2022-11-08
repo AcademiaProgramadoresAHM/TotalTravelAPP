@@ -29,6 +29,7 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
   String worldDuracion = "Días";
   DefaultPackageViewModel? DefaulPackageId;
   ReservationViewmodel Reserv = new ReservationViewmodel();
+  CiudadViewModel ciudad = new CiudadViewModel();
 
   void SetPay(PayNumber) {
     setState(() {
@@ -41,19 +42,6 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
       people = peopleNumber;
     });
   }
-
-  // Future<void> crearUsuario(
-  //     ReservationInsert user, BuildContext context) async {
-  //   final url = Uri.parse(
-  //       "https://totaltravelapi.azurewebsites.net/API/Reservation/List");
-  //   final headers = {"Content-type": "application/json"};
-  //   final json = '{""}';
-  //   final response = await post(url, headers: headers, body: json);
-  //   Navigator.pop(
-  //       context,
-  //       MaterialPageRoute(
-  //           builder: (context) => NavigationHomeScreen(widget.userloggeddata)));
-  // }
 
   Future<dynamic> GetListadoPackageshome() async {
     String url_list =
@@ -396,7 +384,9 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => ReservDefaultPackage(
-                                    widget.userloggeddata, widget.Package)),
+                                    widget.userloggeddata,
+                                    widget.Package,
+                                    ciudad)),
                           );
                         },
                       ),
@@ -408,6 +398,10 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
           ),
         ),
       );
+
+      //guardo el valor de la ciudad id para mandarlo y filtrarlo
+      ciudad.ciudadID = element['ciudad_ID'];
+      ciudad.Ciudad = element['ciudad'];
     });
 
     return list;
@@ -455,24 +449,28 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
               children: [
                 FutureBuilder<dynamic>(
                   builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return Wrap(
-                          spacing: 8,
-                          runSpacing: 4,
-                          alignment: WrapAlignment.start,
-                          crossAxisAlignment: WrapCrossAlignment.start,
-                          direction: Axis.horizontal,
-                          runAlignment: WrapAlignment.start,
-                          verticalDirection: VerticalDirection.down,
-                          clipBehavior: Clip.none,
-                          children: PackageDetails(widget.Package, context));
-                    } else {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(
                           child: Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
                         child: CircularProgressIndicator(
                             color: Color.fromARGB(255, 101, 45, 144)),
                       ));
+                    } else {
+                      if (snapshot.hasData) {
+                        return Wrap(
+                            spacing: 8,
+                            runSpacing: 4,
+                            alignment: WrapAlignment.start,
+                            crossAxisAlignment: WrapCrossAlignment.start,
+                            direction: Axis.horizontal,
+                            runAlignment: WrapAlignment.start,
+                            verticalDirection: VerticalDirection.down,
+                            clipBehavior: Clip.none,
+                            children: PackageDetails(widget.Package, context));
+                      } else {
+                        return Center(child: Text('No Data'));
+                      }
                     }
                   },
                   future: GetListadoPackageshome(),

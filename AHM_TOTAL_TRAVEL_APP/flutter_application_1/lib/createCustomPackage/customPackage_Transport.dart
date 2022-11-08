@@ -31,7 +31,7 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
   Future<dynamic> GetListTransports(CiudadSalida,CiudadLlegada, userloggeddata,idPartner, bool) async {
     List<dynamic> dataTransport;
     String url_list =
-        "https://totaltravel.somee.com/API/DetailsTransportation/List";
+        "https://totaltravelapi.azurewebsites.net/API/DetailsTransportation/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -123,7 +123,7 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(12),
                         child: Image.network(
-                          "https://totaltravel.somee.com/Images/"+imageUrl[0].toString(),
+                          "https://totaltravelapi.azurewebsites.net/Images/"+imageUrl[0].toString(),
                           width: 100,
                           height: 100,
                           fit: BoxFit.cover,

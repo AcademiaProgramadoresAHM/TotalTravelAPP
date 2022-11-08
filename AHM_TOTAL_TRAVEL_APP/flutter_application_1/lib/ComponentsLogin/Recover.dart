@@ -22,7 +22,7 @@ Future<void> PostEmailVerification(String email, BuildContext context) async {
   loginData.Email = email;
 
   final url =
-      Uri.parse("https://totaltravel.somee.com/API/Login/EmailVerification");
+      Uri.parse("https://totaltravelapi.azurewebsites.net/API/Login/EmailVerification");
   final headers = {"Content-type": "application/json", "Accept": "text/plain"};
   final json = jsonEncode(loginData);
   final response = await post(url, headers: headers, body: json);
@@ -53,7 +53,7 @@ Future<void> PostEmailSender(
   EmailVerificationViewModel loginData = new EmailVerificationViewModel();
   loginData.Email = email;
 
-  final url = Uri.parse("https://totaltravel.somee.com/API/Login/EmailSender");
+  final url = Uri.parse("https://totaltravelapi.azurewebsites.net/API/Login/EmailSender");
   final headers = {"Content-type": "application/json", "Accept": "text/plain"};
   final json = jsonEncode(loginData);
   final response = await post(url, headers: headers, body: json);
@@ -98,7 +98,7 @@ Future<void> changePassword(
   loginData.Usua_Password = password;
 
   final url =
-      Uri.parse("https://totaltravel.somee.com/API/Users/UpdatePassword");
+      Uri.parse("https://totaltravelapi.azurewebsites.net/API/Users/UpdatePassword");
   final headers = {"Content-type": "application/json", "Accept": "text/plain"};
   final json = jsonEncode(loginData);
   final response = await put(url, headers: headers, body: json);

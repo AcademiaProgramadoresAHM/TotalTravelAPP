@@ -13,12 +13,9 @@ class ReservationPreview extends StatefulWidget {
   final ReservationViewmodel Reservation;
   final DefaultPackageModel? package;
   final List<dynamic> paqueteactividades;
-  final int? HotelID;
-  final double? precio;
-  final int? reservID;
 
   const ReservationPreview(this.userloggeddata, this.Reservation, this.package,
-      this.paqueteactividades, this.HotelID, this.precio, this.reservID,
+      this.paqueteactividades,
       {super.key});
   @override
   State<ReservationPreview> createState() => _ReservationPreviewState();
@@ -815,13 +812,11 @@ class _ReservationPreviewState extends State<ReservationPreview> {
                               MaterialPageRoute(
                                   builder: (context) => NavigationHomeScreen(
                                       ReservConfirm(
-                                          widget.userloggeddata,
-                                          widget.Reservation,
-                                          widget.package,
-                                          widget.paqueteactividades,
-                                          widget.HotelID,
-                                          widget.precio,
-                                          widget.reservID),
+                                        widget.userloggeddata,
+                                        widget.Reservation,
+                                        widget.package,
+                                        widget.paqueteactividades,
+                                      ),
                                       userloggeddata)));
                         },
                         child: Text(

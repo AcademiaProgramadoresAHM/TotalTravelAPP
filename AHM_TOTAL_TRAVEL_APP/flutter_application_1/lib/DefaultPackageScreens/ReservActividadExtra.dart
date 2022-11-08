@@ -1,104 +1,92 @@
 import 'dart:convert';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_application_1/app_theme.dart';
-import 'package:flutter_application_1/DefaultPackageScreens/DetailsPackage.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/Models/DefaultPackageViewModel.dart';
 import 'package:flutter_application_1/Components/Decodificador.dart';
-import 'package:http/http.dart' as http;
+
+import '../Models/DefaultPackageViewModel.dart';
+import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
-import '../utils/models.dart';
-import '../utils/AppWidget.dart';
-import '../utils/ListaHoteles.dart';
-import 'package:flutter_application_1/Components/Packages.dart';
-import 'package:flutter_application_1/Screens/LoadingPage.dart';
+import 'package:http/http.dart' as http;
 
-import 'Models/HotelsViewModel.dart';
-import 'navigation_home_screen.dart';
+import '../createCustomPackage/customPackage_Activities.dart';
 
-class FeedbackScreen extends StatefulWidget {
+class ReservActivitiesExtra extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
-  const FeedbackScreen(this.userloggeddata, {super.key});
+  final ReservationViewmodel Reservation;
+  final DefaultPackageModel? package;
+  final List<dynamic> paqueteactividades;
+
+  const ReservActivitiesExtra(this.userloggeddata, this.Reservation,
+      this.package, this.paqueteactividades,
+      {super.key});
   @override
-  _FeedbackScreenState createState() => _FeedbackScreenState();
+  State<ReservActivitiesExtra> createState() => _ReservActivitiesExtraState();
 }
 
-class _FeedbackScreenState extends State<FeedbackScreen> {
-  bool IsLoading = false;
-  HotelViewModel? hotelId;
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  Future<dynamic> GetListadoPackageshome(userloggeddata) async {
-    // showDialog(
-    //     context: context,
-    //     builder: (context) {
-    //       return Center(child: CircularProgressIndicator());
-    //     });
-
-    //listado paquetes
+class _ReservActivitiesExtraState extends State<ReservActivitiesExtra> {
+  Future<dynamic> GetListActivitiesExtras(
+      Ciudad, userloggeddata, idActivity, bool, ActivitiesCount) async {
+    List<dynamic> dataActivities;
     String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/DefaultPackages/List";
-    final response = await http.get(Uri.parse(url_list));
-    //imagen Hoteles
-    String url_list2 =
-        "https://totaltravelapi.azurewebsites.net/API/Hotels/List";
-    final headers = {
-      "Content-type": "application/json",
-      "Authorization": "bearer " + widget.userloggeddata!.Token!
-    };
-    final response2 = await http.get(Uri.parse(url_list2), headers: headers);
-
-    if (response.statusCode == 200 && response2.statusCode == 200) {
-      Map<String, dynamic> userMap = jsonDecode(response.body);
-      Map<String, dynamic> HotelMap = jsonDecode(response2.body);
-      var user = Decodificador.fromJson(userMap);
-      var hotelimg = Decodificador.fromJson(HotelMap);
-      return user.data;
-    } else {
-      print("Error " + response.statusCode.toString());
-    }
-
-    // Navigator.of(context).pop();
-  }
-
-  Future<dynamic> FindPackage(idPackage, userloggeddata) async {
-    List<dynamic> datapackage;
-    String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/DefaultPackages/List";
+        "https://totaltravelapi.azurewebsites.net/API/ActivitiesExtra/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
     };
     final response = await http.get(Uri.parse(url_list), headers: headers);
-    if (response.statusCode == 200) {
-      Map<String, dynamic> userMap = jsonDecode(response.body);
-      var Json = Decodificador.fromJson(userMap);
-      datapackage = Json.data;
-      var package = datapackage.where((x) => x['id'] == idPackage).toList();
+    if (bool == true) {
+      if (response.statusCode == 200) {
+        Map<String, dynamic> userMap = jsonDecode(response.body);
+        var Json = Decodificador.fromJson(userMap);
+        dataActivities = Json.data;
+        var activity =
+            dataActivities.where((x) => x['ciudad_ID'] == Ciudad.ID).toList();
 
-      print(package);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => NavigationHomeScreen(
-                DetailPackageScreen(widget.userloggeddata, package),
-                widget.userloggeddata)),
-      );
+        return activity;
+      }
+    } else if (bool == false) {
+      if (response.statusCode == 200) {
+        Map<String, dynamic> userMap = jsonDecode(response.body);
+        var Json = Decodificador.fromJson(userMap);
+        dataActivities = Json.data;
+        var Activity =
+            dataActivities.where((x) => x['id'] == idActivity).toList();
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(
+        //       builder: (context) => ActivityDetails()),
+        // );
+      }
     } else {
-      print("Error " + response.statusCode.toString());
+      print(widget.userloggeddata!.Token);
+      final url_list = Uri.parse(
+          "https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
+      final headers = {
+        "Content-type": "application/json",
+        "Authorization": "bearer " + widget.userloggeddata!.Token!
+      };
+
+      final json = jsonEncode({"token": widget.userloggeddata!.Token});
+      final response = await http.post(url_list, headers: headers, body: json);
+      if (response.body != " ") {
+        print(response.body);
+        widget.userloggeddata!.Token = response.body;
+        GetListActivitiesExtras(
+            Ciudad, widget.userloggeddata, null, true, ActivitiesCount);
+      }
     }
   }
 
-  List<Padding> ListDefaultPackagesHome(
-      List<dynamic> data, BuildContext context) {
+  //Imprimi Listado
+
+  List<Padding> ListActivities(List<dynamic> data, BuildContext context) {
+    final hours = time.hour.toString().padLeft(2, '0');
+    final minutes = time.minute.toString().padLeft(2, '0');
     List<Padding> list = [];
     final _controller = PageController();
     List<String> imageUrl;
     data.forEach((element) {
-      //imageUrl = ;
+      imageUrl = element['imageURL'].split(',');
       list.add(Padding(
         padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
         child: Container(
@@ -135,8 +123,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(12),
                         child: Image.network(
-                          'https://media-cdn.tripadvisor.com/media/photo-s/25/fb/8c/46/hotel-exterior.jpg',
-                          //imageUrl[0].toString(),
+                          imageUrl[0].toString(),
                           width: 100,
                           height: 100,
                           fit: BoxFit.cover,
@@ -173,15 +160,15 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      element['nombre'],
+                                      element['actividad'],
                                       style: TextStyle(
                                         fontFamily: 'Outfit',
                                         color: Color(0xFF090F13),
-                                        fontSize: 26,
+                                        fontSize: 20,
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),
-                                    Text(
+                                    /*Text(
                                       '\$' + element['precio'].toString(),
                                       style: TextStyle(
                                         fontFamily: 'Outfit',
@@ -189,11 +176,11 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                         fontSize: 24,
                                         fontWeight: FontWeight.w600,
                                       ),
-                                    ),
+                                    ),*/
                                   ],
                                 ),
                                 Text(
-                                  element['hotel'],
+                                  " ",
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color.fromRGBO(101, 45, 143, 1),
@@ -205,7 +192,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0, 4, 0, 0),
                                   child: Text(
-                                    element['descripcion_Paquete'],
+                                    element['descripcion'],
                                     style: TextStyle(
                                       fontFamily: 'Outfit',
                                       color: Color(0xFF7C8791),
@@ -262,33 +249,34 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                                           ],
                                         ),
                                       ),
-                                      ElevatedButton(
-                                        style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  Color.fromRGBO(
-                                                      101, 45, 143, 1)),
-                                          shape: MaterialStateProperty.all(
-                                            RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
+                                      Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  10, 0, 10, 0),
+                                          child: SizedBox(
+                                            width: 100,
+                                            child: ElevatedButton(
+                                              child: Text(
+                                                "Ver Detalles",
+                                                style: TextStyle(),
+                                              ),
+                                              style: ElevatedButton.styleFrom(
+                                                elevation: 0.0,
+                                                shadowColor: Colors.transparent,
+                                                backgroundColor:
+                                                    Color(0xFF652D8F),
+                                                padding: EdgeInsets.zero,
+                                              ),
+                                              onPressed: () {
+                                                // GetListActivitiesExtras(
+                                                //     widget.Ciudad,
+                                                //     widget.userloggeddata,
+                                                //     element['id'],
+                                                //     false,
+                                                //     widget.ActivitiesAdd);
+                                              },
                                             ),
-                                          ),
-                                        ),
-                                        child: Text(
-                                          'Ver Detalles',
-                                          style: TextStyle(
-                                            fontFamily: 'Outfit',
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          FindPackage(element['id'],
-                                              widget.userloggeddata);
-                                        },
-                                      ),
+                                          )),
                                     ],
                                   ),
                                 ),
@@ -313,73 +301,15 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter layout demo',
-      debugShowCheckedModeBanner: false,
+      title: 'Material App',
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromRGBO(101, 45, 143, 1),
-          title: Row(
-            children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: Text(
-                  '  ',
-                ),
-              ),
-              Expanded(
-                flex: 5,
-                child: Center(
-                  child: Text(
-                    'Paquetes Predeterminados',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: Image.asset(
-                    'assets/images/logo-AHM-Fondo-Morao.png',
-                    height: 50,
-                  ),
-                ),
-              ),
-            ],
-          ),
+          title: Text('Material App Bar'),
         ),
-        body: ListView(
-          children: <Widget>[
-            FutureBuilder<dynamic>(
-              future: GetListadoPackageshome(widget.userloggeddata),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(
-                      child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
-                    child: CircularProgressIndicator(
-                        color: Color.fromARGB(255, 101, 45, 144)),
-                  ));
-                } else {
-                  return Wrap(
-                      spacing: 8,
-                      runSpacing: 4,
-                      alignment: WrapAlignment.start,
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      direction: Axis.horizontal,
-                      runAlignment: WrapAlignment.start,
-                      verticalDirection: VerticalDirection.down,
-                      clipBehavior: Clip.none,
-                      children:
-                          ListDefaultPackagesHome(snapshot.data, context));
-                }
-              },
-            ),
-          ],
+        body: Center(
+          child: Container(
+            child: Text('Hello World'),
+          ),
         ),
       ),
     );

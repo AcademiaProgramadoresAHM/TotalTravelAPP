@@ -475,9 +475,10 @@ Future<dynamic> FindReservation(idReservation, userloggeddata, context) async {
   }
 }
 
+int? reservID;
+
 Future<void> PostReservertion(
     double? precio,
-    int? reservID,
     int? HotID,
     ReservationViewmodel? reservacion,
     ModelDataRecordPayment payment,
@@ -527,7 +528,7 @@ int? res;
 Future<void> PostReservHotel(
     String? FechaEntrada,
     String? FechaSalida,
-    int ResvID,
+    int? ResvID,
     int? HotelID,
     int PrecioTotal,
     int? UsuarioCrea,

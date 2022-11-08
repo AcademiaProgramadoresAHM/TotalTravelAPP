@@ -358,15 +358,15 @@ class _ActivityDetails extends State<ActivityDetails> {
       );
 
       if (confirm == true) {
+        String hour = DateFormat("HH:mm").format(new DateTime(2000, 1, 1, time.hour, time.minute));
+
         ActivitiesExtra activitiesExtraModel = new ActivitiesExtra();
         activitiesExtraModel.index = widget.ActivityAdd;
         activitiesExtraModel.acEx_ID = element['id'];
         activitiesExtraModel.acEx_Descripcion = element['actividad'];
         activitiesExtraModel.acEx_numeroPersonas = peopleFinal;
-        activitiesExtraModel.reAE_FechaReservacion =
-            DateFormat('dd-MM-yyyy').format(date);
-        activitiesExtraModel.reAE_HoraReservacion = DateFormat("HH:mm")
-            .format(new DateTime(2000, 1, 1, time.hour, time.minute));
+        activitiesExtraModel.reAE_FechaReservacion =DateFormat('yyyy-MM-dd').format(date);
+        activitiesExtraModel.reAE_HoraReservacion = hour.substring(1,2) + hour.substring(3,4);
         activitiesExtraModel.reAE_Precios = element['precio'].toString();
 
         widget.activityExtra.insert(widget.ActivityAdd, activitiesExtraModel);

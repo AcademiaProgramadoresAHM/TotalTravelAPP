@@ -536,7 +536,8 @@ class _customActivities extends State<customActivities> {
           );
 
             }else{
-            widget.customPackage.actividadesExtra = widget.activityExtra;
+              widget.customPackage.actividadesExtra = widget.activityExtra;
+            widget.customPackage.actividadesExtras = jsonEncode(widget.activityExtra);
              Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,3,widget.customPackage),widget.userloggeddata)),);
         
             }

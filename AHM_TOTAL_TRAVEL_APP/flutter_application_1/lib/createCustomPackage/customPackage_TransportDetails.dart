@@ -20,7 +20,8 @@ class TransportDetails extends StatefulWidget {
   final customPackageViewModel customPackage;
   final CiudadesViewModel? Ciudad;
   final List<dynamic> transport;
-  const TransportDetails(this.userloggeddata,this.customPackage,this.Ciudad,this.transport, {Key? key})
+  final List<reservacionTransporte> transportList;
+  const TransportDetails(this.userloggeddata,this.customPackage,this.Ciudad,this.transport,this.transportList, {Key? key})
       : super(key: key);
 
   @override
@@ -139,7 +140,7 @@ class _TransportDetails extends State<TransportDetails> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(2),
                           child: Image.network(
-                            "https://totaltravel.somee.com/Images/"+imageUrl[0].toString(),
+                            "https://totaltravelapi.azurewebsites.net/Images/"+imageUrl[0].toString(),
                             width: 100,
                             height: 300,
                             fit: BoxFit.contain,
@@ -312,14 +313,26 @@ class _TransportDetails extends State<TransportDetails> {
         ),
       );
 
-      widget.customPackage.partner = element['parter'];
-      widget.customPackage.ciudadSalida_ID = element['ciudad_Salida_ID'];
-      widget.customPackage.ciudadSalida = element['ciudad_Salida'];
-      widget.customPackage.ciudadLlegada_ID = element['ciudad_Llegada_ID'];
-      widget.customPackage.ciudadLlegada = element['ciudad_Llegada'];
-      widget.customPackage.horaSalida = element['hora_Salida'];
-      widget.customPackage.tprt_cantidadPersonas = peopleFinal.toInt();
-      widget.customPackage.tprt_Total = element['precio'].toInt();
+         if (confirm == true) {
+            reservacionTransporte transporte = new reservacionTransporte();
+
+            transporte.detr_ID = element['id'];
+            transporte.reTr_CantidadAsientos = peopleFinal.toInt();
+            
+            
+            widget.customPackage.reservacionTransportes = jsonEncode(transporte);
+            widget.customPackage.partner = element['parter'];
+            widget.customPackage.ciudadSalida_ID = element['ciudad_Salida_ID'];
+            widget.customPackage.ciudadSalida = element['ciudad_Salida'];
+            widget.customPackage.ciudadLlegada_ID = element['ciudad_Llegada_ID'];
+            widget.customPackage.ciudadLlegada = element['ciudad_Llegada'];
+            widget.customPackage.horaSalida = element['hora_Salida'];
+            widget.customPackage.tprt_cantidadPersonas = peopleFinal.toInt();
+            widget.customPackage.tprt_Total = element['precio'].toInt();
+          
+            widget.transportList.insert(0, transporte);
+            widget.customPackage.transporteReservacion = widget.transportList;
+         }
     });
     return list;
   }
@@ -433,6 +446,10 @@ class _TransportDetails extends State<TransportDetails> {
           width: 170,
           child:     ElevatedButton(
           onPressed: () {
+            setState(() {
+                        confirm = true;
+            });
+
              Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen( createCustomPackage(widget.Ciudad,widget.userloggeddata,2,widget.customPackage),widget.userloggeddata)),);
           
           },

@@ -36,6 +36,8 @@ class DefaultPackageModel {
   int? iDHotel;
   String? hotel;
   String? descripcionHotel;
+  int? ciudadID;
+  String? Ciudad;
   int? iDRestaurante;
   String? restaurante;
   int? iDUsuarioCreacion;
@@ -55,6 +57,8 @@ class DefaultPackageModel {
         "iD_Hotel": iDHotel,
         "hotel": hotel,
         "descripcion_Hotel": descripcionHotel,
+        "ciudad_ID": ciudadID,
+        "ciudad": Ciudad,
         "iD_Restaurante": iDRestaurante,
         "restaurante": restaurante,
         "iD_Usuario_Creacion": iDUsuarioCreacion,
@@ -99,4 +103,9 @@ class DefaultPackageDetailsModel {
         "fechaModifica": fechaModifica.toString(),
         "estado": estado,
       };
+}
+
+class CiudadViewModel {
+  int? ciudadID;
+  String? Ciudad;
 }
