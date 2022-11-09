@@ -120,7 +120,7 @@ class _CalendarPopupViewState extends State<CalendarPopupView>
                                       ),
                                       Text(
                                         startDate != null
-                                            ? DateFormat('EEE, dd MMM')
+                                            ? DateFormat('dd MMM')
                                                 .format(startDate!)
                                             : '--/-- ',
                                         style: TextStyle(
@@ -155,7 +155,7 @@ class _CalendarPopupViewState extends State<CalendarPopupView>
                                       ),
                                       Text(
                                         endDate != null
-                                            ? DateFormat('EEE, dd MMM')
+                                            ? DateFormat('dd MMM')
                                                 .format(endDate!)
                                             : '--/-- ',
                                         style: TextStyle(

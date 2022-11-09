@@ -367,7 +367,7 @@ class _ActivityDetails extends State<ActivityDetails> {
         activitiesExtraModel.acEx_numeroPersonas = peopleFinal;
         activitiesExtraModel.reAE_FechaReservacion =DateFormat('yyyy-MM-dd').format(date);
         activitiesExtraModel.reAE_HoraReservacion = hour.substring(1,2) + hour.substring(3,4);
-        activitiesExtraModel.reAE_Precios = element['precio'].toString();
+        activitiesExtraModel.reAE_Precios = element['precio'];
 
         widget.activityExtra.insert(widget.ActivityAdd, activitiesExtraModel);
       }

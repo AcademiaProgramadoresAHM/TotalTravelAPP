@@ -46,6 +46,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.purple,
         textTheme: AppTheme.textTheme,
         platform: TargetPlatform.iOS,
+        scaffoldBackgroundColor: Colors.white,
       ),
       home: LandingPage(),
     );
