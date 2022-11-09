@@ -21,8 +21,9 @@ class RestaurantDetails extends StatefulWidget {
   final customPackageViewModel customPackage;
   final int RestaurantsAdd;
   final List<Restaurants> Restaurante;
+  final Map<int?, String> CitiesDictionary;
   const RestaurantDetails(this.userloggeddata, this.Restaurant, this.Ciudad,
-      this.customPackage, this.RestaurantsAdd, this.Restaurante,
+      this.customPackage, this.RestaurantsAdd, this.Restaurante,this.CitiesDictionary,
       {Key? key})
       : super(key: key);
 
@@ -537,7 +538,7 @@ class _RestaurantDetails extends State<RestaurantDetails> {
                       setState(() {
                         confirm = true;
                       });
-                      Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(RestaurantcustomPackage(widget.userloggeddata, widget.Ciudad,widget.customPackage,RestaurantCounter,widget.Restaurante),widget.userloggeddata)),);
+                      Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(RestaurantcustomPackage(widget.userloggeddata, widget.Ciudad,widget.customPackage,RestaurantCounter,widget.Restaurante,widget.CitiesDictionary),widget.userloggeddata)),);
                     },
                     child: Text(
                       'Confirmar',

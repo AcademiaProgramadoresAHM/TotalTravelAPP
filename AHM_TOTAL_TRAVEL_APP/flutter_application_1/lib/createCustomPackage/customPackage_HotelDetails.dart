@@ -13,7 +13,8 @@ class HotelDetails extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final List<dynamic> Hotel;
   final CiudadesViewModel Ciudad;
-  const HotelDetails(this.userloggeddata, this.Hotel,this.Ciudad, {Key? key})
+  final Map<int?, String> CitiesDictionary;
+  const HotelDetails(this.userloggeddata, this.Hotel,this.Ciudad,this.CitiesDictionary, {Key? key})
       : super(key: key);
 
   @override
@@ -259,7 +260,7 @@ class _HotelDetails extends State<HotelDetails> {
         padding: EdgeInsets.all(8.0),
         child: ElevatedButton(
           onPressed: () {
-            Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(RoomsListcustomPackage(widget.userloggeddata, hotelId,widget.Ciudad),widget.userloggeddata)),);
+            Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(RoomsListcustomPackage(widget.userloggeddata, hotelId,widget.Ciudad,widget.CitiesDictionary),widget.userloggeddata)),);
           },
           child: Text(
             'Selecciona habitaciones',

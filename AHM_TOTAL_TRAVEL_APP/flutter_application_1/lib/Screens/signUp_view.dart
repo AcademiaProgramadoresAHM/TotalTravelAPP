@@ -22,14 +22,16 @@ import 'package:http/http.dart';
 import 'package:flutter_application_1/Models/RequestsViewModel.dart';
 
 class SignUpView extends StatefulWidget {
-  const SignUpView({Key? key}) : super(key: key);
+  final Map<int?, String> CountriesDictionary;
+  SignUpView(this.CountriesDictionary, {Key? key}) : super(key: key);
 
   @override
   State<SignUpView> createState() => _SignUpViewState();
 }
 
 class _SignUpViewState extends State<SignUpView> {
-  int? suburbValue;
+  int? suburbValue, CountryValue, CityValue;
+  
    TextEditingController textSuburbsEditingController = TextEditingController();
   TextEditingController dniController = TextEditingController();
   TextEditingController nameController = TextEditingController();
@@ -61,7 +63,6 @@ class _SignUpViewState extends State<SignUpView> {
     time = 'Please Select Time';
     date = 'Please select Date';
     selectedValue = 'Please select value';
-    setState(() {});
   }
 
   @override
@@ -135,14 +136,16 @@ class _SignUpViewState extends State<SignUpView> {
     );
   }
 
-//Dropdown cities
-
+//Dropdowns
+  int? CountriesDropDownValue;
   int? CitiesDropDownValue;
   int? SuburbsDropDownValue;
+ 
 
   bool _isVisible1 = false;
-  bool _isVisible2 = false;
-  bool _isVisible3 = false;
+  bool _isVisibleCountries = false;
+  bool _isVisibleCities = false;
+  bool _isVisibleSuburbs = false;
   String defaultDetalles = '';
   String? adressId;
   CiudadesViewModel? planDetalles;
@@ -156,54 +159,63 @@ class _SignUpViewState extends State<SignUpView> {
 
   void showToast2(bool result2) {
     setState(() {
-      _isVisible2 = result2;
+      _isVisibleCountries = result2;
     });
   }
    void showToast3(bool result3) {
     setState(() {
-      _isVisible3 = result3;
+      _isVisibleCities = result3;
+    });
+  }
+   void showToast4(bool result3) {
+    setState(() {
+      _isVisibleSuburbs = result3;
     });
   }
 
   Map<int?, String> CitiesDictionary = Map();
-
-  Future<dynamic> GetCities() async {
-    var data;
-    String url_list = "https://totaltravelapi.azurewebsites.net/API/Cities/List";
-    final respuesta = await http.get(Uri.parse(url_list));
-    if (respuesta.statusCode == 200) {
-      Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
-      var Json = DecoderAPI.fromJson(ServerResponse);
-      data = Json.data;
-      // rellena diccionario de datos
-      data.forEach((x) {
-        CiudadesViewModel element = CiudadesViewModel.fromJson(x);
-        var descripcion = element.Ciudad! + ", " + element.Pais.toString();
-        CitiesDictionary[element.ID] = descripcion;
-      });
-
-      return Json.data;
-    } else {
-      print("Error: " + respuesta.statusCode.toString());
+  Future<dynamic> GetCities(CountryId) async {
+    List<dynamic> dataCities;
+      String url_list = "https://totaltravelapi.azurewebsites.net/API/Cities/List";
+      var respuesta = await http.get(Uri.parse(url_list));
+      if (respuesta.statusCode == 200) {
+        Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
+        var Json = DecoderAPI.fromJson(ServerResponse);
+        dataCities = Json.data;
+        var data = dataCities.where((x) => x['paisID'] == CountryId).toList();
+        // rellena diccionario de datos
+        data.forEach((x) {
+          CiudadesViewModel element = CiudadesViewModel.fromJson(x);
+          var descripcion = element.Ciudad!;
+          setState(() {
+              CitiesDictionary[element.ID] = descripcion;
+          }); 
+        });
+        return Json.data;
+      } else {
+        print("Error: " + respuesta.statusCode.toString());
+      }
     }
-  }
 
   Map<int?, String> SuburbsDictionary = Map();
 
-  Future<dynamic> GetSuburbs() async {
-    var data;
+  Future<dynamic> GetSuburbs(CityId) async {
+    
+   List<dynamic> dataSuburbs;
     String url_list = "https://totaltravelapi.azurewebsites.net/API/Suburbs/List";
-    final respuesta = await http.get(Uri.parse(url_list));
+    var respuesta = await http.get(Uri.parse(url_list));
     if (respuesta.statusCode == 200) {
       Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
       var Json = DecoderAPI.fromJson(ServerResponse);
-      data = Json.data;
+      dataSuburbs = Json.data;
+      var data = dataSuburbs.where((x) => x['ciudadID'] == CityId).toList();
       // rellena diccionario de datos
       data.forEach((x) {
         SuburbsViewModel element = SuburbsViewModel.fromJson(x);
-
         var descripcion = element.Colonia!;
-        SuburbsDictionary[element.ID] = descripcion;
+        setState(() {
+            SuburbsDictionary[element.ID] = descripcion;
+        }); 
       });
 
       return Json.data;
@@ -211,6 +223,7 @@ class _SignUpViewState extends State<SignUpView> {
       print("Error: " + respuesta.statusCode.toString());
     }
   }
+
 
   Future<void> PostAdress(int id, String calle, String avenida, BuildContext context) async {
     AdressesViewModel adressView = new AdressesViewModel();
@@ -253,8 +266,6 @@ class _SignUpViewState extends State<SignUpView> {
   @override
   void initState() {
     super.initState();
-    GetCities();
-    GetSuburbs();
     init();
   }
 
@@ -679,11 +690,77 @@ class _SignUpViewState extends State<SignUpView> {
                                   ),
                                  
 
+                             
+                                  SizedBox(
+                                    height: size.height * 0.01,
+                                  ),
+                                     Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 0),
+                                    child: 
+                                    Container(
+                                      height: 65,
+                                    decoration: BoxDecoration(color: Colors.transparent),
+                                    child:DropdownButtonHideUnderline(
+                                      child: DropdownButton2(
+                                    isExpanded: true,
+                                    hint: Padding(
+                                      padding: const EdgeInsets.only(left: 30),
+                                      child: TextFormField(
+                                        style: kTextFormFieldStyle(),
+                                        decoration: const InputDecoration(
+                                          border: InputBorder.none,
+                                          // prefixIcon: Icon(Icons.location_on_outlined),
+                                          hintText: 'Selecciones un país',
+                                        ),
+                                      ),
+                                    ),
+                                    items: widget.CountriesDictionary.keys.map((id) {
+                                      return DropdownMenuItem(
+                                          value: id,
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    30, 0, 0, 0),
+                                            child: Text(
+                                              widget.CountriesDictionary[id].toString(),
+                                            ),
+                                          ));
+                                    }).toList(),
+                                    value: CountryValue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        CountryValue = value as int?;
+                                        CountriesDropDownValue = value;
+                                        //CitiesDictionary = widget.CitiesDictionary;
+                                        if(CityValue!= null){
+                                          CityValue = null;
+                                        }
+                                        CitiesDictionary.clear();
+                                        SuburbsDictionary.clear();
+                                        GetCities(CountriesDropDownValue);
+                                      });
+                                      
+                                    },
+                                    buttonHeight: 100,
+                                    buttonWidth: 400,
+                                    itemHeight: 50,
+                                    dropdownMaxHeight: 200,
+                                    searchInnerWidget: Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: 0,
+                                        bottom: 4,
+                                        right: 8,
+                                        left: 10,
+                                      ),
+                                    ),
+                                  )),
+                                  )),
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                        right: 200.0, top: 10.0, bottom: 10.0),
+                                        right: 200.0, top: 0, bottom: 10.0),
                                     child: Visibility(
-                                      visible: _isVisible2,
+                                      visible: _isVisibleCountries,
                                       child: RichText(
                                         text: TextSpan(
                                           children: [
@@ -701,88 +778,148 @@ class _SignUpViewState extends State<SignUpView> {
                                   SizedBox(
                                     height: size.height * 0.01,
                                   ),
+                                     Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 0),
+                                    child: 
+                                    Container(
+                                      height: 65,
+                                    decoration: BoxDecoration(color: Colors.transparent),
+                                    child:DropdownButtonHideUnderline(
+                                      child: DropdownButton2(
+                                    isExpanded: true,
+                                    hint: Padding(
+                                      padding: const EdgeInsets.only(left: 30),
+                                      child: TextFormField(
+                                        style: kTextFormFieldStyle(),
+                                        decoration: const InputDecoration(
+                                          border: InputBorder.none,
+                                          // prefixIcon: Icon(Icons.location_on_outlined),
+                                          hintText: 'Seleccione una ciudad',
+                                        ),
+                                      ),
+                                    ),
+                                    items: CitiesDictionary.keys.map((id) {
+                                      return DropdownMenuItem(
+                                          value: id,
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    30, 0, 0, 0),
+                                            child: Text(
+                                              CitiesDictionary[id].toString(),
+                                            ),
+                                          ));
+                                    }).toList(),
+                                    value: CityValue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        CityValue = value as int?;
+                                        CitiesDropDownValue = value;
 
+                                        if(suburbValue!= null){
+                                          suburbValue = null;
+                                        }
+                                        SuburbsDictionary.clear();
+                                        GetSuburbs(CitiesDropDownValue);
+                                      });
+                                      
+                                    },
+                                    buttonHeight: 100,
+                                    buttonWidth: 400,
+                                    itemHeight: 50,
+                                    dropdownMaxHeight: 200,
+                                    searchInnerWidget: Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: 0,
+                                        bottom: 4,
+                                        right: 8,
+                                        left: 10,
+                                      ),
+                                    ),
+                                  )),
+                                  )),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        right: 200.0, top: 0, bottom: 10.0),
+                                    child: Visibility(
+                                      visible: _isVisibleCities,
+                                      child: RichText(
+                                        text: TextSpan(
+                                          children: [
+                                            TextSpan(
+                                                text: "Seleccione una opción ",
+                                                style: TextStyle(
+                                                    color: redColor,
+                                                    fontSize: 13)),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+
+                                  SizedBox(
+                                    height: size.height * 0.01,
+                                  ),
                                  Padding(
                                     padding: const EdgeInsets.only(
                                         top: 0),
                                     child: 
                                     Container(
-                          height: 65,
-                        decoration: BoxDecoration(color: Colors.transparent),
-                         child: DropdownButtonHideUnderline(
-                                child: DropdownButton2(
-                                  isExpanded: true,
-                                  
-                                  hint: Padding(
-                                    padding: const EdgeInsets.only(left: 0),
-                                    child: TextFormField(
-                                      style: kTextFormFieldStyle(),
-                                      decoration: const InputDecoration(
-                                      
-                                        border: InputBorder.none,
-                                        prefixIcon: Icon(Icons.calendar_today),
-                                        hintText: 'Colonia',
-                                        
-                                      ),
-                                    ),
-                                  ),
-                                  items: SuburbsDictionary.keys.map((id) {
-                                          return DropdownMenuItem(
-                                            value: id,
-                                            child: Text(SuburbsDictionary[id]
-                                                .toString()),
-                                          );
-                                        }).toList(),
-                                         value: suburbValue,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      suburbValue = value as int?;
-                                       SuburbsDropDownValue = value;
-                                    });
-                                  },
-                                  buttonHeight: 70,
-                                  buttonWidth: 400,
-                                  itemHeight: 40,
-                                  dropdownMaxHeight: 200,
-                                  searchController: textSuburbsEditingController,
-                                  searchInnerWidget: Padding(
-                                    padding: const EdgeInsets.only(
-                                      top: 10,
-                                      bottom: 4,
-                                      right: 8,
-                                      left: 10,
-                                    ),
-                                     child: TextFormField(
-                                      controller: textSuburbsEditingController,
-                                      decoration: InputDecoration(
-                                        isDense: true,
-                                        contentPadding: const EdgeInsets.symmetric(
-                                          horizontal: 10,
-                                          vertical: 8,
-                                        ),
-                                        hintText: 'Busca un colonia',
-                                        hintStyle: const TextStyle(fontSize: 17),
-                                        border: OutlineInputBorder(
-                                          borderRadius: BorderRadius.circular(4),
+                                      height: 65,
+                                    decoration: BoxDecoration(color: Colors.transparent),
+                                    child:DropdownButtonHideUnderline(
+                                      child: DropdownButton2(
+                                    isExpanded: true,
+                                    hint: Padding(
+                                      padding: const EdgeInsets.only(left: 30),
+                                      child: TextFormField(
+                                        style: kTextFormFieldStyle(),
+                                        decoration: const InputDecoration(
+                                          border: InputBorder.none,
+                                          // prefixIcon: Icon(Icons.location_on_outlined),
+                                          hintText: 'Seleccione una colonia',
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  searchMatchFn: (item, searchValue) {
-                                    return (item.value.toString().contains(searchValue));
-                                  },
-                                  onMenuStateChange: (isOpen) {
-                                  if (!isOpen) {
-                                    textSuburbsEditingController.clear();
-                                  }
-                                }
-                      )),
-                       )),
+                                    items: SuburbsDictionary?.keys.map((id) {
+                                      return DropdownMenuItem(
+                                          value: id,
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    30, 0, 0, 0),
+                                            child: Text(
+                                             SuburbsDictionary![id].toString(),
+                                            ),
+                                          ));
+                                    }).toList(),
+                                    value: suburbValue,
+                                    onChanged: (value) {
+                                      setState(() {
+                                        suburbValue = value as int?;
+                                        SuburbsDropDownValue = value;
+                                      });
+                                    },
+                                    buttonHeight: 100,
+                                    buttonWidth: 400,
+                                    itemHeight: 50,
+                                    dropdownMaxHeight: 200,
+                                    searchInnerWidget: Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: 0,
+                                        bottom: 4,
+                                        right: 8,
+                                        left: 10,
+                                      ),
+                                    ),
+                                  )),
+                                  )),
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         right: 200.0, top: 0, bottom: 10.0),
                                     child: Visibility(
-                                      visible: _isVisible3,
+                                      visible: _isVisibleSuburbs,
                                       child: RichText(
                                         text: TextSpan(
                                           children: [
@@ -970,28 +1107,46 @@ class _SignUpViewState extends State<SignUpView> {
           // Validate returns true if the form is valid, or false otherwise.
           // ... Navigate To your Home Page
 
-          bool result, result2, result3;
+          bool result;
+          if(_sexo == null || SuburbsDropDownValue == null || CitiesDropDownValue == null || CountriesDropDownValue == null){
           if (_sexo == null) {
             result = true;
             showToast1(result);
-              if (SuburbsDropDownValue == null) {
-              result3 = true;
-              showToast3(result3);
-               if (_formKey.currentState!.validate()) {}
-              }
-            
-          } else if(SuburbsDropDownValue == null){
-            result3 = true;
-            showToast2(result3);
-            result2 = false;
-            showToast2(result2);
-            if (_formKey.currentState!.validate()) {}
+          }else{
+            result = false;
+            showToast1(result);
           }
-           else if(_sexo != null && SuburbsDropDownValue != null ){
+
+          if (CountriesDropDownValue == null) {
+            result = true;
+            showToast2(result);
+          }
+          else{
+            result = false;
+            showToast2(result);
+          }
+
+          if (CitiesDropDownValue == null) {
+            result = true;
+            showToast3(result);
+          }
+          else{
             result = false;
             showToast3(result);
-            showToast2(result);
-            showToast1(result);
+          }
+
+          if (SuburbsDropDownValue == null) {
+            result = true;
+            showToast4(result);
+          }
+          else{
+            result = false;
+            showToast4(result);
+          }
+
+           if (_formKey.currentState!.validate()) {}
+          }
+          else if(_sexo != null && SuburbsDropDownValue != null && CitiesDropDownValue != null && CountriesDropDownValue != null){
             if (_formKey.currentState!.validate()) {
               PostAdress(SuburbsDropDownValue!, calleController.text, avenidaController.text, context);
             }

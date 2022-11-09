@@ -24,7 +24,8 @@ import '../main.dart';
 
 class createPackage extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
-  const createPackage(this.userloggeddata, {Key? key}) : super(key: key);
+  final Map<int?, String> CitiesDictionary;
+  const createPackage(this.userloggeddata,this.CitiesDictionary, {Key? key}) : super(key: key);
 
   @override
   _createPackage createState() => _createPackage();
@@ -41,12 +42,13 @@ class _createPackage extends State<createPackage> {
   @override
   void initState() {
     super.initState();
-    GetCities();
+    //GetCities();
+    
   }
 
 //Dropdown cities
-
-  int? CitiesDropDownValue;
+int? CitiesDropDownValue;
+  
   bool _isVisible1 = false;
 
   void showToast1(bool result) {
@@ -89,28 +91,7 @@ class _createPackage extends State<createPackage> {
     }
   }
 
-  Map<int?, String> CitiesDictionary = Map();
 
-  Future<dynamic> GetCities() async {
-    var data;
-    String url_list = "https://totaltravelapi.azurewebsites.net/API/Cities/List";
-    var respuesta = await http.get(Uri.parse(url_list));
-    if (respuesta.statusCode == 200) {
-      Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
-      var Json = DecoderAPI.fromJson(ServerResponse);
-      data = Json.data;
-      // rellena diccionario de datos
-      data.forEach((x) {
-        CiudadesViewModel element = CiudadesViewModel.fromJson(x);
-        var descripcion = element.Ciudad!;
-        CitiesDictionary[element.ID] = descripcion;
-      });
-
-      return Json.data;
-    } else {
-      print("Error: " + respuesta.statusCode.toString());
-    }
-  }
 
   List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
     List<Padding> list = [];
@@ -308,23 +289,13 @@ class _createPackage extends State<createPackage> {
                                       onPressed: () async {
                                         if (CitiesDropDownValue != null) {
                                           CiudadesViewModel cityModel =
-                                              new CiudadesViewModel(
-                                                  CitiesDropDownValue,
-                                                  null,
-                                                  null,
-                                                  null,
-                                                  null);
+                                              new CiudadesViewModel(CitiesDropDownValue,null,null,null, null);
                                           Navigator.push(
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
                                                     NavigationHomeScreen(
-                                                        createCustomPackage(
-                                                            cityModel,
-                                                            widget
-                                                                .userloggeddata,
-                                                            null,
-                                                            customPackage),
+                                                        createCustomPackage(cityModel,widget.userloggeddata,null,customPackage,widget.CitiesDictionary),
                                                         widget.userloggeddata)),
                                           );
                                         }
@@ -351,7 +322,7 @@ class _createPackage extends State<createPackage> {
                                         ),
                                       ),
                                     ),
-                                    items: CitiesDictionary.keys.map((id) {
+                                    items: widget.CitiesDictionary.keys.map((id) {
                                       return DropdownMenuItem(
                                           value: id,
                                           child: Padding(
@@ -359,7 +330,7 @@ class _createPackage extends State<createPackage> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     30, 0, 0, 0),
                                             child: Text(
-                                              CitiesDictionary[id].toString(),
+                                              widget.CitiesDictionary[id].toString(),
                                             ),
                                           ));
                                     }).toList(),

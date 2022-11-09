@@ -1,5 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/ComponentsLogin/Register.dart';
+import 'package:flutter_application_1/Models/CitiesViewModel.dart';
+import 'package:flutter_application_1/Models/CountriesViewModel.dart';
+import 'package:flutter_application_1/Models/SuburbsViewModel.dart';
 import 'package:flutter_application_1/Screens/recoverPass.dart';
 import 'package:flutter_application_1/Screens/signIn_screen.dart';
 
@@ -12,7 +18,7 @@ import '../ComponentsLogin/constants.dart';
 import '../ComponentsLogin/controller/simple_ui_controller.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:flutter_application_1/ComponentsLogin/Login.dart';
-
+import 'package:http/http.dart' as http;
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
@@ -25,6 +31,38 @@ class _LoginViewState extends State<Login> {
   TextEditingController passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
+
+Map<int?, String> CountriesDictionary = Map();
+//COUNTRIES
+  Future<dynamic> GetCountries() async {
+    var data;
+    String url_list = "https://totaltravelapi.azurewebsites.net/API/Countries/List";
+    var respuesta = await http.get(Uri.parse(url_list));
+    if (respuesta.statusCode == 200) {
+      Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
+      var Json = DecoderAPI.fromJson(ServerResponse);
+      data = Json.data;
+      // rellena diccionario de datos
+      data.forEach((x) {
+        CountriesViewModel element = CountriesViewModel.fromJson(x);
+        var descripcion = element.Pais!;
+        CountriesDictionary[element.ID] = descripcion;
+      });
+      return Json.data;
+    } else {
+      print("Error: " + respuesta.statusCode.toString());
+    }
+  }
+
+
+
+
+  @override
+  void initState() {
+    super.initState();
+    GetCountries();
+  }
+
 
   @override
   void dispose() {
@@ -240,7 +278,7 @@ class _LoginViewState extends State<Login> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const recoverPassScreen()),
+                          builder: (context) => recoverPassScreen(CountriesDictionary)),
                     );
                   },
                   child: RichText(
@@ -257,7 +295,7 @@ class _LoginViewState extends State<Login> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const SignUpView()),
+                          builder: (context) => SignUpView(CountriesDictionary)),
                     );
                   },
                   child: RichText(

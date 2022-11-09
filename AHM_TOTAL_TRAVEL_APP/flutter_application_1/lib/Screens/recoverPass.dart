@@ -11,7 +11,8 @@ import '../ComponentsLogin/constants.dart';
 import '../ComponentsLogin/controller/simple_ui_controller.dart';
 
 class recoverPassScreen extends StatefulWidget {
-  const recoverPassScreen({Key? key}) : super(key: key);
+   final Map<int?, String> CountriesDictionary;
+  const recoverPassScreen(this.CountriesDictionary, {Key? key}) : super(key: key);
 
   @override
   State<recoverPassScreen> createState() => _recoverPassViewState();
@@ -155,7 +156,7 @@ class _recoverPassViewState extends State<recoverPassScreen> {
                     Navigator.push(
                         context,
                         CupertinoPageRoute(
-                            builder: (ctx) => const SignUpView()));
+                            builder: (ctx) => SignUpView(widget.CountriesDictionary)));
                     emailController.clear();
                     _formKey.currentState?.reset();
 

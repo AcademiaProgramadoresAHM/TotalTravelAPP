@@ -21,8 +21,9 @@ class TransportSchedules extends StatefulWidget {
   final CiudadesViewModel? CiudadSalida;
   final CiudadesViewModel? CiudadLlegada;
   final customPackageViewModel customPackage;
+    final Map<int?, String> CitiesDictionary;
   final List<dynamic> transport;
-  const TransportSchedules(this.userloggeddata, this.CiudadSalida,this.CiudadLlegada,this.customPackage,this.transport,{Key? key})
+  const TransportSchedules(this.userloggeddata, this.CiudadSalida,this.CiudadLlegada,this.customPackage,this.transport,this.CitiesDictionary,{Key? key})
       : super(key: key);
 
   @override
@@ -64,7 +65,7 @@ final TextEditingController textEditingController = TextEditingController();
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => NavigationHomeScreen( TransportDetails(widget.userloggeddata,widget.customPackage,widget.CiudadSalida, Transport,[]),widget.userloggeddata)),
+                  builder: (context) => NavigationHomeScreen( TransportDetails(widget.userloggeddata,widget.customPackage,widget.CiudadSalida, Transport,[],widget.CitiesDictionary),widget.userloggeddata)),
             );
        }
      

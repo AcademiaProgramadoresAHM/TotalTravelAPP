@@ -18,7 +18,8 @@ class HistoryActivities extends StatefulWidget {
   final int ActivitiesAdd;
   final CiudadesViewModel? Ciudad;
   final customPackageViewModel customPackage;
-  const HistoryActivities(this.userloggeddata,this.activityExtra,this.ActivitiesAdd,this.Ciudad,this.customPackage, {Key? key}) : super(key: key);
+  final Map<int?, String> CitiesDictionary;
+  const HistoryActivities(this.userloggeddata,this.activityExtra,this.ActivitiesAdd,this.Ciudad,this.customPackage,this.CitiesDictionary, {Key? key}) : super(key: key);
   @override
   _HistoryActivities createState() => _HistoryActivities();
 }
@@ -187,7 +188,7 @@ class _HistoryActivities extends State<HistoryActivities> {
                                                
 
                                             widget.activityExtra.removeAt(element.index!);
-                                        Navigator.push(context,MaterialPageRoute(builder: (context) => HistoryActivities(widget.userloggeddata,widget.activityExtra,ActivitiesCounter,widget.Ciudad,widget.customPackage)),);
+                                        Navigator.push(context,MaterialPageRoute(builder: (context) => HistoryActivities(widget.userloggeddata,widget.activityExtra,ActivitiesCounter,widget.Ciudad,widget.customPackage,widget.CitiesDictionary)),);
 
                                         },
                                       ),
@@ -330,7 +331,7 @@ class _HistoryActivities extends State<HistoryActivities> {
                         context,
                     MaterialPageRoute(
                     builder: (context) =>
-                         customActivities(widget.userloggeddata,widget.Ciudad,ActivitiesCounter,widget.customPackage,widget.activityExtra)),
+                         customActivities(widget.userloggeddata,widget.Ciudad,ActivitiesCounter,widget.customPackage,widget.activityExtra,widget.CitiesDictionary)),
                       );
           },
           child: Text(

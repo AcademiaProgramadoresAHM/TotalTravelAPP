@@ -21,7 +21,8 @@ class TransportDetails extends StatefulWidget {
   final CiudadesViewModel? Ciudad;
   final List<dynamic> transport;
   final List<reservacionTransporte> transportList;
-  const TransportDetails(this.userloggeddata,this.customPackage,this.Ciudad,this.transport,this.transportList, {Key? key})
+    final Map<int?, String> CitiesDictionary;
+  const TransportDetails(this.userloggeddata,this.customPackage,this.Ciudad,this.transport,this.transportList,this.CitiesDictionary, {Key? key})
       : super(key: key);
 
   @override
@@ -450,7 +451,7 @@ class _TransportDetails extends State<TransportDetails> {
                         confirm = true;
             });
 
-             Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen( createCustomPackage(widget.Ciudad,widget.userloggeddata,2,widget.customPackage),widget.userloggeddata)),);
+             Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen( createCustomPackage(widget.Ciudad,widget.userloggeddata,2,widget.customPackage,widget.CitiesDictionary),widget.userloggeddata)),);
           
           },
           child: Text(

@@ -20,8 +20,8 @@ class TransportcustomPackage extends StatefulWidget {
   final CiudadesViewModel? CiudadSalida;
   final CiudadesViewModel? CiudadLlegada;
   final customPackageViewModel customPackage;
-
-  const TransportcustomPackage(this.userloggeddata, this.CiudadSalida,this.CiudadLlegada,this.customPackage, {super.key});
+  final Map<int?, String> CitiesDictionary;
+  const TransportcustomPackage(this.userloggeddata, this.CiudadSalida,this.CiudadLlegada,this.customPackage,this.CitiesDictionary, {super.key});
   @override
   _TransportcustomPackage createState() => _TransportcustomPackage();
 }
@@ -58,7 +58,7 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => NavigationHomeScreen( TransportSchedules(widget.userloggeddata,widget.CiudadLlegada,widget.CiudadLlegada,widget.customPackage,Transport),widget.userloggeddata)),
+                  builder: (context) => NavigationHomeScreen( TransportSchedules(widget.userloggeddata,widget.CiudadLlegada,widget.CiudadLlegada,widget.customPackage,Transport,widget.CitiesDictionary),widget.userloggeddata)),
             );
           }
       }
@@ -444,7 +444,7 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
         ),
       );
       }else{
-         Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen( createCustomPackage(widget.CiudadSalida,widget.userloggeddata,2,widget.customPackage),widget.userloggeddata)),);
+         Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen( createCustomPackage(widget.CiudadSalida,widget.userloggeddata,2,widget.customPackage,widget.CitiesDictionary),widget.userloggeddata)),);
       }
               
             

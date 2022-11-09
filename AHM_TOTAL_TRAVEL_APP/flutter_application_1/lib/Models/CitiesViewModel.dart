@@ -2,6 +2,7 @@
     {
         int? ID;
         String? Ciudad;
+        int? PaisID;
         String? Pais;
         String? UsuarioCrea;
         String? UsuarioModifica;
@@ -14,5 +15,6 @@
         CiudadesViewModel.fromJson(Map<String, dynamic> json)
       : ID = json['id'],
         Ciudad = json['ciudad'],
+        PaisID = json['paisID'],
         Pais = json['pais'];
     }

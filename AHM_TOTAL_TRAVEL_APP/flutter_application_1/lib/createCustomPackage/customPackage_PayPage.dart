@@ -17,7 +17,8 @@ class payPage extends StatefulWidget {
   final customPackageViewModel customPackage;
     final UserLoggedModel? userloggeddata;
   final CiudadesViewModel? Ciudad;
-  const payPage( this.customPackage,this.userloggeddata,this.Ciudad,{Key? key}) : super(key: key);
+  final Map<int?, String> CitiesDictionary;
+  const payPage( this.customPackage,this.userloggeddata,this.Ciudad,this.CitiesDictionary,{Key? key}) : super(key: key);
 
   @override
   State<payPage> createState() => _payPage();
@@ -1235,7 +1236,7 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
           ),
           child: Text("Cancelar",style: TextStyle(color: Color(0xFF652D8F)),)),
           ElevatedButton(onPressed: () {
-            Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,3,widget.customPackage),widget.userloggeddata)),);
+            Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,3,widget.customPackage,widget.CitiesDictionary),widget.userloggeddata)),);
           },
            style: ElevatedButton.styleFrom(
             primary: Color(0xFF652D8F),

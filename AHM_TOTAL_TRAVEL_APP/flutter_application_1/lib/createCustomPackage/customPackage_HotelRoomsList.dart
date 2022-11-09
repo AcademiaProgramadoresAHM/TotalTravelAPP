@@ -16,8 +16,8 @@ class RoomsListcustomPackage extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final HotelViewModel? Hotel;
   final CiudadesViewModel Ciudad;
-
-  const RoomsListcustomPackage( this.userloggeddata, this.Hotel,this.Ciudad,{super.key});
+  final Map<int?, String> CitiesDictionary;
+  const RoomsListcustomPackage( this.userloggeddata, this.Hotel,this.Ciudad,this.CitiesDictionary,{super.key});
   @override
   _RoomsListcustomPackage createState() => _RoomsListcustomPackage();
 }
@@ -80,7 +80,7 @@ Future<dynamic> FindRooms(idRoom,userloggeddata) async {
      var Room = dataRoom.where((x) => x['id'] == idRoom).toList();
          Navigator.push(
               context,
-               MaterialPageRoute(builder: (context) =>  RoomDetails( widget.userloggeddata,Room, widget.Ciudad)),
+               MaterialPageRoute(builder: (context) =>  RoomDetails( widget.userloggeddata,Room, widget.Ciudad,widget.CitiesDictionary)),
               );
   } else {
     print("Error " + response.statusCode.toString());

@@ -55,7 +55,9 @@ final headers = {
       "Authorization": "bearer " + widget.userloggeddata!.Token!
     };
   final json = jsonEncode(customPackage);
+  print(json);
   final response = await post(url, headers: headers, body: json);
+  print(response);
   if (response.body != " ") {
     Map<String, dynamic> userMap = jsonDecode(response.body);
     var data = DecoderAPI.fromJson(userMap);

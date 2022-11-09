@@ -1,6 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter_application_1/Account_screen.dart';
+import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
+import 'package:flutter_application_1/Models/CitiesViewModel.dart';
 import 'package:flutter_application_1/Screens/Compras.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Start.dart';
 import 'package:flutter_application_1/Screens/historialcompras.dart';
@@ -118,11 +120,37 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
     }
   }
 
+Map<int?, String> CitiesDictionary = Map();
+
+  Future<dynamic> GetCities() async {
+    var data;
+    String url_list = "https://totaltravelapi.azurewebsites.net/API/Cities/List";
+    var respuesta = await http.get(Uri.parse(url_list));
+    if (respuesta.statusCode == 200) {
+      Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
+      var Json = DecoderAPI.fromJson(ServerResponse);
+      data = Json.data;
+      // rellena diccionario de datos
+      data.forEach((x) {
+        CiudadesViewModel element = CiudadesViewModel.fromJson(x);
+        var descripcion = element.Ciudad!;
+        CitiesDictionary[element.ID] = descripcion;
+      });
+
+      return Json.data;
+    } else {
+      print("Error: " + respuesta.statusCode.toString());
+    }
+  }
+
+
+
   @override
   void initState() {
     drawerIndex = DrawerIndex.HOME;
     screenView = widget.page;
     super.initState();
+    GetCities();
   }
 
   @override
@@ -176,7 +204,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
           break;*/
         case DrawerIndex.CrearPaquete:
           setState(() {
-            screenView = createPackage(widget.userloggeddata);
+            screenView = createPackage(widget.userloggeddata,CitiesDictionary);
           });
           break;
         case DrawerIndex.Account:

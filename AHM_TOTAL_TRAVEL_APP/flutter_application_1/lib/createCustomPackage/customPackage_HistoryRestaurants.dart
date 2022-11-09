@@ -19,7 +19,8 @@ class HistoryRestaurants extends StatefulWidget {
   final int RestaurantAdd;
   final CiudadesViewModel? Ciudad;
   final customPackageViewModel customPackage;
-  const HistoryRestaurants(this.userloggeddata,this.Restaurant,this.RestaurantAdd,this.Ciudad,this.customPackage, {Key? key}) : super(key: key);
+  final Map<int?, String> CitiesDictionary;
+  const HistoryRestaurants(this.userloggeddata,this.Restaurant,this.RestaurantAdd,this.Ciudad,this.customPackage,this.CitiesDictionary, {Key? key}) : super(key: key);
   @override
   _HistoryRestaurants createState() => _HistoryRestaurants();
 }
@@ -179,7 +180,7 @@ class _HistoryRestaurants extends State<HistoryRestaurants> {
                                                
 
                                             widget.Restaurant.removeAt(element.index!);
-                                        Navigator.push(context,MaterialPageRoute(builder: (context) => HistoryRestaurants(widget.userloggeddata,widget.Restaurant,RestaurantCounter,widget.Ciudad,widget.customPackage)),);
+                                        Navigator.push(context,MaterialPageRoute(builder: (context) => HistoryRestaurants(widget.userloggeddata,widget.Restaurant,RestaurantCounter,widget.Ciudad,widget.customPackage,widget.CitiesDictionary)),);
 
                                         },
                                       ),
@@ -322,7 +323,7 @@ class _HistoryRestaurants extends State<HistoryRestaurants> {
                         context,
                     MaterialPageRoute(
                     builder: (context) =>
-                         RestaurantcustomPackage(widget.userloggeddata,widget.Ciudad,widget.customPackage,RestaurantCounter,widget.Restaurant)),
+                         RestaurantcustomPackage(widget.userloggeddata,widget.Ciudad,widget.customPackage,RestaurantCounter,widget.Restaurant,widget.CitiesDictionary)),
                       );
           },
           child: Text(

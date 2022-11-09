@@ -18,8 +18,8 @@ class ActivityDetails extends StatefulWidget {
   final int ActivityAdd;
   final customPackageViewModel customPackage;
   final List<ActivitiesExtra> activityExtra;
-  const ActivityDetails(this.userloggeddata, this.Activity, this.Ciudad,
-      this.ActivityAdd, this.customPackage, this.activityExtra,
+  final Map<int?, String> CitiesDictionary;
+  const ActivityDetails(this.userloggeddata, this.Activity, this.Ciudad,this.ActivityAdd, this.customPackage, this.activityExtra,this.CitiesDictionary,
       {Key? key})
       : super(key: key);
 
@@ -505,7 +505,7 @@ class _ActivityDetails extends State<ActivityDetails> {
                                     widget.Ciudad,
                                     ActivitiesCounter,
                                     widget.customPackage,
-                                    widget.activityExtra),
+                                    widget.activityExtra, widget.CitiesDictionary),
                                 widget.userloggeddata)),
                       );
                     },

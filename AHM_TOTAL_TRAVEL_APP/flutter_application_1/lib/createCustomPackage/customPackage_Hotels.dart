@@ -15,8 +15,8 @@ import '../utils/ListaHoteles.dart';
 class HotelcustomPackage extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final CiudadesViewModel? Ciudad;
-
-  const HotelcustomPackage(this.userloggeddata, this.Ciudad, {super.key});
+  final Map<int?, String> CitiesDictionary;
+  const HotelcustomPackage(this.userloggeddata, this.Ciudad,this.CitiesDictionary, {super.key});
   @override
   _HotelcustomPackage createState() => _HotelcustomPackage();
 }
@@ -55,7 +55,7 @@ class _HotelcustomPackage extends State<HotelcustomPackage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => NavigationHomeScreen( HotelDetails(widget.userloggeddata, Hotel,Ciudad),widget.userloggeddata)),
+                  builder: (context) => NavigationHomeScreen( HotelDetails(widget.userloggeddata, Hotel,Ciudad,widget.CitiesDictionary),widget.userloggeddata)),
             );
           }
       }

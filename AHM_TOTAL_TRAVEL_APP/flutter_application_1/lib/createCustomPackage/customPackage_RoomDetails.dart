@@ -19,7 +19,8 @@ class RoomDetails extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final List<dynamic> Room;
   final CiudadesViewModel Ciudad;
-  const RoomDetails(this.userloggeddata, this.Room, this.Ciudad, {Key? key})
+  final Map<int?, String> CitiesDictionary;
+  const RoomDetails(this.userloggeddata, this.Room, this.Ciudad,this.CitiesDictionary, {Key? key})
       : super(key: key);
 
   @override
@@ -799,7 +800,7 @@ class _RoomDetails extends State<RoomDetails> {
                         MaterialPageRoute(
                             builder: (context) => NavigationHomeScreen(
                                 createCustomPackage(widget.Ciudad,
-                                    widget.userloggeddata, 1, customPackage),
+                                    widget.userloggeddata, 1, customPackage,widget.CitiesDictionary),
                                 widget.userloggeddata)),
                       );
                     },

@@ -27,8 +27,8 @@ class RestaurantcustomPackage extends StatefulWidget {
   final customPackageViewModel customPackage;
   final int RestaurantsAdd;
   final List<Restaurants> Restaurante;
-
-  const RestaurantcustomPackage( this.userloggeddata, this.Ciudad,this.customPackage,this.RestaurantsAdd,this.Restaurante,{super.key});
+  final Map<int?, String> CitiesDictionary;
+  const RestaurantcustomPackage( this.userloggeddata, this.Ciudad,this.customPackage,this.RestaurantsAdd,this.Restaurante,this.CitiesDictionary,{super.key});
   @override
   _RestaurantcustomPackage createState() => _RestaurantcustomPackage();
 }
@@ -70,7 +70,7 @@ Future<dynamic> GetListRestaurants(Ciudad, userloggeddata,idRestaurant,bool) asy
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => RestaurantDetails(widget.userloggeddata, Activity,Ciudad,widget.customPackage,widget.RestaurantsAdd,widget.Restaurante)),
+                  builder: (context) => RestaurantDetails(widget.userloggeddata, Activity,Ciudad,widget.customPackage,widget.RestaurantsAdd,widget.Restaurante,widget.CitiesDictionary)),
             );
           }
     } else {
@@ -353,7 +353,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                               ),
                               ), onPressed:() {
                                     if(widget.RestaurantsAdd != 0){
-                                       Navigator.push(context,MaterialPageRoute(builder: (context) => HistoryRestaurants(widget.userloggeddata,widget.Restaurante,widget.RestaurantsAdd,widget.Ciudad,widget.customPackage)),);
+                                       Navigator.push(context,MaterialPageRoute(builder: (context) => HistoryRestaurants(widget.userloggeddata,widget.Restaurante,widget.RestaurantsAdd,widget.Ciudad,widget.customPackage,widget.CitiesDictionary)),);
                                     }else{
                                       showDialog<String>(
                                           context: context,
@@ -493,8 +493,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                         context,
                     MaterialPageRoute(
                     builder: (context) =>
-                         createCustomPackage(
-                      widget.Ciudad,widget.userloggeddata,4,widget.customPackage)),
+                         createCustomPackage(widget.Ciudad,widget.userloggeddata,4,widget.customPackage,widget.CitiesDictionary)),
               );
               },
               style: ElevatedButton.styleFrom(
@@ -509,7 +508,7 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
            
               widget.customPackage.Restaurant = widget.Restaurante;
               widget.customPackage.restaurantes = jsonEncode(widget.Restaurante);              
-               Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,4,widget.customPackage),widget.userloggeddata)),);
+               Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,4,widget.customPackage,widget.CitiesDictionary),widget.userloggeddata)),);
                
             }
 

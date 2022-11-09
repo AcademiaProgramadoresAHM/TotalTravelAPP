@@ -28,9 +28,8 @@ class customActivities extends StatefulWidget {
   final int ActivitiesAdd;
   final List<ActivitiesExtra> activityExtra;
   final customPackageViewModel customPackage;
-  const customActivities(this.userloggeddata, this.Ciudad, this.ActivitiesAdd,
-      this.customPackage, this.activityExtra,
-      {super.key});
+  final Map<int?, String> CitiesDictionary;
+  const customActivities(this.userloggeddata, this.Ciudad, this.ActivitiesAdd,this.customPackage, this.activityExtra,this.CitiesDictionary,{super.key});
   @override
   _customActivities createState() => _customActivities();
 }
@@ -78,7 +77,7 @@ class _customActivities extends State<customActivities> {
                   Ciudad,
                   ActivitiesCount,
                   widget.customPackage,
-                  widget.activityExtra)),
+                  widget.activityExtra, widget.CitiesDictionary)),
         );
       }
     } else {
@@ -386,7 +385,7 @@ class _customActivities extends State<customActivities> {
                                                   widget.activityExtra,
                                                   widget.ActivitiesAdd,
                                                   widget.Ciudad,
-                                                  widget.customPackage)),
+                                                  widget.customPackage,widget.CitiesDictionary)),
                                     );
                                     }else{
                                       showDialog<String>(
@@ -525,7 +524,7 @@ class _customActivities extends State<customActivities> {
               ),
               child: Text("Cancelar",style: TextStyle(color: Color(0xFF652D8F)),)),
               ElevatedButton(onPressed: () {
-                  Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,3,widget.customPackage),widget.userloggeddata)),);
+                  Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,3,widget.customPackage,widget.CitiesDictionary),widget.userloggeddata)),);
               },
               style: ElevatedButton.styleFrom(
                 primary: Color(0xFF652D8F),
@@ -538,7 +537,7 @@ class _customActivities extends State<customActivities> {
             }else{
               widget.customPackage.actividadesExtra = widget.activityExtra;
             widget.customPackage.actividadesExtras = jsonEncode(widget.activityExtra);
-             Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,3,widget.customPackage),widget.userloggeddata)),);
+             Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,3,widget.customPackage,widget.CitiesDictionary),widget.userloggeddata)),);
         
             }
           },

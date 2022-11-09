@@ -51,7 +51,8 @@ class createCustomPackage extends StatefulWidget {
   final CiudadesViewModel? Ciudad;
   final int? Step;
   final customPackageViewModel customPackage;
-  const createCustomPackage(this.Ciudad,this.userloggeddata,this.Step, this.customPackage, {Key? key, }) : super(key: key);
+  final Map<int?, String> CitiesDictionary;
+  const createCustomPackage(this.Ciudad,this.userloggeddata,this.Step, this.customPackage,this.CitiesDictionary, {Key? key, }) : super(key: key);
 
 
 
@@ -73,7 +74,6 @@ final TextEditingController textEditingController = TextEditingController();
   // the current step
 @override
   void initState() {
-     GetCities(null,true);
       StepSet(widget.Step);
     //GetListHotels(widget.Ciudad,widget.userloggeddata);
   }
@@ -117,35 +117,7 @@ final TextEditingController textEditingController = TextEditingController();
 
   int? CitiesDropDownValue;
 
-  Map<int?, String> CitiesDictionary = Map();
 
-  Future<dynamic> GetCities(idCiudad, bool) async {
-    var data;
-    String url_list = "https://totaltravelapi.azurewebsites.net/API/Cities/List";
-    var respuesta = await http.get(Uri.parse(url_list));
-    if(bool == true){
-        if (respuesta.statusCode == 200) {
-      Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
-      var Json = DecoderAPI.fromJson(ServerResponse);
-      data = Json.data;
-      // rellena diccionario de datos
-      data.forEach((x) {
-        CiudadesViewModel element = CiudadesViewModel.fromJson(x);
-        var descripcion = element.Ciudad!;
-        CitiesDictionary[element.ID] = descripcion;
-      });
-
-      return Json.data;
-    } else {
-      print("Error: " + respuesta.statusCode.toString());
-    }
-    }else{
-
-            CiudadesViewModel element = new CiudadesViewModel(idCiudad, null, null, null, null);
-           Navigator.push(context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(TransportcustomPackage(widget.userloggeddata,element,widget.Ciudad,widget.customPackage),widget.userloggeddata)),);
-
-    }
-  }
 
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now().add(const Duration(days: 5));
@@ -303,7 +275,7 @@ final TextEditingController textEditingController = TextEditingController();
                                       if(_currentStep == 0){
                                           Navigator.push(
                                           context,
-                                          MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createPackage(widget.userloggeddata),widget.userloggeddata)),
+                                          MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createPackage(widget.userloggeddata,widget.CitiesDictionary),widget.userloggeddata)),
                                         );
                                       }else{
                                          _stepCancel();
@@ -352,7 +324,7 @@ final TextEditingController textEditingController = TextEditingController();
                              Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => NavigationHomeScreen( HotelcustomPackage( widget.userloggeddata,widget.Ciudad),widget.userloggeddata)),
+                                      builder: (context) => NavigationHomeScreen( HotelcustomPackage( widget.userloggeddata,widget.Ciudad,widget.CitiesDictionary),widget.userloggeddata)),
                                 );
                           },
                         ),
@@ -405,11 +377,11 @@ final TextEditingController textEditingController = TextEditingController();
                                                                                   ),
                                                                                 ),
                                                                               ),
-                                                                              items: CitiesDictionary.keys.map((id) {
+                                                                              items: widget.CitiesDictionary.keys.map((id) {
                                                                                       return DropdownMenuItem(
                                                                                         value: id,
                                                                                         child: Padding(padding: EdgeInsetsDirectional.fromSTEB(40, 0, 0, 0),
-                                                                                        child:  Text(CitiesDictionary[id].toString(),), 
+                                                                                        child:  Text(widget.CitiesDictionary[id].toString(),), 
                                                                                         ) 
                                                                                       
                                                                                       );
@@ -420,7 +392,9 @@ final TextEditingController textEditingController = TextEditingController();
                                                                                   selectedCity = value as int?;
                                                                                   CitiesDropDownValue = value;
                                                                                 });
-                                                                                GetCities(CitiesDropDownValue, false);
+                                                                                   CiudadesViewModel element = new CiudadesViewModel(CitiesDropDownValue, null, null, null, null);
+                                                                                  Navigator.push(context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(TransportcustomPackage(widget.userloggeddata,element,widget.Ciudad,widget.customPackage,widget.CitiesDictionary),widget.userloggeddata)),);
+                                                                               
                                                                               },
                                                                               buttonHeight: 100,
                                                                               buttonWidth: 350,
@@ -473,7 +447,7 @@ final TextEditingController textEditingController = TextEditingController();
                             primary: Color.fromARGB(255, 101, 45, 143),
                           ),
                            onPressed: () {
-                               Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen( customActivities( widget.userloggeddata,widget.Ciudad,0,widget.customPackage,[]),widget.userloggeddata)),);
+                               Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen( customActivities( widget.userloggeddata,widget.Ciudad,0,widget.customPackage,[],widget.CitiesDictionary),widget.userloggeddata)),);
                             
                           },
                         ),
@@ -499,7 +473,7 @@ final TextEditingController textEditingController = TextEditingController();
                             primary: Color.fromRGBO(101, 45, 143, 1),
                           ),
                           onPressed: () {
-                             Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen( RestaurantcustomPackage( widget.userloggeddata,widget.Ciudad,widget.customPackage,0,[]),widget.userloggeddata)),);
+                             Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen( RestaurantcustomPackage( widget.userloggeddata,widget.Ciudad,widget.customPackage,0,[],widget.CitiesDictionary),widget.userloggeddata)),);
                           
                           },
                         ),
@@ -525,7 +499,7 @@ final TextEditingController textEditingController = TextEditingController();
                             primary: Color.fromARGB(255, 101, 45, 143),
                           ),
                           onPressed: () {
-                                    Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen( payPage(widget.customPackage,widget.userloggeddata,widget.Ciudad ),widget.userloggeddata)),);
+                                    Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen( payPage(widget.customPackage,widget.userloggeddata,widget.Ciudad,widget.CitiesDictionary),widget.userloggeddata)),);
                            
                           },
                         ),
