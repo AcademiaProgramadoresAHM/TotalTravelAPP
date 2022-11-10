@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Models/CitiesViewModel.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
@@ -12,6 +13,7 @@ import 'package:get/get.dart';
 import 'package:flutter_application_1/Screens/prueba.dart';
 import 'package:flutter_application_1/Screens/signUp_view.dart';
 import 'package:flutter_application_1/navigation_home_screen.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 class payPage extends StatefulWidget {
   final customPackageViewModel customPackage;
@@ -1221,30 +1223,46 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
           width: 175,
           height: 35,
           child:     ElevatedButton(
-          onPressed: () => showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-          child: Text('¿Esta seguro que desea continuar?',),
-          ) ,
-          actions: <Widget>[
-          ElevatedButton(onPressed: () {
-             Navigator.pop(context);
-          },
-           style: ElevatedButton.styleFrom(
-            primary:  Color.fromARGB(255, 234, 234, 234),
-          ),
-          child: Text("Cancelar",style: TextStyle(color: Color(0xFF652D8F)),)),
-          ElevatedButton(onPressed: () {
-            Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,3,widget.customPackage,widget.CitiesDictionary),widget.userloggeddata)),);
-          },
-           style: ElevatedButton.styleFrom(
-            primary: Color(0xFF652D8F),
-          ),
-          child: Text("Aceptar"))
-          ],
-        ),
-      ),
+          onPressed: () => showCupertinoDialog(
+                            context: context,
+                            builder: (BuildContext context) => Theme(
+                                  data: ThemeData.light(),
+                                  child: CupertinoAlertDialog(
+                                    title: Text(
+                                      'Advertencia',
+                                      style: boldTextStyle(
+                                          color: Colors.black, size: 18),
+                                    ),
+                                    content: Text(
+                                      '¿Está seguro de continuar?',
+                                      style: secondaryTextStyle(
+                                          color: Colors.black, size: 16),
+                                    ),
+                                    actions: [
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          'Cancelar',
+                                          style: primaryTextStyle(
+                                              color: dodgerBlue, size: 18),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          'Aceptar',
+                                          style: primaryTextStyle(
+                                              color: redColor, size: 18),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          Navigator.pop(context);
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                )),
           child: Text(
             'Regresar',
             style: TextStyle(fontSize: 18,color: Color(0xFF652D8F)),

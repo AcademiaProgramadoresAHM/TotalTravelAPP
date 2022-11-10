@@ -30,25 +30,34 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
 
   Future<dynamic> GetListTransports(CiudadSalida,CiudadLlegada, userloggeddata,idPartner, bool) async {
     List<dynamic> dataTransport;
-    String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/DetailsTransportation/List";
+    var Transport;
+      if(bool == true){
+        String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/Transports/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
     };
     final response = await http.get(Uri.parse(url_list), headers: headers);
-    var Transport;
-      if(bool == true){
                 if (response.statusCode == 200) 
               {
                 Map<String, dynamic> userMap = jsonDecode(response.body);
                 var Json = DecoderAPI.fromJson(userMap);
+                print(Json.data);
+                print(CiudadSalida.ID);
                 dataTransport = Json.data;
-                  Transport = dataTransport.where((x) => x['ciudad_Llegada_ID'] == CiudadLlegada.ID && x['ciudad_Salida_ID'] == CiudadSalida.ID).toList();
+                  Transport = dataTransport.where((x) => x['ciudad_ID'] == CiudadSalida.ID).toList();
                 return Transport;
               }
       }
       else if(bool == false){
+        String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/DetailsTransportation/List";
+        final headers = {
+          "Content-type": "application/json",
+          "Authorization": "bearer " + widget.userloggeddata!.Token!
+        };
+        final response = await http.get(Uri.parse(url_list), headers: headers);
          if (response.statusCode == 200) 
          {
             Map<String, dynamic> userMap = jsonDecode(response.body);
@@ -58,7 +67,7 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
             Navigator.push(
               context,
               MaterialPageRoute(
-                  builder: (context) => NavigationHomeScreen( TransportSchedules(widget.userloggeddata,widget.CiudadLlegada,widget.CiudadLlegada,widget.customPackage,Transport,widget.CitiesDictionary),widget.userloggeddata)),
+                  builder: (context) => TransportSchedules(widget.userloggeddata,widget.CiudadLlegada,widget.CiudadLlegada,widget.customPackage,Transport,widget.CitiesDictionary)),
             );
           }
       }
@@ -160,7 +169,7 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      element['parter'],
+                                      element['nombrePartner'],
                                       style: TextStyle(
                                         fontFamily: 'Outfit',
                                         color: Color(0xFF090F13),
@@ -183,7 +192,7 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0, 4, 0, 0),
                                   child: Text(
-                                    "Servicio de transporte" + element['tipo_Transporte'],
+                                    "Servicio de transporte" + element['tipoTransporte'],
                                     style: TextStyle(
                                       fontFamily: 'Outfit',
                                       color: Color(0xFF7C8791),
@@ -196,7 +205,7 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0, 4, 0, 0),
                                   child: Text(
-                                    element['ciudad_Salida'],
+                                    element['ciudad'],
                                     style: TextStyle(
                                       fontFamily: 'Outfit',
                                       color: Color(0xFF7C8791),
@@ -271,7 +280,7 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
                                           ),
                                         ),
                                         onPressed: () {
-                                          GetListTransports(widget.CiudadSalida,widget.CiudadLlegada,widget.userloggeddata,element['partner_ID'],false);
+                                          GetListTransports(widget.CiudadSalida,widget.CiudadLlegada,widget.userloggeddata,element['partnerID'],false);
                                         },
                                       ),
                                     ],
@@ -408,7 +417,7 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
         ),
       ),
           child: Text(
-            'Cancelar',
+            'Regresar',
             style: TextStyle(fontSize: 18,color: Color(0xFF652D8F)),
           ),
           style: ElevatedButton.styleFrom(

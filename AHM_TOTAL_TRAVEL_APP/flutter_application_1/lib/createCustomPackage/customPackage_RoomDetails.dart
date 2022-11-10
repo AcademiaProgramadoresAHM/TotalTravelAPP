@@ -781,7 +781,7 @@ class _RoomDetails extends State<RoomDetails> {
                       ),
                     ),
                     child: Text(
-                      'Cancelar',
+                      'Regresar',
                       style: TextStyle(fontSize: 18, color: Color(0xFF652D8F)),
                     ),
                     style: ElevatedButton.styleFrom(

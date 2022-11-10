@@ -756,9 +756,9 @@ class _SignUpViewState extends State<SignUpView> {
                                       
                                     },
                                     icon: const Icon(
-                                        Icons.arrow_forward_ios_outlined,
+                                        Icons.keyboard_double_arrow_down,
                                       ),
-                                      iconSize: 14,
+                                      iconSize: 20,
                                       iconEnabledColor: Color.fromRGBO(101, 45, 143, 1),
                                       iconDisabledColor: Colors.grey,
                                       buttonHeight: 50,
@@ -872,9 +872,9 @@ class _SignUpViewState extends State<SignUpView> {
                                       
                                     },
                                     icon: const Icon(
-                                        Icons.arrow_forward_ios_outlined,
+                                         Icons.keyboard_double_arrow_down,
                                       ),
-                                      iconSize: 14,
+                                      iconSize: 20,
                                       iconEnabledColor: Color.fromRGBO(101, 45, 143, 1),
                                       iconDisabledColor: Colors.grey,
                                       buttonHeight: 50,
@@ -984,9 +984,9 @@ class _SignUpViewState extends State<SignUpView> {
                                       
                                     },
                                     icon: const Icon(
-                                        Icons.arrow_forward_ios_outlined,
+                                         Icons.keyboard_double_arrow_down,
                                       ),
-                                      iconSize: 14,
+                                      iconSize: 20,
                                       iconEnabledColor: Color.fromRGBO(101, 45, 143, 1),
                                       iconDisabledColor: Colors.grey,
                                       buttonHeight: 50,

@@ -286,21 +286,34 @@ final TextEditingController textEditingController = TextEditingController();
       appBar: AppBar(
         backgroundColor: Color(0xFF652D8F),
         automaticallyImplyLeading: false,
-        title: Align(
-          alignment: AlignmentDirectional(0.5, -0.05),
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 10, 10, 10),
-            child: Text(
-              'Agencia Total Travel',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                color: Colors.white,
-                fontSize: 24,
-              ),
-            ),
-          ),
-        ),
+        title: Row(
+              children: <Widget>[
+                 
+                Material(
+                      color:  Color.fromRGBO(101, 45, 143, 1), // button color
+                      child: InkWell(
+                        splashColor: Color.fromRGBO(101, 45, 143, 1), // splash color
+                        onTap: () {}, // button pressed
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            IconButton(
+                                icon:  const Icon(
+                                         Icons.arrow_back,
+                                      ),
+                                 onPressed:() {            
+                                  Navigator.pop(context);                    
+                              },),
+                          ],
+                        ),
+                      ),
+                    ),
+                
+                Padding(padding: EdgeInsetsDirectional.fromSTEB(100, 0, 0, 0),
+                child:   Text("Horarios"),
+                ),
+             
+            ]),
         actions: [
           Align(
             alignment: AlignmentDirectional(-0.05, 0.05),

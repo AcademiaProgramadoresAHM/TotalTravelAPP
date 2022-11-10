@@ -256,21 +256,75 @@ class _HotelDetails extends State<HotelDetails> {
           ),
         ],
       )),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(RoomsListcustomPackage(widget.userloggeddata, hotelId,widget.Ciudad,widget.CitiesDictionary),widget.userloggeddata)),);
-          },
-          child: Text(
-            'Selecciona habitaciones',
-            style: TextStyle(fontSize: 18),
-          ),
-          style: ElevatedButton.styleFrom(
-            primary: Color(0xFF652D8F),
-          ),
-        ),
-      ),
+          bottomNavigationBar: Row(
+          children: [
+            Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                child: SizedBox(
+                  width: 175,
+                  height: 35,
+                  child: ElevatedButton(
+                    onPressed: () => showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                          child: Text(
+                            '¿Esta seguro que desea continuar?',
+                          ),
+                        ),
+                        actions: <Widget>[
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Color.fromARGB(255, 234, 234, 234),
+                              ),
+                              child: Text(
+                                "Cancelar",
+                                style: TextStyle(color: Color(0xFF652D8F)),
+                              )),
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Color(0xFF652D8F),
+                              ),
+                              child: Text("Aceptar"))
+                        ],
+                      ),
+                    ),
+                    child: Text(
+                      'Regresar',
+                      style: TextStyle(fontSize: 18, color: Color(0xFF652D8F)),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromARGB(255, 234, 234, 234),
+                    ),
+                  ),
+                )),
+            Padding(
+                padding: EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: 170,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push( context,MaterialPageRoute(builder: (context) =>  RoomsListcustomPackage(widget.userloggeddata, hotelId,widget.Ciudad,widget.CitiesDictionary)),);
+                    },
+                    child: Text(
+                      'Habitaciones',
+                      style: TextStyle(fontSize: 18),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Color(0xFF652D8F),
+                    ),
+                  ),
+                )),
+          ],
+        )
     );
   }
 }

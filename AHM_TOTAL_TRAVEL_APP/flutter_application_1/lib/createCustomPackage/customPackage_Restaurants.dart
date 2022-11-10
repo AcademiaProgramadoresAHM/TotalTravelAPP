@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
@@ -310,7 +311,6 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
     //GetListHotels(widget.Ciudad,widget.userloggeddata);
     ListaHoteles = getHoteles();
   }
-
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width;
@@ -355,24 +355,39 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                     if(widget.RestaurantsAdd != 0){
                                        Navigator.push(context,MaterialPageRoute(builder: (context) => HistoryRestaurants(widget.userloggeddata,widget.Restaurante,widget.RestaurantsAdd,widget.Ciudad,widget.customPackage,widget.CitiesDictionary)),);
                                     }else{
-                                      showDialog<String>(
+                                       showCupertinoDialog(
                                           context: context,
-                                          builder: (BuildContext context) => AlertDialog(
-                                            title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                                            child: Text('Seleccione un restaurante',),
-                                            ) ,
-                                            actions: <Widget>[
-                                        
-                                            ElevatedButton(onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              primary: Color(0xFF652D8F),
-                                            ),
-                                            child: Text("Aceptar"))
-                                            ],
-                                          ),
-                                        );
+                                          builder: (BuildContext context) =>
+                                              Theme(
+                                                data: ThemeData.light(),
+                                                child: CupertinoAlertDialog(
+                                                  title: Text(
+                                                    'Advertencia',
+                                                    style: boldTextStyle(
+                                                        color: Colors.black,
+                                                        size: 18),
+                                                  ),
+                                                  content: Text(
+                                                    'Seleccione un restaurante',
+                                                    style: secondaryTextStyle(
+                                                        color: Colors.black,
+                                                        size: 16),
+                                                  ),
+                                                  actions: [
+                                                    CupertinoDialogAction(
+                                                      child: Text(
+                                                        'Aceptar',
+                                                        style: primaryTextStyle(
+                                                            color: redColor,
+                                                            size: 18),
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                    )
+                                                  ],
+                                                ),
+                                              ));
 
                                     } 
                                  
@@ -429,33 +444,48 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
           width: 175,
           height: 35,
           child:     ElevatedButton(
-          onPressed: () => showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-          child: Text('¿Esta seguro que desea continuar?',),
-          ) ,
-          actions: <Widget>[
-          ElevatedButton(onPressed: () {
-            Navigator.pop(context);
-          },
-           style: ElevatedButton.styleFrom(
-            primary:  Color.fromARGB(255, 234, 234, 234),
-          ),
-          child: Text("Cancelar",style: TextStyle(color: Color(0xFF652D8F)),)),
-          ElevatedButton(onPressed: () {
-            Navigator.pop(context);
-             Navigator.pop(context);
-          },
-           style: ElevatedButton.styleFrom(
-            primary: Color(0xFF652D8F),
-          ),
-          child: Text("Aceptar"))
-          ],
-        ),
-      ),
+          onPressed: () =>  showCupertinoDialog(
+                            context: context,
+                            builder: (BuildContext context) => Theme(
+                                  data: ThemeData.light(),
+                                  child: CupertinoAlertDialog(
+                                    title: Text(
+                                      'Advertencia',
+                                      style: boldTextStyle(
+                                          color: Colors.black, size: 18),
+                                    ),
+                                    content: Text(
+                                      '¿Está seguro de continuar?',
+                                      style: secondaryTextStyle(
+                                          color: Colors.black, size: 16),
+                                    ),
+                                    actions: [
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          'Cancelar',
+                                          style: primaryTextStyle(
+                                              color: dodgerBlue, size: 18),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          'Aceptar',
+                                          style: primaryTextStyle(
+                                              color: redColor, size: 18),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          Navigator.pop(context);
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                )),
           child: Text(
-            'Cancelar',
+            'Regresar',
             style: TextStyle(fontSize: 18,color: Color(0xFF652D8F)),
           ),
           style: ElevatedButton.styleFrom(
@@ -472,37 +502,61 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
           child:     ElevatedButton(
           onPressed: () {
                 if(widget.Restaurante.isEmpty){
-                  showDialog<String>(
-            context: context,
-            builder: (BuildContext context) => AlertDialog(
-              title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                      child: Text('No ha seleccionado ningun restaurante.', style: TextStyle(fontWeight: FontWeight.normal), textAlign: TextAlign.center,),
-              ) ,
-              content: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                      child: Text('¿Esta seguro que desea continuar?',style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center,)),
-              actions: <Widget>[
-              ElevatedButton(onPressed: () {
-                Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                primary:  Color.fromARGB(255, 234, 234, 234),
-              ),
-              child: Text("Cancelar",style: TextStyle(color: Color(0xFF652D8F)),)),
-              ElevatedButton(onPressed: () {
-                  Navigator.push(
-                        context,
-                    MaterialPageRoute(
-                    builder: (context) =>
-                         createCustomPackage(widget.Ciudad,widget.userloggeddata,4,widget.customPackage,widget.CitiesDictionary)),
-              );
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Color(0xFF652D8F),
-              ),
-              child: Text("Aceptar"))
-              ],
-            ),
-          );
+             showCupertinoDialog(
+                                context: context,
+                                builder: (BuildContext context) => Theme(
+                                      data: ThemeData.light(),
+                                      child: CupertinoAlertDialog(
+                                        title: Text(
+                                          'Advertencia\n',
+                                          style: boldTextStyle(
+                                              color: Colors.black, size: 18),
+                                        ),
+                                        content: Text(
+                                          'No ha seleccionado ningún restaurante \n¿Está seguro de continuar?',
+                                          style: secondaryTextStyle(
+                                              color: Colors.black, size: 16),
+                                        ),
+                                        actions: [
+                                          CupertinoDialogAction(
+                                            child: Text(
+                                              'Cancelar',
+                                              style: primaryTextStyle(
+                                                  color: dodgerBlue, size: 18),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                          CupertinoDialogAction(
+                                            child: Text(
+                                              'Aceptar',
+                                              style: primaryTextStyle(
+                                                  color: redColor, size: 18),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        NavigationHomeScreen(
+                                                            createCustomPackage(
+                                                                widget.Ciudad,
+                                                                widget
+                                                                    .userloggeddata,
+                                                                3,
+                                                                widget
+                                                                    .customPackage,
+                                                                widget
+                                                                    .CitiesDictionary),
+                                                            widget
+                                                                .userloggeddata)),
+                                              );
+                                            },
+                                          )
+                                        ],
+                                      ),
+                                    ));
 
             }else{
            

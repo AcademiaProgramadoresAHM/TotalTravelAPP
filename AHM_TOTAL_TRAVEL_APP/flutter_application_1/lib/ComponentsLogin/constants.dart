@@ -14,7 +14,7 @@ TextStyle kLoginTermsAndPrivacyStyle(Size size) =>
     GoogleFonts.ubuntu(fontSize: 15, color: Colors.grey, height: 1.5);
 
 TextStyle kHaveAnAccountStyle(Size size) =>
-    GoogleFonts.ubuntu(fontSize: size.height * 0.022, color: Colors.black);
+    GoogleFonts.ubuntu(fontSize: size.height * 0.022, color: Color.fromARGB(255, 101, 45, 144));
 
 TextStyle kLoginOrSignUpTextStyle(
   Size size,
@@ -25,4 +25,4 @@ TextStyle kLoginOrSignUpTextStyle(
       color: Colors.deepPurpleAccent,
     );
 
-TextStyle kTextFormFieldStyle() => const TextStyle(color: Colors.black);
+TextStyle kTextFormFieldStyle() => const TextStyle(color: Color.fromARGB(255, 101, 45, 144));
