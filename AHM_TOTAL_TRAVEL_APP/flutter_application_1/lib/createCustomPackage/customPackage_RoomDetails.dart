@@ -64,11 +64,33 @@ class _RoomDetails extends State<RoomDetails> {
   List<Padding> RoomDetails(List<dynamic> data, BuildContext context) {
     Future pickDateRange() async {
       DateTimeRange? newDataRange = await showDateRangePicker(
+          helpText: 'Selecciona un rango', // Can be used as title
+                                              cancelText: 'Cancelar',
+                                              confirmText: 'Aceptar',
         context: context,
         initialDateRange: dateRange,
+      
         firstDate: DateTime(
             DateTime.now().year, DateTime.now().month, DateTime.now().day),
         lastDate: DateTime(2100),
+        builder: (context, child) {
+          return Theme(
+        data: Theme.of(context).copyWith(
+          colorScheme: ColorScheme.light(
+            primary: Color.fromRGBO(101, 45, 143, 1), // <-- SEE HERE
+            onPrimary: Colors.white, // <-- SEE HERE
+            onSurface: Color.fromRGBO(101, 45, 143, 1), // <-- SEE HERE
+          ),
+          textButtonTheme: TextButtonThemeData(
+            style: TextButton.styleFrom(
+              primary: Color.fromRGBO(101, 45, 143, 1),// button text color
+            ),
+          ),
+        ),
+        child: child!,
+      );
+        },
+
       );
 
       if (newDataRange == null) return;
@@ -82,6 +104,8 @@ class _RoomDetails extends State<RoomDetails> {
         ChangeNight = true;
       });
     }
+
+    
 
     int intParse(doubleNum) {
       double multiplier = .5;

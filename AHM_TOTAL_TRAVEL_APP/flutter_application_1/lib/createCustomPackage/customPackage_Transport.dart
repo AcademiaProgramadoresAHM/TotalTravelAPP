@@ -43,8 +43,6 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
               {
                 Map<String, dynamic> userMap = jsonDecode(response.body);
                 var Json = DecoderAPI.fromJson(userMap);
-                print(Json.data);
-                print(CiudadSalida.ID);
                 dataTransport = Json.data;
                   Transport = dataTransport.where((x) => x['ciudad_ID'] == CiudadSalida.ID).toList();
                 return Transport;
@@ -72,7 +70,6 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
           }
       }
       else{
-        print(widget.userloggeddata!.Token);
           final url_list =Uri.parse("https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
           final headers = {
             "Content-type": "application/json",
@@ -81,7 +78,6 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
           final json = jsonEncode(widget.userloggeddata!.Token);
           final response = await http.post(url_list, headers: headers, body: json);
           if (response.body != " ") {
-            print(response.body);
             widget.userloggeddata!.Token = response.body;
             GetListTransports(widget.CiudadSalida,widget.CiudadLlegada, userloggeddata,null, true);
           }

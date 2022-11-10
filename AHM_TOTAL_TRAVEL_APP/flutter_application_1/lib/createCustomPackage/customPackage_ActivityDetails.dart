@@ -198,6 +198,11 @@ class _ActivityDetails extends State<ActivityDetails> {
                                                           onPressed: () async {
                                                             DateTime? newDate =
                                                                 await showDatePicker(
+                                                                    helpText: 'Selecciona una fecha', // Can be used as title
+                                                                      cancelText: 'Cancelar',
+                                                                      confirmText: 'Aceptar',
+                                                                      fieldLabelText: 'Ingresa una fecha',
+                                                                      fieldHintText: 'Día/Mes/Año',
                                                               context: context,
                                                               initialDate: date,
                                                               firstDate: DateTime(
@@ -210,6 +215,23 @@ class _ActivityDetails extends State<ActivityDetails> {
                                                               lastDate:
                                                                   DateTime(
                                                                       2100),
+                                                                       builder: (context, child) {
+                                                                  return Theme(
+                                                                data: Theme.of(context).copyWith(
+                                                                  colorScheme: ColorScheme.light(
+                                                                    primary: Color.fromRGBO(101, 45, 143, 1), // <-- SEE HERE
+                                                                    onPrimary: Colors.white, // <-- SEE HERE
+                                                                    onSurface: Color.fromRGBO(101, 45, 143, 1), // <-- SEE HERE
+                                                                  ),
+                                                                  textButtonTheme: TextButtonThemeData(
+                                                                    style: TextButton.styleFrom(
+                                                                      primary: Color.fromRGBO(101, 45, 143, 1),// button text color
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                                child: child!,
+                                                              );
+                                                                },
                                                             );
 
                                                             if (newDate == null)
@@ -260,14 +282,33 @@ class _ActivityDetails extends State<ActivityDetails> {
                                                               TimeOfDay?
                                                                   newTime =
                                                                   await showTimePicker(
+                                                                      helpText: 'Selecciona una hora', // Can be used as title
                                                                       cancelText:
                                                                           "Cancelar",
                                                                       confirmText:
                                                                           "Confirmar",
                                                                       context:
                                                                           context,
-                                                                      initialTime:
-                                                                          time);
+                                                                      initialTime:time,
+                                                                       builder: (context, child) {
+                                                                          return Theme(
+                                                                        data: Theme.of(context).copyWith(
+                                                                          colorScheme: ColorScheme.light(
+                                                                            primary: Color.fromRGBO(101, 45, 143, 1), // <-- SEE HERE
+                                                                            onPrimary: Colors.white, // <-- SEE HERE
+                                                                            onSurface: Color.fromRGBO(101, 45, 143, 1), // <-- SEE HERE
+                                                                          ),
+                                                                          textButtonTheme: TextButtonThemeData(
+                                                                            style: TextButton.styleFrom(
+                                                                              primary: Color.fromRGBO(101, 45, 143, 1),// button text color
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        child: child!,
+                                                                      );
+                                                                        },
+                                                                      
+                                                                      );
 
                                                               if (newTime ==
                                                                   null) return;
@@ -367,7 +408,7 @@ class _ActivityDetails extends State<ActivityDetails> {
         activitiesExtraModel.acEx_Descripcion = element['actividad'];
         activitiesExtraModel.acEx_numeroPersonas = peopleFinal;
         activitiesExtraModel.reAE_FechaReservacion =DateFormat('yyyy-MM-dd').format(date);
-        activitiesExtraModel.reAE_HoraReservacion = hour.substring(1,2) + hour.substring(3,4);
+        activitiesExtraModel.reAE_HoraReservacion = hour;
         activitiesExtraModel.reAE_Precios = element['precio'];
 
         widget.activityExtra.insert(widget.ActivityAdd, activitiesExtraModel);

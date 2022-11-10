@@ -343,7 +343,6 @@ class _HistoryActivities extends State<HistoryActivities> {
           width: 170,
           child:     ElevatedButton(
           onPressed: () {
-            print(ActivitiesCounter);
                Navigator.push(
                         context,
                     MaterialPageRoute(

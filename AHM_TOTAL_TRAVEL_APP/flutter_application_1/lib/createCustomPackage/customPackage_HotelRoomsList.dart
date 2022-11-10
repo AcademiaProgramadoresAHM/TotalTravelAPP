@@ -45,7 +45,6 @@ Map<int?, String> HotelsDictionary = Map();
   
     return Room;
   } else {
-     print(widget.userloggeddata!.Token);
 
           final url_list =Uri.parse("https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
           final headers = {
@@ -55,7 +54,6 @@ Map<int?, String> HotelsDictionary = Map();
           final json = jsonEncode({"token: string"});
           final response = await http.post(url_list, headers: headers, body: json);
           if (response.body != " ") {
-            print(response.body);
             widget.userloggeddata!.Token = response.body;
             GetListRooms(Hotel, widget.userloggeddata);
           }
@@ -83,7 +81,6 @@ Future<dynamic> FindRooms(idRoom,userloggeddata) async {
                MaterialPageRoute(builder: (context) =>  RoomDetails( widget.userloggeddata,Room, widget.Ciudad,widget.CitiesDictionary)),
               );
   } else {
-    print("Error " + response.statusCode.toString());
   }
 }
 

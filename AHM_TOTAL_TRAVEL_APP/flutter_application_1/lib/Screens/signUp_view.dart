@@ -448,10 +448,34 @@ class _SignUpViewState extends State<SignUpView> {
                                     onTap: () async {
                                       DateTime? pickedDate =
                                           await showDatePicker(
+                                            helpText: 'Selecciona una fecha', // Can be used as title
+                                              cancelText: 'Cancelar',
+                                              confirmText: 'Aceptar',
+                                              fieldLabelText: 'Ingresa una fecha',
+                                              fieldHintText: 'Día/Mes/Año',
                                               context: context,
                                               initialDate: DateTime.now(),
                                               firstDate: DateTime(1901),
-                                              lastDate: DateTime(2101));
+                                              lastDate: DateTime(2101),
+                                              builder: (context, child) {
+                                                                return Theme(
+                                                              data: Theme.of(context).copyWith(
+                                                                colorScheme: ColorScheme.light(
+                                                                  primary: Color.fromRGBO(101, 45, 143, 1), // <-- SEE HERE
+                                                                  onPrimary: Colors.white, // <-- SEE HERE
+                                                                  onSurface: Color.fromRGBO(101, 45, 143, 1), // <-- SEE HERE
+                                                                ),
+                                                                textButtonTheme: TextButtonThemeData(
+                                                                  style: TextButton.styleFrom(
+                                                                    primary: Color.fromRGBO(101, 45, 143, 1),// button text color
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              child: child!,
+                                                            );
+                                                              },
+                                                              
+                                              );
 
                                       if (pickedDate != null) {
                                         print(pickedDate);

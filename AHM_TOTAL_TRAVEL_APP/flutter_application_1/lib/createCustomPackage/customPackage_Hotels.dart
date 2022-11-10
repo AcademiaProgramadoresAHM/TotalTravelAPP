@@ -60,7 +60,7 @@ class _HotelcustomPackage extends State<HotelcustomPackage> {
           }
       }
       else{
-        print(widget.userloggeddata!.Token);
+
           final url_list =Uri.parse("https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
           final headers = {
             "Content-type": "application/json",
@@ -69,7 +69,6 @@ class _HotelcustomPackage extends State<HotelcustomPackage> {
           final json = jsonEncode(widget.userloggeddata!.Token);
           final response = await http.post(url_list, headers: headers, body: json);
           if (response.body != " ") {
-            print(response.body);
             widget.userloggeddata!.Token = response.body;
             GetListHotels(Ciudad, userloggeddata,null, true);
           }

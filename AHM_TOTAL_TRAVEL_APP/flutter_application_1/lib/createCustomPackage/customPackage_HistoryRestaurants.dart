@@ -37,7 +37,7 @@ class _HistoryRestaurants extends State<HistoryRestaurants> {
       list.add(Padding(
         padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
         child: Container(
-          height: 248,
+          height: 200,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(2),
             color: Colors.white,
@@ -258,7 +258,7 @@ class _HistoryRestaurants extends State<HistoryRestaurants> {
             child: Column(
           children: [
                 Wrap(
-                      spacing: 8,
+                      spacing: 2,
                       runSpacing: 4,
                       alignment: WrapAlignment.start,
                       crossAxisAlignment: WrapCrossAlignment.start,

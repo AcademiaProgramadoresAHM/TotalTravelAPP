@@ -85,7 +85,6 @@ class _customActivities extends State<customActivities> {
         );
       }
     } else {
-      print(widget.userloggeddata!.Token);
       final url_list = Uri.parse(
           "https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
       final headers = {
@@ -96,7 +95,6 @@ class _customActivities extends State<customActivities> {
       final json = jsonEncode({"token": widget.userloggeddata!.Token});
       final response = await http.post(url_list, headers: headers, body: json);
       if (response.body != " ") {
-        print(response.body);
         widget.userloggeddata!.Token = response.body;
         GetListActivities(
             Ciudad, widget.userloggeddata, null, true, ActivitiesCount);
@@ -378,7 +376,6 @@ class _customActivities extends State<customActivities> {
                                     ),
                                   ),
                                   onPressed: () {
-                                    print(widget.ActivitiesAdd);
                                     if (widget.ActivitiesAdd != 0) {
                                       Navigator.push(
                                         context,
