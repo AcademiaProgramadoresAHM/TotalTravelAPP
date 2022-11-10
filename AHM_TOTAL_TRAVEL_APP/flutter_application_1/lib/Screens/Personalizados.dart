@@ -4,6 +4,7 @@ import 'dart:math';
 
 import 'package:flutter_application_1/Models/TimelineViewModel.dart';
 import 'package:flutter_application_1/Screens/Timeline.dart';
+import 'package:flutter_application_1/Screens/transporte.dart';
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/ReserDetalles.dart';
@@ -65,6 +66,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
           dataReservation.where((x) => x['id'] == idReservation).toList();
 
 
+      TimelineViewModel TimeLineModel = new TimelineViewModel([],0,'','','',0,'','','',0,'','');
       var id_reservation;
       reservation.forEach((x) {
         id_reservation = x['id'];
@@ -81,44 +83,58 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
         Map<String, dynamic> userMap = jsonDecode(respon.body);
         var Json = Decodificador.fromJson(userMap);
         var data = Json.data;
-
         var actividades = data['actividades'];
-        var id_Hotel = data['id_Hotel'];
-        var Hotel = data['Hotel'];
-        var Fecha_Entrada = data['Fecha_Entrada'];
-        var Fecha_Salida = data['Fecha_Salida'];
-        var iD_Transporte = data['iD_Transporte'];
-        var Transporte = data['Transporte'];
-        var Hora_Salida = data['Hora_Salida'];
-        var Hora_Llegada = data['Hora_Llegada'];
-        var iD_Cliente = data['iD_Cliente'];
-        var nombre_Cliente = data['nombre_Cliente'];
-        var apellido_Cliente = data['apellido_Cliente'];
-        var timelineviewmodel = TimelineViewModel.fromJson({
-          "actividades": actividades,
-          "id_Hotel": id_Hotel,
-          "Hotel": Hotel,
-          "Fecha_Entrada": Fecha_Entrada,
-          "Fecha_Salida": Fecha_Salida
+        var hotel = data['hotel_Info'];
+        var trasporte = data['transporte_Info'];
+        var cliente = data['cliente_Info'];
+        
+        print("Hotel" + hotel.toString());
+        print("trasporte" + trasporte.toString());
+        print("cliente" + cliente.toString());
 
-      });
-  Actividades? acti;
-  actividades.forEach((x) {
-    acti?.id_actividad = x['id_actividad'];
-    print(acti?.id_actividad);
-    print(x['id_actividad']);
-    acti?.nombre_actividad = x['nombre_actividad'];
+        var id, actividad, fecha, fullresponse;
+        Actividades acti = new Actividades(0, '', '');
+        var i = 0;
+        actividades.forEach((x) {
+          acti.id_actividad = x['id'];
+          acti.nombre_actividad = x['actividad'];
+          acti.fecha_Actividad = x['fecha'];
+          TimeLineModel.actividades!.insert(i, acti);
+          i++;
+        });
 
-    acti?.fecha_Actividad = x['fecha_Actividad'];
-  });
-        print(acti.toString());
-      }
+        hotel.forEach((x){
+          TimeLineModel.id_Hotel = x['iD_Hotel'];
+          TimeLineModel.Hotel = x['hotel'];
+          TimeLineModel.Fecha_Entrada = x['fecha_Entrada'];
+          TimeLineModel.Fecha_Salida = x['fecha_Salida'];
+        });
 
-      Navigator.push(
+        trasporte.forEach((x){
+          TimeLineModel.iD_Transporte = x['iD_Transporte'];
+          TimeLineModel.Transporte = x['transporte'];
+          var Hora_Salida = x['horaSalida'].toString();
+          var Hora_Llegada = x['horaLlegada'].toString();
+          TimeLineModel.Hora_Salida = Hora_Salida.substring(1,2) + ':' + Hora_Salida.substring(3,4);
+          TimeLineModel.Hora_Llegada = Hora_Llegada.substring(1,2) + ':' + Hora_Llegada.substring(3,4);
+        });
+
+        cliente.forEach((x){
+          TimeLineModel.iD_Cliente = x['iD_Usuario'];
+          TimeLineModel.nombre_Cliente = x['nombre'];
+          TimeLineModel.apellido_Cliente = x['apellido'];
+        });
+
+
+        print(TimeLineModel.toString());
+      /*Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  Personali2Screen(widget.userloggeddata, reservation)));
+                  Personali2Screen(widget.userloggeddata, reservation)));*/
+      }
+
+
     } else {
       print("Error " + response.statusCode.toString());
     }
