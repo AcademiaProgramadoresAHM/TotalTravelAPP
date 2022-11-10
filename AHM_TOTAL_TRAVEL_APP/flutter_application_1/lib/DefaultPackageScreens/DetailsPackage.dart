@@ -297,6 +297,28 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                                         ],
                                       ),
                                     ),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Flexible(
+                                          child: Text('Ciudad Ubicacion:',
+                                              style: TextStyle(
+                                                  fontSize: 18,
+                                                  color: Colors.black)),
+                                        ),
+                                        Flexible(
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    10, 0, 0, 0),
+                                            child: Text(element['ciudad'],
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: Colors.black)),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0, 0, 0, 20),

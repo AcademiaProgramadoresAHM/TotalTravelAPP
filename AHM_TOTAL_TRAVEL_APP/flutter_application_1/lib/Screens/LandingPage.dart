@@ -40,12 +40,12 @@ class LandingPageState extends State<LandingPage> {
     data.forEach((element) {
       list.add(
         Container(
-          height: 650,
+          height: 950,
           width: context.width(),
           child: Container(
-            height: 650,
+            height: 950,
             child: Container(
-              height: 650,
+              height: 950,
               width: context.width(),
               decoration: BoxDecoration(
                 color: context.cardColor,
@@ -237,45 +237,14 @@ class LandingPageState extends State<LandingPage> {
                         Flexible(
                             flex: 6,
                             child: Padding(
-                              padding:
-                                  EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
-                              child: ElevatedButton(
-                                  style: ButtonStyle(
-                                    //backgroundColor: MaterialStateProperty.all(Colors.red),
-                                    backgroundColor: MaterialStateProperty.all(
-                                        HexColor('#652D90')),
-                                    shape: MaterialStateProperty.all(
-                                      RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(15),
-                                      ),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => Login()));
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        Icons.account_circle,
-                                        size: 18.0,
-                                        color: white,
-                                      ),
-                                      SizedBox(
-                                        width: 2,
-                                      ),
-                                      Text(
-                                        'Ingresar',
-                                        style: TextStyle(
-                                            color: white, fontSize: 18.0),
-                                      )
-                                    ],
-                                  )),
-                            )),
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
+                                child: loginButton())),
                       ],
                     )),
+                SizedBox(
+                  height: 10,
+                ),
                 FutureBuilder<dynamic>(
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -288,10 +257,10 @@ class LandingPageState extends State<LandingPage> {
                     } else {
                       if (snapshot.hasData) {
                         return Container(
-                          height: 550,
+                          height: 570, // ajusta el tamaño de la carta
                           child: CarouselSlider(
                             options: CarouselOptions(
-                              height: 530,
+                              height: 600,
                               // aspectRatio: 1.0,
                               enlargeCenterPage: true,
                               scrollDirection: Axis.horizontal,
@@ -321,10 +290,7 @@ class LandingPageState extends State<LandingPage> {
   // Login Button
   @override
   Widget loginButton() {
-    return SizedBox(
-      width: double.infinity,
-      height: 55,
-      child: ElevatedButton(
+    return ElevatedButton(
         style: ButtonStyle(
           //backgroundColor: MaterialStateProperty.all(Colors.red),
           backgroundColor: MaterialStateProperty.all(HexColor('#652D90')),
@@ -334,9 +300,25 @@ class LandingPageState extends State<LandingPage> {
             ),
           ),
         ),
-        onPressed: () {},
-        child: const Text('Ingresar'),
-      ),
-    );
+        onPressed: () {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Login()));
+        },
+        child: Row(
+          children: [
+            Icon(
+              Icons.account_circle,
+              size: 18.0,
+              color: white,
+            ),
+            SizedBox(
+              width: 2,
+            ),
+            Text(
+              'Ingresar',
+              style: TextStyle(color: white, fontSize: 18.0),
+            )
+          ],
+        ));
   }
 }
