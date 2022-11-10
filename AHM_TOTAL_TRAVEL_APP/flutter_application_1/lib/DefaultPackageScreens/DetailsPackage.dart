@@ -61,6 +61,7 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
     final _controller = PageController();
     List<String> imageUrl;
     data.forEach((element) {
+      imageUrl = element['image_URL'].split(',');
       list.add(
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(18, 14, 18, 0),
@@ -82,25 +83,28 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
-                    Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(18, 0, 0, 0),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        height: 190,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                        ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(16),
-                          child: Image.network(
-                            'https://picsum.photos/seed/786/600',
-                            width: 100,
-                            height: 100,
-                            fit: BoxFit.cover,
+                    Flexible(
+                      flex: 6,
+                      child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(18, 10, 0, 0),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.8,
+                          height: 190,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(16),
+                            child: Image.network(
+                              imageUrl[0].toString(),
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),
-                    ),
+                    )
                   ],
                 ),
                 Padding(
@@ -297,27 +301,30 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                                         ],
                                       ),
                                     ),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Flexible(
-                                          child: Text('Ciudad Ubicacion:',
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Colors.black)),
-                                        ),
-                                        Flexible(
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    10, 0, 0, 0),
-                                            child: Text(element['ciudad'],
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 0, 0, 20),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Flexible(
+                                            child: Text('Ciudad Ubicacion:',
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.black)),
                                           ),
-                                        ),
-                                      ],
+                                          Flexible(
+                                            child: Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(10, 0, 0, 0),
+                                              child: Text(element['ciudad'],
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      color: Colors.black)),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
@@ -358,7 +365,9 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     10, 0, 0, 0),
-                                            child: Text(element['restaurante'],
+                                            child: Text(
+                                                element['restaurante'] ??
+                                                    'No Incluye Restaurentes',
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.black)),
