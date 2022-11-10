@@ -177,12 +177,14 @@ Map<int?, String> CountriesDictionary = Map();
               children: [
                 /// username or Gmail
                 TextFormField(
-                  style: kTextFormFieldStyle(),
+
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.person),
                     hintText: 'Correo Electronico',
                     border: OutlineInputBorder(
+                       borderSide: BorderSide(color: Color.fromARGB(255, 101, 45, 144)),
                       borderRadius: BorderRadius.all(Radius.circular(15)),
+                      
                     ),
                   ),
                   controller: emailController,

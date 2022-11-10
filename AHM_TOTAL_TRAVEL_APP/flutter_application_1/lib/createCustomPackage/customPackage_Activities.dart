@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
@@ -29,7 +30,9 @@ class customActivities extends StatefulWidget {
   final List<ActivitiesExtra> activityExtra;
   final customPackageViewModel customPackage;
   final Map<int?, String> CitiesDictionary;
-  const customActivities(this.userloggeddata, this.Ciudad, this.ActivitiesAdd,this.customPackage, this.activityExtra,this.CitiesDictionary,{super.key});
+  const customActivities(this.userloggeddata, this.Ciudad, this.ActivitiesAdd,
+      this.customPackage, this.activityExtra, this.CitiesDictionary,
+      {super.key});
   @override
   _customActivities createState() => _customActivities();
 }
@@ -77,11 +80,11 @@ class _customActivities extends State<customActivities> {
                   Ciudad,
                   ActivitiesCount,
                   widget.customPackage,
-                  widget.activityExtra, widget.CitiesDictionary)),
+                  widget.activityExtra,
+                  widget.CitiesDictionary)),
         );
       }
     } else {
-      print(widget.userloggeddata!.Token);
       final url_list = Uri.parse(
           "https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
       final headers = {
@@ -92,7 +95,6 @@ class _customActivities extends State<customActivities> {
       final json = jsonEncode({"token": widget.userloggeddata!.Token});
       final response = await http.post(url_list, headers: headers, body: json);
       if (response.body != " ") {
-        print(response.body);
         widget.userloggeddata!.Token = response.body;
         GetListActivities(
             Ciudad, widget.userloggeddata, null, true, ActivitiesCount);
@@ -284,8 +286,8 @@ class _customActivities extends State<customActivities> {
                                               style: ElevatedButton.styleFrom(
                                                 elevation: 0.0,
                                                 shadowColor: Colors.transparent,
-                                                        backgroundColor:
-                                                         Color(0xFF652D8F),
+                                                backgroundColor:
+                                                    Color(0xFF652D8F),
                                                 padding: EdgeInsets.zero,
                                               ),
                                               onPressed: () {
@@ -374,40 +376,54 @@ class _customActivities extends State<customActivities> {
                                     ),
                                   ),
                                   onPressed: () {
-                                    print(widget.ActivitiesAdd);
-                                    if(widget.ActivitiesAdd != 0){
-                                         Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              HistoryActivities(
-                                                  widget.userloggeddata,
-                                                  widget.activityExtra,
-                                                  widget.ActivitiesAdd,
-                                                  widget.Ciudad,
-                                                  widget.customPackage,widget.CitiesDictionary)),
-                                    );
-                                    }else{
-                                      showDialog<String>(
+                                    if (widget.ActivitiesAdd != 0) {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                HistoryActivities(
+                                                    widget.userloggeddata,
+                                                    widget.activityExtra,
+                                                    widget.ActivitiesAdd,
+                                                    widget.Ciudad,
+                                                    widget.customPackage,
+                                                    widget.CitiesDictionary)),
+                                      );
+                                    } else {
+                                      showCupertinoDialog(
                                           context: context,
-                                          builder: (BuildContext context) => AlertDialog(
-                                            title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                                            child: Text('Seleccione una actividad',),
-                                            ) ,
-                                            actions: <Widget>[
-                                        
-                                            ElevatedButton(onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            style: ElevatedButton.styleFrom(
-                                              primary: Color(0xFF652D8F),
-                                            ),
-                                            child: Text("Aceptar"))
-                                            ],
-                                          ),
-                                        );
-
-                                    } 
+                                          builder: (BuildContext context) =>
+                                              Theme(
+                                                data: ThemeData.light(),
+                                                child: CupertinoAlertDialog(
+                                                  title: Text(
+                                                    'Advertencia',
+                                                    style: boldTextStyle(
+                                                        color: Colors.black,
+                                                        size: 18),
+                                                  ),
+                                                  content: Text(
+                                                    'Seleccione una actividad',
+                                                    style: secondaryTextStyle(
+                                                        color: Colors.black,
+                                                        size: 16),
+                                                  ),
+                                                  actions: [
+                                                    CupertinoDialogAction(
+                                                      child: Text(
+                                                        'Aceptar',
+                                                        style: primaryTextStyle(
+                                                            color: redColor,
+                                                            size: 18),
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                    )
+                                                  ],
+                                                ),
+                                              ));
+                                    }
                                   },
                                 ),
                                 Text(
@@ -449,110 +465,163 @@ class _customActivities extends State<customActivities> {
                         child: CircularProgressIndicator(
                             color: Color.fromARGB(255, 101, 45, 144)),
                       ));
-                  }
-                },
-                future: GetListActivities(widget.Ciudad, widget.userloggeddata,null,true,widget.ActivitiesAdd),
-              ),
-            ],
-          )),
-            bottomNavigationBar: Row(children: [
-        Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
-        child:
-        SizedBox( 
-          width: 175,
-          height: 35,
-          child:     ElevatedButton(
-          onPressed: () => showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-          child: Text('¿Esta seguro que desea continuar?',),
-          ) ,
-          actions: <Widget>[
-          ElevatedButton(onPressed: () {
-            Navigator.pop(context);
-          },
-           style: ElevatedButton.styleFrom(
-            primary:  Color.fromARGB(255, 234, 234, 234),
-          ),
-          child: Text("Cancelar",style: TextStyle(color: Color(0xFF652D8F)),)),
-          ElevatedButton(onPressed: () {
-            Navigator.pop(context);
-             Navigator.pop(context);
-          },
-           style: ElevatedButton.styleFrom(
-            primary: Color(0xFF652D8F),
-          ),
-          child: Text("Aceptar"))
-          ],
-        ),
-      ),
-          child: Text(
-            'Cancelar',
-            style: TextStyle(fontSize: 18,color: Color(0xFF652D8F)),
-          ),
-          style: ElevatedButton.styleFrom(
-            primary: Color.fromARGB(255, 234, 234, 234),
-          ),
-        ),)
-     
-      ),
-      Padding(
-        padding: EdgeInsets.all(8.0),
-        child:
-        SizedBox( 
-          width: 170,
-          child:     ElevatedButton(
-          onPressed: () {
-          
-            if(widget.activityExtra.isEmpty){
-                  showDialog<String>(
-            context: context,
-            builder: (BuildContext context) => AlertDialog(
-              title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                      child: Text('No ha seleccionado ninguna actividad.', style: TextStyle(fontWeight: FontWeight.normal), textAlign: TextAlign.center,),
-              ) ,
-              content: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
-                      child: Text('¿Esta seguro que desea continuar?',style: TextStyle(fontWeight: FontWeight.bold), textAlign: TextAlign.center,)),
-              actions: <Widget>[
-              ElevatedButton(onPressed: () {
-                Navigator.pop(context);
-              },
-              style: ElevatedButton.styleFrom(
-                primary:  Color.fromARGB(255, 234, 234, 234),
-              ),
-              child: Text("Cancelar",style: TextStyle(color: Color(0xFF652D8F)),)),
-              ElevatedButton(onPressed: () {
-                  Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,3,widget.customPackage,widget.CitiesDictionary),widget.userloggeddata)),);
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Color(0xFF652D8F),
-              ),
-              child: Text("Aceptar"))
+                    }
+                  },
+                  future: GetListActivities(widget.Ciudad,
+                      widget.userloggeddata, null, true, widget.ActivitiesAdd),
+                ),
               ],
-            ),
-          );
-
-            }else{
-              widget.customPackage.actividadesExtra = widget.activityExtra;
-            widget.customPackage.actividadesExtras = jsonEncode(widget.activityExtra);
-             Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(createCustomPackage(widget.Ciudad,widget.userloggeddata,3,widget.customPackage,widget.CitiesDictionary),widget.userloggeddata)),);
-        
-            }
-          },
-          child: Text(
-            'Confirmar',
-            style: TextStyle(fontSize: 18),
-          ),
-          style: ElevatedButton.styleFrom(
-            primary: Color(0xFF652D8F),
-          ),
-        ),)
-     
-      ),
-       ],)
-        ));
+            )),
+            bottomNavigationBar: Row(
+              children: [
+                Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                    child: SizedBox(
+                      width: 175,
+                      height: 35,
+                      child: ElevatedButton(
+                        onPressed: () => showCupertinoDialog(
+                            context: context,
+                            builder: (BuildContext context) => Theme(
+                                  data: ThemeData.light(),
+                                  child: CupertinoAlertDialog(
+                                    title: Text(
+                                      'Advertencia',
+                                      style: boldTextStyle(
+                                          color: Colors.black, size: 18),
+                                    ),
+                                    content: Text(
+                                      '¿Está seguro de continuar?',
+                                      style: secondaryTextStyle(
+                                          color: Colors.black, size: 16),
+                                    ),
+                                    actions: [
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          'Cancelar',
+                                          style: primaryTextStyle(
+                                              color: dodgerBlue, size: 18),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          'Aceptar',
+                                          style: primaryTextStyle(
+                                              color: redColor, size: 18),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          Navigator.pop(context);
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                )),
+                        child: Text(
+                          'Regresar',
+                          style:
+                              TextStyle(fontSize: 18, color: Color(0xFF652D8F)),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Color.fromARGB(255, 234, 234, 234),
+                        ),
+                      ),
+                    )),
+                Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      width: 170,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (widget.activityExtra.isEmpty) {
+                            showCupertinoDialog(
+                                context: context,
+                                builder: (BuildContext context) => Theme(
+                                      data: ThemeData.light(),
+                                      child: CupertinoAlertDialog(
+                                        title: Text(
+                                          'Advertencia\n',
+                                          style: boldTextStyle(
+                                              color: Colors.black, size: 18),
+                                        ),
+                                        content: Text(
+                                          'No ha seleccionado ninguna actividad \n¿Está seguro de continuar?',
+                                          style: secondaryTextStyle(
+                                              color: Colors.black, size: 16),
+                                        ),
+                                        actions: [
+                                          CupertinoDialogAction(
+                                            child: Text(
+                                              'Cancelar',
+                                              style: primaryTextStyle(
+                                                  color: dodgerBlue, size: 18),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                          CupertinoDialogAction(
+                                            child: Text(
+                                              'Aceptar',
+                                              style: primaryTextStyle(
+                                                  color: redColor, size: 18),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        NavigationHomeScreen(
+                                                            createCustomPackage(
+                                                                widget.Ciudad,
+                                                                widget
+                                                                    .userloggeddata,
+                                                                3,
+                                                                widget
+                                                                    .customPackage,
+                                                                widget
+                                                                    .CitiesDictionary),
+                                                            widget
+                                                                .userloggeddata)),
+                                              );
+                                            },
+                                          )
+                                        ],
+                                      ),
+                                    ));
+                          } else {
+                            widget.customPackage.actividadesExtra =
+                                widget.activityExtra;
+                            widget.customPackage.actividadesExtras =
+                                jsonEncode(widget.activityExtra);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => NavigationHomeScreen(
+                                      createCustomPackage(
+                                          widget.Ciudad,
+                                          widget.userloggeddata,
+                                          3,
+                                          widget.customPackage,
+                                          widget.CitiesDictionary),
+                                      widget.userloggeddata)),
+                            );
+                          }
+                        },
+                        child: Text(
+                          'Confirmar',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Color(0xFF652D8F),
+                        ),
+                      ),
+                    )),
+              ],
+            )));
   }
 
   Column _buildButtonColumn(Color color, IconData icon, String label) {

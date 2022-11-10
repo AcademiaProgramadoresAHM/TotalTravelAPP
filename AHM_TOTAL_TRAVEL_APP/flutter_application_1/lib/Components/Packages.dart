@@ -68,8 +68,9 @@ List<Padding> ListDefaultPackages(
     List<dynamic> data, BuildContext context, user) {
   List<Padding> list = [];
   final _controller = PageController();
-
+  List<String> imageUrl;
   data.forEach((element) {
+    imageUrl = element['image_URL'].split(',');
     list.add(Padding(
       padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
       child: Container(
@@ -106,7 +107,7 @@ List<Padding> ListDefaultPackages(
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Image.network(
-                        'https://picsum.photos/seed/898/600',
+                        imageUrl[0].toString(),
                         width: 100,
                         height: 100,
                         fit: BoxFit.cover,

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_application_1/Components/ShoppingHistory.dart';
 import 'package:flutter_application_1/Models/CitiesViewModel.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
@@ -10,6 +11,7 @@ import 'package:flutter_application_1/Screens/detallesdehistorial.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Activities.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Restaurants.dart';
 import 'package:http/http.dart' as http;
+import 'package:nb_utils/nb_utils.dart';
 import '../Components/Decodificador.dart';
 import '../hotel_booking/hotel_app_theme.dart';
 
@@ -35,7 +37,7 @@ class _HistoryRestaurants extends State<HistoryRestaurants> {
       list.add(Padding(
         padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
         child: Container(
-          height: 248,
+          height: 200,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(2),
             color: Colors.white,
@@ -256,7 +258,7 @@ class _HistoryRestaurants extends State<HistoryRestaurants> {
             child: Column(
           children: [
                 Wrap(
-                      spacing: 8,
+                      spacing: 2,
                       runSpacing: 4,
                       alignment: WrapAlignment.start,
                       crossAxisAlignment: WrapCrossAlignment.start,
@@ -276,33 +278,48 @@ class _HistoryRestaurants extends State<HistoryRestaurants> {
           width: 175,
           height: 35,
           child:     ElevatedButton(
-          onPressed: () => showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-          child: Text('¿Esta seguro que desea continuar?',),
-          ) ,
-          actions: <Widget>[
-          ElevatedButton(onPressed: () {
-            Navigator.pop(context);
-          },
-           style: ElevatedButton.styleFrom(
-            primary:  Color.fromARGB(255, 234, 234, 234),
-          ),
-          child: Text("Cancelar",style: TextStyle(color: Color(0xFF652D8F)),)),
-          ElevatedButton(onPressed: () {
-            Navigator.pop(context);
-             Navigator.pop(context);
-          },
-           style: ElevatedButton.styleFrom(
-            primary: Color(0xFF652D8F),
-          ),
-          child: Text("Aceptar"))
-          ],
-        ),
-      ),
+          onPressed: () => showCupertinoDialog(
+                            context: context,
+                            builder: (BuildContext context) => Theme(
+                                  data: ThemeData.light(),
+                                  child: CupertinoAlertDialog(
+                                    title: Text(
+                                      'Advertencia',
+                                      style: boldTextStyle(
+                                          color: Colors.black, size: 18),
+                                    ),
+                                    content: Text(
+                                      '¿Está seguro de continuar?',
+                                      style: secondaryTextStyle(
+                                          color: Colors.black, size: 16),
+                                    ),
+                                    actions: [
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          'Cancelar',
+                                          style: primaryTextStyle(
+                                              color: dodgerBlue, size: 18),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          'Aceptar',
+                                          style: primaryTextStyle(
+                                              color: redColor, size: 18),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          Navigator.pop(context);
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                )),
           child: Text(
-            'Cancelar',
+            'Regresar',
             style: TextStyle(fontSize: 18,color: Color(0xFF652D8F)),
           ),
           style: ElevatedButton.styleFrom(

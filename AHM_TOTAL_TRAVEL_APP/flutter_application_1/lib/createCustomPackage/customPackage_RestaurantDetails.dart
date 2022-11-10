@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/CitiesViewModel.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:nb_utils/nb_utils.dart';
 // import 'package:flutter_spinbox/flutter_spinbox.dart';
 
 class RestaurantDetails extends StatefulWidget {
@@ -211,6 +213,11 @@ class _RestaurantDetails extends State<RestaurantDetails> {
                                                           onPressed: () async {
                                                             DateTime? newDate =
                                                                 await showDatePicker(
+                                                                    helpText: 'Selecciona una fecha', // Can be used as title
+                                                                    cancelText: 'Cancelar',
+                                                                    confirmText: 'Aceptar',
+                                                                    fieldLabelText: 'Ingresa una fecha',
+                                                                    fieldHintText: 'Día/Mes/Año',
                                                               context: context,
                                                               initialDate: date,
                                                               firstDate: DateTime(
@@ -223,6 +230,23 @@ class _RestaurantDetails extends State<RestaurantDetails> {
                                                               lastDate:
                                                                   DateTime(
                                                                       2100),
+                                                                       builder: (context, child) {
+                                                                return Theme(
+                                                              data: Theme.of(context).copyWith(
+                                                                colorScheme: ColorScheme.light(
+                                                                  primary: Color.fromRGBO(101, 45, 143, 1), // <-- SEE HERE
+                                                                  onPrimary: Colors.white, // <-- SEE HERE
+                                                                  onSurface: Color.fromRGBO(101, 45, 143, 1), // <-- SEE HERE
+                                                                ),
+                                                                textButtonTheme: TextButtonThemeData(
+                                                                  style: TextButton.styleFrom(
+                                                                    primary: Color.fromRGBO(101, 45, 143, 1),// button text color
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              child: child!,
+                                                            );
+                                                              },
                                                             );
 
                                                             if (newDate == null)
@@ -273,14 +297,32 @@ class _RestaurantDetails extends State<RestaurantDetails> {
                                                               TimeOfDay?
                                                                   newTime =
                                                                   await showTimePicker(
+                                                                      helpText: 'Selecciona una hora', // Can be used as title
                                                                       cancelText:
                                                                           "Cancelar",
                                                                       confirmText:
                                                                           "Confirmar",
                                                                       context:
                                                                           context,
-                                                                      initialTime:
-                                                                          time);
+                                                                      initialTime:time,
+                                                                      builder: (context, child) {
+                                                                return Theme(
+                                                              data: Theme.of(context).copyWith(
+                                                                colorScheme: ColorScheme.light(
+                                                                  primary: Color.fromRGBO(101, 45, 143, 1), // <-- SEE HERE
+                                                                  onPrimary: Colors.white, // <-- SEE HERE
+                                                                  onSurface: Color.fromRGBO(101, 45, 143, 1), // <-- SEE HERE
+                                                                ),
+                                                                textButtonTheme: TextButtonThemeData(
+                                                                  style: TextButton.styleFrom(
+                                                                    primary: Color.fromRGBO(101, 45, 143, 1),// button text color
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              child: child!,
+                                                            );
+                                                              },
+                                                                      );
 
                                                               if (newTime ==
                                                                   null) return;
@@ -408,7 +450,7 @@ class _RestaurantDetails extends State<RestaurantDetails> {
         Restaurant.rest_numeroPersonas = peopleFinal;
         Restaurant.rest_FechaReservacion =
             DateFormat('yyyy-MM-dd').format(date);
-        Restaurant.rest_HoraReservacion = hour.substring(1,2) + hour.substring(3,4);
+        Restaurant.rest_HoraReservacion = hour;
 
         widget.Restaurante.insert(widget.RestaurantsAdd, Restaurant);
       }
@@ -483,41 +525,48 @@ class _RestaurantDetails extends State<RestaurantDetails> {
                   width: 175,
                   height: 35,
                   child: ElevatedButton(
-                    onPressed: () => showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        title: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                          child: Text(
-                            '¿Esta seguro que desea continuar?',
-                          ),
-                        ),
-                        actions: <Widget>[
-                          ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                primary: Color.fromARGB(255, 234, 234, 234),
-                              ),
-                              child: Text(
-                                "Cancelar",
-                                style: TextStyle(color: Color(0xFF652D8F)),
-                              )),
-                          ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                                Navigator.pop(context);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                primary: Color(0xFF652D8F),
-                              ),
-                              child: Text("Aceptar"))
-                        ],
-                      ),
-                    ),
+                    onPressed: () => showCupertinoDialog(
+                            context: context,
+                            builder: (BuildContext context) => Theme(
+                                  data: ThemeData.light(),
+                                  child: CupertinoAlertDialog(
+                                    title: Text(
+                                      'Advertencia',
+                                      style: boldTextStyle(
+                                          color: Colors.black, size: 18),
+                                    ),
+                                    content: Text(
+                                      '¿Está seguro de continuar?',
+                                      style: secondaryTextStyle(
+                                          color: Colors.black, size: 16),
+                                    ),
+                                    actions: [
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          'Cancelar',
+                                          style: primaryTextStyle(
+                                              color: dodgerBlue, size: 18),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          'Aceptar',
+                                          style: primaryTextStyle(
+                                              color: redColor, size: 18),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          Navigator.pop(context);
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                )),
                     child: Text(
-                      'Cancelar',
+                      'Regresar',
                       style: TextStyle(fontSize: 18,color: Color(0xFF652D8F)),
                     ),
                     style: ElevatedButton.styleFrom(

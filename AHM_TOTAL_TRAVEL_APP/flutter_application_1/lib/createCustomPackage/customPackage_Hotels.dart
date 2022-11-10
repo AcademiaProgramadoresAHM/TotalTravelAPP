@@ -60,7 +60,7 @@ class _HotelcustomPackage extends State<HotelcustomPackage> {
           }
       }
       else{
-        print(widget.userloggeddata!.Token);
+
           final url_list =Uri.parse("https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
           final headers = {
             "Content-type": "application/json",
@@ -69,7 +69,6 @@ class _HotelcustomPackage extends State<HotelcustomPackage> {
           final json = jsonEncode(widget.userloggeddata!.Token);
           final response = await http.post(url_list, headers: headers, body: json);
           if (response.body != " ") {
-            print(response.body);
             widget.userloggeddata!.Token = response.body;
             GetListHotels(Ciudad, userloggeddata,null, true);
           }
@@ -302,21 +301,34 @@ class _HotelcustomPackage extends State<HotelcustomPackage> {
           appBar: AppBar(
             backgroundColor: Color(0xFF652D8F),
             automaticallyImplyLeading: false,
-            title: Align(
-              alignment: AlignmentDirectional(0, -0.05),
-              child: Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(60, 15, 0, 10),
-                child: Text(
-                  'Hoteles',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontFamily: 'Poppins',
-                    color: Colors.white,
-                    fontSize: 23,
-                  ),
+            title: Row(
+              children: <Widget>[
+                 
+                Material(
+                      color:  Color.fromRGBO(101, 45, 143, 1), // button color
+                      child: InkWell(
+                        splashColor: Color.fromRGBO(101, 45, 143, 1), // splash color
+                        onTap: () {}, // button pressed
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            IconButton(
+                                icon:  const Icon(
+                                         Icons.arrow_back,
+                                      ),
+                                 onPressed:() {            
+                                  Navigator.pop(context);                    
+                              },),
+                          ],
+                        ),
+                      ),
+                    ),
+                
+                Padding(padding: EdgeInsetsDirectional.fromSTEB(100, 0, 0, 0),
+                child:   Text("Hoteles"),
                 ),
-              ),
-            ),
+             
+            ]),
             actions: [
               Align(
                 alignment: AlignmentDirectional(-0.05, 0.05),

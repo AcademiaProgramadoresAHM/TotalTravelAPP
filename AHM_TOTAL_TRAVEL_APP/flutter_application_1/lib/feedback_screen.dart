@@ -98,7 +98,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
     final _controller = PageController();
     List<String> imageUrl;
     data.forEach((element) {
-      //imageUrl = ;
+      imageUrl = element['image_URL'].split(',');
       list.add(Padding(
         padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
         child: Container(
@@ -118,6 +118,31 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
               Column(
                 mainAxisSize: MainAxisSize.max,
                 children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 120,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(0),
+                          bottomRight: Radius.circular(0),
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10),
+                        ),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          imageUrl[0].toString(),
+                          width: 100,
+                          height: 100,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
                   Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(10, 10, 16, 12),
                     child: Row(

@@ -45,7 +45,6 @@ Map<int?, String> HotelsDictionary = Map();
   
     return Room;
   } else {
-     print(widget.userloggeddata!.Token);
 
           final url_list =Uri.parse("https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
           final headers = {
@@ -55,7 +54,6 @@ Map<int?, String> HotelsDictionary = Map();
           final json = jsonEncode({"token: string"});
           final response = await http.post(url_list, headers: headers, body: json);
           if (response.body != " ") {
-            print(response.body);
             widget.userloggeddata!.Token = response.body;
             GetListRooms(Hotel, widget.userloggeddata);
           }
@@ -83,7 +81,6 @@ Future<dynamic> FindRooms(idRoom,userloggeddata) async {
                MaterialPageRoute(builder: (context) =>  RoomDetails( widget.userloggeddata,Room, widget.Ciudad,widget.CitiesDictionary)),
               );
   } else {
-    print("Error " + response.statusCode.toString());
   }
 }
 
@@ -320,21 +317,34 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
         appBar: AppBar(
         backgroundColor: Color(0xFF652D8F),
         automaticallyImplyLeading: false,
-        title: Align(
-          alignment: AlignmentDirectional(0.4, -0.05),
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 15, 0, 10),
-            child: Text(
-              'Habitaciones',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                    fontFamily: 'Poppins',
-                    color: Colors.white,
-                    fontSize: 23,
-                  ),
-            ),
-          ),
-        ),
+        title:  Row(
+              children: <Widget>[
+                 
+                Material(
+                      color:  Color.fromRGBO(101, 45, 143, 1), // button color
+                      child: InkWell(
+                        splashColor: Color.fromRGBO(101, 45, 143, 1), // splash color
+                        onTap: () {}, // button pressed
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            IconButton(
+                                icon:  const Icon(
+                                         Icons.arrow_back,
+                                      ),
+                                 onPressed:() {            
+                                  Navigator.pop(context);                    
+                              },),
+                          ],
+                        ),
+                      ),
+                    ),
+                
+                Padding(padding: EdgeInsetsDirectional.fromSTEB(75, 0, 0, 0),
+                child:   Text("Habitaciones"),
+                ),
+             
+            ]),
         actions: [
           Align(
             alignment: AlignmentDirectional(-0.05, 0.05),

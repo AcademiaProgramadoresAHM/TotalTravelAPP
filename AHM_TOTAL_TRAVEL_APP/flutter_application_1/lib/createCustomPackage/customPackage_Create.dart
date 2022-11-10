@@ -324,7 +324,7 @@ final TextEditingController textEditingController = TextEditingController();
                              Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) => NavigationHomeScreen( HotelcustomPackage( widget.userloggeddata,widget.Ciudad,widget.CitiesDictionary),widget.userloggeddata)),
+                                      builder: (context) => HotelcustomPackage( widget.userloggeddata,widget.Ciudad,widget.CitiesDictionary),),
                                 );
                           },
                         ),
@@ -360,59 +360,97 @@ final TextEditingController textEditingController = TextEditingController();
                                                           children: <Widget>[
                                   
 
-                                                                  Container(
-                                                                      height: 65,
-                                                                    decoration: BoxDecoration(color: Colors.white),
-                                                                    child:  DropdownButtonHideUnderline(
-                                                                            child: DropdownButton2(
-                                                                              isExpanded: true,                             
-                                                                              hint: Padding(
-                                                                                padding: const EdgeInsets.only(left: 30,),
-                                                                                child: TextFormField(
-                                                                                  style: kTextFormFieldStyle(),
-                                                                                  decoration: const InputDecoration(
-                                                                                    
-                                                                                  // prefixIcon: Icon(Icons.location_on_outlined),
-                                                                                    hintText: 'Seleccione una ciudad de salida', hintStyle: TextStyle(fontWeight: FontWeight.bold)
-                                                                                  ),
-                                                                                ),
-                                                                              ),
-                                                                              items: widget.CitiesDictionary.keys.map((id) {
-                                                                                      return DropdownMenuItem(
-                                                                                        value: id,
-                                                                                        child: Padding(padding: EdgeInsetsDirectional.fromSTEB(40, 0, 0, 0),
-                                                                                        child:  Text(widget.CitiesDictionary[id].toString(),), 
-                                                                                        ) 
-                                                                                      
-                                                                                      );
-                                                                                    }).toList(),
-                                                                                    value: selectedCity,
-                                                                              onChanged: (value) {
-                                                                                setState(() {
-                                                                                  selectedCity = value as int?;
-                                                                                  CitiesDropDownValue = value;
-                                                                                });
-                                                                                   CiudadesViewModel element = new CiudadesViewModel(CitiesDropDownValue, null, null, null, null);
+                                                                   Padding(
+                                    padding: const EdgeInsets.only(
+                                        top: 10),
+                                    child: 
+                                    Container(
+                                      width: 350,
+                                      height: 50,
+                                    decoration: BoxDecoration(color: Colors.transparent),
+                                    child:
+                                    DropdownButtonHideUnderline(
+                                      child:  DropdownButton2(
+                                              isExpanded: true,
+                                              hint: Row(
+                                                children: const [
+                                                  
+                                                  SizedBox(
+                                                    width: 4,
+                                                  ),
+                                                  Expanded(
+                                                    child: Text(
+                                                      'Selecciona una ciudad de salida',
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: Color.fromRGBO(101, 45, 143, 1),
+                                                      ),
+                                                      overflow: TextOverflow.ellipsis,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                    items: widget.CitiesDictionary.keys.map((id) {
+                                      return DropdownMenuItem(
+                                          value: id,
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    30, 0, 0, 0),
+                                            child: Text(
+                                              widget.CitiesDictionary[id].toString(),
+                                              style: const TextStyle(
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.black,
+                                            ),
+                                            ),
+                                          ));
+                                    }).toList(),
+                                  value: selectedCity,
+                                      onChanged: (value) {
+                                                setState(() {
+                                              selectedCity = value as int?;
+                                             CitiesDropDownValue = value;
+                                      });
+                                       CiudadesViewModel element = new CiudadesViewModel(CitiesDropDownValue, null, null, null, null);
                                                                                   Navigator.push(context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen(TransportcustomPackage(widget.userloggeddata,element,widget.Ciudad,widget.customPackage,widget.CitiesDictionary),widget.userloggeddata)),);
-                                                                               
-                                                                              },
-                                                                              buttonHeight: 100,
-                                                                              buttonWidth: 350,
-                                                                              itemHeight: 50,
-                                                                              dropdownMaxHeight: 120,
-                                                                              searchController: textEditingController,
-                                                                              searchInnerWidget: Padding(
-                                                                                padding: const EdgeInsets.only(
-                                                                                  top: 0,
-                                                                                  bottom: 4,
-                                                                                  right: 8,
-                                                                                  left: 10,
-                                                                                ),
-                                                                                
-                                                                              ),
-                                                                            
-                                                                  )),
-                                                                  ),
+                                    },
+                                    icon: const Icon(
+                                         Icons.keyboard_double_arrow_down,
+                                      ),
+                                      iconSize: 20,
+                                      iconEnabledColor: Color.fromRGBO(101, 45, 143, 1),
+                                      iconDisabledColor: Colors.grey,
+                                      buttonHeight: 70,
+                                      buttonWidth: 160,
+                                      buttonPadding: const EdgeInsets.only(left: 14, right: 14),
+                                      buttonDecoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(14),
+                                        border: Border.all(
+                                          color: Colors.black26,
+                                        ),
+                                        color: Colors.white,
+                                      ),
+                                      buttonElevation: 2,
+                                        itemHeight: 40,
+                                        itemPadding: const EdgeInsets.only(left: 14, right: 14),
+                                        dropdownMaxHeight: 100,
+                                        dropdownWidth: 350,
+                                        dropdownPadding: null,
+                                        dropdownDecoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(14),
+                                          color: Colors.white,
+                                        ),
+                                        dropdownElevation: 8,
+                                        scrollbarRadius: const Radius.circular(10),
+                                        scrollbarThickness: 6,
+                                        scrollbarAlwaysShow: true,
+                                        offset: const Offset(0, 0),
+                                  )),
+
+                                  )),
                                                        
                                                           ],
                                                         ),

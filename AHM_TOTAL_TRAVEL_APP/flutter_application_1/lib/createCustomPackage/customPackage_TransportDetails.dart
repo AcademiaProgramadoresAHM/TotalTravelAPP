@@ -196,7 +196,7 @@ class _TransportDetails extends State<TransportDetails> {
                                       ),
                                        Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 20, 0, 0),
+                                            0, 20, 0, 10),
                                         child: Text(
                                          "Salida: " + element['ciudad_Salida'],
                                           style: TextStyle(
@@ -222,7 +222,7 @@ class _TransportDetails extends State<TransportDetails> {
                                       ),
                                     Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 0, 0),
+                                            0, 10, 0, 0),
                                         child: Text(
                                          "Hora salida: " + element['hora_Salida'],
                                           style: TextStyle(
@@ -431,7 +431,7 @@ class _TransportDetails extends State<TransportDetails> {
         ),
       ),
           child: Text(
-            'Cancelar',
+            'Regresar',
             style: TextStyle(fontSize: 18,color: Color(0xFF652D8F)),
           ),
           style: ElevatedButton.styleFrom(

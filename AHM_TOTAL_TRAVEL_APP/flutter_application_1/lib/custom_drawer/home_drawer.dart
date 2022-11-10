@@ -230,30 +230,29 @@ class _HomeDrawerState extends State<HomeDrawer> {
                             data: ThemeData.light(),
                             child: CupertinoAlertDialog(
                               title: Text(
-                                'Cerrar Sesión?',
+                                'Cerrar sesión',
                                 style: boldTextStyle(
                                     color: Colors.black, size: 18),
                               ),
                               content: Text(
-                                'Seguro de Cerrar la Sesión?',
+                                '¿Está seguro de cerrar la sesión?',
                                 style: secondaryTextStyle(
                                     color: Colors.black, size: 16),
                               ),
                               actions: [
                                 CupertinoDialogAction(
                                   child: Text(
-                                    'Cancel',
+                                    'Cancelar',
                                     style: primaryTextStyle(
                                         color: dodgerBlue, size: 18),
                                   ),
                                   onPressed: () {
-                                    toasty(context, 'Cancel');
                                     finish(context);
                                   },
                                 ),
                                 CupertinoDialogAction(
                                   child: Text(
-                                    'Cerrar Sesión',
+                                    'Aceptar',
                                     style: primaryTextStyle(
                                         color: redColor, size: 18),
                                   ),
