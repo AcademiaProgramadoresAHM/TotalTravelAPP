@@ -28,8 +28,7 @@ class ActivityDetails extends StatefulWidget {
   _ActivityDetails createState() => _ActivityDetails();
 }
 
-TimeOfDay time =
-    TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
+TimeOfDay time =TimeOfDay(hour: DateTime.now().hour, minute: DateTime.now().minute);
 
 class _ActivityDetails extends State<ActivityDetails> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
@@ -342,7 +341,7 @@ class _ActivityDetails extends State<ActivityDetails> {
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(06, 10, 20, 0),
                                                 child: SpinBox(
-                                                  max: 10,
+                                                  max: widget.customPackage.hote_numeroPersonas!.toDouble(),
                                                   min: 1,
                                                   value: 1,
                                                   onChanged: (valuePeople) {
@@ -400,8 +399,7 @@ class _ActivityDetails extends State<ActivityDetails> {
       );
 
       if (confirm == true) {
-        String hour = DateFormat("HH:mm").format(new DateTime(2000, 1, 1, time.hour, time.minute));
-
+        String hour = hours + minutes;
         ActivitiesExtra activitiesExtraModel = new ActivitiesExtra();
         activitiesExtraModel.index = widget.ActivityAdd;
         activitiesExtraModel.acEx_ID = element['id'];

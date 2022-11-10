@@ -356,7 +356,7 @@ class _RestaurantDetails extends State<RestaurantDetails> {
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(06, 10, 20, 0),
                                                 child: SpinBox(
-                                                  max: 10,
+                                                  max: widget.customPackage.hote_numeroPersonas!.toDouble(),
                                                   min: 1,
                                                   value: 1,
                                                   onChanged: (value) {
@@ -442,7 +442,7 @@ class _RestaurantDetails extends State<RestaurantDetails> {
         ),
       );
       if (confirm == true) {
-        String hour = DateFormat("HH:mm").format(new DateTime(2000, 1, 1, time.hour, time.minute));
+         String hour = hours + minutes;
         Restaurants Restaurant = new Restaurants();
         Restaurant.index = widget.RestaurantsAdd;
         Restaurant.rest_ID = element['id'];

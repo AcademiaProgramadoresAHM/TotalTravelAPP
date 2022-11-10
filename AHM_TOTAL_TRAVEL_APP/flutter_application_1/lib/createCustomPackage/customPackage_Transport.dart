@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
@@ -9,6 +10,7 @@ import 'package:flutter_application_1/createCustomPackage/customPackage_HotelDet
 import 'package:flutter_application_1/createCustomPackage/customPackage_TransportSchedules.dart';
 import 'package:flutter_application_1/navigation_home_screen.dart';
 import 'package:http/http.dart' as http;
+import 'package:nb_utils/nb_utils.dart';
 import '../Models/CitiesViewModel.dart';
 import '../Models/UsersViewModel.dart';
 import '../utils/models.dart';
@@ -61,7 +63,7 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
             Map<String, dynamic> userMap = jsonDecode(response.body);
             var Json = DecoderAPI.fromJson(userMap);
             dataTransport = Json.data;
-            var Transport = dataTransport.where((x) => x['ciudad_Llegada_ID'] == CiudadLlegada.ID && x['ciudad_Salida_ID'] == CiudadSalida.ID).toList();
+            var Transport = dataTransport.where((x) => x['ciudad_Llegada_ID'] == CiudadLlegada.ID && x['ciudad_Salida_ID'] == CiudadSalida.ID && x['partner_ID'] == idPartner).toList();
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -385,33 +387,46 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
           width: 175,
           height: 35,
           child:     ElevatedButton(
-          onPressed: () => showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-          child: Text('¿Esta seguro que desea continuar?',),
-          ) ,
-          actions: <Widget>[
-          ElevatedButton(onPressed: () {
-            Navigator.pop(context);
-
-          },
-           style: ElevatedButton.styleFrom(
-            primary:  Color.fromARGB(255, 234, 234, 234),
-          ),
-          child: Text("Cancelar",style: TextStyle(color: Color(0xFF652D8F)),)),
-          ElevatedButton(onPressed: () {
-            Navigator.pop(context);
-             Navigator.pop(context);
-              Navigator.pop(context);
-          },
-           style: ElevatedButton.styleFrom(
-            primary: Color(0xFF652D8F),
-          ),
-          child: Text("Aceptar"))
-          ],
-        ),
-      ),
+          onPressed: () => showCupertinoDialog(
+                            context: context,
+                            builder: (BuildContext context) => Theme(
+                                  data: ThemeData.light(),
+                                  child: CupertinoAlertDialog(
+                                    title: Text(
+                                      'Advertencia',
+                                      style: boldTextStyle(
+                                          color: Colors.black, size: 18),
+                                    ),
+                                    content: Text(
+                                      '¿Está seguro de continuar?',
+                                      style: secondaryTextStyle(
+                                          color: Colors.black, size: 16),
+                                    ),
+                                    actions: [
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          'Cancelar',
+                                          style: primaryTextStyle(
+                                              color: dodgerBlue, size: 18),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          'Aceptar',
+                                          style: primaryTextStyle(
+                                              color: redColor, size: 18),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          Navigator.pop(context);
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                )),
           child: Text(
             'Regresar',
             style: TextStyle(fontSize: 18,color: Color(0xFF652D8F)),
@@ -430,24 +445,39 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
           child:     ElevatedButton(
           onPressed: () {
         if(widget.customPackage.partner ==  null){
-                showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-          child: Text('Seleccione un servicio de transporte',),
-          ) ,
-          actions: <Widget>[
-
-          ElevatedButton(onPressed: () {
-            Navigator.pop(context);
-          },
-           style: ElevatedButton.styleFrom(
-            primary: Color(0xFF652D8F),
-          ),
-          child: Text("Aceptar"))
-          ],
-        ),
-      );
+             showCupertinoDialog(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              Theme(
+                                                data: ThemeData.light(),
+                                                child: CupertinoAlertDialog(
+                                                  title: Text(
+                                                    'Advertencia',
+                                                    style: boldTextStyle(
+                                                        color: Colors.black,
+                                                        size: 18),
+                                                  ),
+                                                  content: Text(
+                                                    'Seleccione un servicio de transporte',
+                                                    style: secondaryTextStyle(
+                                                        color: Colors.black,
+                                                        size: 16),
+                                                  ),
+                                                  actions: [
+                                                    CupertinoDialogAction(
+                                                      child: Text(
+                                                        'Aceptar',
+                                                        style: primaryTextStyle(
+                                                            color: redColor,
+                                                            size: 18),
+                                                      ),
+                                                      onPressed: () {
+                                                        Navigator.pop(context);
+                                                      },
+                                                    )
+                                                  ],
+                                                ),
+                                              ));
       }else{
          Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen( createCustomPackage(widget.CiudadSalida,widget.userloggeddata,2,widget.customPackage,widget.CitiesDictionary),widget.userloggeddata)),);
       }

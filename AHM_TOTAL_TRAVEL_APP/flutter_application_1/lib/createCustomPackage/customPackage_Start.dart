@@ -60,7 +60,7 @@ int? CitiesDropDownValue;
   Future<dynamic> GetListHotels(userloggeddata) async {
     List<dynamic> dataHotels;
     String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/Hotels/List";
+        "https://totaltravelapi.azurewebsites.net/API/DefaultPackages/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!

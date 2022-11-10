@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/Models/CitiesViewModel.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_application_1/navigation_home_screen.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 // import 'package:flutter_spinbox/flutter_spinbox.dart';
 
@@ -434,6 +436,7 @@ class _RoomDetails extends State<RoomDetails> {
                                               ),
                                               onPressed: () {
                                                 showModalBottomSheet<void>(
+                                                  isDismissible: false,
                                                   context: context,
                                                   builder:
                                                       (BuildContext context) {
@@ -538,86 +541,56 @@ class _RoomDetails extends State<RoomDetails> {
                                                               child:
                                                                   ElevatedButton(
                                                                 onPressed: () {
-                                                                  var roomMax = peopleFinal
-                                                                          .toInt() /
-                                                                      (rooms.toInt() *
-                                                                          element[
-                                                                              'capacidad']);
+                                                                  var roomMax = peopleFinal.toInt() /(rooms.toInt() * element['capacidad']);
 
-                                                                  if (roomMax >
-                                                                      1) {
-                                                                    var quantMax = peopleFinal
-                                                                            .toInt() /
-                                                                        element[
-                                                                            'capacidad'];
-                                                                    if (quantMax -
-                                                                            quantMax.toInt() <
-                                                                        0.5) {
-                                                                      quantMax =
-                                                                          quantMax +
-                                                                              1;
+                                                                  if (roomMax >1) {
+                                                                    var quantMax = peopleFinal.toInt() /element['capacidad'];
+                                                                    if (quantMax - quantMax.toInt() <0.5) {quantMax =quantMax +1;
                                                                     }
-                                                                    showDialog<
-                                                                        String>(
-                                                                      context:
-                                                                          context,
-                                                                      builder: (BuildContext
-                                                                              context) =>
-                                                                          AlertDialog(
-                                                                        title:
-                                                                            Padding(
-                                                                          padding: EdgeInsets.only(
-                                                                              top: 15,
-                                                                              left: 20,
-                                                                              right: 20),
-                                                                          child:
-                                                                              Text(
-                                                                            'Habitaciones insuficientes',
-                                                                            style: TextStyle(
-                                                                                color: Color.fromARGB(255, 128, 9, 1),
-                                                                                fontSize: 18,
-                                                                                fontFamily: 'Outfit',
-                                                                                fontWeight: FontWeight.w500),
-                                                                          ),
-                                                                        ),
-                                                                        content: Padding(
-                                                                            padding: EdgeInsets.only(top: 10, left: 0, right: 0),
-                                                                            child: Text(
-                                                                              '¿Desea agregar más habitaciones?',
-                                                                              style: TextStyle(
-                                                                                fontFamily: 'Outfit',
-                                                                                color: Color(0xFF7C8791),
-                                                                                fontSize: 16,
-                                                                                fontWeight: FontWeight.w500,
+                                                                     showCupertinoDialog(
+                                                                        context: context,
+                                                                        builder: (BuildContext context) => Theme(
+                                                                              data: ThemeData.light(),
+                                                                              child: CupertinoAlertDialog(
+                                                                                title: Text(
+                                                                                  'Habitaciones insuficientes',
+                                                                                  style: boldTextStyle(
+                                                                                      color: Colors.black, size: 18),
+                                                                                ),
+                                                                                content: Text(
+                                                                                  '¿Desea agregar más habitaciones?',
+                                                                                  style: secondaryTextStyle(
+                                                                                      color: Colors.black, size: 16),
+                                                                                ),
+                                                                                actions: [
+                                                                                  CupertinoDialogAction(
+                                                                                    child: Text(
+                                                                                      'Cancelar',
+                                                                                      style: primaryTextStyle(
+                                                                                          color: dodgerBlue, size: 18),
+                                                                                    ),
+                                                                                    onPressed: () {
+                                                                                      Navigator.pop(context);
+                                                                                    },
+                                                                                  ),
+                                                                                  CupertinoDialogAction(
+                                                                                    child: Text(
+                                                                                      'Aceptar',
+                                                                                      style: primaryTextStyle(
+                                                                                          color: redColor, size: 18),
+                                                                                    ),
+                                                                                    onPressed: () {
+                                                                                      SetRooms(quantMax, element['id']);
+                                                                                       Navigator.pop(context);
+                                                                                       Navigator.pop(context);
+                                                                                    },
+                                                                                  )
+                                                                                ],
                                                                               ),
-                                                                            )),
-                                                                        actions: <
-                                                                            Widget>[
-                                                                          TextButton(
-                                                                            onPressed:
-                                                                                () {
-                                                                              Navigator.pop(context, 'Cancel');
-                                                                            },
-                                                                            child:
-                                                                                const Text(
-                                                                              'Cancelar',
-                                                                              style: TextStyle(color: Color(0xFF7C8791)),
-                                                                            ),
-                                                                          ),
-                                                                          TextButton(
-                                                                            onPressed:
-                                                                                () {
-                                                                              Navigator.pop(context, 'OK');
+                                                                            ));
 
-                                                                              SetRooms(quantMax, element['id']);
-                                                                              Navigator.pop(context);
-                                                                            },
-                                                                            child:
-                                                                                const Text('Aceptar'),
-                                                                          ),
-                                                                        ],
-                                                                      ),
-                                                                    );
+
+
                                                                   } else {
                                                                     Navigator.pop(
                                                                         context);
@@ -771,39 +744,46 @@ class _RoomDetails extends State<RoomDetails> {
                   width: 175,
                   height: 35,
                   child: ElevatedButton(
-                    onPressed: () => showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        title: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                          child: Text(
-                            '¿Esta seguro que desea continuar?',
-                          ),
-                        ),
-                        actions: <Widget>[
-                          ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                primary: Color.fromARGB(255, 234, 234, 234),
-                              ),
-                              child: Text(
-                                "Cancelar",
-                                style: TextStyle(color: Color(0xFF652D8F)),
-                              )),
-                          ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                                Navigator.pop(context);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                primary: Color(0xFF652D8F),
-                              ),
-                              child: Text("Aceptar"))
-                        ],
-                      ),
-                    ),
+                    onPressed: () => showCupertinoDialog(
+                            context: context,
+                            builder: (BuildContext context) => Theme(
+                                  data: ThemeData.light(),
+                                  child: CupertinoAlertDialog(
+                                    title: Text(
+                                      'Advertencia',
+                                      style: boldTextStyle(
+                                          color: Colors.black, size: 18),
+                                    ),
+                                    content: Text(
+                                      '¿Está seguro de continuar?',
+                                      style: secondaryTextStyle(
+                                          color: Colors.black, size: 16),
+                                    ),
+                                    actions: [
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          'Cancelar',
+                                          style: primaryTextStyle(
+                                              color: dodgerBlue, size: 18),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          'Aceptar',
+                                          style: primaryTextStyle(
+                                              color: redColor, size: 18),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          Navigator.pop(context);
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                )),
                     child: Text(
                       'Regresar',
                       style: TextStyle(fontSize: 18, color: Color(0xFF652D8F)),

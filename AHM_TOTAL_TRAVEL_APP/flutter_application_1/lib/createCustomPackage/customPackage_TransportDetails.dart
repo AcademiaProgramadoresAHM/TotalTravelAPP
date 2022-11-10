@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_application_1/Models/CitiesViewModel.dart';
@@ -12,6 +13,7 @@ import 'package:flutter_application_1/navigation_home_screen.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
 // import 'package:flutter_spinbox/flutter_spinbox.dart';
 
@@ -263,7 +265,7 @@ class _TransportDetails extends State<TransportDetails> {
                                     Padding(
                                                               padding: EdgeInsetsDirectional.fromSTEB(06, 10, 20, 0),
                                                               child: SpinBox(
-                                                                max: 10,
+                                                                max: widget.customPackage.hote_numeroPersonas!.toDouble(),
                                                                 min: 1,
                                                                 value: 1,
                                                                 onChanged:
@@ -405,31 +407,46 @@ class _TransportDetails extends State<TransportDetails> {
           width: 175,
           height: 35,
           child:     ElevatedButton(
-          onPressed: () => showDialog<String>(
-        context: context,
-        builder: (BuildContext context) => AlertDialog(
-          title: Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-          child: Text('¿Esta seguro que desea continuar?',),
-          ) ,
-          actions: <Widget>[
-          ElevatedButton(onPressed: () {
-            Navigator.pop(context);
-          },
-           style: ElevatedButton.styleFrom(
-            primary:  Color.fromARGB(255, 234, 234, 234),
-          ),
-          child: Text("Cancelar",style: TextStyle(color: Color(0xFF652D8F)),)),
-          ElevatedButton(onPressed: () {
-            Navigator.pop(context);
-             Navigator.pop(context);
-          },
-           style: ElevatedButton.styleFrom(
-            primary: Color(0xFF652D8F),
-          ),
-          child: Text("Aceptar"))
-          ],
-        ),
-      ),
+          onPressed: () => showCupertinoDialog(
+                            context: context,
+                            builder: (BuildContext context) => Theme(
+                                  data: ThemeData.light(),
+                                  child: CupertinoAlertDialog(
+                                    title: Text(
+                                      'Advertencia',
+                                      style: boldTextStyle(
+                                          color: Colors.black, size: 18),
+                                    ),
+                                    content: Text(
+                                      '¿Está seguro de continuar?',
+                                      style: secondaryTextStyle(
+                                          color: Colors.black, size: 16),
+                                    ),
+                                    actions: [
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          'Cancelar',
+                                          style: primaryTextStyle(
+                                              color: dodgerBlue, size: 18),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          'Aceptar',
+                                          style: primaryTextStyle(
+                                              color: redColor, size: 18),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          Navigator.pop(context);
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                )),
           child: Text(
             'Regresar',
             style: TextStyle(fontSize: 18,color: Color(0xFF652D8F)),

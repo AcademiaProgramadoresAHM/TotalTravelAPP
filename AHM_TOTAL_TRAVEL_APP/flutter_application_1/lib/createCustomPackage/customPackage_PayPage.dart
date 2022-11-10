@@ -246,7 +246,7 @@ class _payPage extends State<payPage> {
                               ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          110, 0, 0, 0),
+                                          80, 0, 0, 0),
                                       child: Text(
                                         "HNL. " + widget.customPackage.reHo_PrecioTotal.toString() + '.00',
                                         style: TextStyle(
@@ -435,7 +435,7 @@ List<Padding> ResumeActivities(List<ActivitiesExtra>? data, BuildContext context
                                     ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          110, 0, 0, 0),
+                                          80, 0, 0, 0),
                                       child: Text(
                                         "HNL. " + element.reAE_Precios.toString() + '0',
                                         style: TextStyle(
@@ -821,7 +821,7 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
                               ),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          110, 0, 0, 0),
+                                          80, 0, 0, 0),
                                       child: Text(
                                         "HNL. " + widget.customPackage.tprt_Total.toString() + '.00',
                                         style: TextStyle(
