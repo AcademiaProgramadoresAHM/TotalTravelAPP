@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Components/CardTimeline.dart';
 import 'package:flutter_application_1/Components/Decodificador.dart';
 import 'package:flutter_application_1/ComponentsLogin/controller/simple_ui_controller.dart';
+import 'package:flutter_application_1/Models/TimelineViewModel.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
 import 'package:flutter_application_1/hotel_booking/hotel_app_theme.dart';
 import 'package:get/get.dart';
@@ -26,25 +27,26 @@ class _TimelineState extends State<Timeline> {
   SimpleUIController simpleUIController = Get.put(SimpleUIController());
   List<Color> colors = [Colors.red, Colors.green,Colors.pinkAccent, Colors.blue];
 
-  var _reserData;
 
-  Future<dynamic> GetListTimelineRservation(userloggeddata) async {
+  Future<dynamic> GetListTimelineReservation(idReservation, userloggeddata) async {
     List<dynamic> dataReservation;
+    TimelineViewModel timelineViewModel;
     String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/Reservation/Find/Timeline";
+        "https://totaltravelapi.azurewebsites.net/API/Reservation/Find/Timeline?id=" + idReservation.toString();
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
     };
     final response = await http.get(Uri.parse(url_list), headers: headers);
+    print("Este es el response: " + response.body);
     if (response.statusCode == 200) {
       Map<String, dynamic> userMap = jsonDecode(response.body);
       var Json = Decodificador.fromJson(userMap);
       dataReservation = Json.data;
-      var Reservation = dataReservation
-          .where((x) => x['id_Cliente'] == userloggeddata.ID)
-          .toList();
-      return Reservation;
+      print(dataReservation.toString());
+      timelineViewModel = TimelineViewModel.fromJson(dataReservation[0]);
+      print(timelineViewModel);
+      return dataReservation;
     } else {
       print("Error " + response.statusCode.toString());
     }
@@ -74,6 +76,8 @@ class _TimelineState extends State<Timeline> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     var theme = Theme.of(context);
+    print("hola");
+    GetListTimelineReservation(widget.Reservation, widget.userloggeddata);
 
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),

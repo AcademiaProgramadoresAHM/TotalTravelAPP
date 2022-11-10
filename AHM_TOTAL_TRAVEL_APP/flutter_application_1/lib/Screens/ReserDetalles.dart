@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_application_1/Account_screen.dart';
+import 'package:flutter_application_1/Models/TimelineViewModel.dart';
 import 'package:flutter_application_1/Screens/Personalizados.dart';
 import 'package:flutter_application_1/Screens/Timeline.dart';
 import 'package:flutter_application_1/app_theme.dart';
@@ -24,6 +25,31 @@ class Personali2Screen extends StatefulWidget {
 }
 
 class _Personali2ScreenState extends State<Personali2Screen> {
+  Future<dynamic> GetListTimelineReservation(idReservation, userloggeddata) async {
+    List<dynamic> dataReservation;
+    TimelineViewModel timelineViewModel;
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/Reservation/Find/Timeline?id=" + idReservation.toString();
+    final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+    final response = await http.get(Uri.parse(url_list), headers: headers);
+    print("Este es el response: " + response.body);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var Json = Decodificador.fromJson(userMap);
+      dataReservation = Json.data;
+      print(dataReservation.toString());
+      timelineViewModel = TimelineViewModel.fromJson(dataReservation[0]);
+      print(timelineViewModel);
+      return dataReservation;
+    } else {
+      print("Error " + response.statusCode.toString());
+    }
+  }
+
+
   Future<dynamic> GetListReservationDetails(userloggeddata) async {
     List<dynamic> dataReservation;
     String url_list =

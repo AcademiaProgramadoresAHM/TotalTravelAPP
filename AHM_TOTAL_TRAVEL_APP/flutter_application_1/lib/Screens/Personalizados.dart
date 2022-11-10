@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 //import 'dart:js';
 
+import 'package:flutter_application_1/Models/TimelineViewModel.dart';
 import 'package:flutter_application_1/Screens/Timeline.dart';
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +64,56 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
       var reservation =
           dataReservation.where((x) => x['id'] == idReservation).toList();
 
-      print(reservation);
+
+      var id_reservation;
+      reservation.forEach((x) {
+        id_reservation = x['id'];
+      });
+      String url_list =
+          "https://totaltravelapi.azurewebsites.net/API/Reservation/Find/Timeline?id=" + id_reservation.toString();
+      final headers = {
+        "Content-type": "application/json",
+        "Authorization": "bearer " + widget.userloggeddata!.Token!
+      };
+      final respon = await http.get(Uri.parse(url_list), headers: headers);
+      print("Este es el response: " + respon.body);
+      if(respon.statusCode == 200){
+        Map<String, dynamic> userMap = jsonDecode(respon.body);
+        var Json = Decodificador.fromJson(userMap);
+        var data = Json.data;
+
+        var actividades = data['actividades'];
+        var id_Hotel = data['id_Hotel'];
+        var Hotel = data['Hotel'];
+        var Fecha_Entrada = data['Fecha_Entrada'];
+        var Fecha_Salida = data['Fecha_Salida'];
+        var iD_Transporte = data['iD_Transporte'];
+        var Transporte = data['Transporte'];
+        var Hora_Salida = data['Hora_Salida'];
+        var Hora_Llegada = data['Hora_Llegada'];
+        var iD_Cliente = data['iD_Cliente'];
+        var nombre_Cliente = data['nombre_Cliente'];
+        var apellido_Cliente = data['apellido_Cliente'];
+        var timelineviewmodel = TimelineViewModel.fromJson({
+          "actividades": actividades,
+          "id_Hotel": id_Hotel,
+          "Hotel": Hotel,
+          "Fecha_Entrada": Fecha_Entrada,
+          "Fecha_Salida": Fecha_Salida
+
+      });
+  Actividades? acti;
+  actividades.forEach((x) {
+    acti?.id_actividad = x['id_actividad'];
+    print(acti?.id_actividad);
+    print(x['id_actividad']);
+    acti?.nombre_actividad = x['nombre_actividad'];
+
+    acti?.fecha_Actividad = x['fecha_Actividad'];
+  });
+        print(acti.toString());
+      }
+
       Navigator.push(
           context,
           MaterialPageRoute(
@@ -74,35 +124,6 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
     }
   }
 
-  Future<dynamic> TimeReservation(idReservation, userloggeddata) async {
-    List<dynamic> dataReservation;
-    String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/Reservation/Find/Timeline";
-    final headers = {
-      "Content-type": "application/json",
-      "Authorization": "bearer " + widget.userloggeddata!.Token!
-    };
-    final response = await http.get(Uri.parse(url_list), headers: headers);
-    if (response.statusCode == 200) {
-      Map<String, dynamic> userMap = jsonDecode(response.body);
-      var Json = Decodificador.fromJson(userMap);
-      dataReservation = Json.data;
-      var reservation =
-      dataReservation.where((x) => x['id'] == idReservation).toList();
-
-      print(reservation);
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  Timeline(widget.userloggeddata, reservation)));
-    } else {
-      print("Error " + response.statusCode.toString());
-    }
-  }
-
-
-
   List<Padding> ListDefaultReservation(
       List<dynamic> data, BuildContext context) {
     List<Padding> list = [];
@@ -110,16 +131,12 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
 
     data.forEach((element) {
       var splitFecha = element['fecha_Entrada'].toString().split('T');
-      print(splitFecha);
 
       var fechaentrada = splitFecha[0];
-      print(fechaentrada);
 //////////////////////////////////////////////////////////////
       var splitFechaSalida = element['fecha_Salida'].toString().split('T');
-      print(splitFechaSalida);
 
       var fechasalida = splitFechaSalida[0];
-      print(fechasalida);
 
       list.add(Padding(
         padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
@@ -348,18 +365,6 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                         ),
                                         onPressed: () {
                                           FindReservation(element['id'],
-                                              widget.userloggeddata);
-                                        },
-                                      ),
-                                      ElevatedButton(
-                                        child: Text(
-                                            'Timeline',
-                                            style: TextStyle(fontSize: 12)),
-                                        style: ElevatedButton.styleFrom(
-                                          primary: Color.fromRGBO(101, 45, 143, 1),
-                                        ),
-                                        onPressed: () {
-                                          TimeReservation(element['id'],
                                               widget.userloggeddata);
                                         },
                                       ),
