@@ -522,7 +522,7 @@ class _ReservActivitiesExtraState extends State<ReservActivitiesExtra> {
                       width: 170,
                       child: ElevatedButton(
                         onPressed: () {
-                          if (widget.Reservation.actividadesExtra!.isEmpty) {
+                          if (widget.ActivitiesAdd == 0) {
                             showDialog<String>(
                               context: context,
                               builder: (BuildContext context) => AlertDialog(
@@ -586,9 +586,6 @@ class _ReservActivitiesExtraState extends State<ReservActivitiesExtra> {
                           } else {
                             widget.Reservation.actividadesExtra =
                                 widget.activityExtra;
-                            widget.Reservation.actividadesExtra =
-                                jsonEncode(widget.activityExtra)
-                                    as List<ActivitiesExtraDefault>?;
                             Navigator.push(
                               context,
                               MaterialPageRoute(

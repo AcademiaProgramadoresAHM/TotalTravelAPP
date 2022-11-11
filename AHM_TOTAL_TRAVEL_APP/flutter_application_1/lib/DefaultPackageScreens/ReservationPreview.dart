@@ -902,6 +902,27 @@ class _ReservationPreviewState extends State<ReservationPreview> {
                     clipBehavior: Clip.none,
                     children:
                         ResumeActivities(widget.paqueteactividades, context)),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(30, 4, 8, 4),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.max,
+                    children: [
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
+                        child: Icon(
+                          Icons.assignment_sharp,
+                          color: Color(0xFF0F1113),
+                          size: 24,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(12, 20, 0, 0),
+                        child: Text('Actividades Extras Añadidas al Paquete',
+                            style: TextStyle(fontSize: 18)),
+                      ),
+                    ],
+                  ),
+                ),
                 Wrap(
                     spacing: 8,
                     runSpacing: 4,
