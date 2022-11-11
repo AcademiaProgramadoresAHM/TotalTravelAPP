@@ -91,21 +91,17 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
         Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) => ReservationPreview(
-                      widget.userloggeddata,
-                      reservation,
-                      paquete,
-                      packageDetail,
-                    )));
+                builder: (context) => ReservationPreview(widget.userloggeddata,
+                    reservation, paquete, packageDetail, [])));
       } else {
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //       builder: (context) => NavigationHomeScreen(
-        //           ReservActivitiesExtra(widget.userloggeddata, reservation,
-        //               paquete, packageDetail,),
-        //           widget.userloggeddata),
-        //     ));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => NavigationHomeScreen(
+                  ReservActivitiesExtra(widget.userloggeddata, reservation,
+                      paquete, packageDetail, [], 0),
+                  widget.userloggeddata),
+            ));
       }
     } else {
       print("Error " + response.statusCode.toString());
@@ -208,6 +204,7 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
         return _itemsHeights;
       }
 
+      imageUrl = element['image_URL'].split(',');
       list.add(
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(18, 14, 18, 0),
@@ -244,7 +241,7 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(2),
                           child: Image.network(
-                            'https://picsum.photos/seed/786/600',
+                            imageUrl[0].toString(),
                             width: 100,
                             height: 300,
                             fit: BoxFit.cover,

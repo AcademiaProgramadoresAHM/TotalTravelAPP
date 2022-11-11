@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "dart:convert";
 
+import 'DefaultPackageViewModel.dart';
 import 'customPackageViewModel.dart';
 
 class ReservationViewmodel {
@@ -18,6 +19,7 @@ class ReservationViewmodel {
   String? reHo_FechaSalida;
   int? UsuarioCrea;
   int? hotelid;
+  List<ActivitiesExtraDefault>? actividadesExtra;
 
   Map<String, dynamic> toJson() => {
         "usua_ID": usuaId,
@@ -35,6 +37,7 @@ class ReservationViewmodel {
         "reHo_FechaEntrada": reHo_FechaEntrada,
         "reHo_FechaSalida": reHo_FechaSalida,
         "hote_ID": hotelid,
+        "actividadesExtras": actividadesExtra
       };
 }
 
