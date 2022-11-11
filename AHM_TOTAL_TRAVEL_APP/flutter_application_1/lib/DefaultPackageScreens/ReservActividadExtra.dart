@@ -586,6 +586,8 @@ class _ReservActivitiesExtraState extends State<ReservActivitiesExtra> {
                           } else {
                             widget.Reservation.actividadesExtra =
                                 widget.activityExtra;
+                            widget.Reservation.ActividadesExtras =
+                                jsonEncode(widget.activityExtra);
                             Navigator.push(
                               context,
                               MaterialPageRoute(

@@ -20,6 +20,7 @@ class ReservationViewmodel {
   int? UsuarioCrea;
   int? hotelid;
   List<ActivitiesExtraDefault>? actividadesExtra;
+  String? ActividadesExtras;
 
   Map<String, dynamic> toJson() => {
         "usua_ID": usuaId,
