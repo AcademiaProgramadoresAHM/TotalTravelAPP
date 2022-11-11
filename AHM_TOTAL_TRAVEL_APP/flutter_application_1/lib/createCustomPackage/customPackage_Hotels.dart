@@ -36,7 +36,7 @@ class _HotelcustomPackage extends State<HotelcustomPackage> {
     final response = await http.get(Uri.parse(url_list), headers: headers);
     var Hotel;
       if(bool == true){
-                if (response.statusCode == 200) 
+            if (response.statusCode == 200) 
               {
                 Map<String, dynamic> userMap = jsonDecode(response.body);
                 var Json = DecoderAPI.fromJson(userMap);

@@ -78,60 +78,47 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
         "Authorization": "bearer " + widget.userloggeddata!.Token!
       };
       final respon = await http.get(Uri.parse(url_list), headers: headers);
-      print("Este es el response: " + respon.body);
       if(respon.statusCode == 200){
         Map<String, dynamic> userMap = jsonDecode(respon.body);
         var Json = Decodificador.fromJson(userMap);
         var data = Json.data;
         var actividades = data['actividades'];
-        var hotel = data['hotel_Info'];
-        var trasporte = data['transporte_Info'];
-        var cliente = data['cliente_Info'];
-        
-        print("Hotel" + hotel.toString());
-        print("trasporte" + trasporte.toString());
-        print("cliente" + cliente.toString());
+          TimeLineModel.id_Hotel = data['iD_Hotel'];
+          TimeLineModel.Hotel = data['hotel'];
+          TimeLineModel.Fecha_Entrada = data['fecha_Entrada'];
+          TimeLineModel.Fecha_Salida = data['fecha_Salida'];
+          TimeLineModel.iD_Transporte = data['iD_Transporte'];
+          TimeLineModel.Transporte = data['transporte'];
+          var Hora_Salida = data['horaSalida'].toString();
+          var Hora_Llegada = data['horaLlegada'].toString();
+          TimeLineModel.Hora_Salida = Hora_Salida.substring(0,2) + ':' + Hora_Salida.substring(2,4);
+          TimeLineModel.Hora_Llegada = Hora_Llegada.substring(0,2) + ':' + Hora_Llegada.substring(2,4);
+          TimeLineModel.iD_Cliente = data['iD_Usuario'];
+          TimeLineModel.nombre_Cliente = data['nombre'];
+          TimeLineModel.apellido_Cliente = data['apellido'];
 
         var id, actividad, fecha, fullresponse;
-        Actividades acti = new Actividades(0, '', '');
+       
         var i = 0;
+       
+        List<Actividades> ActividadesList = [];
         actividades.forEach((x) {
+          Actividades acti = new Actividades(0, '', '');
           acti.id_actividad = x['id'];
           acti.nombre_actividad = x['actividad'];
           acti.fecha_Actividad = x['fecha'];
-          TimeLineModel.actividades!.insert(i, acti);
-          i++;
+
+          ActividadesList.add(acti);
+          TimeLineModel.actividades!.add(acti);
         });
-
-        hotel.forEach((x){
-          TimeLineModel.id_Hotel = x['iD_Hotel'];
-          TimeLineModel.Hotel = x['hotel'];
-          TimeLineModel.Fecha_Entrada = x['fecha_Entrada'];
-          TimeLineModel.Fecha_Salida = x['fecha_Salida'];
-        });
-
-        trasporte.forEach((x){
-          TimeLineModel.iD_Transporte = x['iD_Transporte'];
-          TimeLineModel.Transporte = x['transporte'];
-          var Hora_Salida = x['horaSalida'].toString();
-          var Hora_Llegada = x['horaLlegada'].toString();
-          TimeLineModel.Hora_Salida = Hora_Salida.substring(1,2) + ':' + Hora_Salida.substring(3,4);
-          TimeLineModel.Hora_Llegada = Hora_Llegada.substring(1,2) + ':' + Hora_Llegada.substring(3,4);
-        });
-
-        cliente.forEach((x){
-          TimeLineModel.iD_Cliente = x['iD_Usuario'];
-          TimeLineModel.nombre_Cliente = x['nombre'];
-          TimeLineModel.apellido_Cliente = x['apellido'];
-        });
-
-
-        print(TimeLineModel.toString());
-      /*Navigator.push(
+        List<TimelineViewModel> TimeLineList = [];
+        TimeLineList.insert(0, TimeLineModel);
+      
+      Navigator.push(
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  Personali2Screen(widget.userloggeddata, reservation)));*/
+                  Personali2Screen(widget.userloggeddata, reservation,TimeLineList,ActividadesList)));
       }
 
 

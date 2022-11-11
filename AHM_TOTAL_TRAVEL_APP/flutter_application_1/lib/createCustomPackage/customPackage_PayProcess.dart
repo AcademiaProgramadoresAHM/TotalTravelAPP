@@ -50,17 +50,27 @@ class _PayProcess extends State<PayProcess> {
 Future<void> PostCustomPackages(customPackageViewModel customPackage, UserLoggedModel userloggeddata)async {
 
   final url = Uri.parse("https://totaltravelapi.azurewebsites.net/API/Reservation/Insert");
-final headers = {
+  final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
     };
   final json = jsonEncode(customPackage);
   final response = await post(url, headers: headers, body: json);
+  var idPackage;
   if (response.body != " ") {
     Map<String, dynamic> userMap = jsonDecode(response.body);
     var data = DecoderAPI.fromJson(userMap);
-
+    idPackage = response.statusCode;
     if (data.data != null) {
+      
+      final url = Uri.parse("https://totaltravelapi.azurewebsites.net/API/Reservation/Insert");
+      final headers = {
+          "Content-type": "application/json",
+          "Authorization": "bearer " + widget.userloggeddata!.Token!
+        };
+      final json = jsonEncode(customPackage);
+      final response = await post(url, headers: headers, body: json);
+
        Navigator.push( context,MaterialPageRoute(builder: (context) =>   SuccessCustomPackage(widget.userloggeddata,widget.customPackage)));
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

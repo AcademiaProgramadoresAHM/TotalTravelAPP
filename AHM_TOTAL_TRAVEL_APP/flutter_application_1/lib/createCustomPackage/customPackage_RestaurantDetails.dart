@@ -219,17 +219,9 @@ class _RestaurantDetails extends State<RestaurantDetails> {
                                                                     fieldLabelText: 'Ingresa una fecha',
                                                                     fieldHintText: 'Día/Mes/Año',
                                                               context: context,
-                                                              initialDate: date,
-                                                              firstDate: DateTime(
-                                                                  DateTime.now()
-                                                                      .year,
-                                                                  DateTime.now()
-                                                                      .month,
-                                                                  DateTime.now()
-                                                                      .day),
-                                                              lastDate:
-                                                                  DateTime(
-                                                                      2100),
+                                                                  initialDate: DateTime.parse(widget.customPackage.reHo_FechaEntrada!),
+                                                              firstDate: DateTime.parse(widget.customPackage.reHo_FechaEntrada!),
+                                                              lastDate: DateTime.parse(widget.customPackage.reHo_FechaSalida!),
                                                                        builder: (context, child) {
                                                                 return Theme(
                                                               data: Theme.of(context).copyWith(

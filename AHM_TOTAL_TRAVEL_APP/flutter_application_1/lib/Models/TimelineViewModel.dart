@@ -28,6 +28,8 @@ class TimelineViewModel{
     iD_Cliente = json[''],
     nombre_Cliente = json[''],
     apellido_Cliente = json[''];
+
+  void forEach(Null Function(dynamic e) param0) {}
 }
 
 class Actividades {
@@ -41,5 +43,7 @@ class Actividades {
       : id_actividad = json['id'],
         nombre_actividad = json['actividad'],
         fecha_Actividad = json['fecha'];
+
+  void forEach(Null Function() param0) {}
 }
 

@@ -17,36 +17,39 @@ import '../navigation_home_screen.dart';
 class Personali2Screen extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final List<dynamic> Reservation;
-
-  const Personali2Screen(this.userloggeddata, this.Reservation, {super.key});
+  final List<TimelineViewModel> timeLineViewModel;
+  final List<Actividades> actividadesList;
+  const Personali2Screen(this.userloggeddata, this.Reservation,this.timeLineViewModel,this.actividadesList, {super.key});
 
   @override
   _Personali2ScreenState createState() => _Personali2ScreenState();
 }
 
 class _Personali2ScreenState extends State<Personali2Screen> {
-  Future<dynamic> GetListTimelineReservation(idReservation, userloggeddata) async {
-    List<dynamic> dataReservation;
-    TimelineViewModel timelineViewModel;
-    String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/Reservation/Find/Timeline?id=" + idReservation.toString();
-    final headers = {
-      "Content-type": "application/json",
-      "Authorization": "bearer " + widget.userloggeddata!.Token!
-    };
-    final response = await http.get(Uri.parse(url_list), headers: headers);
-    print("Este es el response: " + response.body);
-    if (response.statusCode == 200) {
-      Map<String, dynamic> userMap = jsonDecode(response.body);
-      var Json = Decodificador.fromJson(userMap);
-      dataReservation = Json.data;
-      print(dataReservation.toString());
-      timelineViewModel = TimelineViewModel.fromJson(dataReservation[0]);
-      print(timelineViewModel);
-      return dataReservation;
-    } else {
-      print("Error " + response.statusCode.toString());
-    }
+  void GetListTimelineReservation() {
+    var i = 0;
+        widget.timeLineViewModel.forEach((element){
+            print(element.id_Hotel);
+            print(element.Hotel);
+            print(element.Fecha_Entrada);
+            print(element.Fecha_Salida);
+            print(element.iD_Transporte);
+            print(element.Transporte);
+            print(element.Hora_Salida);
+            print(element.Hora_Llegada);
+            print(element.iD_Cliente);
+            print(element.nombre_Cliente);
+            print(element.apellido_Cliente);
+            print(element.actividades);
+            print(element.actividades);
+        });
+        widget.actividadesList.forEach((e){
+              print("Actividad:" + i.toString());
+              print(e.id_actividad);
+              print(e.nombre_actividad);
+              print(e.fecha_Actividad);
+              i++;
+            });
   }
 
 
@@ -60,6 +63,8 @@ class _Personali2ScreenState extends State<Personali2Screen> {
     };
     final response = await http.get(Uri.parse(url_list), headers: headers);
     if (response.statusCode == 200) {
+      print("object");
+      GetListTimelineReservation();
       Map<String, dynamic> userMap = jsonDecode(response.body);
       var Json = Decodificador.fromJson(userMap);
       dataReservation = Json.data;
@@ -81,16 +86,16 @@ class _Personali2ScreenState extends State<Personali2Screen> {
 
     data.forEach((element) {
       var splitFecha = element['fecha_Entrada'].toString().split('T');
-      print(splitFecha);
+      //print(splitFecha);
 
       var fechaentrada = splitFecha[0];
-      print(fechaentrada);
+      //print(fechaentrada);
 //////////////////////// SALIDA//////////////////////////////////////
       var splitFechaSalida = element['fecha_Salida'].toString().split('T');
-      print(splitFechaSalida);
+      //print(splitFechaSalida);
 
       var fechasalida = splitFechaSalida[0];
-      print(fechasalida);
+      //print(fechasalida);
       list.add(
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(18, 14, 18, 0),
@@ -520,16 +525,16 @@ class _Personali2ScreenState extends State<Personali2Screen> {
 
     data.forEach((element) {
       var splitFecha = element['fecha_Entrada'].toString().split('T');
-      print(splitFecha);
+      //print(splitFecha);
 
       var fechaentrada = splitFecha[0];
-      print(fechaentrada);
+      //print(fechaentrada);
 //////////////////////////////////////////////////////////////
       var splitFechaSalida = element['fecha_Salida'].toString().split('T');
-      print(splitFechaSalida);
+      //print(splitFechaSalida);
 
       var fechasalida = splitFechaSalida[0];
-      print(fechasalida);
+      //print(fechasalida);
       list.add(
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(18, 14, 18, 0),
