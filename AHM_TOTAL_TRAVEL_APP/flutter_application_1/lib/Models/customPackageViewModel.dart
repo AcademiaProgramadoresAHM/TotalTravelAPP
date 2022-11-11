@@ -31,6 +31,7 @@ class customPackageViewModel {
   double? PackageTotal; //*
   int? tipoPago; //*
   int? CantidadPagos; //*
+  int? MontoPago;
   List<reservacionTransporte>? transporteReservacion;
   Map<String, dynamic> toJson() => {
         'resv_ID': 0,

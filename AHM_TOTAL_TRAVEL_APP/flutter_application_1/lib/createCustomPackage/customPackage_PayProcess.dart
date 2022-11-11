@@ -6,6 +6,7 @@ import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/customPackageViewModel.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Success.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
+import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import 'package:flutter/material.dart';
@@ -28,10 +29,9 @@ class PayProcess extends StatefulWidget {
   @override
   _PayProcess createState() => _PayProcess();
 }
-
+ 
 class _PayProcess extends State<PayProcess> {
-  TextEditingController MontoPago = TextEditingController();
-
+ 
   Future<dynamic> GetPaymentType() async {
     String url_list =
         "https://totaltravelapi.azurewebsites.net/API/PaymentTypes/List";
@@ -44,6 +44,7 @@ class _PayProcess extends State<PayProcess> {
     }
   }
   var cantidadFinal = 1;
+  var montoFinal = 1;
 
 
 
@@ -56,22 +57,40 @@ Future<void> PostCustomPackages(customPackageViewModel customPackage, UserLogged
     };
   final json = jsonEncode(customPackage);
   final response = await post(url, headers: headers, body: json);
-  var idPackage;
+   print(response.body);
+  int idPackage;
   if (response.body != " ") {
+   
     Map<String, dynamic> userMap = jsonDecode(response.body);
     var data = DecoderAPI.fromJson(userMap);
-    idPackage = response.statusCode;
+    var codeStatus = ServiceDecoder.fromJson(data.data);
+    print(codeStatus.codeStatus);
     if (data.data != null) {
-      
-      final url = Uri.parse("https://totaltravelapi.azurewebsites.net/API/Reservation/Insert");
+        var jsonRecordPayment = {
+              "resv_ID": codeStatus.codeStatus,
+              "tiPa_ID": widget.customPackage.tipoPago,
+              "rePa_Monto": widget.customPackage.MontoPago,
+              "rePa_FechaPago": DateFormat('yyyy-MM-dd').format(DateTime.now()),
+              "rePa_UsuarioCreacion": widget.customPackage.usua_ID,
+              "rePa_UsuarioModifica": widget.customPackage.usua_ID
+            };
+          final jsonRePayment = jsonEncode(jsonRecordPayment);
+
+      final urlRecordPayment = Uri.parse("https://totaltravelapi.azurewebsites.net/API/RecordPayment/Insert");
       final headers = {
           "Content-type": "application/json",
           "Authorization": "bearer " + widget.userloggeddata!.Token!
         };
-      final json = jsonEncode(customPackage);
-      final response = await post(url, headers: headers, body: json);
+      final responseRecordPayment = await post(urlRecordPayment, headers: headers, body: jsonRePayment);
+      print("response" + responseRecordPayment.body);
+      Map<String, dynamic> responseMap = jsonDecode(responseRecordPayment.body);
+      var dataRecordPayment = DecoderAPI.fromJson(responseMap);
+      print(dataRecordPayment.data);
+      if(dataRecordPayment.data != null){
+        Navigator.push( context,MaterialPageRoute(builder: (context) =>   SuccessCustomPackage(widget.userloggeddata,widget.customPackage)));
+      }
 
-       Navigator.push( context,MaterialPageRoute(builder: (context) =>   SuccessCustomPackage(widget.userloggeddata,widget.customPackage)));
+      
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
         backgroundColor: white,
@@ -245,8 +264,7 @@ Future<void> PostCustomPackages(customPackageViewModel customPackage, UserLogged
                                                                 const InputDecoration(
                                                               prefixIcon: Icon(Icons
                                                                   .monetization_on),
-                                                              hintText:
-                                                                  '0',
+                                                              hintText:'0',
                                                               border:
                                                                   OutlineInputBorder(
                                                                 borderRadius: BorderRadius
@@ -256,17 +274,16 @@ Future<void> PostCustomPackages(customPackageViewModel customPackage, UserLogged
                                                               ),
                                                             ),                                                      
                                                             // The validator receives the text that the user has entered.
-                                                            validator: (value) {
-                                                              if (value ==
-                                                                      null ||
-                                                                  value
-                                                                      .isEmpty) {
-                                                                return 'Rellene este campo';
-                                                              } else {
-                                                                MontoPago.text =
-                                                                    value;
-                                                              }
-                                                              return null;
+                                                            onChanged: (value) {
+                                                               
+                                                                if (value ==null ||value.isEmpty) {
+                                                            
+                                                                } else {
+                                                                    setState(() {
+                                                                      montoFinal = value.toInt();
+                                                                    });
+                                                                }
+                                                                return null;
                                                             },
                                                           ),
                                                         ),
@@ -284,7 +301,7 @@ Future<void> PostCustomPackages(customPackageViewModel customPackage, UserLogged
                                                               onPressed: () {
                                                                 widget.customPackage.tipoPago = element['id'];
                                                                 widget.customPackage.CantidadPagos = cantidadFinal;
-                                                              
+                                                                widget.customPackage.MontoPago = montoFinal.toInt();
 
                                                                 PostCustomPackages(widget.customPackage, widget.userloggeddata!);
                                                                 
