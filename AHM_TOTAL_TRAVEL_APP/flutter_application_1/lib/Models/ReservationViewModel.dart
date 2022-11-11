@@ -107,7 +107,7 @@ class ReservHotelModel {
   String? reHoFechaSalida;
   int? resvId;
   int? hoteId;
-  int? reHoPrecioTotal;
+  double? reHoPrecioTotal;
   int? reHoUsuarioCreacion;
   int? reHoUsuarioModifica;
 

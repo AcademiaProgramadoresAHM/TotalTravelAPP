@@ -27,6 +27,7 @@ class _ReservationPreviewState extends State<ReservationPreview> {
   List<Padding> ResumeActivities(List<dynamic> data, BuildContext context) {
     List<Padding> list = [];
     final _controller = PageController();
+    print(widget.package);
     print(widget.paqueteactividades);
     if (data.length == 0) {
       list.add(Padding(

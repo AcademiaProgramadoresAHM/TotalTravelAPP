@@ -32,30 +32,17 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   }
 
   Future<dynamic> GetListadoPackageshome(userloggeddata) async {
-    // showDialog(
-    //     context: context,
-    //     builder: (context) {
-    //       return Center(child: CircularProgressIndicator());
-    //     });
-
-    //listado paquetes
     String url_list =
         "https://totaltravelapi.azurewebsites.net/API/DefaultPackages/List";
     final response = await http.get(Uri.parse(url_list));
-    //imagen Hoteles
-    String url_list2 =
-        "https://totaltravelapi.azurewebsites.net/API/Hotels/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
     };
-    final response2 = await http.get(Uri.parse(url_list2), headers: headers);
 
-    if (response.statusCode == 200 && response2.statusCode == 200) {
+    if (response.statusCode == 200) {
       Map<String, dynamic> userMap = jsonDecode(response.body);
-      Map<String, dynamic> HotelMap = jsonDecode(response2.body);
       var user = Decodificador.fromJson(userMap);
-      var hotelimg = Decodificador.fromJson(HotelMap);
       return user.data;
     } else {
       print("Error " + response.statusCode.toString());

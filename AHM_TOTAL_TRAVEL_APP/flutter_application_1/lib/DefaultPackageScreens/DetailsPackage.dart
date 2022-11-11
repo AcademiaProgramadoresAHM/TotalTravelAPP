@@ -27,7 +27,7 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
   double people = 2;
   double _pagos = 1;
   String worldDuracion = "Días";
-  DefaultPackageViewModel? DefaulPackageId;
+  DefaultPackageViewModel? PaquetePredeterminado;
   ReservationViewmodel Reserv = new ReservationViewmodel();
   CiudadViewModel ciudad = new CiudadViewModel();
 
@@ -121,19 +121,6 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 0),
                   child: Flexible(
-                    // width: MediaQuery.of(context).size.width,
-                    // height: 320,
-                    // decoration: BoxDecoration(
-                    //   color: Colors.white,
-                    //   boxShadow: [
-                    //     BoxShadow(
-                    //       blurRadius: 4,
-                    //       color: Color(0x33000000),
-                    //       offset: Offset(0, 2),
-                    //     )
-                    //   ],
-                    //   borderRadius: BorderRadius.circular(12),
-                    // ),
                     child: Align(
                       alignment: AlignmentDirectional(0, 0),
                       child: Padding(
@@ -237,12 +224,6 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                                                 fontSize: 18,
                                                 color: Colors.black),
                                           )),
-                                          // Text(
-                                          //   element['descripcion_Paquete'],
-                                          //   style: TextStyle(
-                                          //       fontSize: 18,
-                                          //       color: Colors.black),
-                                          // ),
                                         ],
                                       ),
                                     ),

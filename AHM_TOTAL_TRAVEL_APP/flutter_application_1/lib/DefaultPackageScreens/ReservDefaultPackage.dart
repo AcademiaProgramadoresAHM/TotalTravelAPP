@@ -93,7 +93,7 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
             MaterialPageRoute(
                 builder: (context) => ReservationPreview(widget.userloggeddata,
                     reservation, paquete, packageDetail, [])));
-      } else {
+      } else if (bool == true) {
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -618,10 +618,10 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
       reservation.resvCantidadPagos = _pagos.toInt();
       reservation.resvNumeroPersonas = people.toInt();
       reservation.resvConfirmacionPago = false;
-      reservation.resvConfirmacionHotel = true;
+      reservation.resvConfirmacionHotel = false;
       reservation.resvConfirmacionRestaurante = false;
       reservation.resvConfirmacionTrans = false;
-      reservation.resvPrecio = precio;
+      reservation.resvPrecio = element['precio'];
       reservation.UsuarioCrea = widget.userloggeddata!.ID;
       reservation.reHo_FechaEntrada =
           DateFormat('yyyy-MM-dd').format(dateRange.start);

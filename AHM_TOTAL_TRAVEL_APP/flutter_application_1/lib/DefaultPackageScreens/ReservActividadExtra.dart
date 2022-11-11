@@ -598,7 +598,7 @@ class _ReservActivitiesExtraState extends State<ReservActivitiesExtra> {
                                           widget.Reservation,
                                           widget.package,
                                           widget.paqueteactividades,
-                                          widget.Reservation.actividadesExtra),
+                                          widget.activityExtra),
                                       widget.userloggeddata)),
                             );
                           }
