@@ -15,3 +15,14 @@ class Decodificador {
   Map<String, dynamic> toJson() =>
       {'code': code, 'succes': success, 'message': message, 'data': data};
 }
+
+class ServiceDecoder {
+  final int codeStatus;
+  final String messageStatus;
+
+  ServiceDecoder(this.codeStatus, this.messageStatus);
+
+  ServiceDecoder.fromJson(Map<String, dynamic> json)
+      : codeStatus = json['codeStatus'],
+        messageStatus = json['messageStatus'];
+}
