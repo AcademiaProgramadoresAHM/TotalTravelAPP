@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+
 import 'dart:convert';
 
 import 'package:flutter_application_1/Account_screen.dart';
@@ -19,39 +21,63 @@ class Personali2Screen extends StatefulWidget {
   final List<dynamic> Reservation;
   final List<TimelineViewModel> timeLineViewModel;
   final List<Actividades> actividadesList;
-  const Personali2Screen(this.userloggeddata, this.Reservation,this.timeLineViewModel,this.actividadesList, {super.key});
+  const Personali2Screen(this.userloggeddata, this.Reservation,
+      this.timeLineViewModel, this.actividadesList,
+      {super.key});
 
   @override
   _Personali2ScreenState createState() => _Personali2ScreenState();
 }
 
 class _Personali2ScreenState extends State<Personali2Screen> {
+  String? hotel,
+      fecha_entrada,
+      fecha_salida,
+      transporte,
+      hora_salida,
+      hora_llegada,
+      nombre_Cliente,
+      apellido_Cliente;
+
   void GetListTimelineReservation() {
     var i = 0;
-        widget.timeLineViewModel.forEach((element){
-            print(element.id_Hotel);
-            print(element.Hotel);
-            print(element.Fecha_Entrada);
-            print(element.Fecha_Salida);
-            print(element.iD_Transporte);
-            print(element.Transporte);
-            print(element.Hora_Salida);
-            print(element.Hora_Llegada);
-            print(element.iD_Cliente);
-            print(element.nombre_Cliente);
-            print(element.apellido_Cliente);
-            print(element.actividades);
-            print(element.actividades);
-        });
-        widget.actividadesList.forEach((e){
-              print("Actividad:" + i.toString());
-              print(e.id_actividad);
-              print(e.nombre_actividad);
-              print(e.fecha_Actividad);
-              i++;
-            });
-  }
+    widget.timeLineViewModel.forEach((element) {
+      // print(element.id_Hotel);
+      // print(element.Hotel);
 
+      // print(element.Fecha_Entrada);
+
+      // print(element.Fecha_Salida);
+
+      // print(element.iD_Transporte);
+      // print(element.Transporte);
+      // print(element.Hora_Salida);
+      // print(element.Hora_Llegada);
+      // print(element.iD_Cliente);
+      // print(element.nombre_Cliente);
+      // print(element.apellido_Cliente);
+      // print(element.actividades);
+      // print(element.actividades);
+
+      setState(() {
+        hotel = element.Hotel;
+        fecha_entrada = element.Fecha_Entrada;
+        fecha_salida = element.Fecha_Salida;
+        transporte = element.Transporte;
+        hora_salida = element.Hora_Salida;
+        hora_llegada = element.Hora_Llegada;
+        nombre_Cliente = element.nombre_Cliente;
+        apellido_Cliente = element.apellido_Cliente;
+      });
+    });
+    widget.actividadesList.forEach((e) {
+      print("Actividad:" + i.toString());
+      print(e.id_actividad);
+      print(e.nombre_actividad);
+      print(e.fecha_Actividad);
+      i++;
+    });
+  }
 
   Future<dynamic> GetListReservationDetails(userloggeddata) async {
     List<dynamic> dataReservation;
@@ -82,7 +108,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
       List<dynamic> data, BuildContext context) {
     List<Padding> list = [];
     final _controller = PageController();
-///////////////////////////////////////////
+/////////////////////////////////////////////
 
     data.forEach((element) {
       var splitFecha = element['fecha_Entrada'].toString().split('T');
@@ -878,8 +904,102 @@ class _Personali2ScreenState extends State<Personali2Screen> {
     return list;
   }
 
+//====================== LINEA DEL TIEMPO - ACTIVIDADES ======================//
+  List<ListView> listTimelineReservation(
+      List<Actividades> data, BuildContext context) {
+    List<ListView> list = [];
+    data.forEach((element) {
+      list.add(ListView(
+        padding: EdgeInsets.zero,
+        primary: false,
+        shrinkWrap: true,
+        scrollDirection: Axis.vertical,
+        children: [
+          Padding(
+            padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 3,
+                    color: Color(0x25000000),
+                    offset: Offset(0, 2),
+                  )
+                ],
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(8, 8, 4, 8),
+                    child: Container(
+                      width: 4,
+                      height: 90,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFEE8B60),
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(12, 12, 16, 12),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Actividades',
+                          style: TextStyle(
+                            fontFamily: 'Outfit',
+                            color: Color(0xFF101213),
+                            fontSize: 22,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                          child: Text(
+                            'Su actividad del dia ${element.nombre_actividad}',
+                            style: TextStyle(
+                              fontFamily: 'Outfit',
+                              color: Color(0xFF57636C),
+                              fontSize: 14,
+                              fontWeight: FontWeight.normal,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                          child: Text(
+                            'Fecha: ${element.fecha_Actividad}',
+                            style: TextStyle(
+                              fontFamily: 'Outfit',
+                              color: Color(0xFFEE8B60),
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ));
+    });
+
+    return list;
+  }
+
   @override
   void initState() {
+    GetListTimelineReservation();
     super.initState();
   }
 
@@ -946,6 +1066,163 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                     }
                   },
                   future: GetListReservationDetails(widget.userloggeddata),
+                ),
+                //Empieza la linea del tiempo
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 3,
+                          color: Color(0x25000000),
+                          offset: Offset(0, 2),
+                        )
+                      ],
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(8, 8, 4, 8),
+                          child: Container(
+                            width: 4,
+                            height: 90,
+                            decoration: BoxDecoration(
+                              color: Color(0xFF4B39EF),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(12, 12, 16, 12),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Transporte',
+                                style: TextStyle(
+                                  fontFamily: 'Outfit',
+                                  color: Color(0xFF101213),
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                child: Text(
+                                  'Usted viajara en el transporte $transporte',
+                                  style: TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF57636C),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                child: Text(
+                                  '25/11/2022 Hora Salida: 03:12PM',
+                                  style: TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF4B39EF),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 3,
+                          color: Color(0x25000000),
+                          offset: Offset(0, 2),
+                        )
+                      ],
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(8, 8, 4, 8),
+                          child: Container(
+                            width: 4,
+                            height: 90,
+                            decoration: BoxDecoration(
+                              color: Color(0xFF39D2C0),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(12, 12, 16, 12),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Hotel',
+                                style: TextStyle(
+                                  fontFamily: 'Outfit',
+                                  color: Color(0xFF101213),
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                child: Text(
+                                  'Usted llegara y habitara el hotel...',
+                                  style: TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF57636C),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                child: Text(
+                                  '25/11/2022 Hora Llegada 04:20PM',
+                                  style: TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF39D2C0),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             )),
