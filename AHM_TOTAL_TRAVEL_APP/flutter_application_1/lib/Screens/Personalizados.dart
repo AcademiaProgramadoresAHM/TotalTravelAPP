@@ -65,42 +65,46 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
       var reservation =
           dataReservation.where((x) => x['id'] == idReservation).toList();
 
-
-      TimelineViewModel TimeLineModel = new TimelineViewModel([],0,'','','',0,'','','',0,'','');
+      TimelineViewModel TimeLineModel = new TimelineViewModel(
+          [], 0, '', '', '', 0, '', '', '', '', 0, '', '');
       var id_reservation;
       reservation.forEach((x) {
         id_reservation = x['id'];
       });
       String url_list =
-          "https://totaltravelapi.azurewebsites.net/API/Reservation/Find/Timeline?id=" + id_reservation.toString();
+          "https://totaltravelapi.azurewebsites.net/API/Reservation/Find/Timeline?id=" +
+              id_reservation.toString();
       final headers = {
         "Content-type": "application/json",
         "Authorization": "bearer " + widget.userloggeddata!.Token!
       };
       final respon = await http.get(Uri.parse(url_list), headers: headers);
-      if(respon.statusCode == 200){
+      if (respon.statusCode == 200) {
         Map<String, dynamic> userMap = jsonDecode(respon.body);
         var Json = Decodificador.fromJson(userMap);
         var data = Json.data;
         var actividades = data['actividades'];
-          TimeLineModel.id_Hotel = data['iD_Hotel'];
-          TimeLineModel.Hotel = data['hotel'];
-          TimeLineModel.Fecha_Entrada = data['fecha_Entrada'];
-          TimeLineModel.Fecha_Salida = data['fecha_Salida'];
-          TimeLineModel.iD_Transporte = data['iD_Transporte'];
-          TimeLineModel.Transporte = data['transporte'];
-          var Hora_Salida = data['horaSalida'].toString();
-          var Hora_Llegada = data['horaLlegada'].toString();
-          TimeLineModel.Hora_Salida = Hora_Salida.substring(0,2) + ':' + Hora_Salida.substring(2,4);
-          TimeLineModel.Hora_Llegada = Hora_Llegada.substring(0,2) + ':' + Hora_Llegada.substring(2,4);
-          TimeLineModel.iD_Cliente = data['iD_Usuario'];
-          TimeLineModel.nombre_Cliente = data['nombre'];
-          TimeLineModel.apellido_Cliente = data['apellido'];
+        TimeLineModel.id_Hotel = data['iD_Hotel'];
+        TimeLineModel.Hotel = data['hotel'];
+        TimeLineModel.Fecha_Entrada = data['fecha_Entrada'];
+        TimeLineModel.Fecha_Salida = data['fecha_Salida'];
+        TimeLineModel.iD_Transporte = data['iD_Transporte'];
+        TimeLineModel.Transporte = data['transporte'];
+        TimeLineModel.Transporte_FechaSalida = data['transporteFechaSalida'];
+        var Hora_Salida = data['horaSalida'].toString();
+        var Hora_Llegada = data['horaLlegada'].toString();
+        TimeLineModel.Hora_Salida =
+            Hora_Salida.substring(0, 2) + ':' + Hora_Salida.substring(2, 4);
+        TimeLineModel.Hora_Llegada =
+            Hora_Llegada.substring(0, 2) + ':' + Hora_Llegada.substring(2, 4);
+        TimeLineModel.iD_Cliente = data['iD_Usuario'];
+        TimeLineModel.nombre_Cliente = data['nombre'];
+        TimeLineModel.apellido_Cliente = data['apellido'];
 
         var id, actividad, fecha, fullresponse;
-       
+
         var i = 0;
-       
+
         List<Actividades> ActividadesList = [];
         actividades.forEach((x) {
           Actividades acti = new Actividades(0, '', '');
@@ -113,15 +117,13 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
         });
         List<TimelineViewModel> TimeLineList = [];
         TimeLineList.insert(0, TimeLineModel);
-      
-      Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) =>
-                  Personali2Screen(widget.userloggeddata, reservation,TimeLineList,ActividadesList)));
+
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => Personali2Screen(widget.userloggeddata,
+                    reservation, TimeLineList, ActividadesList)));
       }
-
-
     } else {
       print("Error " + response.statusCode.toString());
     }

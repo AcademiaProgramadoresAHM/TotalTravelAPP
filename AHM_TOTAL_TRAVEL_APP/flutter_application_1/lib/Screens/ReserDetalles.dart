@@ -34,6 +34,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
       fecha_entrada,
       fecha_salida,
       transporte,
+      transporteFechaSalida,
       hora_salida,
       hora_llegada,
       nombre_Cliente,
@@ -44,11 +45,8 @@ class _Personali2ScreenState extends State<Personali2Screen> {
     widget.timeLineViewModel.forEach((element) {
       // print(element.id_Hotel);
       // print(element.Hotel);
-
       // print(element.Fecha_Entrada);
-
       // print(element.Fecha_Salida);
-
       // print(element.iD_Transporte);
       // print(element.Transporte);
       // print(element.Hora_Salida);
@@ -60,10 +58,17 @@ class _Personali2ScreenState extends State<Personali2Screen> {
       // print(element.actividades);
 
       setState(() {
+        //Sacando solo las fechas
+        var fechaEntradaSplit, fechaSalidaSplit, tranFechaSalidaSplit;
+        fechaEntradaSplit = element.Fecha_Entrada?.split('T');
+        fechaSalidaSplit = element.Fecha_Salida?.split('T');
+        tranFechaSalidaSplit = element.Transporte_FechaSalida?.split('T');
+
         hotel = element.Hotel;
-        fecha_entrada = element.Fecha_Entrada;
-        fecha_salida = element.Fecha_Salida;
+        fecha_entrada = fechaEntradaSplit[0];
+        fecha_salida = fechaSalidaSplit[0];
         transporte = element.Transporte;
+        transporteFechaSalida = tranFechaSalidaSplit[0];
         hora_salida = element.Hora_Salida;
         hora_llegada = element.Hora_Llegada;
         nombre_Cliente = element.nombre_Cliente;
@@ -905,10 +910,14 @@ class _Personali2ScreenState extends State<Personali2Screen> {
   }
 
 //====================== LINEA DEL TIEMPO - ACTIVIDADES ======================//
+
   List<ListView> listTimelineReservation(
       List<Actividades> data, BuildContext context) {
     List<ListView> list = [];
     data.forEach((element) {
+      var splitFechaActividad = element.fecha_Actividad.toString().split('T');
+      var fechaActividad = splitFechaActividad[0];
+
       list.add(ListView(
         padding: EdgeInsets.zero,
         primary: false,
@@ -974,7 +983,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                           child: Text(
-                            'Fecha: ${element.fecha_Actividad}',
+                            'Fecha: $fechaActividad',
                             style: TextStyle(
                               fontFamily: 'Outfit',
                               color: Color(0xFFEE8B60),
@@ -993,7 +1002,6 @@ class _Personali2ScreenState extends State<Personali2Screen> {
         ],
       ));
     });
-
     return list;
   }
 
@@ -1130,7 +1138,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                                 child: Text(
-                                  '25/11/2022 Hora Salida: 03:12PM',
+                                  'Fecha y hora de salida $transporteFechaSalida $hora_salida',
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color(0xFF4B39EF),
@@ -1195,7 +1203,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                                 child: Text(
-                                  'Usted llegara y habitara el hotel...',
+                                  'Usted llegara y habitara el hotel $hotel',
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color(0xFF57636C),
@@ -1208,7 +1216,93 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                                 child: Text(
-                                  '25/11/2022 Hora Llegada 04:20PM',
+                                  'Fecha y hora de llegada: $fecha_entrada $hora_llegada',
+                                  style: TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF39D2C0),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                ListView(
+                  padding: EdgeInsets.zero,
+                  primary: false,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.vertical,
+                  children:
+                      listTimelineReservation(widget.actividadesList, context),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16, 12, 16, 0),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 3,
+                          color: Color(0x25000000),
+                          offset: Offset(0, 2),
+                        )
+                      ],
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(8, 8, 4, 8),
+                          child: Container(
+                            width: 4,
+                            height: 90,
+                            decoration: BoxDecoration(
+                              color: Color(0xFF39D2C0),
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding:
+                              EdgeInsetsDirectional.fromSTEB(12, 12, 16, 12),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Hotel',
+                                style: TextStyle(
+                                  fontFamily: 'Outfit',
+                                  color: Color(0xFF101213),
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                child: Text(
+                                  'Desalojará el hotel $hotel el dia: ',
+                                  style: TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Color(0xFF57636C),
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
+                                child: Text(
+                                  '$fecha_salida',
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color(0xFF39D2C0),
