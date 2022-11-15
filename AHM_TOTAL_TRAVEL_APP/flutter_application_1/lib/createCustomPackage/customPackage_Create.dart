@@ -294,11 +294,9 @@ final TextEditingController textEditingController = TextEditingController();
                   : StepperType.horizontal,
               physics: const ScrollPhysics(),
               currentStep: _currentStep,
-              onStepTapped:(step){
-                  if(step>_currentStep){
-                    setState((){
-                        _currentStep=step;
-                    });
+             onStepTapped: (int index) {
+                  if (_currentStep != index) {
+                    _currentStep = _currentStep;
                   }
                 },
               onStepContinue: _stepContinue,
