@@ -523,57 +523,6 @@ Future<void> PostReservertion(
 
 int? res;
 
-// Future<void> PostReservHotel(
-//     String? FechaEntrada,
-//     String? FechaSalida,
-//     int? ResvID,
-//     int? HotelID,
-//     double? PrecioTotal,
-//     int? UsuarioCrea,
-//     ModelDataRecordPayment payment,
-//     UserLoggedModel? userloggeddata,
-//     BuildContext context) async {
-//   ReservHotelModel ReservHotel = new ReservHotelModel();
-//   res = ResvID;
-//   ReservHotel.reHoFechaEntrada = FechaEntrada;
-//   ReservHotel.reHoFechaSalida = FechaSalida;
-//   ReservHotel.resvId = res;
-//   ReservHotel.hoteId = HotelID;
-//   ReservHotel.reHoPrecioTotal = PrecioTotal;
-//   ReservHotel.reHoUsuarioCreacion = UsuarioCrea;
-//   ReservHotel.reHoUsuarioModifica = 0;
-
-//   final headers = {
-//     "Content-type": "application/json",
-//     "Authorization": "bearer " + userloggeddata!.Token!
-//   };
-//   final uri = Uri.parse(
-//       "https://totaltravelapi.azurewebsites.net/API/ReservationHotels/Insert");
-//   final json = jsonEncode(ReservHotel);
-
-//   final response = await http.post(
-//     uri,
-//     headers: headers,
-//     body: json,
-//   );
-
-//   if (response.body != "") {
-//     print(response.body);
-//     print(FechaEntrada);
-//     print(FechaSalida);
-
-//     Map<String, dynamic> userMap = jsonDecode(response.body);
-//     var dataInsert = Decodificador.fromJson(userMap);
-//     if (dataInsert.data != 0) {
-//       RequestStatus status = RequestStatus.fromJson(dataInsert.data);
-//       if (status.CodeStatus! >= 0) {
-//         PostRecordPayment(res, payment.idpayment, payment.monto,
-//             payment.formatted, userloggeddata, context);
-//       }
-//     }
-//   }
-// }
-
 Future<void> PostRecordPayment(
     int? reservID,
     int? tipopagoID,
@@ -622,6 +571,8 @@ Future<void> PostRecordPayment(
     }
   }
 }
+
+
 //                                            /
 //                         _,.------....___,.' ',.-.
 //                      ,-'          _,.--"        |

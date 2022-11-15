@@ -8,6 +8,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/Components/Decodificador.dart';
+import 'Components/search_delegate_element.dart';
 import 'DefaultPackageScreens/DetailsPackage.dart';
 import 'hotel_booking/filters_screen.dart';
 import 'hotel_booking/hotel_app_theme.dart';
@@ -108,18 +109,18 @@ class _HotelHomeScreenState extends State<MyHomePage>
                                 return Column(
                                   children: <Widget>[
                                     getSearchBarUI(),
-                                    getTimeDateUI(),
+                                    // getTimeDateUI(),
                                   ],
                                 );
                               }, childCount: 1),
                             ),
-                            SliverPersistentHeader(
-                              pinned: true,
-                              floating: true,
-                              delegate: ContestTabHeader(
-                                getFilterBarUI(),
-                              ),
-                            ),
+                            // SliverPersistentHeader(
+                            //   pinned: true,
+                            //   floating: true,
+                            //   delegate: ContestTabHeader(
+                            //     getFilterBarUI(),
+                            //   ),
+                            // ),
                           ];
                         },
                         body: SingleChildScrollView(
@@ -375,34 +376,14 @@ class _HotelHomeScreenState extends State<MyHomePage>
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(right: 16, top: 8, bottom: 8),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: HotelAppTheme.buildLightTheme().backgroundColor,
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(38.0),
-                  ),
-                  boxShadow: <BoxShadow>[
-                    BoxShadow(
-                        color: Colors.grey.withOpacity(0.2),
-                        offset: const Offset(0, 2),
-                        blurRadius: 8.0),
-                  ],
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      left: 16, right: 16, top: 4, bottom: 4),
-                  child: TextField(
-                    onChanged: (String txt) {},
-                    style: const TextStyle(
-                      fontSize: 18,
-                    ),
-                    cursorColor: HotelAppTheme.buildLightTheme().primaryColor,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: 'Londres...',
-                    ),
-                  ),
-                ),
+              child: ListTile(
+                onTap: () {
+                  showSearch(
+                    context: context,
+                    delegate: SearchPackageDelegate(),
+                  );
+                },
+                title: const Text('Search'),
               ),
             ),
           ),
