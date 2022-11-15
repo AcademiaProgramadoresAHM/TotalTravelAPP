@@ -24,7 +24,9 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown
   ]).then((_) =>
-      runApp(MaterialApp(home: LandingPage(), navigatorKey: navigatorKey)));
+      runApp(MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: LandingPage(), navigatorKey: navigatorKey)));
 }
 
 class MyApp extends StatelessWidget {
