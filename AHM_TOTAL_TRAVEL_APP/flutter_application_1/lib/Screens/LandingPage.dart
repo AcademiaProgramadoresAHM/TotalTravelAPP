@@ -36,8 +36,10 @@ class LandingPageState extends State<LandingPage> {
     registerButtonClicked();
     List<PlanModal> PlanList = [];
     List<Container> list = [];
+    List<String> imageUrl;
     final _controller = PageController();
     data.forEach((element) {
+      imageUrl = element['image_URL'].split(',');
       list.add(
         Container(
           height: 950,
@@ -56,10 +58,14 @@ class LandingPageState extends State<LandingPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Image.asset(
-                    'assets/images/Argentina.jpg',
-                    fit: BoxFit.cover,
-                    height: 170,
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.network(
+                      imageUrl[0].toString(),
+                      width: 340,
+                      height: 170,
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   SizedBox(height: 20),
                   SingleChildScrollView(
