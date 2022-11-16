@@ -4,12 +4,15 @@ import 'package:flutter_application_1/hotel_booking/calendar_popup_view.dart';
 import 'package:flutter_application_1/hotel_booking/hotel_list_view.dart';
 import 'package:flutter_application_1/hotel_booking/model/hotel_list_data.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/utils/AppWidget.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_application_1/Components/Decodificador.dart';
+import 'package:nb_utils/nb_utils.dart';
 import 'Components/search_delegate_element.dart';
 import 'DefaultPackageScreens/DetailsPackage.dart';
+import 'Models/DefaultPackageViewModel.dart';
 import 'hotel_booking/filters_screen.dart';
 import 'hotel_booking/hotel_app_theme.dart';
 import 'package:flutter_application_1/Components/Packages.dart';
@@ -34,15 +37,35 @@ class _HotelHomeScreenState extends State<MyHomePage>
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now().add(const Duration(days: 5));
 
-  Future<dynamic> FindPackage(idPackage, userloggeddata) async {
-    List<dynamic> datapackage;
+  List<DefaultPackageModelList> datos = [];
+
+  Future<List<DefaultPackageModelList>> _GetDatos() async {
+    List<DefaultPackageModelList> klk = [];
     String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/DefaultPackages/List";
+        "https://totaltravelapi.azurewebsites.net/API/ActivitiesExtra/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + userloggeddata!.Token!
     };
     final response = await http.get(Uri.parse(url_list), headers: headers);
+
+    var datoS = jsonDecode(response.body);
+
+    for (var datos in datoS) {
+      klk.add(DefaultPackageModelList.fromJson(datos));
+    }
+    return klk;
+  }
+
+  Future<dynamic> FindPackage(idPackage, userloggeddata) async {
+    List<dynamic> datapackage;
+    String urlList =
+        "https://totaltravelapi.azurewebsites.net/API/DefaultPackages/List";
+    final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + userloggeddata!.Token!
+    };
+    final response = await http.get(Uri.parse(urlList), headers: headers);
     if (response.statusCode == 200) {
       Map<String, dynamic> userMap = jsonDecode(response.body);
       var Json = Decodificador.fromJson(userMap);
@@ -65,6 +88,11 @@ class _HotelHomeScreenState extends State<MyHomePage>
     animationController = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
     super.initState();
+    _GetDatos().then((value) {
+      setState(() {
+        datos.addAll(value);
+      });
+    });
   }
 
   Future<bool> getData() async {
@@ -375,17 +403,35 @@ class _HotelHomeScreenState extends State<MyHomePage>
         children: <Widget>[
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(right: 16, top: 8, bottom: 8),
-              child: ListTile(
-                onTap: () {
-                  showSearch(
-                    context: context,
-                    delegate: SearchPackageDelegate(),
-                  );
-                },
-                title: const Text('Search'),
-              ),
-            ),
+                padding: const EdgeInsets.only(right: 16, top: 8, bottom: 8),
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  child: ListTile(
+                    onTap: () {
+                      showSearch(
+                        context: context,
+                        delegate: SearchPackageDelegate(datos),
+                      );
+                    },
+                    title: const Text('Search'),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20.0)),
+                    selectedTileColor: Colors.grey[300],
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.8),
+                        spreadRadius: 2,
+                        blurRadius: 5,
+                        offset: Offset(0, 7), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                )),
           ),
           Container(
             decoration: BoxDecoration(
