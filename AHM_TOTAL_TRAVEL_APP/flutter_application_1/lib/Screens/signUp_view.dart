@@ -31,8 +31,8 @@ class SignUpView extends StatefulWidget {
 
 class _SignUpViewState extends State<SignUpView> {
   int? suburbValue, CountryValue, CityValue;
-  
-   TextEditingController textSuburbsEditingController = TextEditingController();
+
+  TextEditingController textSuburbsEditingController = TextEditingController();
   TextEditingController dniController = TextEditingController();
   TextEditingController nameController = TextEditingController();
   TextEditingController lastnameController = TextEditingController();
@@ -46,9 +46,9 @@ class _SignUpViewState extends State<SignUpView> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController password2Controller = TextEditingController();
-  
+
   final ScrollController _scrollController = ScrollController();
-  
+
   List<ListModel> example = [
     ListModel(name: 'Cupertino Date Picker'),
     //ListModel(name: 'Cupertino Time Picker'),
@@ -139,7 +139,6 @@ class _SignUpViewState extends State<SignUpView> {
   int? CountriesDropDownValue;
   int? CitiesDropDownValue;
   int? SuburbsDropDownValue;
- 
 
   bool _isVisible1 = false;
   bool _isVisibleCountries = false;
@@ -161,12 +160,14 @@ class _SignUpViewState extends State<SignUpView> {
       _isVisibleCountries = result2;
     });
   }
-   void showToast3(bool result3) {
+
+  void showToast3(bool result3) {
     setState(() {
       _isVisibleCities = result3;
     });
   }
-   void showToast4(bool result3) {
+
+  void showToast4(bool result3) {
     setState(() {
       _isVisibleSuburbs = result3;
     });
@@ -175,33 +176,34 @@ class _SignUpViewState extends State<SignUpView> {
   Map<int?, String> CitiesDictionary = Map();
   Future<dynamic> GetCities(CountryId) async {
     List<dynamic> dataCities;
-      String url_list = "https://totaltravelapi.azurewebsites.net/API/Cities/List";
-      var respuesta = await http.get(Uri.parse(url_list));
-      if (respuesta.statusCode == 200) {
-        Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
-        var Json = DecoderAPI.fromJson(ServerResponse);
-        dataCities = Json.data;
-        var data = dataCities.where((x) => x['paisID'] == CountryId).toList();
-        // rellena diccionario de datos
-        data.forEach((x) {
-          CiudadesViewModel element = CiudadesViewModel.fromJson(x);
-          var descripcion = element.Ciudad!;
-          setState(() {
-              CitiesDictionary[element.ID] = descripcion;
-          }); 
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/Cities/List";
+    var respuesta = await http.get(Uri.parse(url_list));
+    if (respuesta.statusCode == 200) {
+      Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
+      var Json = DecoderAPI.fromJson(ServerResponse);
+      dataCities = Json.data;
+      var data = dataCities.where((x) => x['paisID'] == CountryId).toList();
+      // rellena diccionario de datos
+      data.forEach((x) {
+        CiudadesViewModel element = CiudadesViewModel.fromJson(x);
+        var descripcion = element.Ciudad!;
+        setState(() {
+          CitiesDictionary[element.ID] = descripcion;
         });
-        return Json.data;
-      } else {
-        print("Error: " + respuesta.statusCode.toString());
-      }
+      });
+      return Json.data;
+    } else {
+      print("Error: " + respuesta.statusCode.toString());
     }
+  }
 
   Map<int?, String> SuburbsDictionary = Map();
 
   Future<dynamic> GetSuburbs(CityId) async {
-    
-   List<dynamic> dataSuburbs;
-    String url_list = "https://totaltravelapi.azurewebsites.net/API/Suburbs/List";
+    List<dynamic> dataSuburbs;
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/Suburbs/List";
     var respuesta = await http.get(Uri.parse(url_list));
     if (respuesta.statusCode == 200) {
       Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
@@ -213,8 +215,8 @@ class _SignUpViewState extends State<SignUpView> {
         SuburbsViewModel element = SuburbsViewModel.fromJson(x);
         var descripcion = element.Colonia!;
         setState(() {
-            SuburbsDictionary[element.ID] = descripcion;
-        }); 
+          SuburbsDictionary[element.ID] = descripcion;
+        });
       });
 
       return Json.data;
@@ -223,15 +225,16 @@ class _SignUpViewState extends State<SignUpView> {
     }
   }
 
-
-  Future<void> PostAdress(int id, String calle, String avenida, BuildContext context) async {
+  Future<void> PostAdress(
+      int id, String calle, String avenida, BuildContext context) async {
     AdressesViewModel adressView = new AdressesViewModel();
     adressView.Colo_ID = id;
     adressView.Dire_Calle = calle;
     adressView.Dire_Avenida = avenida;
     adressView.Dire_UsuarioCreacion = 1;
 
-    final url = Uri.parse("https://totaltravelapi.azurewebsites.net/API/Address/Insert");
+    final url = Uri.parse(
+        "https://totaltravelapi.azurewebsites.net/API/Address/Insert");
     final headers = {
       "Content-type": "application/json",
       "Accept": "text/plain"
@@ -448,34 +451,42 @@ class _SignUpViewState extends State<SignUpView> {
                                     onTap: () async {
                                       DateTime? pickedDate =
                                           await showDatePicker(
-                                            helpText: 'Selecciona una fecha', // Can be used as title
-                                              cancelText: 'Cancelar',
-                                              confirmText: 'Aceptar',
-                                              fieldLabelText: 'Ingresa una fecha',
-                                              fieldHintText: 'Día/Mes/Año',
-                                              context: context,
-                                              initialDate: DateTime.now(),
-                                              firstDate: DateTime(1901),
-                                              lastDate: DateTime(2101),
-                                              builder: (context, child) {
-                                                                return Theme(
-                                                              data: Theme.of(context).copyWith(
-                                                                colorScheme: ColorScheme.light(
-                                                                  primary: Color.fromRGBO(101, 45, 143, 1), // <-- SEE HERE
-                                                                  onPrimary: Colors.white, // <-- SEE HERE
-                                                                  onSurface: Color.fromRGBO(101, 45, 143, 1), // <-- SEE HERE
-                                                                ),
-                                                                textButtonTheme: TextButtonThemeData(
-                                                                  style: TextButton.styleFrom(
-                                                                    primary: Color.fromRGBO(101, 45, 143, 1),// button text color
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                              child: child!,
-                                                            );
-                                                              },
-                                                              
-                                              );
+                                        helpText:
+                                            'Selecciona una fecha', // Can be used as title
+                                        cancelText: 'Cancelar',
+                                        confirmText: 'Aceptar',
+                                        fieldLabelText: 'Ingresa una fecha',
+                                        fieldHintText: 'Día/Mes/Año',
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(1901),
+                                        lastDate: DateTime(2101),
+                                        builder: (context, child) {
+                                          return Theme(
+                                            data: Theme.of(context).copyWith(
+                                              colorScheme: ColorScheme.light(
+                                                primary: Color.fromRGBO(101, 45,
+                                                    143, 1), // <-- SEE HERE
+                                                onPrimary: Colors
+                                                    .white, // <-- SEE HERE
+                                                onSurface: Color.fromRGBO(101,
+                                                    45, 143, 1), // <-- SEE HERE
+                                              ),
+                                              textButtonTheme:
+                                                  TextButtonThemeData(
+                                                style: TextButton.styleFrom(
+                                                  primary: Color.fromRGBO(
+                                                      101,
+                                                      45,
+                                                      143,
+                                                      1), // button text color
+                                                ),
+                                              ),
+                                            ),
+                                            child: child!,
+                                          );
+                                        },
+                                      );
 
                                       if (pickedDate != null) {
                                         print(pickedDate);
@@ -711,107 +722,113 @@ class _SignUpViewState extends State<SignUpView> {
                                     child: Text('Dirección',
                                         style: TextStyle(fontSize: 16.0)),
                                   ),
-                                 
 
-                             
                                   SizedBox(
                                     height: size.height * 0.01,
                                   ),
-                                     Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 0),
-                                    child: 
-                                    Container(
-                                      width: 350,
-                                      height: 50,
-                                    decoration: BoxDecoration(/*color: Colors.transparent*/),
-                                    child:DropdownButtonHideUnderline(
-                                      child:  DropdownButton2(
-                                              isExpanded: true,
-                                              hint: Row(
-                                                children: const [
-                                                  
-                                                  SizedBox(
-                                                    width: 4,
+                                  Padding(
+                                      padding: const EdgeInsets.only(top: 0),
+                                      child: Container(
+                                        width: 350,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            /*color: Colors.transparent*/),
+                                        child: DropdownButtonHideUnderline(
+                                            child: DropdownButton2(
+                                          isExpanded: true,
+                                          hint: Row(
+                                            children: const [
+                                              SizedBox(
+                                                width: 4,
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  'Selecciona un pais',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color.fromRGBO(
+                                                        101, 45, 143, 1),
                                                   ),
-                                                  Expanded(
-                                                    child: Text(
-                                                      'Selecciona un pais',
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight: FontWeight.bold,
-                                                        color: Color.fromRGBO(101, 45, 143, 1),
-                                                      ),
-                                                      overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          items: widget.CountriesDictionary.keys
+                                              .map((id) {
+                                            return DropdownMenuItem(
+                                                value: id,
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(30, 0, 0, 0),
+                                                  child: Text(
+                                                    widget
+                                                        .CountriesDictionary[id]
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      //color: Colors.black,
                                                     ),
                                                   ),
-                                                ],
-                                              ),
-                                    items: widget.CountriesDictionary.keys.map((id) {
-                                      return DropdownMenuItem(
-                                          value: id,
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    30, 0, 0, 0),
-                                            child: Text(
-                                              widget.CountriesDictionary[id].toString(),
-                                              style: const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              //color: Colors.black,
+                                                ));
+                                          }).toList(),
+                                          value: CountryValue,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              CountryValue = value as int?;
+                                              CountriesDropDownValue = value;
+                                              //CitiesDictionary = widget.CitiesDictionary;
+                                              if (CityValue != null) {
+                                                CityValue = null;
+                                              }
+                                              CitiesDictionary.clear();
+                                              SuburbsDictionary.clear();
+                                              GetCities(CountriesDropDownValue);
+                                            });
+                                          },
+                                          icon: const Icon(
+                                            Icons.keyboard_double_arrow_down,
+                                          ),
+                                          iconSize: 20,
+                                          iconEnabledColor:
+                                              Color.fromRGBO(101, 45, 143, 1),
+                                          iconDisabledColor: Colors.grey,
+                                          buttonHeight: 50,
+                                          buttonWidth: 160,
+                                          buttonPadding: const EdgeInsets.only(
+                                              left: 14, right: 14),
+                                          buttonDecoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(14),
+                                            border: Border.all(
+                                              color: Colors.black26,
                                             ),
-                                            ),
-                                          ));
-                                    }).toList(),
-                                    value: CountryValue,
-                                    onChanged: (value) {
-                                      setState(() {
-                                        CountryValue = value as int?;
-                                        CountriesDropDownValue = value;
-                                        //CitiesDictionary = widget.CitiesDictionary;
-                                        if(CityValue!= null){
-                                          CityValue = null;
-                                        }
-                                        CitiesDictionary.clear();
-                                        SuburbsDictionary.clear();
-                                        GetCities(CountriesDropDownValue);
-                                      });
-                                      
-                                    },
-                                    icon: const Icon(
-                                        Icons.keyboard_double_arrow_down,
-                                      ),
-                                      iconSize: 20,
-                                      iconEnabledColor: Color.fromRGBO(101, 45, 143, 1),
-                                      iconDisabledColor: Colors.grey,
-                                      buttonHeight: 50,
-                                      buttonWidth: 160,
-                                      buttonPadding: const EdgeInsets.only(left: 14, right: 14),
-                                      buttonDecoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(14),
-                                        border: Border.all(
-                                          color: Colors.black26,
-                                        ),
-                                        color: Colors.white,
-                                      ),
-                                      buttonElevation: 2,
-                                        itemHeight: 40,
-                                        itemPadding: const EdgeInsets.only(left: 14, right: 14),
-                                        dropdownMaxHeight: 150,
-                                        dropdownWidth: 350,
-                                        dropdownPadding: null,
-                                        dropdownDecoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(14),
-                                          color: Colors.white,
-                                        ),
-                                        dropdownElevation: 8,
-                                        scrollbarRadius: const Radius.circular(10),
-                                        scrollbarThickness: 6,
-                                        scrollbarAlwaysShow: true,
-                                        offset: const Offset(0, 0),
-                                  )),
-                                  )),
+                                            color: Colors.white,
+                                          ),
+                                          buttonElevation: 2,
+                                          itemHeight: 40,
+                                          itemPadding: const EdgeInsets.only(
+                                              left: 14, right: 14),
+                                          dropdownMaxHeight: 150,
+                                          dropdownWidth: 350,
+                                          dropdownPadding: null,
+                                          dropdownDecoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(14),
+                                            color: Colors.white,
+                                          ),
+                                          dropdownElevation: 8,
+                                          scrollbarRadius:
+                                              const Radius.circular(10),
+                                          scrollbarThickness: 6,
+                                          scrollbarAlwaysShow: true,
+                                          offset: const Offset(0, 0),
+                                        )),
+                                      )),
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         right: 200.0, top: 0, bottom: 10.0),
@@ -834,101 +851,107 @@ class _SignUpViewState extends State<SignUpView> {
                                   SizedBox(
                                     height: size.height * 0.01,
                                   ),
-                                     Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 0),
-                                    child: 
-                                    Container(
-                                      width: 350,
-                                      height: 50,
-                                    decoration: BoxDecoration(color: Colors.transparent),
-                                    child:DropdownButtonHideUnderline(
-                                      child:  DropdownButton2(
-                                              isExpanded: true,
-                                              hint: Row(
-                                                children: const [
-                                                  
-                                                  SizedBox(
-                                                    width: 4,
+                                  Padding(
+                                      padding: const EdgeInsets.only(top: 0),
+                                      child: Container(
+                                        width: 350,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            color: Colors.transparent),
+                                        child: DropdownButtonHideUnderline(
+                                            child: DropdownButton2(
+                                          isExpanded: true,
+                                          hint: Row(
+                                            children: const [
+                                              SizedBox(
+                                                width: 4,
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  'Selecciona una ciudad',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color.fromRGBO(
+                                                        101, 45, 143, 1),
                                                   ),
-                                                  Expanded(
-                                                    child: Text(
-                                                      'Selecciona una ciudad',
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight: FontWeight.bold,
-                                                        color: Color.fromRGBO(101, 45, 143, 1),
-                                                      ),
-                                                      overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          items:
+                                              CitiesDictionary.keys.map((id) {
+                                            return DropdownMenuItem(
+                                                value: id,
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(30, 0, 0, 0),
+                                                  child: Text(
+                                                    CitiesDictionary[id]
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black,
                                                     ),
                                                   ),
-                                                ],
-                                              ),
-                                    items: CitiesDictionary.keys.map((id) {
-                                      return DropdownMenuItem(
-                                          value: id,
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    30, 0, 0, 0),
-                                            child: Text(
-                                              CitiesDictionary[id].toString(),
-                                              style: const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
-                                            ),
-                                            ),
-                                          ));
-                                    }).toList(),
-                                    value: CityValue,
-                                    onChanged: (value) {
-                                    setState(() {
-                                        CityValue = value as int?;
-                                        CitiesDropDownValue = value;
+                                                ));
+                                          }).toList(),
+                                          value: CityValue,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              CityValue = value as int?;
+                                              CitiesDropDownValue = value;
 
-                                        if(suburbValue!= null){
-                                          suburbValue = null;
-                                        }
-                                        SuburbsDictionary.clear();
-                                        GetSuburbs(CitiesDropDownValue);
-                                      });
-                                      
-                                    },
-                                    icon: const Icon(
-                                         Icons.keyboard_double_arrow_down,
-                                      ),
-                                      iconSize: 20,
-                                      iconEnabledColor: Color.fromRGBO(101, 45, 143, 1),
-                                      iconDisabledColor: Colors.grey,
-                                      buttonHeight: 50,
-                                      buttonWidth: 160,
-                                      buttonPadding: const EdgeInsets.only(left: 14, right: 14),
-                                      buttonDecoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(14),
-                                        border: Border.all(
-                                          color: Colors.black26,
-                                        ),
-                                        color: Colors.white,
-                                      ),
-                                      buttonElevation: 2,
-                                        itemHeight: 40,
-                                        itemPadding: const EdgeInsets.only(left: 14, right: 14),
-                                        dropdownMaxHeight: 150,
-                                        dropdownWidth: 350,
-                                        dropdownPadding: null,
-                                        dropdownDecoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(14),
-                                          color: Colors.white,
-                                        ),
-                                        dropdownElevation: 8,
-                                        scrollbarRadius: const Radius.circular(10),
-                                        scrollbarThickness: 6,
-                                        scrollbarAlwaysShow: true,
-                                        offset: const Offset(0, 0),
-                                  )),
-
-                                  )),
+                                              if (suburbValue != null) {
+                                                suburbValue = null;
+                                              }
+                                              SuburbsDictionary.clear();
+                                              GetSuburbs(CitiesDropDownValue);
+                                            });
+                                          },
+                                          icon: const Icon(
+                                            Icons.keyboard_double_arrow_down,
+                                          ),
+                                          iconSize: 20,
+                                          iconEnabledColor:
+                                              Color.fromRGBO(101, 45, 143, 1),
+                                          iconDisabledColor: Colors.grey,
+                                          buttonHeight: 50,
+                                          buttonWidth: 160,
+                                          buttonPadding: const EdgeInsets.only(
+                                              left: 14, right: 14),
+                                          buttonDecoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(14),
+                                            border: Border.all(
+                                              color: Colors.black26,
+                                            ),
+                                            color: Colors.white,
+                                          ),
+                                          buttonElevation: 2,
+                                          itemHeight: 40,
+                                          itemPadding: const EdgeInsets.only(
+                                              left: 14, right: 14),
+                                          dropdownMaxHeight: 150,
+                                          dropdownWidth: 350,
+                                          dropdownPadding: null,
+                                          dropdownDecoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(14),
+                                            color: Colors.white,
+                                          ),
+                                          dropdownElevation: 8,
+                                          scrollbarRadius:
+                                              const Radius.circular(10),
+                                          scrollbarThickness: 6,
+                                          scrollbarAlwaysShow: true,
+                                          offset: const Offset(0, 0),
+                                        )),
+                                      )),
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         right: 200.0, top: 0, bottom: 10.0),
@@ -951,96 +974,101 @@ class _SignUpViewState extends State<SignUpView> {
                                   SizedBox(
                                     height: size.height * 0.01,
                                   ),
-                                 Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 0),
-                                    child: 
-                                    Container(
-                                      width: 350,
-                                      height: 50,
-                                    decoration: BoxDecoration(color: Colors.transparent),
-                                    child:
-                                    DropdownButtonHideUnderline(
-                                      child:  DropdownButton2(
-                                              isExpanded: true,
-                                              hint: Row(
-                                                children: const [
-                                                  
-                                                  SizedBox(
-                                                    width: 4,
+                                  Padding(
+                                      padding: const EdgeInsets.only(top: 0),
+                                      child: Container(
+                                        width: 350,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            color: Colors.transparent),
+                                        child: DropdownButtonHideUnderline(
+                                            child: DropdownButton2(
+                                          isExpanded: true,
+                                          hint: Row(
+                                            children: const [
+                                              SizedBox(
+                                                width: 4,
+                                              ),
+                                              Expanded(
+                                                child: Text(
+                                                  'Selecciona una colonia',
+                                                  style: TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Color.fromRGBO(
+                                                        101, 45, 143, 1),
                                                   ),
-                                                  Expanded(
-                                                    child: Text(
-                                                      'Selecciona una colonia',
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight: FontWeight.bold,
-                                                        color: Color.fromRGBO(101, 45, 143, 1),
-                                                      ),
-                                                      overflow: TextOverflow.ellipsis,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          items:
+                                              SuburbsDictionary.keys.map((id) {
+                                            return DropdownMenuItem(
+                                                value: id,
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(30, 0, 0, 0),
+                                                  child: Text(
+                                                    SuburbsDictionary[id]
+                                                        .toString(),
+                                                    style: const TextStyle(
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black,
                                                     ),
                                                   ),
-                                                ],
-                                              ),
-                                    items: SuburbsDictionary.keys.map((id) {
-                                      return DropdownMenuItem(
-                                          value: id,
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    30, 0, 0, 0),
-                                            child: Text(
-                                              SuburbsDictionary[id].toString(),
-                                              style: const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
+                                                ));
+                                          }).toList(),
+                                          value: suburbValue,
+                                          onChanged: (value) {
+                                            setState(() {
+                                              suburbValue = value as int?;
+                                              SuburbsDropDownValue = value;
+                                            });
+                                          },
+                                          icon: const Icon(
+                                            Icons.keyboard_double_arrow_down,
+                                          ),
+                                          iconSize: 20,
+                                          iconEnabledColor:
+                                              Color.fromRGBO(101, 45, 143, 1),
+                                          iconDisabledColor: Colors.grey,
+                                          buttonHeight: 50,
+                                          buttonWidth: 160,
+                                          buttonPadding: const EdgeInsets.only(
+                                              left: 14, right: 14),
+                                          buttonDecoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(14),
+                                            border: Border.all(
+                                              color: Colors.black26,
                                             ),
-                                            ),
-                                          ));
-                                    }).toList(),
-                                    value: suburbValue,
-                                    onChanged: (value) {
-                                     setState(() {
-                                        suburbValue = value as int?;
-                                        SuburbsDropDownValue = value;
-                                      });
-                                      
-                                    },
-                                    icon: const Icon(
-                                         Icons.keyboard_double_arrow_down,
-                                      ),
-                                      iconSize: 20,
-                                      iconEnabledColor: Color.fromRGBO(101, 45, 143, 1),
-                                      iconDisabledColor: Colors.grey,
-                                      buttonHeight: 50,
-                                      buttonWidth: 160,
-                                      buttonPadding: const EdgeInsets.only(left: 14, right: 14),
-                                      buttonDecoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(14),
-                                        border: Border.all(
-                                          color: Colors.black26,
-                                        ),
-                                        color: Colors.white,
-                                      ),
-                                      buttonElevation: 2,
-                                        itemHeight: 40,
-                                        itemPadding: const EdgeInsets.only(left: 14, right: 14),
-                                        dropdownMaxHeight: 150,
-                                        dropdownWidth: 350,
-                                        dropdownPadding: null,
-                                        dropdownDecoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(14),
-                                          color: Colors.white,
-                                        ),
-                                        dropdownElevation: 8,
-                                        scrollbarRadius: const Radius.circular(10),
-                                        scrollbarThickness: 6,
-                                        scrollbarAlwaysShow: true,
-                                        offset: const Offset(0, 0),
-                                  )),
-
-                                  )),
+                                            color: Colors.white,
+                                          ),
+                                          buttonElevation: 2,
+                                          itemHeight: 40,
+                                          itemPadding: const EdgeInsets.only(
+                                              left: 14, right: 14),
+                                          dropdownMaxHeight: 150,
+                                          dropdownWidth: 350,
+                                          dropdownPadding: null,
+                                          dropdownDecoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(14),
+                                            color: Colors.white,
+                                          ),
+                                          dropdownElevation: 8,
+                                          scrollbarRadius:
+                                              const Radius.circular(10),
+                                          scrollbarThickness: 6,
+                                          scrollbarAlwaysShow: true,
+                                          offset: const Offset(0, 0),
+                                        )),
+                                      )),
                                   Padding(
                                     padding: const EdgeInsets.only(
                                         right: 200.0, top: 0, bottom: 10.0),
@@ -1136,7 +1164,8 @@ class _SignUpViewState extends State<SignUpView> {
                                       simpleUIController.isObscure.value = true;
                                     },
                                     child: Padding(
-                                      padding: const EdgeInsets.only(bottom: 50),
+                                      padding:
+                                          const EdgeInsets.only(bottom: 50),
                                       child: RichText(
                                         text: TextSpan(
                                           text: '¿Ya tienes una cuenta?',
@@ -1237,52 +1266,55 @@ class _SignUpViewState extends State<SignUpView> {
           // ... Navigate To your Home Page
 
           bool result;
-          if(_sexo == null || SuburbsDropDownValue == null || CitiesDropDownValue == null || CountriesDropDownValue == null){
-              if (_sexo == null) {
-                result = true;
-                showToast1(result);
-              }else{
-                result = false;
-                showToast1(result);
-              }
+          if (_sexo == null ||
+              SuburbsDropDownValue == null ||
+              CitiesDropDownValue == null ||
+              CountriesDropDownValue == null) {
+            if (_sexo == null) {
+              result = true;
+              showToast1(result);
+            } else {
+              result = false;
+              showToast1(result);
+            }
 
-              if (CountriesDropDownValue == null) {
-                result = true;
-                showToast2(result);
-              }
-              else{
-                result = false;
-                showToast2(result);
-              }
+            if (CountriesDropDownValue == null) {
+              result = true;
+              showToast2(result);
+            } else {
+              result = false;
+              showToast2(result);
+            }
 
-              if (CitiesDropDownValue == null) {
-                result = true;
-                showToast3(result);
-              }
-              else{
-                result = false;
-                showToast3(result);
-              }
+            if (CitiesDropDownValue == null) {
+              result = true;
+              showToast3(result);
+            } else {
+              result = false;
+              showToast3(result);
+            }
 
-              if (SuburbsDropDownValue == null) {
-                result = true;
-                showToast4(result);
-              }
-              else{
-                result = false;
-                showToast4(result);
-              }
+            if (SuburbsDropDownValue == null) {
+              result = true;
+              showToast4(result);
+            } else {
+              result = false;
+              showToast4(result);
+            }
 
-           if (_formKey.currentState!.validate()) {}
-          }
-          else if(_sexo != null && SuburbsDropDownValue != null && CitiesDropDownValue != null && CountriesDropDownValue != null){
+            if (_formKey.currentState!.validate()) {}
+          } else if (_sexo != null &&
+              SuburbsDropDownValue != null &&
+              CitiesDropDownValue != null &&
+              CountriesDropDownValue != null) {
             result = false;
-           showToast1(result);
-           showToast2(result);
-           showToast3(result);
-           showToast4(result);  
+            showToast1(result);
+            showToast2(result);
+            showToast3(result);
+            showToast4(result);
             if (_formKey.currentState!.validate()) {
-              PostAdress(SuburbsDropDownValue!, calleController.text, avenidaController.text, context);
+              PostAdress(SuburbsDropDownValue!, calleController.text,
+                  avenidaController.text, context);
             }
           }
         },
@@ -1292,7 +1324,6 @@ class _SignUpViewState extends State<SignUpView> {
   }
 }
 
-
 class ListModel {
   String? name;
   bool? isNew;
@@ -1300,5 +1331,3 @@ class ListModel {
 
   ListModel({this.name, this.widget, this.isNew});
 }
-
-

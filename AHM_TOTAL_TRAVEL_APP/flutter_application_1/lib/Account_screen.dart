@@ -15,6 +15,7 @@ import 'package:http/http.dart' as http;
 import 'hotel_booking/filters_screen.dart';
 import 'hotel_booking/hotel_app_theme.dart';
 import 'package:flutter_application_1/Models/UsersViewModel.dart';
+import 'package:flutter_application_1/Models/CountriesViewModel.dart';
 import 'main.dart';
 import 'dart:convert';
 import 'package:flutter/src/rendering/box.dart';
@@ -80,6 +81,29 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
             ', avenida ' +
             _userData['avenida'];
       });
+    } else {
+      print("Error: " + respuesta.statusCode.toString());
+    }
+  }
+
+  Map<int?, String> CountriesDictionary = Map();
+//COUNTRIES
+  Future<dynamic> GetCountries() async {
+    var data;
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/Countries/List";
+    var respuesta = await http.get(Uri.parse(url_list));
+    if (respuesta.statusCode == 200) {
+      Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
+      var Json = DecoderAPI.fromJson(ServerResponse);
+      data = Json.data;
+      // rellena diccionario de datos
+      data.forEach((x) {
+        CountriesViewModel element = CountriesViewModel.fromJson(x);
+        var descripcion = element.Pais!;
+        CountriesDictionary[element.ID] = descripcion;
+      });
+      return Json.data;
     } else {
       print("Error: " + respuesta.statusCode.toString());
     }
@@ -332,8 +356,9 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            EditAccount(widget.userloggeddata)),
+                                        builder: (context) => EditAccount(
+                                            widget.userloggeddata,
+                                            CountriesDictionary)),
                                   );
                                 },
                                 child: const Text('Editar Cuenta'),

@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, use_build_context_synchronously
+
 import 'dart:convert';
 import 'dart:math';
 //import 'dart:js';
@@ -144,7 +146,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
       var fechasalida = splitFechaSalida[0];
 
       list.add(Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
+        padding: EdgeInsetsDirectional.fromSTEB(16, 8, 10, 4),
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(8),
@@ -163,20 +165,20 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                 mainAxisSize: MainAxisSize.max,
                 children: [
                   Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 16, 12),
+                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 10, 12),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
                       children: [
                         Container(
                           width: 4,
-                          height: 150,
+                          height: 200,
                           decoration: BoxDecoration(
                             color: Color.fromRGBO(101, 45, 143, 1),
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),
                         Expanded(
-                          flex: 6,
+                          flex: 100,
                           child: Padding(
                             padding:
                                 EdgeInsetsDirectional.fromSTEB(10, 10, 10, 10),
@@ -192,114 +194,10 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Flexible(
-                                        child: new Text('Paquete :',
+                                        child: Text('Paquete :',
                                             style: TextStyle(
                                               fontFamily: 'Outfit',
-                                              fontSize: 25,
-                                              color: Color.fromRGBO(
-                                                  101, 45, 143, 1),
-                                            )),
-                                      ),
-                                      Flexible(
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  70, 0, 0, 0),
-                                          child: Text(
-                                            element['descripcionPaquete'],
-                                            style: TextStyle(
-                                              fontFamily: 'Outfit',
-                                              color: Color.fromRGBO(
-                                                  101, 45, 143, 1),
-                                              fontSize: 22,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 20),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Flexible(
-                                        child: new Text('Precio :',
-                                            style: TextStyle(
-                                              fontFamily: 'Outfit',
-                                              fontSize: 22,
-                                              color:
-                                                  Color.fromARGB(255, 3, 3, 3),
-                                            )),
-                                      ),
-                                      Flexible(
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  100, 0, 0, 0),
-                                          child: Text(
-                                            'L.' + element['precio'].toString(),
-                                            style: TextStyle(
-                                              fontFamily: 'Outfit',
-                                              color:
-                                                  Color.fromARGB(255, 3, 3, 3),
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 20),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Flexible(
-                                        child: new Text('Fecha de Entrada :',
-                                            style: TextStyle(
-                                              fontFamily: 'Outfit',
-                                              fontSize: 20,
-                                              color:
-                                                  Color.fromARGB(255, 3, 3, 3),
-                                            )),
-                                      ),
-                                      Flexible(
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  10, 0, 0, 0),
-                                          child: Text(
-                                            fechaentrada,
-                                            style: TextStyle(
-                                              fontFamily: 'Outfit',
-                                              color:
-                                                  Color.fromARGB(255, 3, 3, 3),
-                                              fontSize: 18,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 20),
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Flexible(
-                                        child: new Text('Fecha de salida :',
-                                            style: TextStyle(
-                                              fontFamily: 'Outfit',
-                                              fontSize: 20,
+                                              fontSize: 16,
                                               color:
                                                   Color.fromARGB(255, 3, 3, 3),
                                             )),
@@ -310,12 +208,48 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                               EdgeInsetsDirectional.fromSTEB(
                                                   26, 0, 0, 0),
                                           child: Text(
-                                            fechasalida,
+                                            element['descripcionPaquete'],
+                                            textAlign: TextAlign.justify,
                                             style: TextStyle(
                                               fontFamily: 'Outfit',
                                               color:
                                                   Color.fromARGB(255, 3, 3, 3),
-                                              fontSize: 18,
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 20),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Flexible(
+                                        child: Text('Precio:',
+                                            style: TextStyle(
+                                              fontFamily: 'Outfit',
+                                              fontSize: 16,
+                                              color:
+                                                  Color.fromARGB(255, 3, 3, 3),
+                                            )),
+                                      ),
+                                      Flexible(
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  40, 0, 0, 0),
+                                          child: Text(
+                                            'L.${element['precio']}',
+                                            style: TextStyle(
+                                              fontFamily: 'Outfit',
+                                              color:
+                                                  Color.fromARGB(255, 3, 3, 3),
+                                              fontSize: 15,
                                               fontWeight: FontWeight.w500,
                                             ),
                                           ),
@@ -332,20 +266,6 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            2, 12, 24, 12),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Icon(
-                                              Icons.star_rounded,
-                                              color: Color(0xFFFFA130),
-                                              size: 24,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
                                       ElevatedButton(
                                         style: ButtonStyle(
                                           backgroundColor:

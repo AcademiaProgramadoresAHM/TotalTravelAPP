@@ -38,7 +38,10 @@ class _Personali2ScreenState extends State<Personali2Screen> {
       hora_salida,
       hora_llegada,
       nombre_Cliente,
-      apellido_Cliente;
+      apellido_Cliente,
+      idActividad,
+      nombreActividad,
+      fechaActividad;
 
   void GetListTimelineReservation() {
     var i = 0;
@@ -76,10 +79,10 @@ class _Personali2ScreenState extends State<Personali2Screen> {
       });
     });
     widget.actividadesList.forEach((e) {
-      print("Actividad:" + i.toString());
-      print(e.id_actividad);
-      print(e.nombre_actividad);
-      print(e.fecha_Actividad);
+      //print("Actividad:" + i.toString());
+      idActividad = e.id_actividad.toString();
+      nombreActividad = e.nombre_actividad;
+      fechaActividad = e.fecha_Actividad;
       i++;
     });
   }
@@ -219,7 +222,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                                           style: TextStyle(
                                                               fontFamily:
                                                                   'Poppins',
-                                                              fontSize: 18,
+                                                              fontSize: 15,
                                                               color: Colors
                                                                   .black)),
                                                     ),
@@ -235,7 +238,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                                             style: TextStyle(
                                                                 fontFamily:
                                                                     'Poppins',
-                                                                fontSize: 16,
+                                                                fontSize: 15,
                                                                 color: Colors
                                                                     .black)),
                                                       ),
@@ -271,7 +274,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                                           style: TextStyle(
                                                               fontFamily:
                                                                   'Poppins',
-                                                              fontSize: 18,
+                                                              fontSize: 15,
                                                               color: Colors
                                                                   .black)),
                                                     ),
@@ -287,7 +290,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                                             style: TextStyle(
                                                                 fontFamily:
                                                                     'Poppins',
-                                                                fontSize: 16,
+                                                                fontSize: 15,
                                                                 color: Colors
                                                                     .black)),
                                                       ),
@@ -323,7 +326,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                                           style: TextStyle(
                                                               fontFamily:
                                                                   'Poppins',
-                                                              fontSize: 18,
+                                                              fontSize: 15,
                                                               color: Colors
                                                                   .black)),
                                                     ),
@@ -339,7 +342,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                                             style: TextStyle(
                                                                 fontFamily:
                                                                     'Poppins',
-                                                                fontSize: 16,
+                                                                fontSize: 15,
                                                                 color: Colors
                                                                     .black)),
                                                       ),
@@ -632,7 +635,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                                           style: TextStyle(
                                                               fontFamily:
                                                                   'Poppins',
-                                                              fontSize: 18,
+                                                              fontSize: 15,
                                                               color: Colors
                                                                   .black)),
                                                     ),
@@ -640,15 +643,15 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                                       child: Padding(
                                                         padding:
                                                             EdgeInsetsDirectional
-                                                                .fromSTEB(120,
-                                                                    0, 0, 0),
+                                                                .fromSTEB(12, 0,
+                                                                    0, 0),
                                                         child: Text(
                                                             element[
                                                                 'nombre_Hotel'],
                                                             style: TextStyle(
                                                                 fontFamily:
                                                                     'Poppins',
-                                                                fontSize: 16,
+                                                                fontSize: 15,
                                                                 color: Colors
                                                                     .black)),
                                                       ),
@@ -671,7 +674,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                             child: Text('Fecha Entrada:',
                                                 style: TextStyle(
                                                     fontFamily: 'Poppins',
-                                                    fontSize: 18,
+                                                    fontSize: 15,
                                                     color: Colors.black)),
                                           ),
                                           Flexible(
@@ -681,7 +684,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                               child: Text(fechaentrada,
                                                   style: TextStyle(
                                                       fontFamily: 'Poppins',
-                                                      fontSize: 16,
+                                                      fontSize: 15,
                                                       color: Colors.black)),
                                             ),
                                           ),
@@ -698,7 +701,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                             child: Text('Fecha Salida:',
                                                 style: TextStyle(
                                                     fontFamily: 'Poppins',
-                                                    fontSize: 18,
+                                                    fontSize: 15,
                                                     color: Colors.black)),
                                           ),
                                           Flexible(
@@ -708,7 +711,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                               child: Text(fechasalida,
                                                   style: TextStyle(
                                                       fontFamily: 'Poppins',
-                                                      fontSize: 16,
+                                                      fontSize: 15,
                                                       color: Colors.black)),
                                             ),
                                           ),
@@ -791,7 +794,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                             child: Text('Nombre Cliente:',
                                                 style: TextStyle(
                                                     fontFamily: 'Poppins',
-                                                    fontSize: 18,
+                                                    fontSize: 15,
                                                     color: Colors.black)),
                                           ),
                                           Flexible(
@@ -802,7 +805,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                                   element['nombrecompleto'],
                                                   style: TextStyle(
                                                       fontFamily: 'Poppins',
-                                                      fontSize: 16,
+                                                      fontSize: 15,
                                                       color: Colors.black)),
                                             ),
                                           ),
@@ -817,7 +820,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                         children: [
                                           Text('Dni :',
                                               style: TextStyle(
-                                                  fontSize: 18,
+                                                  fontSize: 17,
                                                   color: Colors.black)),
                                           Padding(
                                             padding:
@@ -826,7 +829,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                             child: Text(element['dni'],
                                                 style: TextStyle(
                                                     fontFamily: 'Poppins',
-                                                    fontSize: 16,
+                                                    fontSize: 15,
                                                     color: Colors.black)),
                                           ),
                                         ],
@@ -842,7 +845,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                             child: Text('Telefono :',
                                                 style: TextStyle(
                                                     fontFamily: 'Poppins',
-                                                    fontSize: 18,
+                                                    fontSize: 15,
                                                     color: Colors.black)),
                                           ),
                                           Flexible(
@@ -852,7 +855,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                               child: Text(element['telefono'],
                                                   style: TextStyle(
                                                       fontFamily: 'Poppins',
-                                                      fontSize: 16,
+                                                      fontSize: 15,
                                                       color: Colors.black)),
                                             ),
                                           ),
