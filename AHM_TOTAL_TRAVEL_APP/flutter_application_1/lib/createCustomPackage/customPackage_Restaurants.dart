@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/HotelsViewModel.dart';
 import 'package:flutter_application_1/Models/customPackageViewModel.dart';
+import 'package:flutter_application_1/Screens/Restaurantes.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_HistoryRestaurants.dart';
 import 'package:flutter_application_1/createCustomPackage/customPackage_RestaurantDetails.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_RestaurantMenus.dart';
 import 'package:flutter_application_1/navigation_home_screen.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:nb_utils/nb_utils.dart';
@@ -37,6 +39,32 @@ class RestaurantcustomPackage extends StatefulWidget {
 class _RestaurantcustomPackage extends State<RestaurantcustomPackage> {
 late List<Hoteles> ListaHoteles;
 Map<int?, String> HotelsDictionary = Map();
+
+
+Future<dynamic> GetListMenus(userloggeddata,idRestaurant,restaurante) async {
+    List<dynamic> dataMenus;
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/Menus/List";
+    final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+    final response = await http.get(Uri.parse(url_list), headers: headers);
+     if (response.statusCode == 200) 
+              {
+                Map<String, dynamic> userMap = jsonDecode(response.body);
+                var Json = DecoderAPI.fromJson(userMap);
+                dataMenus = Json.data;
+                var menus =
+                    dataMenus.where((x) => x['iD_Restaurante'] == idRestaurant).toList();
+                 Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => MenusList(widget.userloggeddata,menus,restaurante)),
+                  );
+              }
+
+  }
 
 
 
@@ -211,60 +239,32 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          2, 12, 24, 12),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Icon(
-                                            Icons.star_rounded,
-                                            color: Color(0xFFFFA130),
-                                            size: 24,
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    4, 0, 0, 0),
-                                            child: Text(
-                                              '4/5',
-                                              style: TextStyle(
-                                                fontFamily: 'Outfit',
-                                                color: Color(0xFF101213),
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.normal,
+                                    Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 0,20, 0),
+                                              child: SizedBox(
+                                                width: 100,
+                                                child:  ElevatedButton(
+                                                            child: Text(
+                                                               "Ver menú",
+                                                                style: TextStyle(
+                                                                    color: Color(0xFF652D8F))),
+                                                            onPressed:() {
+                                                             
+                                                             GetListMenus(widget.userloggeddata,element['id'],element['restaurante']);
+                                                            },
+                                                            style: ElevatedButton.styleFrom(
+                                                              backgroundColor: Colors.white,
+                                                              elevation: 0.0
+                                                                    ),
+                                                          ),), 
+                                             
                                               ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    8, 0, 0, 0),
-                                            child: Text(
-                                              'Rating',
-                                              style: TextStyle(
-                                                fontFamily: 'Outfit',
-                                                color: Color(0xFF57636C),
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
                                     ElevatedButton(
                                       style: ButtonStyle(
                                         backgroundColor:
                                             MaterialStateProperty.all(
                                                 Color.fromRGBO(
                                                     101, 45, 143, 1)),
-                                        shape: MaterialStateProperty.all(
-                                          RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                          ),
-                                        ),
+                                        
                                       ),
                                       child: Text(
                                         'Reservar',

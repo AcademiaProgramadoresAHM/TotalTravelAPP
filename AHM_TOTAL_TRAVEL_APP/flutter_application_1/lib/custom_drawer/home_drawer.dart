@@ -74,10 +74,6 @@ class _HomeDrawerState extends State<HomeDrawer> {
         icon: Icon(Icons.home),
       ),
       DrawerList(
-          index: DrawerIndex.Help,
-          labelName: 'Historial de compra',
-          icon: Icon(Icons.history)),
-      DrawerList(
         index: DrawerIndex.FeedBack,
         labelName: 'Ofertas de viaje',
         icon: Icon(Icons.loyalty),
@@ -88,24 +84,23 @@ class _HomeDrawerState extends State<HomeDrawer> {
         icon: Icon(Icons.new_label),
       ),
       DrawerList(
+        index: DrawerIndex.Personalization,
+        labelName: 'Reservaciones',
+        icon: Icon(Icons.list),
+      ),
+      DrawerList(
+          index: DrawerIndex.Help,
+          labelName: 'Historial de compra',
+          icon: Icon(Icons.history)),
+      DrawerList(
         index: DrawerIndex.Historial,
         labelName: 'Historial de transacciones',
         icon: Icon(Icons.history),
       ),
-      /*DrawerList(
-        index: DrawerIndex.Compras,
-        labelName: 'Compras',
-        icon: Icon(Icons.shopping_cart),
-      ),*/
       DrawerList(
         index: DrawerIndex.Account,
         labelName: 'Mi Cuenta',
         icon: Icon(Icons.person),
-      ),
-      DrawerList(
-        index: DrawerIndex.Personalization,
-        labelName: 'Reservaciones',
-        icon: Icon(Icons.list),
       ),
       DrawerList(
         index: DrawerIndex.Support,

@@ -82,6 +82,27 @@ class ActivitiesExtra {
       };
 }
 
+class ActivitiesHotel {
+  int? index;
+  int? hoAc_ID;
+  String? hoAc_Descripcion;
+  int? hoAc_numeroPersonas;
+  String? reAH_FechaReservacion;
+  String? reAH_HoraReservacion;
+  double? reAH_Precio;
+
+  Map<String, dynamic> toJson() => {
+        'index': index,
+        'hoAc_ID': hoAc_ID,
+        'reAH_Cantidad': hoAc_numeroPersonas,
+        'reAH_FechaReservacion': reAH_FechaReservacion,
+        'reAH_HoraReservacion': reAH_HoraReservacion,
+        'reAH_Precio': reAH_Precio,
+      };
+}
+
+
+
 class Restaurants {
   int? index;
   int? rest_ID;

@@ -120,11 +120,12 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
     }
   }
 
-Map<int?, String> CitiesDictionary = Map();
+  Map<int?, String> CitiesDictionary = Map();
 
   Future<dynamic> GetCities() async {
     var data;
-    String url_list = "https://totaltravelapi.azurewebsites.net/API/Cities/List";
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/Cities/List";
     var respuesta = await http.get(Uri.parse(url_list));
     if (respuesta.statusCode == 200) {
       Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
@@ -142,8 +143,6 @@ Map<int?, String> CitiesDictionary = Map();
       print("Error: " + respuesta.statusCode.toString());
     }
   }
-
-
 
   @override
   void initState() {
@@ -187,29 +186,14 @@ Map<int?, String> CitiesDictionary = Map();
             screenView = MyHomePage(widget.userloggeddata);
           });
           break;
-        case DrawerIndex.Help:
-          setState(() {
-            screenView = Comprashistorial(widget.userloggeddata);
-          });
-          break;
         case DrawerIndex.FeedBack:
           setState(() {
             screenView = FeedbackScreen(widget.userloggeddata);
           });
           break;
-        /*case DrawerIndex.Compras:
-          setState(() {
-            screenView = Compras();
-          });
-          break;*/
         case DrawerIndex.CrearPaquete:
           setState(() {
-            screenView = createPackage(widget.userloggeddata,CitiesDictionary);
-          });
-          break;
-        case DrawerIndex.Account:
-          setState(() {
-            screenView = AccountInfo(widget.userloggeddata);
+            screenView = createPackage(widget.userloggeddata, CitiesDictionary);
           });
           break;
         case DrawerIndex.Personalization:
@@ -217,6 +201,18 @@ Map<int?, String> CitiesDictionary = Map();
             screenView = PersonaliScreen(widget.userloggeddata);
           });
           break;
+        case DrawerIndex.Help:
+          setState(() {
+            screenView = Comprashistorial(widget.userloggeddata);
+          });
+          break;
+
+        case DrawerIndex.Account:
+          setState(() {
+            screenView = AccountInfo(widget.userloggeddata);
+          });
+          break;
+
         case DrawerIndex.Historial:
           setState(() {
             screenView = HistorialScreen(widget.userloggeddata);
