@@ -194,6 +194,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Flexible(
+                                        flex: 2,
                                         child: Text('Paquete :',
                                             style: TextStyle(
                                               fontFamily: 'Outfit',
@@ -203,6 +204,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                             )),
                                       ),
                                       Flexible(
+                                        flex: 5,
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -225,11 +227,12 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 20),
+                                      0, 0, 0, 5),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Flexible(
+                                        flex: 2,
                                         child: Text('Precio:',
                                             style: TextStyle(
                                               fontFamily: 'Outfit',
@@ -239,6 +242,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                             )),
                                       ),
                                       Flexible(
+                                        flex: 3,
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
@@ -260,7 +264,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 8, 0, 0),
+                                      100, 8, 0, 0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment:

@@ -1042,8 +1042,6 @@ class _ReservationPreviewState extends State<ReservationPreview> {
                                       ReservConfirm(
                                         widget.userloggeddata,
                                         widget.Reservation,
-                                        widget.package,
-                                        widget.paqueteactividades,
                                       ),
                                       userloggeddata)));
                         },

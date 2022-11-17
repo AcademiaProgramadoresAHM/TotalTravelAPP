@@ -613,12 +613,12 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
       );
 
       reservation.usuaId = widget.userloggeddata!.ID;
-      reservation.paquId = element['id'];
+      reservation.paquId = idpackage;
       reservation.resvEsPersonalizado = false;
       reservation.resvCantidadPagos = _pagos.toInt();
       reservation.resvNumeroPersonas = people.toInt();
       reservation.resvConfirmacionPago = false;
-      reservation.resvConfirmacionHotel = false;
+      reservation.resvConfirmacionHotel = true;
       reservation.resvConfirmacionRestaurante = false;
       reservation.resvConfirmacionTrans = false;
       reservation.resvPrecio = element['precio'];

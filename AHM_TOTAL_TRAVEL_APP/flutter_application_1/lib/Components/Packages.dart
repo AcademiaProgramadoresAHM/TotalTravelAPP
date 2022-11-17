@@ -499,6 +499,7 @@ Future<void> PostReservertion(
       "https://totaltravelapi.azurewebsites.net/API/Reservation/Insert");
 
   final json = jsonEncode(reservacion);
+  print(json);
   final response = await http.post(
     uri,
     headers: headers,

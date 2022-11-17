@@ -474,7 +474,6 @@ class _ActivityDetails extends State<DefaultActivityExtraDetails> {
 
         ActivitiesExtraDefault activitiesExtraModel =
             new ActivitiesExtraDefault();
-        activitiesExtraModel.index = widget.ActivityAdd;
         activitiesExtraModel.acEx_ID = element['id'];
         activitiesExtraModel.acEx_Descripcion = element['actividad'];
         activitiesExtraModel.acEx_numeroPersonas = peopleFinal;
@@ -493,7 +492,7 @@ class _ActivityDetails extends State<DefaultActivityExtraDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xFF652D8F),
+          backgroundColor: Color.fromRGBO(101, 45, 143, 1),
           automaticallyImplyLeading: false,
           title: Align(
             alignment: AlignmentDirectional(0.5, -0.05),

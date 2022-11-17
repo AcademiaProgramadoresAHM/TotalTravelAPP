@@ -111,7 +111,6 @@ class CiudadViewModel {
 }
 
 class ActivitiesExtraDefault {
-  int? index;
   int? acEx_ID;
   String? acEx_Descripcion;
   int? acEx_numeroPersonas;
@@ -120,8 +119,7 @@ class ActivitiesExtraDefault {
   double? reAE_Precios;
 
   Map<String, dynamic> toJson() => {
-        'index': index,
-        'acEx_ID': acEx_ID,
+        'reAE_ID': acEx_ID,
         'acEx_Descripcion': acEx_Descripcion,
         'reAE_Cantidad': acEx_numeroPersonas,
         'reAE_FechaReservacion': reAE_FechaReservacion,

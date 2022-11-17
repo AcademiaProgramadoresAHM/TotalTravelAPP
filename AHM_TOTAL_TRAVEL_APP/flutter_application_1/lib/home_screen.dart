@@ -370,16 +370,16 @@ class _HotelHomeScreenState extends State<MyHomePage>
           ClipRRect(
             child: Stack(
               children: <Widget>[
-                Image.asset('assets/images/Argentina.jpg'),
+                Image.asset('assets/images/klk.jpg'),
                 Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(150, 0, 0, 0),
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 130, 185, 0),
                   child: Container(
                     width: 125,
                     height: 50,
                     child: ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                            Color.fromRGBO(101, 45, 143, 1)),
+                        backgroundColor:
+                            MaterialStateProperty.all(Colors.white),
                         shape: MaterialStateProperty.all(
                           RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(15),
@@ -390,7 +390,7 @@ class _HotelHomeScreenState extends State<MyHomePage>
                         'Personaliza',
                         style: TextStyle(
                           fontFamily: 'Outfit',
-                          color: Colors.white,
+                          color: Color.fromRGBO(101, 45, 143, 1),
                           fontSize: 16,
                           fontWeight: FontWeight.normal,
                         ),
