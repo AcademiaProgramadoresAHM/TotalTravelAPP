@@ -265,7 +265,7 @@ Map<int?, String> CountriesDictionary = Map();
                 ),
 
                 SizedBox(
-                  height: size.height * 0.10,
+                  height: size.height * 0.03,
                 ),
 
                 /// Login Button

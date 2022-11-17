@@ -80,6 +80,7 @@ final TextEditingController textEditingController = TextEditingController();
     List<String> items = [];
     List<String> imageUrl;
     final _controller = PageController();
+    if(data.isNotEmpty){
     data.forEach((element) {
       imageUrl = element['image_URL'].split(',');
       String? selectedValue;
@@ -100,8 +101,8 @@ final TextEditingController textEditingController = TextEditingController();
         }
         return _itemsHeights;
       }
-      
-            list.add(
+
+      list.add(
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(18, 14, 18, 0),
           child: Container(
@@ -267,16 +268,70 @@ final TextEditingController textEditingController = TextEditingController();
           ),
         ),
       );
-    
     if(confirm == true){
 
      // widget.activityExtra.insert(widget.ActivityAdd, activitiesExtraModel);
     }
-   
-
-
+    });}else{
+        list.add(Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 4,
+                color: Color(0x32000000),
+                offset: Offset(0, 2),
+              )
+            ],
+          ),
+          child: Column(
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 16, 12),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                      
+                        Expanded(
+                          flex: 6,
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(80, 0, 0, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "No existen registros.",
+                                  style: TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Colors.grey,
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ));
+    }
     
-    });
     return list;
   }
 

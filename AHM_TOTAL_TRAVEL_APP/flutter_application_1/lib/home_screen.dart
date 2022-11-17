@@ -59,7 +59,6 @@ class _HotelHomeScreenState extends State<MyHomePage>
 
       return Json.data;
     } else {
-      print("Error: " + respuesta.statusCode.toString());
     }
   }
 
@@ -77,8 +76,6 @@ class _HotelHomeScreenState extends State<MyHomePage>
       var Json = Decodificador.fromJson(userMap);
       datapackage = Json.data;
       var package = datapackage.where((x) => x['id'] == idPackage).toList();
-
-      print(package);
       Navigator.push(
         context,
         MaterialPageRoute(

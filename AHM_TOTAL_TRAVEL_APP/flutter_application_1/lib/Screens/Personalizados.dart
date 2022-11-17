@@ -350,7 +350,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                 flex: 5,
                 child: Center(
                   child: Text(
-                    'Reservaciones Hechas',
+                    'Reservaciones',
                     style: TextStyle(
                       fontWeight: FontWeight.w500,
                       fontSize: 20,

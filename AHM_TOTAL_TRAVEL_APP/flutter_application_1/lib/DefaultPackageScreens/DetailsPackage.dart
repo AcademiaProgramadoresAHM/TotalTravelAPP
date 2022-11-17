@@ -161,49 +161,7 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(2, 12, 24, 12),
                                                 child: Row(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  children: [
-                                                    Icon(
-                                                      Icons.star_rounded,
-                                                      color: Color(0xFFFFA130),
-                                                      size: 24,
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  4, 0, 0, 0),
-                                                      child: Text(
-                                                        '4/5',
-                                                        style: TextStyle(
-                                                          fontFamily: 'Outfit',
-                                                          color:
-                                                              Color(0xFF101213),
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  8, 0, 0, 0),
-                                                      child: Text(
-                                                        'Rating',
-                                                        style: TextStyle(
-                                                          fontFamily: 'Outfit',
-                                                          color:
-                                                              Color(0xFF57636C),
-                                                          fontSize: 14,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
+                                                  
                                                 ),
                                               ),
                                             ],
@@ -454,42 +412,52 @@ class _DetailPackageScreenState extends State<DetailPackageScreen> {
       ),
       key: scaffoldKey,
       backgroundColor: Colors.white,
-      body: SafeArea(
-        child: GestureDetector(
-            onTap: () => FocusScope.of(context).unfocus(),
-            child: Column(
-              children: [
-                FutureBuilder<dynamic>(
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                          child: Padding(
-                        padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
-                        child: CircularProgressIndicator(
-                            color: Color.fromARGB(255, 101, 45, 144)),
-                      ));
-                    } else {
-                      if (snapshot.hasData) {
-                        return Wrap(
-                            spacing: 8,
-                            runSpacing: 4,
-                            alignment: WrapAlignment.start,
-                            crossAxisAlignment: WrapCrossAlignment.start,
-                            direction: Axis.horizontal,
-                            runAlignment: WrapAlignment.start,
-                            verticalDirection: VerticalDirection.down,
-                            clipBehavior: Clip.none,
-                            children: PackageDetails(widget.Package, context));
-                      } else {
-                        return Center(child: Text('No Data'));
-                      }
-                    }
-                  },
-                  future: GetListadoPackageshome(),
-                ),
-              ],
-            )),
+      body: SingleChildScrollView(
+        child: Column(
+        children: [
+          SafeArea(
+            child: GestureDetector(
+                onTap: () => FocusScope.of(context).unfocus(),
+                child: Column(
+                  children: [
+                    FutureBuilder<dynamic>(
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Center(
+                              child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
+                            child: CircularProgressIndicator(
+                                color: Color.fromARGB(255, 101, 45, 144)),
+                          ));
+                        } else {
+                          if (snapshot.hasData) {
+                            return Wrap(
+                                spacing: 8,
+                                runSpacing: 4,
+                                alignment: WrapAlignment.start,
+                                crossAxisAlignment: WrapCrossAlignment.start,
+                                direction: Axis.horizontal,
+                                runAlignment: WrapAlignment.start,
+                                verticalDirection: VerticalDirection.down,
+                                clipBehavior: Clip.none,
+                                children: PackageDetails(widget.Package, context));
+                          } else {
+                             return Center(
+                                child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
+                              child: CircularProgressIndicator(
+                                  color: Color.fromARGB(255, 101, 45, 144)),
+                            ));
+                          }
+                        }
+                      },
+                      future: GetListadoPackageshome(),
+                    ),
+                  ],
+                )),
+          ),
+        ],
       ),
-    );
+    ));
   }
 }

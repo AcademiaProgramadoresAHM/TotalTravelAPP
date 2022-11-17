@@ -81,6 +81,7 @@ class _HotelcustomPackage extends State<HotelcustomPackage> {
     List<Padding> list = [];
     final _controller = PageController();
     List<String> imageUrl;
+    if(data.isNotEmpty){
     data.forEach((element) {
       imageUrl = element['image_URL'].split(',');
       list.add(Padding(
@@ -202,37 +203,7 @@ class _HotelcustomPackage extends State<HotelcustomPackage> {
                                         child: Row(
                                           mainAxisSize: MainAxisSize.max,
                                           children: [
-                                            Icon(
-                                              Icons.star_rounded,
-                                              color: Color(0xFFFFA130),
-                                              size: 24,
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(4, 0, 0, 0),
-                                              child: Text(
-                                                '4/5',
-                                                style: TextStyle(
-                                                  fontFamily: 'Outfit',
-                                                  color: Color(0xFF101213),
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(8, 0, 0, 0),
-                                              child: Text(
-                                                'Rating',
-                                                style: TextStyle(
-                                                  fontFamily: 'Outfit',
-                                                  color: Color(0xFF57636C),
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
-                                              ),
-                                            ),
+                                          
                                           ],
                                         ),
                                       ),
@@ -278,7 +249,65 @@ class _HotelcustomPackage extends State<HotelcustomPackage> {
           ),
         ),
       ));
-    });
+    });}else{
+        list.add(Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 4,
+                color: Color(0x32000000),
+                offset: Offset(0, 2),
+              )
+            ],
+          ),
+          child: Column(
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 16, 12),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                      
+                        Expanded(
+                          flex: 6,
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(80, 0, 0, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "No existen registros.",
+                                  style: TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Colors.grey,
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ));
+    }
 
     return list;
   }
