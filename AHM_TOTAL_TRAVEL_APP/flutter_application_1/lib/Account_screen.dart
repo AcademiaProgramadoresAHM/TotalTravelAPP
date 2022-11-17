@@ -51,6 +51,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
     animationController = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
     super.initState();
+    GetCountries();
   }
 
   Future<void> GetUserData() async {

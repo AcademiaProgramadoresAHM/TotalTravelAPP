@@ -799,6 +799,119 @@ class _EditAccountState extends State<EditAccount> {
                                     ),
                                   ),
                                 ),
+                                SizedBox(
+                                  height: size.height * 0.01,
+                                ),
+                                Padding(
+                                    padding: const EdgeInsets.only(top: 0),
+                                    child: Container(
+                                      width: 350,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                          color: Colors.transparent),
+                                      child: DropdownButtonHideUnderline(
+                                          child: DropdownButton2(
+                                        isExpanded: true,
+                                        hint: Row(
+                                          children: const [
+                                            SizedBox(
+                                              width: 4,
+                                            ),
+                                            Expanded(
+                                              child: Text(
+                                                'Selecciona una colonia',
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Color.fromRGBO(
+                                                      101, 45, 143, 1),
+                                                ),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        items: SuburbsDictionary.keys.map((id) {
+                                          return DropdownMenuItem(
+                                              value: id,
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(30, 0, 0, 0),
+                                                child: Text(
+                                                  SuburbsDictionary[id]
+                                                      .toString(),
+                                                  style: const TextStyle(
+                                                    fontSize: 14,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                              ));
+                                        }).toList(),
+                                        value: suburbValue,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            suburbValue = value as int?;
+                                            SuburbsDropDownValue = value;
+                                          });
+                                        },
+                                        icon: const Icon(
+                                          Icons.keyboard_double_arrow_down,
+                                        ),
+                                        iconSize: 20,
+                                        iconEnabledColor:
+                                            Color.fromRGBO(101, 45, 143, 1),
+                                        iconDisabledColor: Colors.grey,
+                                        buttonHeight: 50,
+                                        buttonWidth: 160,
+                                        buttonPadding: const EdgeInsets.only(
+                                            left: 14, right: 14),
+                                        buttonDecoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(14),
+                                          border: Border.all(
+                                            color: Colors.black26,
+                                          ),
+                                          color: Colors.white,
+                                        ),
+                                        buttonElevation: 2,
+                                        itemHeight: 40,
+                                        itemPadding: const EdgeInsets.only(
+                                            left: 14, right: 14),
+                                        dropdownMaxHeight: 150,
+                                        dropdownWidth: 350,
+                                        dropdownPadding: null,
+                                        dropdownDecoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(14),
+                                          color: Colors.white,
+                                        ),
+                                        dropdownElevation: 8,
+                                        scrollbarRadius:
+                                            const Radius.circular(10),
+                                        scrollbarThickness: 6,
+                                        scrollbarAlwaysShow: true,
+                                        offset: const Offset(0, 0),
+                                      )),
+                                    )),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 200.0, top: 0, bottom: 10.0),
+                                  child: Visibility(
+                                    visible: _isVisibleSuburbs,
+                                    child: RichText(
+                                      text: TextSpan(
+                                        children: [
+                                          TextSpan(
+                                              text: "Seleccione una opción ",
+                                              style: TextStyle(
+                                                  color: redColor,
+                                                  fontSize: 13)),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
 
                                 SizedBox(
                                   height: size.height * 0.01,
@@ -899,8 +1012,7 @@ class _EditAccountState extends State<EditAccount> {
           // ... Navigate To your Home Page
 
           bool result;
-          if (_sexo == null ||
-              SuburbsDropDownValue == null ||
+          if (SuburbsDropDownValue == null ||
               CitiesDropDownValue == null ||
               CountriesDropDownValue == null) {
             /*
@@ -937,8 +1049,7 @@ class _EditAccountState extends State<EditAccount> {
             }
 
             if (_formKey.currentState!.validate()) {}
-          } else if (_sexo != null &&
-              SuburbsDropDownValue != null &&
+          } else if (SuburbsDropDownValue != null &&
               CitiesDropDownValue != null &&
               CountriesDropDownValue != null) {
             result = false;
