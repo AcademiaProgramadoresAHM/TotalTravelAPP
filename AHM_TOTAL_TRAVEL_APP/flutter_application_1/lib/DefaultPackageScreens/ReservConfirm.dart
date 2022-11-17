@@ -19,12 +19,10 @@ import '../Models/registerpaymentViewModel.dart'; //https://pub.dev/packages/nb_
 class ReservConfirm extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final ReservationViewmodel Reservation;
-  final DefaultPackageModel? package;
-  final List<dynamic> paqueteactividades;
+  // final DefaultPackageModel? package;
+  // final List<dynamic> paqueteactividades;
 
-  const ReservConfirm(this.userloggeddata, this.Reservation, this.package,
-      this.paqueteactividades,
-      {super.key});
+  const ReservConfirm(this.userloggeddata, this.Reservation, {super.key});
 
   static String tag = '/ReservConfirm';
 

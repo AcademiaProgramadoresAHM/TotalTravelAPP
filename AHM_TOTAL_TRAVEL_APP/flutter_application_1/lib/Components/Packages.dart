@@ -52,8 +52,7 @@ Future<dynamic> FindPackage(
     var Json = Decodificador.fromJson(userMap);
     datapackage = Json.data;
     var package = datapackage.where((x) => x['id'] == idPackage).toList();
-
-    print(package);
+    
     Navigator.push(
       context,
       MaterialPageRoute(
@@ -202,42 +201,7 @@ List<Padding> ListDefaultPackages(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           2, 12, 24, 12),
                                       child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Icon(
-                                            Icons.star_rounded,
-                                            color: Color(0xFFFFA130),
-                                            size: 24,
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    4, 0, 0, 0),
-                                            child: Text(
-                                              '4/5',
-                                              style: TextStyle(
-                                                fontFamily: 'Outfit',
-                                                color: Color(0xFF101213),
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    8, 0, 0, 0),
-                                            child: Text(
-                                              'Rating',
-                                              style: TextStyle(
-                                                fontFamily: 'Outfit',
-                                                color: Color(0xFF57636C),
-                                                fontSize: 14,
-                                                fontWeight: FontWeight.normal,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
+                                        
                                       ),
                                     ),
                                     ElevatedButton(
@@ -499,6 +463,7 @@ Future<void> PostReservertion(
       "https://totaltravelapi.azurewebsites.net/API/Reservation/Insert");
 
   final json = jsonEncode(reservacion);
+  print(json);
   final response = await http.post(
     uri,
     headers: headers,

@@ -286,7 +286,7 @@ class _payPage extends State<payPage> {
 List<Padding> ResumeActivities(List<ActivitiesExtra>? data, BuildContext context) {
     List<Padding> list = [];
     final _controller = PageController();
-
+   if(data != null){
     data?.forEach((element) {
 
       setState(() {
@@ -464,7 +464,65 @@ List<Padding> ResumeActivities(List<ActivitiesExtra>? data, BuildContext context
           ),
         ),
       ));
-    });
+    });}else{
+        list.add(Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 4,
+                color: Color(0x32000000),
+                offset: Offset(0, 2),
+              )
+            ],
+          ),
+          child: Column(
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 16, 12),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                      
+                        Expanded(
+                          flex: 6,
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(80, 0, 0, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "No hay actividades incluidas",
+                                  style: TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Colors.grey,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ));
+    }
 
     return list;
   }
@@ -473,7 +531,7 @@ List<Padding> ResumeActivities(List<ActivitiesExtra>? data, BuildContext context
 List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
     List<Padding> list = [];
     final _controller = PageController();
-
+    if(data != null){
     data?.forEach((element) {
       list.add(Padding(
         padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
@@ -634,7 +692,65 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
           ),
         ),
       ));
-    });
+    });}else{
+        list.add(Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 4,
+                color: Color(0x32000000),
+                offset: Offset(0, 2),
+              )
+            ],
+          ),
+          child: Column(
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 16, 12),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                      
+                        Expanded(
+                          flex: 6,
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(80, 0, 0, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "No hay restaurantes incluidas",
+                                  style: TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Colors.grey,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ));
+    }
 
     return list;
   }
@@ -976,13 +1092,47 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           12, 20, 0, 0),
                                       child: Text(
+                                        'Transporte',style: TextStyle(fontSize: 18)
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                                    Wrap(
+                                  spacing: 8,
+                                  runSpacing: 4,
+                                  alignment: WrapAlignment.start,
+                                  crossAxisAlignment: WrapCrossAlignment.start,
+                                  direction: Axis.horizontal,
+                                  runAlignment: WrapAlignment.start,
+                                  verticalDirection: VerticalDirection.down,
+                                  clipBehavior: Clip.none,
+                                  children: ResumeTransport(widget.customPackage, context)),
+                                    Padding(
+                                padding:
+                                    EdgeInsetsDirectional.fromSTEB(30, 4, 8, 4),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0, 20, 0, 0),
+                                      child: Icon(
+                                        Icons.assignment_sharp,
+                                        color: Color(0xFF0F1113),
+                                        size: 24,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          12, 20, 0, 0),
+                                      child: Text(
                                         'Actividades',style: TextStyle(fontSize: 18)
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-                                
                          Wrap(
                         spacing: 8,
                         runSpacing: 4,
@@ -1029,41 +1179,8 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
                         verticalDirection: VerticalDirection.down,
                         clipBehavior: Clip.none,
                         children: ResumeRestaurant(widget.customPackage.Restaurant, context))),
-                          Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(30, 4, 8, 4),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 20, 0, 0),
-                                      child: Icon(
-                                        Icons.assignment_sharp,
-                                        color: Color(0xFF0F1113),
-                                        size: 24,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          12, 20, 0, 0),
-                                      child: Text(
-                                        'Transporte',style: TextStyle(fontSize: 18)
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),     
-                               Wrap(
-                        spacing: 8,
-                        runSpacing: 4,
-                        alignment: WrapAlignment.start,
-                        crossAxisAlignment: WrapCrossAlignment.start,
-                        direction: Axis.horizontal,
-                        runAlignment: WrapAlignment.start,
-                        verticalDirection: VerticalDirection.down,
-                        clipBehavior: Clip.none,
-                        children: ResumeTransport(widget.customPackage, context)),
+                      
+                           
                         Padding(padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 30),),    
 
                               Wrap(
@@ -1078,6 +1195,7 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
                         children:[
                       
                         ]),
+                        
                          Padding(
                       padding: EdgeInsetsDirectional.fromSTEB(15, 0, 15, 0),
                       child: Container(
@@ -1164,7 +1282,7 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
                                     ),
                                   ),
                                   Text(
-                                    'HNL ' +SubTotal.toString() + '0',
+                                    'HNL ' +SubTotal.toString() + '.00',
                                     textAlign: TextAlign.end,
                                     style: TextStyle(
                                       fontFamily: 'Lexend Deca',
@@ -1194,7 +1312,7 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
                                     ),
                                   ),
                                   Text(
-                                    'HNL '+  Total.toString() + '0',
+                                    'HNL '+  Total.toString() + '.00',
                                     textAlign: TextAlign.end,
                                     style: TextStyle(
                                       fontFamily: 'Lexend Deca',

@@ -66,13 +66,11 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
       datapackage = Json.data;
       var package = datapackage.where((x) => x['id'] == idPackage).toList();
 
-      print(package);
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => NavigationHomeScreen(
-                DetailPackageScreen(widget.userloggeddata, package),
-                widget.userloggeddata)),
+            builder: (context) => 
+                DetailPackageScreen(widget.userloggeddata, package),),
       );
     } else {
       print("Error " + response.statusCode.toString());

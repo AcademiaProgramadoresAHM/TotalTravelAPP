@@ -11,7 +11,6 @@ import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter_application_1/custom_drawer/drawer_user_controller.dart';
 import 'package:flutter_application_1/custom_drawer/home_drawer.dart';
 import 'package:flutter_application_1/feedback_screen.dart';
-import 'package:flutter_application_1/help_screen.dart';
 import 'package:flutter_application_1/home_screen.dart';
 import 'package:flutter_application_1/invite_friend_screen.dart';
 import 'package:flutter/material.dart';
