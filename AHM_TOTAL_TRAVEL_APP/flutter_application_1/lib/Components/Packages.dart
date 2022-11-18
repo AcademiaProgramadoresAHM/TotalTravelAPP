@@ -26,7 +26,7 @@ UserLoggedModel? userloggeddata;
 
 Future<dynamic> GetListadoPackages() async {
   String url_list =
-      "https://totaltravelapi.azurewebsites.net/API/DefaultPackages/List";
+      "https://apitotaltravel.azurewebsites.net/API/DefaultPackages/List";
   final response = await http.get(Uri.parse(url_list));
   if (response.statusCode == 200) {
     Map<String, dynamic> userMap = jsonDecode(response.body);
@@ -41,7 +41,7 @@ Future<dynamic> FindPackage(
     idPackage, userloggeddata, BuildContext context) async {
   List<dynamic> datapackage;
   String url_list =
-      "https://totaltravelapi.azurewebsites.net/API/DefaultPackages/List";
+      "https://apitotaltravel.azurewebsites.net/API/DefaultPackages/List";
   final headers = {
     "Content-type": "application/json",
     "Authorization": "bearer " + userloggeddata!.Token!
@@ -404,7 +404,7 @@ List<Padding> ListReservation(List<dynamic> data, BuildContext context, user) {
 Future<dynamic> GetListadoReservation(userloggeddata, context) async {
   List<dynamic> dataReservation;
   String url_list =
-      "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
+      "https://apitotaltravel.azurewebsites.net/API/Reservation/List";
   final headers = {
     "Content-type": "application/json",
     "Authorization": "bearer " + userloggeddata!.Token!
@@ -425,7 +425,7 @@ Future<dynamic> GetListadoReservation(userloggeddata, context) async {
 Future<dynamic> FindReservation(idReservation, userloggeddata, context) async {
   List<dynamic> dataReservation;
   String url_list =
-      "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
+      "https://apitotaltravel.azurewebsites.net/API/Reservation/List";
   final headers = {
     "Content-type": "application/json",
     "Authorization": "bearer " + userloggeddata!.Token!
@@ -460,7 +460,7 @@ Future<void> PostReservertion(
     "Authorization": "bearer " + userloggeddata!.Token!
   };
   final uri = Uri.parse(
-      "https://totaltravelapi.azurewebsites.net/API/Reservation/Insert");
+      "https://apitotaltravel.azurewebsites.net/API/Reservation/Insert");
 
   final json = jsonEncode(reservacion);
   print(json);
@@ -509,7 +509,7 @@ Future<void> PostRecordPayment(
   };
 
   final uri = Uri.parse(
-      "https://totaltravelapi.azurewebsites.net/API/RecordPayment/Insert");
+      "https://apitotaltravel.azurewebsites.net/API/RecordPayment/Insert");
   final json = jsonEncode(RegistroPago);
 
   final response = await http.post(

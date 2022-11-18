@@ -39,7 +39,7 @@ class ReservConfirmState extends State<ReservConfirm> {
 
   Future<dynamic> GetPaymentType() async {
     String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/PaymentTypes/List";
+        "https://apitotaltravel.azurewebsites.net/API/PaymentTypes/List";
     final response = await http.get(Uri.parse(url_list));
     if (response.statusCode == 200) {
       Map<String, dynamic> userMap = jsonDecode(response.body);
@@ -53,7 +53,7 @@ class ReservConfirmState extends State<ReservConfirm> {
   Future<dynamic> FindPayment(idPayment, userloggeddata) async {
     List<dynamic> datapayment;
     String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/PaymentTypes/List";
+        "https://apitotaltravel.azurewebsites.net/API/PaymentTypes/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!

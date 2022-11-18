@@ -44,7 +44,7 @@ Map<int?, String> HotelsDictionary = Map();
 Future<dynamic> GetListMenus(userloggeddata,idRestaurant,restaurante) async {
     List<dynamic> dataMenus;
     String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/Menus/List";
+        "https://apitotaltravel.azurewebsites.net/API/Menus/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -71,7 +71,7 @@ Future<dynamic> GetListMenus(userloggeddata,idRestaurant,restaurante) async {
 Future<dynamic> GetListRestaurants(Ciudad, userloggeddata,idRestaurant,bool) async {
     List<dynamic> dataActivities;
     String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/Restaurants/List";
+        "https://apitotaltravel.azurewebsites.net/API/Restaurants/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -103,7 +103,7 @@ Future<dynamic> GetListRestaurants(Ciudad, userloggeddata,idRestaurant,bool) asy
             );
           }
     } else {
-          final url_list =Uri.parse("https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
+          final url_list =Uri.parse("https://apitotaltravel.azurewebsites.net/API/Authentication/Refresh-token");
           final headers = {
             "Content-type": "application/json",
             "Authorization": "bearer " + widget.userloggeddata!.Token!

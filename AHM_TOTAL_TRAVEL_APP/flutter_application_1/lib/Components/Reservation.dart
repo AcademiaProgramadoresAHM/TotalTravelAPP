@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 Future<dynamic> GetListadoReservation() async {
   String url_list =
-      "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
+      "https://apitotaltravel.azurewebsites.net/API/Reservation/List";
 
   final response = await http.get(Uri.parse(url_list));
   if (response.statusCode == 200) {

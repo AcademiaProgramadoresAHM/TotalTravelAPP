@@ -90,7 +90,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
   Future<dynamic> GetListReservationDetails(userloggeddata) async {
     List<dynamic> dataReservation;
     String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
+        "https://apitotaltravel.azurewebsites.net/API/Reservation/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!

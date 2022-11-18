@@ -46,7 +46,7 @@ class _RestaurantDetails extends State<RestaurantDetails> {
 
   Future<void> GetListMenus(id, userloggeddata) async {
     List<dynamic> dataMenus;
-    String url_list = "https://totaltravelapi.azurewebsites.net/API/Menus/List";
+    String url_list = "https://apitotaltravel.azurewebsites.net/API/Menus/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!

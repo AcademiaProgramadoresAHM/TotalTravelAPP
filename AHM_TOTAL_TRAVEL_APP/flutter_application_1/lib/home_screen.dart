@@ -44,7 +44,7 @@ class _HotelHomeScreenState extends State<MyHomePage>
   Future<dynamic> GetCities() async {
     var data;
     String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/Cities/List";
+        "https://apitotaltravel.azurewebsites.net/API/Cities/List";
     var respuesta = await http.get(Uri.parse(url_list));
     if (respuesta.statusCode == 200) {
       Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
@@ -65,7 +65,7 @@ class _HotelHomeScreenState extends State<MyHomePage>
   Future<dynamic> FindPackage(idPackage, userloggeddata) async {
     List<dynamic> datapackage;
     String urlList =
-        "https://totaltravelapi.azurewebsites.net/API/DefaultPackages/List";
+        "https://apitotaltravel.azurewebsites.net/API/DefaultPackages/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + userloggeddata!.Token!
