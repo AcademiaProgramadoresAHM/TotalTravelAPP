@@ -974,7 +974,9 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                           child: Text(
-                            'Su actividad del dia ${element.nombre_actividad}',
+                            'Su actividad del dia' +
+                                    element.nombre_actividad! ??
+                                'nombre actividad',
                             style: TextStyle(
                               fontFamily: 'Outfit',
                               color: Color(0xFF57636C),
@@ -1128,7 +1130,9 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                                 child: Text(
-                                  'Usted viajara en el transporte $transporte',
+                                  'Usted viajara en el transporte' +
+                                          transporte! ??
+                                      "transporte",
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color(0xFF57636C),
@@ -1141,7 +1145,10 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                                 child: Text(
-                                  'Fecha y hora de salida $transporteFechaSalida $hora_salida',
+                                  'Fecha y hora de salida $transporteFechaSalida $hora_salida' +
+                                          transporteFechaSalida! ??
+                                      'fecha salida' + hora_salida! ??
+                                      'hora salida',
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color(0xFF4B39EF),
@@ -1206,7 +1213,9 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                                 child: Text(
-                                  'Usted llegara y habitara el hotel $hotel',
+                                  'Usted llegara y habitara el hotel' +
+                                          hotel! ??
+                                      'hotel',
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color(0xFF57636C),
@@ -1219,7 +1228,10 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                                 child: Text(
-                                  'Fecha y hora de llegada: $fecha_entrada $hora_llegada',
+                                  'Fecha y hora de llegada: $fecha_entrada $hora_llegada' +
+                                          fecha_entrada! ??
+                                      'fecha entrada' + hora_llegada! ??
+                                      'hora llegada',
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color(0xFF39D2C0),
@@ -1292,7 +1304,8 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                                 child: Text(
-                                  'Desalojará el hotel $hotel el dia: ',
+                                  'Desalojará el hotel' + hotel! ??
+                                      'hotel' + 'el dia: ',
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color(0xFF57636C),
@@ -1305,7 +1318,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                 padding:
                                     EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
                                 child: Text(
-                                  '$fecha_salida',
+                                  fecha_salida! ?? 'fecha salida',
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color(0xFF39D2C0),
