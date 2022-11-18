@@ -29,7 +29,10 @@ import 'package:nb_utils/nb_utils.dart';
 class EditAccount extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final Map<int?, String> CountriesDictionary;
-  const EditAccount(this.userloggeddata, this.CountriesDictionary, {Key? key})
+  final Map<String, dynamic> userData;
+  const EditAccount(
+      this.userloggeddata, this.CountriesDictionary, this.userData,
+      {Key? key})
       : super(key: key);
   @override
   State<EditAccount> createState() => _EditAccountState();
@@ -54,6 +57,7 @@ class _EditAccountState extends State<EditAccount> {
   String? selectedValue;
   String? time;
   String? date;
+  String? name, surname, email, phone, dni, street, avenue;
 
   init() async {
     time = 'Please Select Time';
@@ -205,7 +209,7 @@ class _EditAccountState extends State<EditAccount> {
               nameController.text,
               surnameController.text,
               emailController.text,
-              dateOfBirthController.text,
+              phoneController.text,
               adressId!,
               context);
         }
@@ -283,24 +287,17 @@ class _EditAccountState extends State<EditAccount> {
 
   var _userData;
 
-  Future<void> GetUserData() async {
-    String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Users/Find?id=" +
-            widget.userloggeddata!.ID.toString();
-    final headers = {
-      "Content-type": "application/json",
-      "Authorization": "bearer " + widget.userloggeddata!.Token!
-    };
-    final respuesta = await http.get(Uri.parse(url_list), headers: headers);
-    if (respuesta.statusCode == 200) {
-      Map<String, dynamic> userMap = jsonDecode(respuesta.body);
-      var data = userMap['data'];
-      setState(() {
-        _userData = data;
-      });
-    } else {
-      print("Error: " + respuesta.statusCode.toString());
-    }
+  Future<void> GetUserData(data) async {
+    setState(() {
+      _userData = data;
+      name = _userData['nombre'];
+      surname = _userData['apellido'];
+      email = _userData['email'];
+      phone = _userData['telefono'];
+      dni = _userData['dni'];
+      street = _userData['calle'];
+      avenue = _userData['avenida'];
+    });
   }
 
   @override
@@ -310,7 +307,7 @@ class _EditAccountState extends State<EditAccount> {
     // GetCities();
     // GetSuburbs();
     init();
-    GetUserData();
+    GetUserData(widget.userData);
     super.initState();
   }
 
@@ -419,7 +416,7 @@ class _EditAccountState extends State<EditAccount> {
                                           BorderRadius.all(Radius.circular(15)),
                                     ),
                                   ),
-                                  initialValue: _userData['nombre'] ?? ' ',
+                                  initialValue: name ?? '',
 
                                   // The validator receives the text that the user has entered.
                                   validator: (value) {
@@ -446,7 +443,7 @@ class _EditAccountState extends State<EditAccount> {
                                     ),
                                   ),
 
-                                  initialValue: _userData['apellido'],
+                                  initialValue: surname ?? '',
                                   // The validator receives the text that the user has entered.
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -464,7 +461,7 @@ class _EditAccountState extends State<EditAccount> {
                                 /// Gmail
                                 TextFormField(
                                   style: kTextFormFieldStyle(),
-                                  initialValue: _userData['email'],
+                                  initialValue: email ?? '',
                                   decoration: const InputDecoration(
                                     prefixIcon: Icon(Icons.email_rounded),
                                     hintText: 'Correo Electrónico',
@@ -509,7 +506,7 @@ class _EditAccountState extends State<EditAccount> {
                                     ),
                                   ),
 
-                                  initialValue: _userData['dni'],
+                                  initialValue: dni ?? '',
                                   // The validator receives the text that the user has entered.
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -541,7 +538,7 @@ class _EditAccountState extends State<EditAccount> {
                                     ),
                                   ),
 
-                                  initialValue: _userData['telefono'],
+                                  initialValue: phone ?? '',
                                   // The validator receives the text that the user has entered.
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -931,7 +928,7 @@ class _EditAccountState extends State<EditAccount> {
                                     ),
                                   ),
 
-                                  initialValue: _userData['calle'],
+                                  initialValue: street ?? '',
                                   // The validator receives the text that the user has entered.
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {
@@ -957,7 +954,7 @@ class _EditAccountState extends State<EditAccount> {
                                     ),
                                   ),
 
-                                  initialValue: _userData['avenida'],
+                                  initialValue: avenue ?? '',
                                   // The validator receives the text that the user has entered.
                                   validator: (value) {
                                     if (value == null || value.isEmpty) {

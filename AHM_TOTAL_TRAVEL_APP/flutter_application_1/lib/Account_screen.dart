@@ -25,7 +25,7 @@ UserLoggedModel? userloggeddata;
 
 class AccountInfo extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
-  final  Map<String, dynamic> userData;
+  final Map<String, dynamic> userData;
   const AccountInfo(this.userloggeddata, this.userData, {Key? key})
       : super(key: key);
 
@@ -57,33 +57,33 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
     GetCountries();
   }
 
-  Future<dynamic> dataUserEdit(userloggeddata) async {
-    //List<dynamic> userEdit;
-    String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Users/Find?id=" +
-            widget.userloggeddata!.ID.toString();
-    final headers = {
-      "Content-type": "application/json",
-      "Authorization": "bearer " + widget.userloggeddata!.Token!
-    };
-    final respuesta = await http.get(Uri.parse(url_list), headers: headers);
-    if (respuesta.statusCode == 200) {
-      Map<String, dynamic> userMap = jsonDecode(respuesta.body);
-      //var Json = Decodificador.fromJson(userMap);
-      var userEdit = userMap['data'];
-      //var dataUserEdit =
-      //userEdit.where((x) => x['id'] == userloggeddata.id).toList();
+  // Future<dynamic> dataUserEdit(userloggeddata) async {
+  //   //List<dynamic> userEdit;
+  //   String url_list =
+  //       "https://apitotaltravel.azurewebsites.net/API/Users/Find?id=" +
+  //           widget.userloggeddata!.ID.toString();
+  //   final headers = {
+  //     "Content-type": "application/json",
+  //     "Authorization": "bearer " + widget.userloggeddata!.Token!
+  //   };
+  //   final respuesta = await http.get(Uri.parse(url_list), headers: headers);
+  //   if (respuesta.statusCode == 200) {
+  //     Map<String, dynamic> userMap = jsonDecode(respuesta.body);
+  //     //var Json = Decodificador.fromJson(userMap);
+  //     var userEdit = userMap['data'];
+  //     //var dataUserEdit =
+  //     //userEdit.where((x) => x['id'] == userloggeddata.id).toList();
 
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) =>
-                EditAccount(widget.userloggeddata, CountriesDictionary)),
-      );
-    } else {
-      print("Error: " + respuesta.statusCode.toString());
-    }
-  }
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(
+  //           builder: (context) => EditAccount(
+  //               widget.userloggeddata, CountriesDictionary, userEdit)),
+  //     );
+  //   } else {
+  //     print("Error: " + respuesta.statusCode.toString());
+  //   }
+  // }
 
   Future<void> GetUserData(data) async {
     // String url_list =
@@ -97,22 +97,22 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
     // if (respuesta.statusCode == 200) {
     //   Map<String, dynamic> userMap = jsonDecode(respuesta.body);
     //   var data = userMap['data'];
-      setState(() {
-        _userData = data;
-        image = _userData['image_URL'];
-        name = _userData['nombre'];
-        surname = _userData['apellido'];
-        email = _userData['email'];
-        phone = _userData['telefono'];
-        dni = _userData['dni'];
-        sex = _userData['sexo'];
-        direction = 'Colonia ' +
-            _userData['colonia'] +
-            ', calle ' +
-            _userData['calle'] +
-            ', avenida ' +
-            _userData['avenida'];
-      });
+    setState(() {
+      _userData = data;
+      image = _userData['image_URL'];
+      name = _userData['nombre'];
+      surname = _userData['apellido'];
+      email = _userData['email'];
+      phone = _userData['telefono'];
+      dni = _userData['dni'];
+      sex = _userData['sexo'];
+      direction = 'Colonia ' +
+          _userData['colonia'] +
+          ', calle ' +
+          _userData['calle'] +
+          ', avenida ' +
+          _userData['avenida'];
+    });
     // } else {
     //   print("Error: " + respuesta.statusCode.toString());
     // }
@@ -371,7 +371,14 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                                 ),
                                 onPressed: () {
                                   // Validate returns true if the form is valid, or false otherwise.
-                                  dataUserEdit(widget.userloggeddata);
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => EditAccount(
+                                            widget.userloggeddata,
+                                            CountriesDictionary,
+                                            widget.userData)),
+                                  );
                                 },
                                 child: const Text('Editar Cuenta'),
                               ),
