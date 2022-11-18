@@ -178,132 +178,103 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                       child: Column(
                         children: <Widget>[
                           Container(
-                              margin: const EdgeInsets.only(top: 70.0),
-                              height: 150,
-                              width: 150,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                boxShadow: <BoxShadow>[
-                                  BoxShadow(
-                                      blurRadius: 8,
-                                      color:
-                                          Color.fromARGB(255, 255, 255, 255)),
-                                ],
-                              ),
-                              child: ClipRRect(
-                                borderRadius: const BorderRadius.all(
-                                    Radius.circular(60.0)),
-                                child: Image.network(image),
-                              )),
+                            margin: const EdgeInsets.only(top: 70.0),
+                            height: 180,
+                            width: 150,
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              boxShadow: <BoxShadow>[
+                                BoxShadow(
+                                    blurRadius: 8,
+                                    color: Color.fromARGB(255, 255, 255, 255)),
+                              ],
+                            ),
+                            child: Column(
+                              children: [
+                                //-----Imagen de Perfil------
+                                ClipRRect(
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(60.0)),
+                                  child: Image.network(image),
+                                ),
+                                //-----Nombre de Usuario----
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 5, 0, 0),
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            top: 25.0, right: 10.0),
+                                        child: Text(
+                                          name ?? 'Nombre',
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(top: 25.0),
+                                        child: Text(
+                                          surname ?? 'Apellido',
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(),
+                            child: Text(
+                              email ?? 'Email',
+                              //'null',
+                              style:
+                                  TextStyle(fontSize: 18.0, color: Colors.grey),
+                            ),
+                          ),
                           Padding(
                             padding:
                                 const EdgeInsets.only(right: 240.0, top: 70.0),
                             child: Text(
-                              'Nombre',
+                              'Personal',
                               style: TextStyle(
                                   fontFamily: 'Roboto', fontSize: 17.0),
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 25.0, right: 195.0),
-                            child: Text(
-                              name ?? 'Nombre',
-                              //_userData?.nombre_completo ?? 'nulo',
-                              //widget.userloggeddata?.nombre_completo ?? 'nulo',
-                              style: TextStyle(
-                                  fontSize: 20.0, fontWeight: FontWeight.bold),
-                            ),
-                          ),
+                              padding: EdgeInsets.only(top: 25.0, left: 50.0),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    name ?? 'Nombre',
+                                    style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                    surname ?? 'Apellido',
+                                    style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ],
+                              )),
                           Divider(
-                            color: Color.fromRGBO(101, 45, 143, 1),
+                            color: Color.fromARGB(156, 183, 182, 183),
                             thickness: 02.0,
                             indent: 40.0,
                             endIndent: 40.0,
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.only(right: 240.0, top: 20.0),
-                            child: Text(
-                              'Apellido',
-                              style: TextStyle(
-                                  fontFamily: 'Roboto', fontSize: 17.0),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 25.0, right: 195.0),
-                            child: Text(
-                              surname ?? 'Apellido',
-                              //_userData?.nombre_completo ?? 'nulo',
-                              //widget.userloggeddata?.nombre_completo ?? 'nulo',
-                              style: TextStyle(
-                                  fontSize: 20.0, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Divider(
-                            color: Color.fromRGBO(101, 45, 143, 1),
-                            thickness: 02.0,
-                            indent: 40.0,
-                            endIndent: 40.0,
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(right: 170.0, top: 20.0),
-                            child: Text(
-                              'Correo electrónico',
-                              style: TextStyle(
-                                  fontFamily: 'Roboto', fontSize: 17.0),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 25.0, right: 20.0),
-                            child: Text(
-                              email ?? 'Email',
-                              //'null',
-                              style: TextStyle(
-                                  fontSize: 20.0, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Divider(
-                            color: Color.fromRGBO(101, 45, 143, 1),
-                            thickness: 02.0,
-                            indent: 40.0,
-                            endIndent: 40.0,
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(right: 240.0, top: 20.0),
-                            child: Text(
-                              'Teléfono',
-                              style: TextStyle(
-                                  fontFamily: 'Roboto', fontSize: 17.0),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 25.0, right: 154.0),
-                            child: Text(
-                              phone ?? 'Telefono',
-                              //'nulo',
-                              style: TextStyle(
-                                  fontSize: 20.0, fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                          Divider(
-                            color: Color.fromRGBO(101, 45, 143, 1),
-                            thickness: 02.0,
-                            indent: 40.0,
-                            endIndent: 40.0,
-                          ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.only(right: 270.0, top: 20.0),
-                            child: Text(
-                              'DNI',
-                              style: TextStyle(
-                                  fontFamily: 'Roboto', fontSize: 17.0),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 25.0, right: 100.0),
+                            padding: EdgeInsets.only(top: 25.0, right: 160.0),
                             child: Text(
                               dni ?? 'DNI',
                               //'nulo',
@@ -312,22 +283,13 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             ),
                           ),
                           Divider(
-                            color: Color.fromRGBO(101, 45, 143, 1),
+                            color: Color.fromARGB(156, 183, 182, 183),
                             thickness: 02.0,
                             indent: 40.0,
                             endIndent: 40.0,
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.only(right: 250.0, top: 20.0),
-                            child: Text(
-                              'Sexo',
-                              style: TextStyle(
-                                  fontFamily: 'Roboto', fontSize: 17.0),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(top: 25.0, right: 150.0),
+                            padding: EdgeInsets.only(top: 25.0, right: 220.0),
                             child: Text(
                               sex ?? 'Sexo',
                               //'nulo',
@@ -336,23 +298,14 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             ),
                           ),
                           Divider(
-                            color: Color.fromRGBO(101, 45, 143, 1),
+                            color: Color.fromARGB(156, 183, 182, 183),
                             thickness: 02.0,
                             indent: 40.0,
                             endIndent: 40.0,
                           ),
                           Padding(
-                            padding:
-                                const EdgeInsets.only(right: 220.0, top: 20.0),
-                            child: Text(
-                              'Direccion',
-                              style: TextStyle(
-                                  fontFamily: 'Roboto', fontSize: 17.0),
-                            ),
-                          ),
-                          Padding(
                             padding: EdgeInsets.only(
-                                top: 25.0, right: 20.0, left: 40.0),
+                                top: 25.0, right: 10.0, left: 50.0),
                             child: Text(
                               direction ?? 'Direccion',
                               //'nulo',
@@ -361,15 +314,48 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             ),
                           ),
                           Divider(
-                            color: Color.fromRGBO(101, 45, 143, 1),
+                            color: Color.fromARGB(156, 183, 182, 183),
                             thickness: 02.0,
                             indent: 40.0,
                             endIndent: 40.0,
                           ),
                           Padding(
+                            padding:
+                                const EdgeInsets.only(right: 240.0, top: 20.0),
+                            child: Text(
+                              'Contact',
+                              style: TextStyle(
+                                  fontFamily: 'Roboto', fontSize: 17.0),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 25.0, right: 210.0),
+                            child: Text(
+                              phone ?? 'Telefono',
+                              //'nulo',
+                              style: TextStyle(
+                                  fontSize: 20.0, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Divider(
+                            color: Color.fromARGB(156, 183, 182, 183),
+                            thickness: 02.0,
+                            indent: 40.0,
+                            endIndent: 40.0,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 25.0, right: 50.0),
+                            child: Text(
+                              email ?? 'Email',
+                              //'null',
+                              style: TextStyle(
+                                  fontSize: 20.0, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          Padding(
                             padding: const EdgeInsets.only(
                                 right: 20.0,
-                                top: 20.0,
+                                top: 50.0,
                                 bottom: 20.0,
                                 left: 20.0),
                             child: SizedBox(
