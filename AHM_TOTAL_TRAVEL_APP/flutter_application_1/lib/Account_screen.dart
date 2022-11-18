@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_interpolation_to_compose_strings
 
 import 'package:flutter/rendering.dart';
+import 'package:flutter_application_1/Components/Decodificador.dart';
 import 'package:flutter_application_1/Screens/EditAccount.dart';
 import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,9 @@ UserLoggedModel? userloggeddata;
 
 class AccountInfo extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
-  const AccountInfo(this.userloggeddata, {Key? key}) : super(key: key);
+  final List<dynamic> userData;
+  const AccountInfo(this.userloggeddata, this.userData, {Key? key})
+      : super(key: key);
 
   @override
   State<AccountInfo> createState() => _AccountInfo();
@@ -47,14 +50,16 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
 
   @override
   void initState() {
-    GetUserData();
+    GetUserData(widget.userData);
     animationController = AnimationController(
         duration: const Duration(milliseconds: 1000), vsync: this);
     super.initState();
     GetCountries();
+    print('aqui el widget' + widget.userData.toString());
   }
 
-  Future<void> GetUserData() async {
+  Future<dynamic> dataUserEdit(userloggeddata) async {
+    //List<dynamic> userEdit;
     String url_list =
         "https://apitotaltravel.azurewebsites.net/API/Users/Find?id=" +
             widget.userloggeddata!.ID.toString();
@@ -65,26 +70,54 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
     final respuesta = await http.get(Uri.parse(url_list), headers: headers);
     if (respuesta.statusCode == 200) {
       Map<String, dynamic> userMap = jsonDecode(respuesta.body);
-      var data = userMap['data'];
-      setState(() {
-        _userData = data;
-        image = _userData['image_URL'];
-        name = _userData['nombre'];
-        surname = _userData['apellido'];
-        email = _userData['email'];
-        phone = _userData['telefono'];
-        dni = _userData['dni'];
-        sex = _userData['sexo'];
-        direction = 'Colonia ' +
-            _userData['colonia'] +
-            ', calle ' +
-            _userData['calle'] +
-            ', avenida ' +
-            _userData['avenida'];
-      });
+      //var Json = Decodificador.fromJson(userMap);
+      var userEdit = userMap['data'];
+      //var dataUserEdit =
+      //userEdit.where((x) => x['id'] == userloggeddata.id).toList();
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                EditAccount(widget.userloggeddata, CountriesDictionary)),
+      );
     } else {
       print("Error: " + respuesta.statusCode.toString());
     }
+  }
+
+  Future<void> GetUserData(data) async {
+    // String url_list =
+    //     "https://totaltravelapi.azurewebsites.net/API/Users/Find?id=" +
+    //         widget.userloggeddata!.ID.toString();
+    // final headers = {
+    //   "Content-type": "application/json",
+    //   "Authorization": "bearer " + widget.userloggeddata!.Token!
+    // };
+    // final respuesta = await http.get(Uri.parse(url_list), headers: headers);
+    // if (respuesta.statusCode == 200) {
+    //   Map<String, dynamic> userMap = jsonDecode(respuesta.body);
+    //   var data = userMap['data'];
+    print('aqui la data ' + data);
+    // setState(() {
+    //   _userData = data;
+    //   image = _userData['image_URL'];
+    //   name = _userData['nombre'];
+    //   surname = _userData['apellido'];
+    //   email = _userData['email'];
+    //   phone = _userData['telefono'];
+    //   dni = _userData['dni'];
+    //   sex = _userData['sexo'];
+    //   direction = 'Colonia ' +
+    //       _userData['colonia'] +
+    //       ', calle ' +
+    //       _userData['calle'] +
+    //       ', avenida ' +
+    //       _userData['avenida'];
+    // });
+    // } else {
+    //   print("Error: " + respuesta.statusCode.toString());
+    // }
   }
 
   Map<int?, String> CountriesDictionary = Map();
@@ -340,13 +373,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                                 ),
                                 onPressed: () {
                                   // Validate returns true if the form is valid, or false otherwise.
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => EditAccount(
-                                            widget.userloggeddata,
-                                            CountriesDictionary)),
-                                  );
+                                  dataUserEdit(widget.userloggeddata);
                                 },
                                 child: const Text('Editar Cuenta'),
                               ),

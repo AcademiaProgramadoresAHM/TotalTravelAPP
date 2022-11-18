@@ -36,6 +36,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   Widget? screenView;
   DrawerIndex? drawerIndex;
   UserLoggedModel? userloggeddata;
+  List<dynamic> userEdit = [];
 
   Future<dynamic> FindReservation(userloggeddata) async {
     List<dynamic> datapackage;
@@ -116,6 +117,36 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
       //       HistorydetailScreen(widget.userloggeddata, ShoppingHistory)));
     } else {
       print("Error " + response.statusCode.toString());
+    }
+  }
+
+  Future<dynamic> dataUserEdit(userloggeddata) async {
+    //List<dynamic> userEdit;
+    String url_list =
+        "https://totaltravelapi.azurewebsites.net/API/Users/Find?id=" +
+            widget.userloggeddata!.ID.toString();
+    final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+    final respuesta = await http.get(Uri.parse(url_list), headers: headers);
+
+    if (respuesta.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(respuesta.body);
+      //var Json = Decodificador.fromJson(userMap);
+      setState(() {
+        userEdit.insert(0, userMap['data']);
+      });
+
+      //var dataUserEdit =
+      //userEdit.where((x) => x['id'] == userloggeddata.id).toList();
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //       builder: (context) => AccountInfo(widget.userloggeddata, userEdit)),
+      // );
+    } else {
+      print("Error: " + respuesta.statusCode.toString());
     }
   }
 
@@ -208,7 +239,8 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
 
         case DrawerIndex.Account:
           setState(() {
-            screenView = AccountInfo(widget.userloggeddata);
+            screenView = AccountInfo(widget.userloggeddata, userEdit);
+            print(userEdit);
           });
           break;
 

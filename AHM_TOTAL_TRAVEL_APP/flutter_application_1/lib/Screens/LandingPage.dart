@@ -233,18 +233,30 @@ class LandingPageState extends State<LandingPage> {
                           height: 100,
                           child: Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(160, 5, 0, 5),
-                            child: Image.asset(
-                              'assets/images/logo-AHM-Fondo-Morao.png',
-                              fit: BoxFit.contain,
-                            ),
+                                EdgeInsetsDirectional.fromSTEB(10, 5, 0, 5),
+                            child: Row(children: [
+                              Image.asset(
+                                'assets/images/logo-AHM-Fondo-Morao.png',
+                                fit: BoxFit.contain,
+                              ),
+                              Center(
+                                child: Text(
+                                  'Total Travel',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 20,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ]),
                           ),
                         ),
                         Flexible(
                             flex: 6,
                             child: Padding(
                                 padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 20, 0),
+                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
                                 child: loginButton())),
                       ],
                     )),
@@ -299,6 +311,7 @@ class LandingPageState extends State<LandingPage> {
     return ElevatedButton(
         style: ButtonStyle(
           //backgroundColor: MaterialStateProperty.all(Colors.red),
+          maximumSize: MaterialStateProperty.all(const Size(180, 40)),
           backgroundColor: MaterialStateProperty.all(HexColor('#652D90')),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(
