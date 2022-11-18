@@ -25,7 +25,7 @@ UserLoggedModel? userloggeddata;
 
 class AccountInfo extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
-  final List<dynamic> userData;
+  final  Map<String, dynamic> userData;
   const AccountInfo(this.userloggeddata, this.userData, {Key? key})
       : super(key: key);
 
@@ -55,7 +55,6 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
         duration: const Duration(milliseconds: 1000), vsync: this);
     super.initState();
     GetCountries();
-    print('aqui el widget' + widget.userData.toString());
   }
 
   Future<dynamic> dataUserEdit(userloggeddata) async {
@@ -98,23 +97,22 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
     // if (respuesta.statusCode == 200) {
     //   Map<String, dynamic> userMap = jsonDecode(respuesta.body);
     //   var data = userMap['data'];
-    print('aqui la data ' + data);
-    // setState(() {
-    //   _userData = data;
-    //   image = _userData['image_URL'];
-    //   name = _userData['nombre'];
-    //   surname = _userData['apellido'];
-    //   email = _userData['email'];
-    //   phone = _userData['telefono'];
-    //   dni = _userData['dni'];
-    //   sex = _userData['sexo'];
-    //   direction = 'Colonia ' +
-    //       _userData['colonia'] +
-    //       ', calle ' +
-    //       _userData['calle'] +
-    //       ', avenida ' +
-    //       _userData['avenida'];
-    // });
+      setState(() {
+        _userData = data;
+        image = _userData['image_URL'];
+        name = _userData['nombre'];
+        surname = _userData['apellido'];
+        email = _userData['email'];
+        phone = _userData['telefono'];
+        dni = _userData['dni'];
+        sex = _userData['sexo'];
+        direction = 'Colonia ' +
+            _userData['colonia'] +
+            ', calle ' +
+            _userData['calle'] +
+            ', avenida ' +
+            _userData['avenida'];
+      });
     // } else {
     //   print("Error: " + respuesta.statusCode.toString());
     // }

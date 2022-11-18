@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_application_1/Account_screen.dart';
+import 'package:flutter_application_1/Components/Packages.dart';
 import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/CitiesViewModel.dart';
 import 'package:flutter_application_1/Screens/Compras.dart';
@@ -36,7 +37,8 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   Widget? screenView;
   DrawerIndex? drawerIndex;
   UserLoggedModel? userloggeddata;
-  List<dynamic> userEdit = [];
+  Map<String, dynamic> userEdit = {};
+        
 
   Future<dynamic> FindReservation(userloggeddata) async {
     List<dynamic> datapackage;
@@ -120,23 +122,24 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
     }
   }
 
-  Future<dynamic> dataUserEdit(userloggeddata) async {
+  void dataUserEdit(userloggeddata) async {
     //List<dynamic> userEdit;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Users/Find?id=" +
-            widget.userloggeddata!.ID.toString();
+        "https://apitotaltravel.azurewebsites.net/API/Users/Find?id=" +widget.userloggeddata!.ID.toString();
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
     };
     final respuesta = await http.get(Uri.parse(url_list), headers: headers);
-
+    print("Response" + respuesta.toString());
     if (respuesta.statusCode == 200) {
       Map<String, dynamic> userMap = jsonDecode(respuesta.body);
-      //var Json = Decodificador.fromJson(userMap);
+      var Json = Decodificador.fromJson(userMap);
       setState(() {
-        userEdit.insert(0, userMap['data']);
+         print("Entro");
+           userEdit = Json.data;
       });
+         
 
       //var dataUserEdit =
       //userEdit.where((x) => x['id'] == userloggeddata.id).toList();
@@ -180,6 +183,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
     screenView = widget.page;
     super.initState();
     GetCities();
+    dataUserEdit(userloggeddata);
   }
 
   @override
@@ -238,9 +242,8 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
           break;
 
         case DrawerIndex.Account:
-          setState(() {
-            screenView = AccountInfo(widget.userloggeddata, userEdit);
-            print(userEdit);
+          setState((){
+           screenView = AccountInfo(widget.userloggeddata, userEdit);
           });
           break;
 
