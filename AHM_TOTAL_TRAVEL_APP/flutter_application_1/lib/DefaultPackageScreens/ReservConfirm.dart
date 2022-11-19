@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_application_1/Components/Packages.dart';
+import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -31,6 +32,13 @@ class ReservConfirm extends StatefulWidget {
 }
 
 class ReservConfirmState extends State<ReservConfirm> {
+  double _pagos = 1;
+  void SetPay(PayNumber) {
+    setState(() {
+      _pagos = PayNumber;
+    });
+  }
+
   TextEditingController MontoPago = TextEditingController();
   ModelDataRecordPayment dataPayment = new ModelDataRecordPayment();
   static final DateTime now = DateTime.now();
@@ -68,6 +76,8 @@ class ReservConfirmState extends State<ReservConfirm> {
       dataPayment.idpayment = idPayment;
       dataPayment.monto = MontoPago.text.toDouble();
       dataPayment.formatted = formatted;
+
+      widget.Reservation.resvCantidadPagos = _pagos.toInt();
 
       PostReservertion(
           widget.Reservation.resvPrecio,
@@ -175,6 +185,41 @@ class ReservConfirmState extends State<ReservConfirm> {
                                                   child: Center(
                                                     child: Column(
                                                       children: <Widget>[
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsetsDirectional
+                                                                  .fromSTEB(0,
+                                                                      30, 0, 0),
+                                                          child: Text(
+                                                            "Cantidad de Pagos a Realizar",
+                                                            style: TextStyle(
+                                                              fontFamily:
+                                                                  'Outfit',
+                                                              color:
+                                                                  Colors.black,
+                                                              fontSize: 17,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Padding(
+                                                          child: SpinBox(
+                                                            max: 10,
+                                                            value: _pagos,
+                                                            onChanged: (value) {
+                                                              setState(() {
+                                                                SetPay(value);
+                                                              });
+                                                            },
+                                                          ),
+                                                          padding:
+                                                              const EdgeInsets
+                                                                      .only(
+                                                                  left: 30,
+                                                                  right: 30),
+                                                        ),
                                                         Padding(
                                                           padding:
                                                               EdgeInsetsDirectional

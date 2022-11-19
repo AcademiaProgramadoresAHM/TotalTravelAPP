@@ -46,7 +46,7 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
   String? Restaurante;
   bool? boleano;
 //Variables de datos de la reservacion
-  double people = 2;
+  double people = 1;
   double _pagos = 1;
 
   ReservationViewmodel reservation = new ReservationViewmodel();
@@ -417,7 +417,7 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             10, 10, 0, 0),
                                         child: Text(
-                                          "Seleccione los Pagos y Personas",
+                                          "Ingrese cuantas personas incluira en el viaje",
                                           style: TextStyle(
                                             fontFamily: 'Outfit',
                                             color: Colors.black,
@@ -438,7 +438,7 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                                             width: 300,
                                             child: ElevatedButton(
                                               child: Text(
-                                                "${_pagos.round().toString()} ${wordPagos}  ${people.round().toString()} ${wordPeople}",
+                                                " ${people.round().toString()} ${wordPeople}",
                                                 style: TextStyle(
                                                     color: Color(0xFF652D8F)),
                                               ),
@@ -460,48 +460,48 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                                                       child: Center(
                                                         child: Column(
                                                           children: <Widget>[
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          0,
-                                                                          30,
-                                                                          0,
-                                                                          0),
-                                                              child: Text(
-                                                                "Cantidad de Pagos a Realizar",
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontFamily:
-                                                                      'Outfit',
-                                                                  color: Colors
-                                                                      .black,
-                                                                  fontSize: 17,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Padding(
-                                                              child: SpinBox(
-                                                                max: 10,
-                                                                value: _pagos,
-                                                                onChanged:
-                                                                    (value) {
-                                                                  setState(() {
-                                                                    SetPay(
-                                                                        value);
-                                                                  });
-                                                                },
-                                                              ),
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .only(
-                                                                      left: 30,
-                                                                      right:
-                                                                          30),
-                                                            ),
+                                                            // Padding(
+                                                            //   padding:
+                                                            //       EdgeInsetsDirectional
+                                                            //           .fromSTEB(
+                                                            //               0,
+                                                            //               30,
+                                                            //               0,
+                                                            //               0),
+                                                            //   child: Text(
+                                                            //     "Cantidad de Pagos a Realizar",
+                                                            //     style:
+                                                            //         TextStyle(
+                                                            //       fontFamily:
+                                                            //           'Outfit',
+                                                            //       color: Colors
+                                                            //           .black,
+                                                            //       fontSize: 17,
+                                                            //       fontWeight:
+                                                            //           FontWeight
+                                                            //               .w500,
+                                                            //     ),
+                                                            //   ),
+                                                            // ),
+                                                            // Padding(
+                                                            //   child: SpinBox(
+                                                            //     max: 10,
+                                                            //     value: _pagos,
+                                                            //     onChanged:
+                                                            //         (value) {
+                                                            //       setState(() {
+                                                            //         SetPay(
+                                                            //             value);
+                                                            //       });
+                                                            //     },
+                                                            //   ),
+                                                            //   padding:
+                                                            //       const EdgeInsets
+                                                            //               .only(
+                                                            //           left: 30,
+                                                            //           right:
+                                                            //               30),
+                                                            // ),
                                                             Padding(
                                                               padding:
                                                                   EdgeInsetsDirectional
@@ -615,7 +615,6 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
       reservation.usuaId = widget.userloggeddata!.ID;
       reservation.paquId = idpackage;
       reservation.resvEsPersonalizado = false;
-      reservation.resvCantidadPagos = _pagos.toInt();
       reservation.resvNumeroPersonas = people.toInt();
       reservation.resvConfirmacionPago = false;
       reservation.resvConfirmacionHotel = true;
@@ -784,15 +783,15 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
                                             color: dodgerBlue, size: 18),
                                       ),
                                       onPressed: () {
-                                        FindPackage(idpackage, false,
-                                            widget.userloggeddata);
+                                        // FindPackage(idpackage, false,
+                                        //     widget.userloggeddata);
                                       },
                                     ),
                                     CupertinoDialogAction(
                                       child: Text(
                                         'Agregar',
                                         style: primaryTextStyle(
-                                            color: redColor, size: 18),
+                                            color: Colors.purple, size: 18),
                                       ),
                                       onPressed: () {
                                         FindPackage(idpackage, true,
