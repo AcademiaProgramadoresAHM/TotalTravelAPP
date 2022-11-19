@@ -400,7 +400,7 @@ class _EditAccountState extends State<EditAccount> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      right: 200.0, top: 10.0, bottom: 30.0),
+                                      right: 170.0, top: 10.0, bottom: 20.0),
                                   child: Text('Información general',
                                       style: TextStyle(fontSize: 16.0)),
                                 ),
@@ -475,7 +475,7 @@ class _EditAccountState extends State<EditAccount> {
                                     if (value == null || value.isEmpty) {
                                       return 'Rellene este campo';
                                     } else if (!value.endsWith('@gmail.com')) {
-                                      return 'Ingrese una dirección válida';
+                                      return 'Ingrese un correo válida';
                                     } else {
                                       emailController.text = value;
                                     }
@@ -487,7 +487,7 @@ class _EditAccountState extends State<EditAccount> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      right: 190.0, top: 10.0, bottom: 20.0),
+                                      right: 155.0, top: 10.0, bottom: 20.0),
                                   child: Text('Información personal',
                                       style: TextStyle(fontSize: 16.0)),
                                 ),
@@ -553,7 +553,7 @@ class _EditAccountState extends State<EditAccount> {
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.only(
-                                      right: 260.0, top: 30.0),
+                                      right: 250.0, top: 30.0, bottom: 20.0),
                                   child: Text('Dirección',
                                       style: TextStyle(fontSize: 16.0)),
                                 ),

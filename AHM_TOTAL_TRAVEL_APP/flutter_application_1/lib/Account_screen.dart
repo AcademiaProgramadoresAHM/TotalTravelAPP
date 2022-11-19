@@ -44,7 +44,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
   DateTime endDate = DateTime.now().add(const Duration(days: 5));
   //UserListViewModel? _userData;
   var _userData;
-  String? name, surname, email, phone, dni, sex, direction;
+  String? name, surname, fullName, email, phone, dni, sex, direction;
   String image =
       'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__340.png';
 
@@ -113,6 +113,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
           ', avenida ' +
           _userData['avenida'];
     });
+    fullName = _userData['nombre'] + ' ' + _userData['apellido'];
     // } else {
     //   print("Error: " + respuesta.statusCode.toString());
     // }
@@ -176,9 +177,9 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                       child: Column(
                         children: <Widget>[
                           Container(
-                            margin: const EdgeInsets.only(top: 70.0),
-                            height: 180,
-                            width: 150,
+                            margin: const EdgeInsets.only(top: 20.0),
+                            height: 145,
+                            width: 141,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               boxShadow: <BoxShadow>[
@@ -195,49 +196,29 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                                       Radius.circular(60.0)),
                                   child: Image.network(image),
                                 ),
-                                //-----Nombre de Usuario----
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
+                            child: Row(
+                              children: [
                                 Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 5, 0, 0),
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            top: 25.0, right: 10.0),
-                                        child: Text(
-                                          name ?? 'Nombre',
-                                          style: TextStyle(
-                                              fontSize: 20.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(top: 25.0),
-                                        child: Text(
-                                          surname ?? 'Apellido',
-                                          style: TextStyle(
-                                              fontSize: 20.0,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
+                                  padding:
+                                      EdgeInsets.only(left: 90.0, right: 15.0),
+                                  child: Text(
+                                    fullName ?? 'Nombre Completo',
+                                    style: TextStyle(
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                 ),
                               ],
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(),
-                            child: Text(
-                              email ?? 'Email',
-                              //'null',
-                              style:
-                                  TextStyle(fontSize: 18.0, color: Colors.grey),
-                            ),
-                          ),
-                          Padding(
                             padding:
-                                const EdgeInsets.only(right: 240.0, top: 70.0),
+                                const EdgeInsets.only(right: 240.0, top: 30.0),
                             child: Text(
                               'Personal',
                               style: TextStyle(
@@ -245,7 +226,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             ),
                           ),
                           Padding(
-                              padding: EdgeInsets.only(top: 25.0, left: 50.0),
+                              padding: EdgeInsets.only(top: 25.0, left: 45.0),
                               child: Row(
                                 children: [
                                   Text(
@@ -272,7 +253,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             endIndent: 40.0,
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 25.0, right: 160.0),
+                            padding: EdgeInsets.only(top: 25.0, right: 125.0),
                             child: Text(
                               dni ?? 'DNI',
                               //'nulo',
@@ -287,7 +268,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             endIndent: 40.0,
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 25.0, right: 220.0),
+                            padding: EdgeInsets.only(top: 25.0, right: 180.0),
                             child: Text(
                               sex ?? 'Sexo',
                               //'nulo',
@@ -303,7 +284,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                                top: 25.0, right: 10.0, left: 50.0),
+                                top: 25.0, right: 25.0, left: 40.0),
                             child: Text(
                               direction ?? 'Direccion',
                               //'nulo',
@@ -321,13 +302,13 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             padding:
                                 const EdgeInsets.only(right: 240.0, top: 20.0),
                             child: Text(
-                              'Contact',
+                              'Contacto',
                               style: TextStyle(
                                   fontFamily: 'Roboto', fontSize: 17.0),
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 25.0, right: 210.0),
+                            padding: EdgeInsets.only(top: 25.0, right: 185.0),
                             child: Text(
                               phone ?? 'Telefono',
                               //'nulo',
@@ -349,6 +330,12 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                               style: TextStyle(
                                   fontSize: 20.0, fontWeight: FontWeight.bold),
                             ),
+                          ),
+                          Divider(
+                            color: Color.fromARGB(156, 183, 182, 183),
+                            thickness: 02.0,
+                            indent: 40.0,
+                            endIndent: 40.0,
                           ),
                           Padding(
                             padding: const EdgeInsets.only(
