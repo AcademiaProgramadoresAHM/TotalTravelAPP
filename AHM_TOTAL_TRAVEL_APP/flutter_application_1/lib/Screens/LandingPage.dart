@@ -311,7 +311,7 @@ class LandingPageState extends State<LandingPage> {
     return ElevatedButton(
         style: ButtonStyle(
           //backgroundColor: MaterialStateProperty.all(Colors.red),
-          maximumSize: MaterialStateProperty.all(const Size(180, 40)),
+          maximumSize: MaterialStateProperty.all(const Size(119, 40)),
           backgroundColor: MaterialStateProperty.all(HexColor('#652D90')),
           shape: MaterialStateProperty.all(
             RoundedRectangleBorder(

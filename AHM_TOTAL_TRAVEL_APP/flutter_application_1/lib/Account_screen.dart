@@ -222,7 +222,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           ),
                           Padding(
                             padding:
-                                const EdgeInsets.only(right: 240.0, top: 30.0),
+                                const EdgeInsets.only(right: 240.0, top: 20.0),
                             child: Text(
                               'Personal',
                               style: TextStyle(
@@ -230,7 +230,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             ),
                           ),
                           Padding(
-                              padding: EdgeInsets.only(top: 25.0, left: 45.0),
+                              padding: EdgeInsets.only(top: 20.0, left: 45.0),
                               child: Row(
                                 children: [
                                   Text(
@@ -257,7 +257,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             endIndent: 40.0,
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 25.0, right: 125.0),
+                            padding: EdgeInsets.only(top: 20.0, right: 150.0),
                             child: Text(
                               dni ?? 'DNI',
                               //'nulo',
@@ -272,7 +272,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             endIndent: 40.0,
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 25.0, right: 180.0),
+                            padding: EdgeInsets.only(top: 20.0, right: 205.0),
                             child: Text(
                               sex ?? 'Sexo',
                               //'nulo',
@@ -288,7 +288,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                                top: 25.0, right: 25.0, left: 40.0),
+                                top: 20.0, right: 25.0, left: 45.0),
                             child: Text(
                               direction ?? 'Direccion',
                               //'nulo',
@@ -312,7 +312,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 25.0, right: 185.0),
+                            padding: EdgeInsets.only(top: 20.0, right: 207.0),
                             child: Text(
                               phone ?? 'Telefono',
                               //'nulo',
@@ -327,7 +327,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             endIndent: 40.0,
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 25.0, right: 50.0),
+                            padding: EdgeInsets.only(top: 20.0, right: 70.0),
                             child: Text(
                               email ?? 'Email',
                               //'null',
@@ -344,7 +344,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                           Padding(
                             padding: const EdgeInsets.only(
                                 right: 20.0,
-                                top: 50.0,
+                                top: 20.0,
                                 bottom: 20.0,
                                 left: 20.0),
                             child: SizedBox(
