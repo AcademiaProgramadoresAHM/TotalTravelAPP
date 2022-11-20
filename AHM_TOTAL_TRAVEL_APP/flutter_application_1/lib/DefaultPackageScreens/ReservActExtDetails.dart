@@ -482,7 +482,7 @@ class _ActivityDetails extends State<DefaultActivityExtraDetails> {
         activitiesExtraModel.reAE_HoraReservacion = hour;
         activitiesExtraModel.reAE_Precios = element['precio'];
 
-        int? precioSuma = element['precio'];
+        int? precioSuma = element['precio'].toString().toInt();
 
         widget.activityExtra!.insert(widget.ActivityAdd, activitiesExtraModel);
       }

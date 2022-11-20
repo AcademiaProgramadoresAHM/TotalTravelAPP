@@ -20,6 +20,7 @@ class ReservationViewmodel {
   int? UsuarioCrea;
   int? hotelid;
   List<ActivitiesExtraDefault>? actividadesExtra;
+  List<reservacionTransporte>? transporteReservacion;
   String? ActividadesExtras;
 
   Map<String, dynamic> toJson() => {
@@ -38,7 +39,8 @@ class ReservationViewmodel {
         "reHo_FechaEntrada": reHo_FechaEntrada,
         "reHo_FechaSalida": reHo_FechaSalida,
         "hote_ID": hotelid,
-        "actividadesExtras": actividadesExtra
+        "actividadesExtras": actividadesExtra,
+        'reservacionTransportes': transporteReservacion
       };
 }
 
@@ -120,5 +122,15 @@ class ReservHotelModel {
         "reHo_PrecioTotal": reHoPrecioTotal,
         "reHo_UsuarioCreacion": reHoUsuarioCreacion,
         "reHo_UsuarioModifica": reHoUsuarioModifica,
+      };
+}
+
+class reservacionTransporte {
+  int? detr_ID;
+  int? reTr_CantidadAsientos;
+
+  Map<String, dynamic> toJson() => {
+        'detr_ID': detr_ID,
+        'reTr_CantidadAsientos': reTr_CantidadAsientos,
       };
 }
