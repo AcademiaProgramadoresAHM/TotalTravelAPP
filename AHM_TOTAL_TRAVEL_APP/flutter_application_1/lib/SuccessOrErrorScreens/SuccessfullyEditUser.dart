@@ -101,15 +101,13 @@ class _SuccessEditUserViewState extends State<SuccessEditUser> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: size.height * 0.10,
-                ),
-
-                /// Login Button
-                _loginButton(),
               ],
             ),
           ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0),
+          child: _loginButton(),
         ),
       ],
     );
