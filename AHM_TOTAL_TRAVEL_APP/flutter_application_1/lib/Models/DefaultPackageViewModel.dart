@@ -120,7 +120,6 @@ class ActivitiesExtraDefault {
   double? reAE_Precios;
 
   Map<String, dynamic> toJson() => {
-        'index': index,
         'acEx_ID': acEx_ID,
         'acEx_Descripcion': acEx_Descripcion,
         'reAE_Cantidad': acEx_numeroPersonas,

@@ -4,6 +4,44 @@ import "dart:convert";
 import 'DefaultPackageViewModel.dart';
 import 'customPackageViewModel.dart';
 
+class ReservEdit {
+  String? resvId;
+  String? usuaId;
+  String? paquId;
+  String? resvEsPersonalizado;
+  String? resvCantidadPagos;
+  String? resvNumeroPersonas;
+  bool? resvConfirmacionPago;
+  bool? resvConfirmacionHotel;
+  bool? resvConfirmacionRestaurante;
+  bool? resvConfirmacionTrans;
+  String? resvPrecio;
+  String? resvUsuarioCreacion;
+  String? resvUsuarioModifica;
+  String? reHoFechaEntrada;
+  String? reHoFechaSalida;
+  String? hoteId;
+
+  Map<String, dynamic> toJson() => {
+        "resv_ID": resvId,
+        "usua_ID": usuaId,
+        "paqu_ID": paquId,
+        "resv_esPersonalizado": resvEsPersonalizado,
+        "resv_CantidadPagos": resvCantidadPagos,
+        "resv_NumeroPersonas": resvNumeroPersonas,
+        "resv_ConfirmacionPago": resvConfirmacionPago,
+        "resv_ConfirmacionHotel": resvConfirmacionHotel,
+        "resv_ConfirmacionRestaurante": resvConfirmacionRestaurante,
+        "resv_ConfirmacionTrans": resvConfirmacionTrans,
+        "resv_Precio": resvPrecio,
+        "resv_UsuarioCreacion": resvUsuarioCreacion,
+        "resv_UsuarioModifica": resvUsuarioModifica,
+        "reHo_FechaEntrada": reHoFechaEntrada,
+        "reHo_FechaSalida": reHoFechaSalida,
+        "hote_ID": hoteId,
+      };
+}
+
 class ReservationViewmodel {
   int? usuaId;
   int? paquId;

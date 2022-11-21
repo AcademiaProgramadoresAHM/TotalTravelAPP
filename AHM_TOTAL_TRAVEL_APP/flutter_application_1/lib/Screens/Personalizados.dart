@@ -11,12 +11,15 @@ import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/ReserDetalles.dart';
 import 'package:flutter_application_1/introduction_animation/components/center_next_button.dart';
+import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
 
 import '../Components/Decodificador.dart';
 import '../Components/Reservation.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
+
+import 'EditReservation.dart';
 
 class PersonaliScreen extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
@@ -28,6 +31,7 @@ class PersonaliScreen extends StatefulWidget {
 }
 
 class _PersonaliScreenState extends State<PersonaliScreen> {
+  ReservEdit reservacionEditado = new ReservEdit();
   Future<dynamic> GetListReservation(userloggeddata) async {
     List<dynamic> dataReservation;
     String url_list =
@@ -48,6 +52,33 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
       return Reservation;
     } else {
       print("Error " + response.statusCode.toString());
+    }
+  }
+
+  Future<dynamic> FindReservationEdit(idreservacion, userloggeddata) async {
+    List<dynamic> dataReservation;
+    String url_list =
+        "https://apitotaltravel.azurewebsites.net/API/Reservation/List";
+    final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+    final response = await http.get(Uri.parse(url_list), headers: headers);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var Json = Decodificador.fromJson(userMap);
+      dataReservation = Json.data;
+      var reservation =
+          dataReservation.where((x) => x['id'] == idreservacion).toList();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => EditReserv(
+              widget.userloggeddata, reservation, reservacionEditado),
+        ),
+      );
+    } else {
+      print("Error" + response.statusCode.toString());
     }
   }
 
@@ -264,7 +295,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                 ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      100, 8, 0, 0),
+                                      20, 8, 0, 0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment:
@@ -294,6 +325,33 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                         ),
                                         onPressed: () {
                                           FindReservation(element['id'],
+                                              widget.userloggeddata);
+                                        },
+                                      ),
+                                      ElevatedButton(
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Color.fromRGBO(
+                                                      101, 45, 143, 1)),
+                                          shape: MaterialStateProperty.all(
+                                            RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                          ),
+                                        ),
+                                        child: Text(
+                                          'Editar Reservation',
+                                          style: TextStyle(
+                                            fontFamily: 'Outfit',
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          FindReservationEdit(element['id'],
                                               widget.userloggeddata);
                                         },
                                       ),
