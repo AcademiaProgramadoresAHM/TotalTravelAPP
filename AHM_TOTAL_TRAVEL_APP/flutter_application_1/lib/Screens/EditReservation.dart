@@ -1,9 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../Components/Decodificador.dart';
+import '../EditarReservScreen/HotelList.dart';
 import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
 import 'package:http/http.dart' as http;
@@ -15,9 +17,11 @@ class EditReserv extends StatefulWidget {
   final List<dynamic> Reservacion;
   final ReservEdit? reservacionEditado;
   String? PaqueteDescrip;
+  double Precio;
+  int idpaquete;
 
   EditReserv(this.userloggeddata, this.Reservacion, this.reservacionEditado,
-      this.PaqueteDescrip);
+      this.PaqueteDescrip, this.Precio, this.idpaquete);
   @override
   State<EditReserv> createState() => _EditReservState();
 }
@@ -61,79 +65,57 @@ class _EditReservState extends State<EditReserv> {
       datapackage = Package.data;
       var package = datapackage.where((x) => x['id'] == idpackage).toList();
 
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                HotelList(widget.userloggeddata, userMap['ciudad_ID'])),
+      );
+
       return package;
     } else {
       print("Error " + response.statusCode.toString());
     }
   }
 
-  List<Padding> PaquetesDetalles(List<dynamic> data, BuildContext context) {
-    List<Padding> list = [];
-    List<String> imageUrl;
-    data.forEach((element) {
-      imageUrl = element['image_URL'].split(',');
-      list.add(Padding(
-        padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-        child: Row(children: [
-          Column(
-            children: [
-              Image.network(
-                imageUrl[0].toString(),
-                width: 100,
-                height: 100,
-                fit: BoxFit.cover,
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(5, 10, 5, 5),
-                child: Text(
-                  element['nombre'],
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(5, 10, 5, 5),
-                child: Text(
-                  element['descripcion_Paquete'],
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(5, 10, 5, 5),
-                child: Text(
-                  element['duracion_Paquete'],
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsetsDirectional.fromSTEB(5, 10, 5, 5),
-                child: Text(
-                  element['precio'],
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-            ],
-          )
-        ]),
-      ));
+  DateTimeRange dateRange = DateTimeRange(
+      start: DateTime(
+          DateTime.now().year, DateTime.now().month, DateTime.now().day),
+      end: DateTime(
+          DateTime.now().year, DateTime.now().month, DateTime.now().day + 1));
+
+  Future pickDateRange() async {
+    DateTimeRange? newDataRange = await showDateRangePicker(
+      context: context,
+      initialDateRange: dateRange,
+      firstDate: DateTime(
+          DateTime.now().year, DateTime.now().month, DateTime.now().day),
+      lastDate: DateTime(2100),
+    );
+
+    if (newDataRange == null) return;
+
+    setState(() {
+      dateRange = newDataRange;
+      final difference = dateRange.duration.inDays;
     });
-    return list;
   }
 
   List<Padding> ReservationDetails(List<dynamic> data, BuildContext context) {
     List<Padding> list = [];
     final _controller = PageController();
     List<String> imageUrl;
+    List<String> FechaLlegada;
+    List<String> FechaSalida;
     data.forEach((element) {
       // imageUrl = element['image_URL'].split(',');
+      FechaLlegada = element['fecha_Entrada'].split('T');
+      FechaSalida = element['fecha_Salida'].split('T');
       if (widget.PaqueteDescrip == null) {
         widget.PaqueteDescrip = element['descripcionPaquete'];
       }
-      if (Precio == null) {
-        Precio = element['precio'].toString();
+      if (widget.Precio == null) {
+        widget.Precio = element['precio'];
         widget.reservacionEditado!.resvPrecio = Precio.toDouble();
       }
       list.add(
@@ -206,6 +188,17 @@ class _EditReservState extends State<EditReserv> {
                                                 style: TextStyle(
                                                   fontFamily: 'Poppins',
                                                   fontSize: 20,
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(0, 10, 0, 0),
+                                                child: Text(
+                                                  element['dni'],
+                                                  style: TextStyle(
+                                                      fontFamily: 'Poppins',
+                                                      fontSize: 16,
+                                                      color: grey),
                                                 ),
                                               ),
                                               Padding(
@@ -288,7 +281,9 @@ class _EditReservState extends State<EditReserv> {
                                                                   widget
                                                                       .reservacionEditado,
                                                                   widget
-                                                                      .PaqueteDescrip)),
+                                                                      .PaqueteDescrip,
+                                                                  widget
+                                                                      .Precio)),
                                                     );
                                                   },
                                                 ),
@@ -318,9 +313,7 @@ class _EditReservState extends State<EditReserv> {
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(20, 0, 0, 0),
                                                 child: Text(
-                                                    widget.reservacionEditado!
-                                                        .resvPrecio
-                                                        .toString(),
+                                                    widget.Precio.toString(),
                                                     style: TextStyle(
                                                         fontSize: 18,
                                                         color: Colors.black)),
@@ -331,80 +324,215 @@ class _EditReservState extends State<EditReserv> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 20),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Text('Costo:',
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Colors.black)),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    120, 0, 0, 0),
-                                            child: Text(
-                                                element['precio'].toString() ??
-                                                    '00.00',
-                                                style: TextStyle(
-                                                    fontSize: 18,
-                                                    color: Colors.black)),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 20),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Flexible(
-                                            child: Text('Ciudad Ubicacion:',
-                                                style: TextStyle(
-                                                    fontSize: 18,
-                                                    color: Colors.black)),
-                                          ),
-                                          Flexible(
-                                            child: Padding(
+                                        padding: EdgeInsets.only(top: 0),
+                                        child: Column(
+                                          children: [
+                                            Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(10, 0, 0, 0),
-                                              child: Text(element['dni'],
-                                                  style: TextStyle(
-                                                      fontSize: 18,
-                                                      color: Colors.black)),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                                                  .fromSTEB(0, 16, 0, 0),
+                                              child: Row(
+                                                children: [
+                                                  Flexible(
+                                                    flex: 4,
+                                                    child: Text(
+                                                      "Cambiar Fecha de Llegada",
+                                                      style: TextStyle(
+                                                        fontFamily: 'Outfit',
+                                                        color: Colors.black,
+                                                        fontSize: 18,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 50,
+                                                  ),
+                                                  Flexible(
+                                                      flex: 4,
+                                                      child: SizedBox(
+                                                          width: 150,
+                                                          child: ElevatedButton(
+                                                            child: Text(
+                                                              "Selec. Fecha",
+                                                              style: TextStyle(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          255,
+                                                                          255,
+                                                                          255)),
+                                                            ),
+                                                            style:
+                                                                ElevatedButton
+                                                                    .styleFrom(
+                                                              elevation: 0.0,
+                                                              shadowColor: Colors
+                                                                  .transparent,
+                                                              backgroundColor:
+                                                                  Color
+                                                                      .fromRGBO(
+                                                                          101,
+                                                                          45,
+                                                                          143,
+                                                                          1),
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                            ),
+                                                            onPressed: () {
+                                                              pickDateRange();
+                                                            },
+                                                          )))
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        )),
                                     Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 0, 0, 20),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Flexible(
-                                            child: Text('Hotel de Hospedaje:',
-                                                style: TextStyle(
-                                                    fontSize: 18,
-                                                    color: Colors.black)),
-                                          ),
-                                          Flexible(
-                                            child: Padding(
+                                        padding: EdgeInsets.only(top: 0),
+                                        child: Column(
+                                          children: [
+                                            Padding(
                                               padding: EdgeInsetsDirectional
-                                                  .fromSTEB(10, 0, 0, 0),
-                                              child: Text(
+                                                  .fromSTEB(0, 16, 0, 0),
+                                              child: Row(
+                                                children: [
+                                                  Flexible(
+                                                    flex: 4,
+                                                    child: Text(
+                                                      "Seleccione su\nfecha de Salida",
+                                                      style: TextStyle(
+                                                        fontFamily: 'Outfit',
+                                                        color: Colors.black,
+                                                        fontSize: 18,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 50,
+                                                  ),
+                                                  Flexible(
+                                                      flex: 4,
+                                                      child: SizedBox(
+                                                          width: 150,
+                                                          child: ElevatedButton(
+                                                            child: Text(
+                                                              "Selec. Fecha",
+                                                              style: TextStyle(
+                                                                  color: Color
+                                                                      .fromARGB(
+                                                                          255,
+                                                                          255,
+                                                                          255,
+                                                                          255)),
+                                                            ),
+                                                            style:
+                                                                ElevatedButton
+                                                                    .styleFrom(
+                                                              elevation: 0.0,
+                                                              shadowColor: Colors
+                                                                  .transparent,
+                                                              backgroundColor:
+                                                                  Color
+                                                                      .fromRGBO(
+                                                                          101,
+                                                                          45,
+                                                                          143,
+                                                                          1),
+                                                              padding:
+                                                                  EdgeInsets
+                                                                      .zero,
+                                                            ),
+                                                            onPressed: () {
+                                                              pickDateRange();
+                                                            },
+                                                          )))
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        )),
+                                    Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 10, 0, 10),
+                                        child: Text(
+                                          'Hotel de Hospedaje',
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500),
+                                        )),
+                                    Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 10, 0, 0),
+                                        child: Container(
+                                          width: double.infinity,
+                                          height: 80,
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            children: [
+                                              Flexible(
+                                                flex: 6,
+                                                child: Text(
                                                   element['nombre_Hotel'],
-                                                  style: TextStyle(
-                                                      fontSize: 18,
-                                                      color: Colors.black)),
-                                            ),
+                                                  style:
+                                                      TextStyle(fontSize: 18),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                width: 120,
+                                              ),
+                                              Flexible(
+                                                flex: 6,
+                                                child: ElevatedButton(
+                                                  style: ButtonStyle(
+                                                    backgroundColor:
+                                                        MaterialStateProperty
+                                                            .all(Color.fromRGBO(
+                                                                101,
+                                                                45,
+                                                                143,
+                                                                1)),
+                                                    shape: MaterialStateProperty
+                                                        .all(
+                                                      RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  child: Text(
+                                                    'Cambiar',
+                                                    style: TextStyle(
+                                                      fontFamily: 'Outfit',
+                                                      color: Colors.white,
+                                                      fontSize: 16,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                    ),
+                                                  ),
+                                                  onPressed: () {
+                                                    Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              PaquetesEleccion(
+                                                                  widget
+                                                                      .userloggeddata,
+                                                                  widget
+                                                                      .Reservacion,
+                                                                  widget
+                                                                      .reservacionEditado,
+                                                                  widget
+                                                                      .PaqueteDescrip,
+                                                                  widget
+                                                                      .Precio)),
+                                                    );
+                                                  },
+                                                ),
+                                              )
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                    ),
+                                        )),
                                     Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: [
@@ -456,7 +584,7 @@ class _EditReservState extends State<EditReserv> {
                           ),
                         ),
                         child: Text(
-                          'Reservar',
+                          'Confirmar Cambio',
                           style: TextStyle(
                             fontFamily: 'Outfit',
                             color: Colors.white,
@@ -474,6 +602,22 @@ class _EditReservState extends State<EditReserv> {
           ),
         ),
       );
+      widget.reservacionEditado!.paquId = widget.idpaquete;
+      widget.reservacionEditado!.hoteId = element['hotel_ID'];
+      widget.reservacionEditado!.reHoFechaEntrada =
+          DateFormat('yyyy-MM-dd').format(dateRange.start);
+      widget.reservacionEditado!.reHoFechaSalida =
+          DateFormat('yyyy-MM-dd').format(dateRange.end);
+      widget.reservacionEditado!.resvId = element['id'];
+      widget.reservacionEditado!.resvPrecio = widget.Precio;
+      widget.reservacionEditado!.resvNumeroPersonas = element['numeroPersonas'];
+      widget.reservacionEditado!.resvCantidadPagos = element['cantidadPagos'];
+      widget.reservacionEditado!.usuaId = element['id_Cliente'];
+      widget.reservacionEditado!.resvConfirmacionHotel = false;
+      widget.reservacionEditado!.resvConfirmacionPago = false;
+      widget.reservacionEditado!.resvConfirmacionRestaurante = false;
+      widget.reservacionEditado!.resvConfirmacionTrans = false;
+      widget.reservacionEditado!.resvEsPersonalizado = false;
     });
 
     return list;

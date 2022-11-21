@@ -14,9 +14,10 @@ class PaquetesEleccion extends StatefulWidget {
   final List<dynamic> Reservacion;
   final ReservEdit? reservacionEditado;
   String? PaqueteDescrip;
+  double Precio;
 
   PaquetesEleccion(this.userloggeddata, this.Reservacion,
-      this.reservacionEditado, this.PaqueteDescrip);
+      this.reservacionEditado, this.PaqueteDescrip, this.Precio);
   @override
   State<PaquetesEleccion> createState() => _PaquetesEleccionState();
 }
@@ -65,7 +66,8 @@ class _PaquetesEleccionState extends State<PaquetesEleccion> {
               widget.reservacionEditado,
               package,
               widget.Reservacion,
-              widget.PaqueteDescrip),
+              widget.PaqueteDescrip,
+              widget.Precio),
         ),
       );
     } else {
