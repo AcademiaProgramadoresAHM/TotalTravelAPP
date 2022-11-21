@@ -12,9 +12,10 @@ class PaqueteDetailConfirm extends StatefulWidget {
   final List<dynamic> Reservacion;
   final ReservEdit? reservacionEditado;
   final List<dynamic> PaqueteDetalles;
+  String? PaqueteDescrip;
 
   PaqueteDetailConfirm(this.userloggeddata, this.reservacionEditado,
-      this.PaqueteDetalles, this.Reservacion);
+      this.PaqueteDetalles, this.Reservacion, this.PaqueteDescrip);
   @override
   State<PaqueteDetailConfirm> createState() => _PaqueteDetailConfirmState();
 }
@@ -327,16 +328,14 @@ class _PaqueteDetailConfirmState extends State<PaqueteDetailConfirm> {
                           ),
                         ),
                         onPressed: () {
-                          widget.reservacionEditado!.paquId =
-                              element['id'].toString();
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => EditReserv(
-                                      widget.userloggeddata,
-                                      widget.Reservacion,
-                                      widget.reservacionEditado,
-                                    )),
+                                    widget.userloggeddata,
+                                    widget.Reservacion,
+                                    widget.reservacionEditado,
+                                    widget.PaqueteDescrip)),
                           );
                         },
                       ),
@@ -348,6 +347,9 @@ class _PaqueteDetailConfirmState extends State<PaqueteDetailConfirm> {
           ),
         ),
       );
+      widget.reservacionEditado!.paquId = element['id'];
+      widget.PaqueteDescrip = element['descripcion_Paquete'];
+      widget.reservacionEditado?.resvPrecio = element['precio'];
     });
 
     return list;

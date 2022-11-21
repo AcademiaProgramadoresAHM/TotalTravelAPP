@@ -74,7 +74,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
         context,
         MaterialPageRoute(
           builder: (context) => EditReserv(
-              widget.userloggeddata, reservation, reservacionEditado),
+              widget.userloggeddata, reservation, reservacionEditado, null),
         ),
       );
     } else {
@@ -371,6 +371,20 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
           ),
         ),
       ));
+      reservacionEditado.paquId = element['id_Paquete'];
+      reservacionEditado.hoteId = element['hotel_ID'];
+      reservacionEditado.reHoFechaEntrada = element['fecha_Entrada'];
+      reservacionEditado.reHoFechaSalida = element['fecha_Salida'];
+      reservacionEditado.resvId = element['id'];
+      reservacionEditado.resvPrecio = element['precio'];
+      reservacionEditado.resvNumeroPersonas = element['numeroPersonas'];
+      reservacionEditado.resvCantidadPagos = element['cantidadPagos'];
+      reservacionEditado.usuaId = element['id_Cliente'];
+      reservacionEditado.resvConfirmacionHotel = false;
+      reservacionEditado.resvConfirmacionPago = false;
+      reservacionEditado.resvConfirmacionRestaurante = false;
+      reservacionEditado.resvConfirmacionTrans = false;
+      reservacionEditado.resvEsPersonalizado = false;
     });
 
     return list;

@@ -13,9 +13,10 @@ class PaquetesEleccion extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final List<dynamic> Reservacion;
   final ReservEdit? reservacionEditado;
+  String? PaqueteDescrip;
 
-  PaquetesEleccion(
-      this.userloggeddata, this.Reservacion, this.reservacionEditado);
+  PaquetesEleccion(this.userloggeddata, this.Reservacion,
+      this.reservacionEditado, this.PaqueteDescrip);
   @override
   State<PaquetesEleccion> createState() => _PaquetesEleccionState();
 }
@@ -59,8 +60,12 @@ class _PaquetesEleccionState extends State<PaquetesEleccion> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => PaqueteDetailConfirm(widget.userloggeddata,
-              widget.reservacionEditado, package, widget.Reservacion),
+          builder: (context) => PaqueteDetailConfirm(
+              widget.userloggeddata,
+              widget.reservacionEditado,
+              package,
+              widget.Reservacion,
+              widget.PaqueteDescrip),
         ),
       );
     } else {

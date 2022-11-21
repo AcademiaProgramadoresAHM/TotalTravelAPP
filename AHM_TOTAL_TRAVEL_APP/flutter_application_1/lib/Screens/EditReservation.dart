@@ -14,14 +14,23 @@ class EditReserv extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final List<dynamic> Reservacion;
   final ReservEdit? reservacionEditado;
+  String? PaqueteDescrip;
 
-  EditReserv(this.userloggeddata, this.Reservacion, this.reservacionEditado);
+  EditReserv(this.userloggeddata, this.Reservacion, this.reservacionEditado,
+      this.PaqueteDescrip);
   @override
   State<EditReserv> createState() => _EditReservState();
 }
 
 class _EditReservState extends State<EditReserv> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
+  String? Precio;
+
+  void SetPrice(PayNumber) {
+    setState(() {
+      Precio = PayNumber;
+    });
+  }
 
   Future<dynamic> GetReservation() async {
     String url_list =
@@ -120,6 +129,13 @@ class _EditReservState extends State<EditReserv> {
     List<String> imageUrl;
     data.forEach((element) {
       // imageUrl = element['image_URL'].split(',');
+      if (widget.PaqueteDescrip == null) {
+        widget.PaqueteDescrip = element['descripcionPaquete'];
+      }
+      if (Precio == null) {
+        Precio = element['precio'].toString();
+        widget.reservacionEditado!.resvPrecio = Precio.toDouble();
+      }
       list.add(
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(18, 14, 18, 0),
@@ -207,7 +223,9 @@ class _EditReservState extends State<EditReserv> {
                                             0, 10, 0, 10),
                                         child: Text(
                                           'Paquete Incluido Del Viaje',
-                                          style: TextStyle(fontSize: 18),
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w500),
                                         )),
                                     Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
@@ -221,7 +239,8 @@ class _EditReservState extends State<EditReserv> {
                                               Flexible(
                                                 flex: 4,
                                                 child: Text(
-                                                  element['descripcionPaquete'],
+                                                  widget.PaqueteDescrip
+                                                      .toString(),
                                                   style:
                                                       TextStyle(fontSize: 18),
                                                 ),
@@ -267,7 +286,9 @@ class _EditReservState extends State<EditReserv> {
                                                                   widget
                                                                       .Reservacion,
                                                                   widget
-                                                                      .reservacionEditado)),
+                                                                      .reservacionEditado,
+                                                                  widget
+                                                                      .PaqueteDescrip)),
                                                     );
                                                   },
                                                 ),
@@ -277,12 +298,13 @@ class _EditReservState extends State<EditReserv> {
                                         )),
                                     Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
-                                          0, 20, 0, 20),
+                                          0, 10, 0, 10),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Flexible(
-                                            child: new Text('Duracion:',
+                                            child: new Text(
+                                                'Precio del Paquete:',
                                                 style: TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.black)),
@@ -296,7 +318,9 @@ class _EditReservState extends State<EditReserv> {
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(20, 0, 0, 0),
                                                 child: Text(
-                                                    "${element['durecionPaquete']}",
+                                                    widget.reservacionEditado!
+                                                        .resvPrecio
+                                                        .toString(),
                                                     style: TextStyle(
                                                         fontSize: 18,
                                                         color: Colors.black)),

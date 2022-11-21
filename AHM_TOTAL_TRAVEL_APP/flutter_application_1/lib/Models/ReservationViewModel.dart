@@ -5,22 +5,22 @@ import 'DefaultPackageViewModel.dart';
 import 'customPackageViewModel.dart';
 
 class ReservEdit {
-  String? resvId;
-  String? usuaId;
-  String? paquId;
-  String? resvEsPersonalizado;
-  String? resvCantidadPagos;
-  String? resvNumeroPersonas;
+  int? resvId;
+  int? usuaId;
+  int? paquId;
+  bool? resvEsPersonalizado;
+  int? resvCantidadPagos;
+  int? resvNumeroPersonas;
   bool? resvConfirmacionPago;
   bool? resvConfirmacionHotel;
   bool? resvConfirmacionRestaurante;
   bool? resvConfirmacionTrans;
-  String? resvPrecio;
+  double? resvPrecio;
   String? resvUsuarioCreacion;
   String? resvUsuarioModifica;
   String? reHoFechaEntrada;
   String? reHoFechaSalida;
-  String? hoteId;
+  int? hoteId;
 
   Map<String, dynamic> toJson() => {
         "resv_ID": resvId,
