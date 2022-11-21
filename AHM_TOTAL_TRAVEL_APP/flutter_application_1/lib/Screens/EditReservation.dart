@@ -1,11 +1,13 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/Account_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../Components/Decodificador.dart';
 import '../EditarReservScreen/HotelList.dart';
+import '../Models/CitiesViewModel.dart';
 import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
 import 'package:http/http.dart' as http;
@@ -19,9 +21,10 @@ class EditReserv extends StatefulWidget {
   String? PaqueteDescrip;
   double Precio;
   int idpaquete;
+  String HotelNombre;
 
   EditReserv(this.userloggeddata, this.Reservacion, this.reservacionEditado,
-      this.PaqueteDescrip, this.Precio, this.idpaquete);
+      this.PaqueteDescrip, this.Precio, this.idpaquete, this.HotelNombre);
   @override
   State<EditReserv> createState() => _EditReservState();
 }
@@ -29,7 +32,7 @@ class EditReserv extends StatefulWidget {
 class _EditReservState extends State<EditReserv> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   String? Precio;
-
+  String HotelNombre = "";
   void SetPrice(PayNumber) {
     setState(() {
       Precio = PayNumber;
@@ -51,6 +54,7 @@ class _EditReservState extends State<EditReserv> {
 
   Future<dynamic> FindPackages(idpackage, userloggeddata) async {
     List<dynamic> datapackage;
+
     String url_list =
         "https://apitotaltravel.azurewebsites.net/API/DefaultPackages/List";
     final response = await http.get(Uri.parse(url_list));
@@ -64,15 +68,23 @@ class _EditReservState extends State<EditReserv> {
       var Package = Decodificador.fromJson(userMap);
       datapackage = Package.data;
       var package = datapackage.where((x) => x['id'] == idpackage).toList();
+      CiudadesViewModel Ciudad =
+          new CiudadesViewModel(userMap['ciudad_ID'], null, null, null, null);
 
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                HotelList(widget.userloggeddata, userMap['ciudad_ID'])),
+            builder: (context) => HotelList(
+                widget.userloggeddata,
+                userMap['ciudad_ID'],
+                Ciudad,
+                widget.reservacionEditado,
+                widget.Reservacion,
+                widget.PaqueteDescrip,
+                widget.Precio,
+                widget.idpaquete,
+                widget.HotelNombre)),
       );
-
-      return package;
     } else {
       print("Error " + response.statusCode.toString());
     }
@@ -117,6 +129,9 @@ class _EditReservState extends State<EditReserv> {
       if (widget.Precio == null) {
         widget.Precio = element['precio'];
         widget.reservacionEditado!.resvPrecio = Precio.toDouble();
+      }
+      if (widget.HotelNombre == "") {
+        widget.HotelNombre = element['nombre_Hotel'];
       }
       list.add(
         Padding(
@@ -272,18 +287,18 @@ class _EditReservState extends State<EditReserv> {
                                                     Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              PaquetesEleccion(
-                                                                  widget
-                                                                      .userloggeddata,
-                                                                  widget
-                                                                      .Reservacion,
-                                                                  widget
-                                                                      .reservacionEditado,
-                                                                  widget
-                                                                      .PaqueteDescrip,
-                                                                  widget
-                                                                      .Precio)),
+                                                          builder: (context) => PaquetesEleccion(
+                                                              widget
+                                                                  .userloggeddata,
+                                                              widget
+                                                                  .Reservacion,
+                                                              widget
+                                                                  .reservacionEditado,
+                                                              widget
+                                                                  .PaqueteDescrip,
+                                                              widget.Precio,
+                                                              widget
+                                                                  .HotelNombre)),
                                                     );
                                                   },
                                                 ),
@@ -472,7 +487,7 @@ class _EditReservState extends State<EditReserv> {
                                               Flexible(
                                                 flex: 6,
                                                 child: Text(
-                                                  element['nombre_Hotel'],
+                                                  widget.HotelNombre,
                                                   style:
                                                       TextStyle(fontSize: 18),
                                                 ),
@@ -511,22 +526,9 @@ class _EditReservState extends State<EditReserv> {
                                                     ),
                                                   ),
                                                   onPressed: () {
-                                                    Navigator.push(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                          builder: (context) =>
-                                                              PaquetesEleccion(
-                                                                  widget
-                                                                      .userloggeddata,
-                                                                  widget
-                                                                      .Reservacion,
-                                                                  widget
-                                                                      .reservacionEditado,
-                                                                  widget
-                                                                      .PaqueteDescrip,
-                                                                  widget
-                                                                      .Precio)),
-                                                    );
+                                                    FindPackages(
+                                                        element['id_Paquete'],
+                                                        widget.userloggeddata);
                                                   },
                                                 ),
                                               )

@@ -2,20 +2,42 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import '../Components/Decodificador.dart';
 import '../ComponentsLogin/Decoder.dart';
+import '../Models/CitiesViewModel.dart';
+import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
+import '../createCustomPackage/customPackage_HotelDetails.dart';
+import '../navigation_home_screen.dart';
+import 'HotelDetail.dart';
 
 class HotelList extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
-  final int? idciudad;
+  final int idciudad;
+  final CiudadesViewModel? ciudad;
+  final List<dynamic> Reservacion;
+  final ReservEdit? reservacionEditado;
+  String? PaqueteDescrip;
+  double Precio;
+  int idpaquete;
+  String HotelNombre;
 
-  HotelList(this.userloggeddata, this.idciudad);
+  HotelList(
+      this.userloggeddata,
+      this.idciudad,
+      this.ciudad,
+      this.reservacionEditado,
+      this.Reservacion,
+      this.PaqueteDescrip,
+      this.Precio,
+      this.idpaquete,
+      this.HotelNombre);
   @override
   State<HotelList> createState() => _HotelListState();
 }
 
 class _HotelListState extends State<HotelList> {
-  Future<dynamic> GetListHotels(Ciudad, userloggeddata, idHotel, bool) async {
+  Future<dynamic> GetListHotels(idCiudad, userloggeddata, idHotel, bool) async {
     List<dynamic> dataHotels;
     String url_list =
         "https://apitotaltravel.azurewebsites.net/API/Hotels/List";
@@ -30,23 +52,8 @@ class _HotelListState extends State<HotelList> {
         Map<String, dynamic> userMap = jsonDecode(response.body);
         var Json = DecoderAPI.fromJson(userMap);
         dataHotels = Json.data;
-        Hotel = dataHotels.where((x) => x['ciudadID'] == Ciudad.ID).toList();
-        return Hotel;
-      }
-    } else if (bool == false) {
-      if (response.statusCode == 200) {
-        Map<String, dynamic> userMap = jsonDecode(response.body);
-        var Json = DecoderAPI.fromJson(userMap);
-        dataHotels = Json.data;
-        var Hotel = dataHotels.where((x) => x['id'] == idHotel).toList();
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(
-        //       builder: (context) => NavigationHomeScreen(
-        //           HotelDetails(widget.userloggeddata, Hotel, Ciudad,
-        //               widget.CitiesDictionary),
-        //           widget.userloggeddata)),
-        // );
+        Hotel = dataHotels.where((x) => x['ciudadID'] == idCiudad.ID).toList();
+        return Json.data;
       }
     } else {
       final url_list = Uri.parse(
@@ -59,8 +66,42 @@ class _HotelListState extends State<HotelList> {
       final response = await http.post(url_list, headers: headers, body: json);
       if (response.body != " ") {
         widget.userloggeddata!.Token = response.body;
-        GetListHotels(Ciudad, userloggeddata, null, true);
+        GetListHotels(idCiudad, userloggeddata, null, true);
       }
+    }
+  }
+
+  Future<dynamic> FindHotel(idHotel, userloggeddata) async {
+    List<dynamic> datapackage;
+
+    String url_list =
+        "https://apitotaltravel.azurewebsites.net/API/Hotels/List";
+    final response = await http.get(Uri.parse(url_list));
+    final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+
+    if (response.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var Json = Decodificador.fromJson(userMap);
+      datapackage = Json.data;
+      var Ciudad = datapackage.where((x) => x['id'] == idHotel).toList();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => HotelDetailsEdit(
+                widget.userloggeddata,
+                Ciudad,
+                widget.reservacionEditado,
+                widget.Reservacion,
+                widget.PaqueteDescrip,
+                widget.Precio,
+                widget.idpaquete,
+                widget.HotelNombre)),
+      );
+    } else {
+      print("Error " + response.statusCode.toString());
     }
   }
 
@@ -216,11 +257,8 @@ class _HotelListState extends State<HotelList> {
                                             ),
                                           ),
                                           onPressed: () {
-                                            GetListHotels(
-                                                widget.idciudad,
-                                                widget.userloggeddata,
-                                                element['id'],
-                                                false);
+                                            FindHotel(element['id'],
+                                                widget.userloggeddata);
                                           },
                                         ),
                                       ],
@@ -305,16 +343,75 @@ class _HotelListState extends State<HotelList> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Material App',
+      title: 'Flutter layout demo',
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Material App Bar'),
-        ),
-        body: Center(
-          child: Container(
-            child: Text('Hello World'),
+          backgroundColor: Color.fromRGBO(101, 45, 143, 1),
+          title: Row(
+            children: <Widget>[
+              Expanded(
+                flex: 1,
+                child: Text(
+                  '           ',
+                ),
+              ),
+              Expanded(
+                flex: 5,
+                child: Center(
+                  child: Text(
+                    'Reservaciones',
+                    style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 20,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Image.asset(
+                    'assets/images/logo-AHM-Fondo-Morao.png',
+                    height: 50,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
+        body: SingleChildScrollView(
+            child: Column(
+          children: [
+            FutureBuilder<dynamic>(
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return Wrap(
+                      spacing: 8,
+                      runSpacing: 4,
+                      alignment: WrapAlignment.start,
+                      crossAxisAlignment: WrapCrossAlignment.start,
+                      direction: Axis.horizontal,
+                      runAlignment: WrapAlignment.start,
+                      verticalDirection: VerticalDirection.down,
+                      clipBehavior: Clip.none,
+                      children: ListHotels(snapshot.data, context));
+                } else {
+                  return Center(
+                      child: Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
+                    child: CircularProgressIndicator(
+                        color: Color.fromARGB(255, 101, 45, 144)),
+                  ));
+                }
+              },
+              future: GetListHotels(
+                  widget.ciudad, widget.userloggeddata, null, true),
+            ),
+          ],
+        )),
       ),
     );
   }

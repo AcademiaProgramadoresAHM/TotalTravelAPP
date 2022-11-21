@@ -79,7 +79,8 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
               reservacionEditado,
               null,
               userMap['precio'],
-              userMap['id_Paquete']),
+              userMap['id_Paquete'],
+              ""),
         ),
       );
     } else {

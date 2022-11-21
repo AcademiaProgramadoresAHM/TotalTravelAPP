@@ -14,9 +14,16 @@ class PaqueteDetailConfirm extends StatefulWidget {
   final List<dynamic> PaqueteDetalles;
   String? PaqueteDescrip;
   double Precio;
+  String HotelNombre;
 
-  PaqueteDetailConfirm(this.userloggeddata, this.reservacionEditado,
-      this.PaqueteDetalles, this.Reservacion, this.PaqueteDescrip, this.Precio);
+  PaqueteDetailConfirm(
+      this.userloggeddata,
+      this.reservacionEditado,
+      this.PaqueteDetalles,
+      this.Reservacion,
+      this.PaqueteDescrip,
+      this.Precio,
+      this.HotelNombre);
   @override
   State<PaqueteDetailConfirm> createState() => _PaqueteDetailConfirmState();
 }
@@ -338,7 +345,8 @@ class _PaqueteDetailConfirmState extends State<PaqueteDetailConfirm> {
                                     widget.reservacionEditado,
                                     widget.PaqueteDescrip,
                                     widget.Precio,
-                                    element['id'])),
+                                    element['id'],
+                                    widget.HotelNombre)),
                           );
                         },
                       ),
