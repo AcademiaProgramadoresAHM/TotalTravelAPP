@@ -287,7 +287,7 @@ List<Padding> ResumeActivities(List<ActivitiesExtra>? data, BuildContext context
     List<Padding> list = [];
     final _controller = PageController();
    if(data != null){
-    data?.forEach((element) {
+    data.forEach((element) {
 
       setState(() {
         SubTotal = SubTotal + num.parse(element.reAE_Precios.toString());
@@ -532,7 +532,7 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
     List<Padding> list = [];
     final _controller = PageController();
     if(data != null){
-    data?.forEach((element) {
+    data.forEach((element) {
       list.add(Padding(
         padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
         child: Container(

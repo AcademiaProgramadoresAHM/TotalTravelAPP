@@ -217,7 +217,8 @@ Future<void> PostCustomPackages(customPackageViewModel customPackage, UserLogged
                                          Padding(
                                                               padding: EdgeInsetsDirectional.fromSTEB(20, 10, 20, 0),
                                                               child: SpinBox(
-                                                                max: 10,
+                                                                readOnly: true,
+                                                                max: 6,
                                                                 min: 1,
                                                                 value: 1,
                                                                 onChanged:
