@@ -179,7 +179,7 @@ class _HistorialScreenState extends State<HistorialScreen> {
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     10, 0, 0, 0),
                                             child: Text(
-                                                '\$' +
+                                                '\L.' +
                                                         element['montoPago']
                                                             .toString() ??
                                                     '00.00',
@@ -202,17 +202,21 @@ class _HistorialScreenState extends State<HistorialScreen> {
                                           style: TextStyle(
                                               fontSize: 20,
                                               color: Colors.black)),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            10, 0, 0, 0),
-                                        child: Text(
-                                            element['nombre_paquete']
-                                                    .toString() ??
-                                                '0',
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.black)),
-                                      ),
+                                      Flexible(
+                                        flex: 6,
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  10, 0, 0, 0),
+                                          child: Text(
+                                              element['nombre_paquete']
+                                                      .toString() ??
+                                                  '0',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Colors.black)),
+                                        ),
+                                      )
                                     ],
                                   ),
                                 ),
