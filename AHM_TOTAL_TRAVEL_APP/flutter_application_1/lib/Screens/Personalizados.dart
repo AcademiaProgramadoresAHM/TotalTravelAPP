@@ -11,6 +11,7 @@ import 'package:flutter_application_1/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Screens/ReserDetalles.dart';
 import 'package:flutter_application_1/introduction_animation/components/center_next_button.dart';
+import '../EditarReservScreen/EditReservation_start.dart';
 import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
 
@@ -55,7 +56,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
 
   Future<dynamic> FindReservationEdit(idreservacion, userloggeddata) async {
     List<dynamic> dataReservation;
-    List<dynamic> Actividadespaquete;
+    List<dynamic> datarestaurante;
     String url_list =
         "https://apitotaltravel.azurewebsites.net/API/Reservation/List";
     final headers = {
@@ -66,46 +67,29 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
     if (response.statusCode == 200) {
       Map<String, dynamic> userMap = jsonDecode(response.body);
       var Json = Decodificador.fromJson(userMap);
-      var data = Json.data;
       dataReservation = Json.data;
-      reservacionEditado.resvId = userMap['id'];
-      reservacionEditado.paquId = userMap["id_Paquete"];
-      reservacionEditado.hoteId = userMap["hotel_ID"];
-      reservacionEditado.usuaId = userMap["id_Cliente"];
-      reservacionEditado.resvPrecio = userMap["precio"];
-      reservacionEditado.resvNumeroPersonas = userMap["numeroPersonas"];
-      reservacionEditado.resvCantidadPagos = userMap["cantidadPagos"];
-      reservacionEditado.reHoFechaEntrada = userMap["fecha_Entrada"];
-      reservacionEditado.reHoFechaSalida = userMap["fecha_Salida"];
-      reservacionEditado.NombreCompleto = userMap['nombrecompleto'];
-      reservacionEditado.dni = userMap["dni"];
       var reservation =
           dataReservation.where((x) => x['id'] == idreservacion).toList();
 
       // url_list =
-      //     "https://apitotaltravel.azurewebsites.net/API/ReservationActivitiesExtra/List";
-      // final responseAct = await http.get(Uri.parse(url_list), headers: headers);
-      // if (responseAct.statusCode == 200) {
-      //   Map<String, dynamic> userMapa = jsonDecode(response.body);
+      //     "https://apitotaltravel.azurewebsites.net/API/ReservationRestaurant/List";
+      // final response2 = await http.get(Uri.parse(url_list), headers: headers);
+      // if (response2.statusCode == 200) {
+      //   Map<String, dynamic> userMapa = jsonDecode(response2.body);
       //   var Activ = Decodificador.fromJson(userMapa);
-      //   Actividadespaquete = Activ.data;
-      //   var packageAct =
-      //       Actividadespaquete.where((x) => x['reservacion'] == idreservacion)
-      //           .toList();
+      //   datarestaurante = Activ.data;
+      //   var restaurante = datarestaurante
+      //       .where((x) => x['resv_ID'] == idreservacion)
+      //       .toList();
+
       // }
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => EditReserv(
-      //         widget.userloggeddata,
-      //         reservation,
-      //         reservacionEditado,
-      //         null,
-      //         userMap["precio"],
-      //         userMap['id_Paquete'],
-      //         "", []),
-      //   ),
-      // );
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => EditReservationStart(
+              widget.userloggeddata, reservacionEditado, reservation),
+        ),
+      );
     } else {
       print("Error" + response.statusCode.toString());
     }

@@ -1,52 +1,33 @@
 import 'dart:convert';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
-import 'package:flutter_application_1/Models/HotelsViewModel.dart';
-import 'package:flutter_application_1/Models/customPackageViewModel.dart';
-import 'package:flutter_application_1/Screens/Restaurantes.dart';
-import 'package:flutter_application_1/createCustomPackage/customPackage_Create.dart';
-import 'package:flutter_application_1/createCustomPackage/customPackage_HistoryRestaurants.dart';
-import 'package:flutter_application_1/createCustomPackage/customPackage_RestaurantDetails.dart';
-import 'package:flutter_application_1/createCustomPackage/customPackage_RestaurantMenus.dart';
-import 'package:flutter_application_1/navigation_home_screen.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:nb_utils/nb_utils.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../Models/CitiesViewModel.dart';
+import 'package:nb_utils/nb_utils.dart';
+import '../Components/Decodificador.dart';
+import '../ComponentsLogin/Decoder.dart';
+import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
-import '../utils/models.dart';
-import '../utils/AppWidget.dart';
-import '../utils/T2Colors.dart';
-import '../utils/ListaHoteles.dart';
-import '../utils/flutter_rating_bar.dart';
+import 'EditReservation_MenuList.dart';
+import 'EditReservation_RestaurantDetails.dart';
+import 'EditReservation_start.dart';
 
-class RestaurantcustomPackage extends StatefulWidget {
-  static var tag = "/DemoT2Cards";
+class EditReservationRestaurante extends StatefulWidget {
+  final ReservEdit reservacionEditado;
+  final List<dynamic> reservationList;
   final UserLoggedModel? userloggeddata;
-  final CiudadesViewModel? Ciudad;
-  final customPackageViewModel customPackage;
-  final int RestaurantsAdd;
-  final List<Restaurants> Restaurante;
-  final Map<int?, String> CitiesDictionary;
-  const RestaurantcustomPackage(
-      this.userloggeddata,
-      this.Ciudad,
-      this.customPackage,
-      this.RestaurantsAdd,
-      this.Restaurante,
-      this.CitiesDictionary,
-      {super.key});
+  final int idCiudad;
+
+  EditReservationRestaurante(this.userloggeddata, this.reservacionEditado,
+      this.reservationList, this.idCiudad);
   @override
-  _RestaurantcustomPackage createState() => _RestaurantcustomPackage();
+  State<EditReservationRestaurante> createState() =>
+      _EditReservationRestauranteState();
 }
 
-class _RestaurantcustomPackage extends State<RestaurantcustomPackage> {
-  late List<Hoteles> ListaHoteles;
-  Map<int?, String> HotelsDictionary = Map();
-
+class _EditReservationRestauranteState
+    extends State<EditReservationRestaurante> {
   Future<dynamic> GetListMenus(
       userloggeddata, idRestaurant, restaurante) async {
     List<dynamic> dataMenus;
@@ -65,15 +46,19 @@ class _RestaurantcustomPackage extends State<RestaurantcustomPackage> {
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) =>
-                MenusList(widget.userloggeddata, menus, restaurante)),
+            builder: (context) => EditReservationMenuList(
+                widget.userloggeddata,
+                widget.reservacionEditado,
+                widget.reservationList,
+                menus,
+                restaurante)),
       );
     }
   }
 
-  Future<dynamic> GetListRestaurants(
-      Ciudad, userloggeddata, idRestaurant, bool) async {
-    List<dynamic> dataActivities;
+  //Encontrar el hotel
+  Future<dynamic> FindRestaurant(idRestaurante, userloggeddata) async {
+    List<dynamic> datahotel;
     String url_list =
         "https://apitotaltravel.azurewebsites.net/API/Restaurants/List";
     final headers = {
@@ -81,54 +66,46 @@ class _RestaurantcustomPackage extends State<RestaurantcustomPackage> {
       "Authorization": "bearer " + widget.userloggeddata!.Token!
     };
     final response = await http.get(Uri.parse(url_list), headers: headers);
-    if (bool == true) {
-      if (response.statusCode == 200) {
-        Map<String, dynamic> userMap = jsonDecode(response.body);
-        var Json = DecoderAPI.fromJson(userMap);
-        dataActivities = Json.data;
-        var activity =
-            dataActivities.where((x) => x['ciudadID'] == Ciudad.ID).toList();
-
-        return activity;
-      }
-    } else if (bool == false) {
-      if (response.statusCode == 200) {
-        Map<String, dynamic> userMap = jsonDecode(response.body);
-        var Json = DecoderAPI.fromJson(userMap);
-        dataActivities = Json.data;
-        var Activity =
-            dataActivities.where((x) => x['id'] == idRestaurant).toList();
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-              builder: (context) => RestaurantDetails(
-                  widget.userloggeddata,
-                  Activity,
-                  Ciudad,
-                  widget.customPackage,
-                  widget.RestaurantsAdd,
-                  widget.Restaurante,
-                  widget.CitiesDictionary)),
-        );
-      }
+    if (response.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var Json = Decodificador.fromJson(userMap);
+      datahotel = Json.data;
+      var restaurant =
+          datahotel.where((x) => x['id'] == idRestaurante).toList();
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => EditReservationRestaurantDetails(
+                widget.userloggeddata,
+                widget.reservacionEditado,
+                widget.reservationList,
+                restaurant)),
+      );
     } else {
-      final url_list = Uri.parse(
-          "https://apitotaltravel.azurewebsites.net/API/Authentication/Refresh-token");
-      final headers = {
-        "Content-type": "application/json",
-        "Authorization": "bearer " + widget.userloggeddata!.Token!
-      };
-
-      final json = jsonEncode({"token": widget.userloggeddata!.Token});
-      final response = await http.post(url_list, headers: headers, body: json);
-      if (response.body != " ") {
-        widget.userloggeddata!.Token = response.body;
-        GetListRestaurants(Ciudad, widget.userloggeddata, null, true);
-      }
+      print("Error" + response.statusCode.toString());
     }
   }
 
-  List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
+  Future<dynamic> GetListRestaurant(idCiudad, userloggeddata) async {
+    List<dynamic> dataHotels;
+    String url_list =
+        "https://apitotaltravel.azurewebsites.net/API/Restaurants/List";
+    final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+    final response = await http.get(Uri.parse(url_list), headers: headers);
+    var Hotel;
+    if (response.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var Json = Decodificador.fromJson(userMap);
+      dataHotels = Json.data;
+      Hotel = dataHotels.where((x) => x['ciudadID'] == idCiudad).toList();
+      return Hotel;
+    }
+  }
+
+  List<Padding> Listrestaurante(List<dynamic> data, BuildContext context) {
     List<Padding> list = [];
     final _controller = PageController();
     List<String> imageUrl;
@@ -290,11 +267,8 @@ class _RestaurantcustomPackage extends State<RestaurantcustomPackage> {
                                           ),
                                         ),
                                         onPressed: () {
-                                          GetListRestaurants(
-                                              widget.Ciudad,
-                                              widget.userloggeddata,
-                                              element['id'],
-                                              false);
+                                          FindRestaurant(element['id'],
+                                              widget.userloggeddata);
                                         },
                                       ),
                                     ],
@@ -319,16 +293,7 @@ class _RestaurantcustomPackage extends State<RestaurantcustomPackage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-    //GetListHotels(widget.Ciudad,widget.userloggeddata);
-    ListaHoteles = getHoteles();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    changeStatusColor(appStore.appBarColor);
     return MaterialApp(
         title: 'Flutter layout demo',
         debugShowCheckedModeBanner: false,
@@ -344,96 +309,96 @@ class _RestaurantcustomPackage extends State<RestaurantcustomPackage> {
                         padding: EdgeInsetsDirectional.fromSTEB(125, 10, 0, 0),
                         child: Text("Restaurantes"),
                       ),
-                      SizedBox.fromSize(
-                        size: Size(80, 80), // button width and height
-                        child: Material(
-                          color:
-                              Color.fromRGBO(101, 45, 143, 1), // button color
-                          child: InkWell(
-                            splashColor:
-                                Color.fromRGBO(101, 45, 143, 1), // splash color
-                            onTap: () {}, // button pressed
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                IconButton(
-                                  icon: Container(
-                                    decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color: Colors.black, width: 1),
-                                        shape: BoxShape.circle,
-                                        color:
-                                            Color.fromARGB(255, 210, 173, 238)),
-                                    child: Center(
-                                      child: Text(
-                                        "${widget.RestaurantsAdd}",
-                                        style: TextStyle(
-                                            fontSize: 16, color: black),
-                                      ),
-                                    ),
-                                  ),
-                                  onPressed: () {
-                                    if (widget.RestaurantsAdd != 0) {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                HistoryRestaurants(
-                                                    widget.userloggeddata,
-                                                    widget.Restaurante,
-                                                    widget.RestaurantsAdd,
-                                                    widget.Ciudad,
-                                                    widget.customPackage,
-                                                    widget.CitiesDictionary)),
-                                      );
-                                    } else {
-                                      showCupertinoDialog(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              Theme(
-                                                data: ThemeData.light(),
-                                                child: CupertinoAlertDialog(
-                                                  title: Text(
-                                                    'Advertencia',
-                                                    style: boldTextStyle(
-                                                        color: Colors.black,
-                                                        size: 18),
-                                                  ),
-                                                  content: Text(
-                                                    'Seleccione un restaurante',
-                                                    style: secondaryTextStyle(
-                                                        color: Colors.black,
-                                                        size: 16),
-                                                  ),
-                                                  actions: [
-                                                    CupertinoDialogAction(
-                                                      child: Text(
-                                                        'Aceptar',
-                                                        style: primaryTextStyle(
-                                                            color: redColor,
-                                                            size: 18),
-                                                      ),
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                      },
-                                                    )
-                                                  ],
-                                                ),
-                                              ));
-                                    }
-                                  },
-                                ),
-                                Text(
-                                  "Ver Restaurantes",
-                                  style: TextStyle(
-                                      fontSize: 10, color: Colors.white),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      )
+                      // SizedBox.fromSize(
+                      //   size: Size(80, 80), // button width and height
+                      //   child: Material(
+                      //     color:
+                      //         Color.fromRGBO(101, 45, 143, 1), // button color
+                      //     child: InkWell(
+                      //       splashColor:
+                      //           Color.fromRGBO(101, 45, 143, 1), // splash color
+                      //       onTap: () {}, // button pressed
+                      //       child: Column(
+                      //         mainAxisAlignment: MainAxisAlignment.center,
+                      //         children: <Widget>[
+                      //           IconButton(
+                      //             icon: Container(
+                      //               decoration: BoxDecoration(
+                      //                   border: Border.all(
+                      //                       color: Colors.black, width: 1),
+                      //                   shape: BoxShape.circle,
+                      //                   color:
+                      //                       Color.fromARGB(255, 210, 173, 238)),
+                      //               child: Center(
+                      //                 child: Text(
+                      //                   "${widget.RestaurantsAdd}",
+                      //                   style: TextStyle(
+                      //                       fontSize: 16, color: black),
+                      //                 ),
+                      //               ),
+                      //             ),
+                      //             onPressed: () {
+                      //               if (widget.RestaurantsAdd != 0) {
+                      //                 Navigator.push(
+                      //                   context,
+                      //                   MaterialPageRoute(
+                      //                       builder: (context) =>
+                      //                           HistoryRestaurants(
+                      //                               widget.userloggeddata,
+                      //                               widget.Restaurante,
+                      //                               widget.RestaurantsAdd,
+                      //                               widget.Ciudad,
+                      //                               widget.customPackage,
+                      //                               widget.CitiesDictionary)),
+                      //                 );
+                      //               } else {
+                      //                 showCupertinoDialog(
+                      //                     context: context,
+                      //                     builder: (BuildContext context) =>
+                      //                         Theme(
+                      //                           data: ThemeData.light(),
+                      //                           child: CupertinoAlertDialog(
+                      //                             title: Text(
+                      //                               'Advertencia',
+                      //                               style: boldTextStyle(
+                      //                                   color: Colors.black,
+                      //                                   size: 18),
+                      //                             ),
+                      //                             content: Text(
+                      //                               'Seleccione un restaurante',
+                      //                               style: secondaryTextStyle(
+                      //                                   color: Colors.black,
+                      //                                   size: 16),
+                      //                             ),
+                      //                             actions: [
+                      //                               CupertinoDialogAction(
+                      //                                 child: Text(
+                      //                                   'Aceptar',
+                      //                                   style: primaryTextStyle(
+                      //                                       color: redColor,
+                      //                                       size: 18),
+                      //                                 ),
+                      //                                 onPressed: () {
+                      //                                   Navigator.pop(context);
+                      //                                 },
+                      //                               )
+                      //                             ],
+                      //                           ),
+                      //                         ));
+                      //               }
+                      //             },
+                      //           ),
+                      //           Text(
+                      //             "Ver Restaurantes",
+                      //             style: TextStyle(
+                      //                 fontSize: 10, color: Colors.white),
+                      //             textAlign: TextAlign.center,
+                      //           ),
+                      //         ],
+                      //       ),
+                      //     ),
+                      //   ),
+                      // )
                     ]),
               ),
             ),
@@ -455,7 +420,7 @@ class _RestaurantcustomPackage extends State<RestaurantcustomPackage> {
                           runAlignment: WrapAlignment.start,
                           verticalDirection: VerticalDirection.down,
                           clipBehavior: Clip.none,
-                          children: ListHotels(snapshot.data, context));
+                          children: Listrestaurante(snapshot.data, context));
                     } else {
                       return Center(
                           child: Padding(
@@ -465,8 +430,8 @@ class _RestaurantcustomPackage extends State<RestaurantcustomPackage> {
                       ));
                     }
                   },
-                  future: GetListRestaurants(
-                      widget.Ciudad, widget.userloggeddata, null, true),
+                  future:
+                      GetListRestaurant(widget.idCiudad, widget.userloggeddata),
                 ),
               ],
             )),
@@ -534,7 +499,7 @@ class _RestaurantcustomPackage extends State<RestaurantcustomPackage> {
                       width: 170,
                       child: ElevatedButton(
                         onPressed: () {
-                          if (widget.Restaurante.isEmpty) {
+                          if (widget.reservationList.isEmpty) {
                             showCupertinoDialog(
                                 context: context,
                                 builder: (BuildContext context) => Theme(
@@ -568,44 +533,38 @@ class _RestaurantcustomPackage extends State<RestaurantcustomPackage> {
                                                   color: redColor, size: 18),
                                             ),
                                             onPressed: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        NavigationHomeScreen(
-                                                            createCustomPackage(
-                                                                widget.Ciudad,
-                                                                widget
-                                                                    .userloggeddata,
-                                                                4,
-                                                                widget
-                                                                    .customPackage,
-                                                                widget
-                                                                    .CitiesDictionary),
-                                                            widget
-                                                                .userloggeddata)),
-                                              );
+                                              // Navigator.push(
+                                              //   context,
+                                              //   MaterialPageRoute(
+                                              //       builder: (context) =>
+                                              //           NavigationHomeScreen(
+                                              //               createCustomPackage(
+                                              //                   widget.Ciudad,
+                                              //                   widget
+                                              //                       .userloggeddata,
+                                              //                   4,
+                                              //                   widget
+                                              //                       .customPackage,
+                                              //                   widget
+                                              //                       .CitiesDictionary),
+                                              //               widget
+                                              //                   .userloggeddata)),
+                                              // );
                                             },
                                           )
                                         ],
                                       ),
                                     ));
                           } else {
-                            widget.customPackage.Restaurant =
-                                widget.Restaurante;
-                            widget.customPackage.restaurantes =
-                                jsonEncode(widget.Restaurante);
+                            // widget.reservacionEditado.Restaurante =
+                            //     widget.Restaurante;
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => NavigationHomeScreen(
-                                      createCustomPackage(
-                                          widget.Ciudad,
-                                          widget.userloggeddata,
-                                          4,
-                                          widget.customPackage,
-                                          widget.CitiesDictionary),
-                                      widget.userloggeddata)),
+                                  builder: (context) => EditReservationStart(
+                                      widget.userloggeddata,
+                                      widget.reservacionEditado,
+                                      widget.reservationList)),
                             );
                           }
                         },
@@ -620,26 +579,5 @@ class _RestaurantcustomPackage extends State<RestaurantcustomPackage> {
                     )),
               ],
             )));
-  }
-
-  Column _buildButtonColumn(Color color, IconData icon, String label) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Icon(icon, color: color),
-        Container(
-          margin: const EdgeInsets.only(top: 8),
-          child: Text(
-            label,
-            style: TextStyle(
-              fontSize: 12,
-              fontWeight: FontWeight.w400,
-              color: color,
-            ),
-          ),
-        ),
-      ],
-    );
   }
 }

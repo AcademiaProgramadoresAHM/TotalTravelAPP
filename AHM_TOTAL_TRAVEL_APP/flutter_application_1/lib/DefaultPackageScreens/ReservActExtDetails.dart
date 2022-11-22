@@ -45,6 +45,7 @@ class _ActivityDetails extends State<DefaultActivityExtraDetails> {
   bool basePrice = true, confirm = false;
   var priceBase;
   var peopleFinal = 1;
+
   List<Padding> DefaultActivityExtraDetails(
       List<dynamic> data, BuildContext context) {
     final hours = time.hour.toString().padLeft(2, '0');

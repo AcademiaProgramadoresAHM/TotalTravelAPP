@@ -3,6 +3,8 @@
 import 'dart:convert';
 //import 'dart:js';
 import 'package:flutter/material.dart';
+import '../Models/ReservationViewModel.dart';
+import '../Models/UsersViewModel.dart';
 import 'Decodificador.dart';
 import 'package:http/http.dart' as http;
 
@@ -280,4 +282,20 @@ List<Padding> ListDefaultReservation(List<dynamic> data, BuildContext context) {
   });
 
   return list;
+}
+
+Future<void> UpdateReservation(ReservEdit reservacionEditado,
+    UserLoggedModel? userloggeddata, BuildContext context) async {
+  final headers = {
+    "Content-type": "application/json",
+    "Authorization": "bearer " + userloggeddata!.Token!
+  };
+
+  final uri = Uri.parse(
+      "https://apitotaltravel.azurewebsites.net/API/Reservation/Update?id=" +
+          reservacionEditado.resvId.toString());
+
+  final json = jsonEncode(reservacionEditado);
+  final response = await http.put(uri, headers: headers, body: json);
+  print(response.body);
 }

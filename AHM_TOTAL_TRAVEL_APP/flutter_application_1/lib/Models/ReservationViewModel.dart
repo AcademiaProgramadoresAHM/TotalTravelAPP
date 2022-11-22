@@ -26,6 +26,9 @@ class ReservEdit {
   String? reHoFechaEntrada;
   String? reHoFechaSalida;
   int? hoteId;
+  String? HotelDescrip;
+  String? PaqueteDescrip;
+  String? Restaurante;
 
   Map<String, dynamic> toJson() => {
         "resv_ID": resvId,
