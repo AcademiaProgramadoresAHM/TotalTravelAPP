@@ -88,7 +88,7 @@ class LandingPageState extends State<LandingPage> {
                           ),
                         ),
                         24.height,
-                        Text('\$' + element['precio'].toString(),
+                        Text('\L.' + element['precio'].toString(),
                             style: boldTextStyle(
                                 size: 45, color: blueButtonAndTextColor)),
                         Text('per user/month', style: secondaryTextStyle()),
@@ -229,7 +229,7 @@ class LandingPageState extends State<LandingPage> {
                     child: Row(
                       children: [
                         Container(
-                          width: 250,
+                          width: 240,
                           height: 100,
                           child: Padding(
                             padding:
@@ -252,12 +252,7 @@ class LandingPageState extends State<LandingPage> {
                             ]),
                           ),
                         ),
-                        Flexible(
-                            flex: 6,
-                            child: Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                                child: loginButton())),
+                        Flexible(flex: 6, child: loginButton()),
                       ],
                     )),
                 SizedBox(
