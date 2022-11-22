@@ -57,6 +57,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
 
   Future<dynamic> FindReservationEdit(idreservacion, userloggeddata) async {
     List<dynamic> dataReservation;
+    List<dynamic> Actividadespaquete;
     String url_list =
         "https://apitotaltravel.azurewebsites.net/API/Reservation/List";
     final headers = {
@@ -70,19 +71,33 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
       dataReservation = Json.data;
       var reservation =
           dataReservation.where((x) => x['id'] == idreservacion).toList();
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => EditReserv(
-              widget.userloggeddata,
-              reservation,
-              reservacionEditado,
-              null,
-              userMap['precio'],
-              userMap['id_Paquete'],
-              ""),
-        ),
-      );
+
+      url_list =
+          "https://apitotaltravel.azurewebsites.net/API/ReservationActivitiesExtra/List";
+      final responseAct = await http.get(Uri.parse(url_list), headers: headers);
+      if (responseAct.statusCode == 200) {
+        Map<String, dynamic> userMapa = jsonDecode(response.body);
+        var Activ = Decodificador.fromJson(userMapa);
+        Actividadespaquete = Activ.data;
+        var packageAct =
+            Actividadespaquete.where((x) => x['reservacion'] == idreservacion)
+                .toList();
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => EditReserv(
+                widget.userloggeddata,
+                reservation,
+                reservacionEditado,
+                null,
+                userMap['precio'],
+                userMap['id_Paquete'],
+                "",
+                packageAct),
+          ),
+        );
+      }
     } else {
       print("Error" + response.statusCode.toString());
     }

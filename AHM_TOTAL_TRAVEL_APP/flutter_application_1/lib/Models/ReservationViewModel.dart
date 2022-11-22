@@ -16,6 +16,9 @@ class ReservEdit {
   bool? resvConfirmacionRestaurante;
   bool? resvConfirmacionTrans;
   double? resvPrecio;
+  int? habi_ID;
+  int? habi_Cantidad;
+  String? habitacionreserv;
   String? resvUsuarioCreacion;
   String? resvUsuarioModifica;
   String? reHoFechaEntrada;

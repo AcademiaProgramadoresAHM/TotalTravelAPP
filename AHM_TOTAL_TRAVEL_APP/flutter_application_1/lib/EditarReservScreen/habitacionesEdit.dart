@@ -1,62 +1,62 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
+import 'package:flutter_application_1/Models/HotelsViewModel.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_HotelDetails.dart';
+import 'package:flutter_application_1/createCustomPackage/customPackage_RoomDetails.dart';
 import 'package:http/http.dart' as http;
-import '../Components/Decodificador.dart';
-import '../ComponentsLogin/Decoder.dart';
 import '../Models/CitiesViewModel.dart';
 import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
-import '../createCustomPackage/customPackage_HotelDetails.dart';
-import '../navigation_home_screen.dart';
-import 'HotelDetail.dart';
+import '../utils/models.dart';
+import '../utils/AppWidget.dart';
+import '../utils/ListaHoteles.dart';
+import 'RoomsDetails.dart';
 
-class HotelList extends StatefulWidget {
+class RoomsListEdit extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
-  final int idciudad;
-  final CiudadesViewModel? ciudad;
-  final List<dynamic> Reservacion;
+  final HotelViewModel? Hotel;
   final ReservEdit? reservacionEditado;
+  final List<dynamic> Reservacion;
   final List<dynamic> Actividadespaquete;
   String? PaqueteDescrip;
   double Precio;
   int idpaquete;
   String HotelNombre;
 
-  HotelList(
+  RoomsListEdit(
       this.userloggeddata,
-      this.idciudad,
-      this.ciudad,
-      this.reservacionEditado,
+      this.Hotel,
       this.Reservacion,
+      this.reservacionEditado,
       this.PaqueteDescrip,
       this.Precio,
       this.idpaquete,
       this.HotelNombre,
       this.Actividadespaquete);
   @override
-  State<HotelList> createState() => _HotelListState();
+  _RoomsListEdit createState() => _RoomsListEdit();
 }
 
-class _HotelListState extends State<HotelList> {
-  Future<dynamic> GetListHotels(idCiudad, userloggeddata, idHotel, bool) async {
-    List<dynamic> dataHotels;
-    String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Hotels/List";
+class _RoomsListEdit extends State<RoomsListEdit> {
+  late List<Hoteles> ListaHoteles;
+  Map<int?, String> HotelsDictionary = Map();
+
+  Future<dynamic> GetListRooms(Hotel, userloggeddata) async {
+    List<dynamic> dataRooms;
+    String url_list = "https://apitotaltravel.azurewebsites.net/API/Rooms/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
     };
     final response = await http.get(Uri.parse(url_list), headers: headers);
-    var Hotel;
-    if (bool == true) {
-      if (response.statusCode == 200) {
-        Map<String, dynamic> userMap = jsonDecode(response.body);
-        var Json = DecoderAPI.fromJson(userMap);
-        dataHotels = Json.data;
-        Hotel = dataHotels.where((x) => x['ciudadID'] == idCiudad.ID).toList();
-        return Json.data;
-      }
+    if (response.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var Json = DecoderAPI.fromJson(userMap);
+      dataRooms = Json.data;
+      var Room = dataRooms.where((x) => x['hotelID'] == Hotel.ID).toList();
+
+      return Room;
     } else {
       final url_list = Uri.parse(
           "https://apitotaltravel.azurewebsites.net/API/Authentication/Refresh-token");
@@ -64,48 +64,43 @@ class _HotelListState extends State<HotelList> {
         "Content-type": "application/json",
         "Authorization": "bearer " + widget.userloggeddata!.Token!
       };
-      final json = jsonEncode(widget.userloggeddata!.Token);
+      final json = jsonEncode({"token: string"});
       final response = await http.post(url_list, headers: headers, body: json);
       if (response.body != " ") {
         widget.userloggeddata!.Token = response.body;
-        GetListHotels(idCiudad, userloggeddata, null, true);
+        GetListRooms(Hotel, widget.userloggeddata);
       }
     }
   }
 
-  Future<dynamic> FindHotel(idHotel, userloggeddata) async {
-    List<dynamic> datapackage;
-
-    String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Hotels/List";
-    final response = await http.get(Uri.parse(url_list));
+  Future<dynamic> FindRooms(idRoom, userloggeddata) async {
+    List<dynamic> dataRoom;
+    String url_list = "https://apitotaltravel.azurewebsites.net/API/Rooms/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
     };
-
+    final response = await http.get(Uri.parse(url_list), headers: headers);
     if (response.statusCode == 200) {
       Map<String, dynamic> userMap = jsonDecode(response.body);
-      var Json = Decodificador.fromJson(userMap);
-      datapackage = Json.data;
-      var Ciudad = datapackage.where((x) => x['id'] == idHotel).toList();
+      var Json = DecoderAPI.fromJson(userMap);
+      dataRoom = Json.data;
+      var Room = dataRoom.where((x) => x['id'] == idRoom).toList();
       Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => HotelDetailsEdit(
+            builder: (context) => RoomDetailsEdits(
                 widget.userloggeddata,
-                Ciudad,
-                widget.reservacionEditado,
+                Room,
                 widget.Reservacion,
+                widget.reservacionEditado,
                 widget.PaqueteDescrip,
                 widget.Precio,
                 widget.idpaquete,
                 widget.HotelNombre,
                 widget.Actividadespaquete)),
       );
-    } else {
-      print("Error " + response.statusCode.toString());
-    }
+    } else {}
   }
 
   List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
@@ -114,7 +109,7 @@ class _HotelListState extends State<HotelList> {
     List<String> imageUrl;
     if (data.isNotEmpty) {
       data.forEach((element) {
-        imageUrl = element['image_URL'].split(',');
+        imageUrl = element['imageUrl'].split(',');
         list.add(Padding(
           padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
           child: Container(
@@ -188,7 +183,7 @@ class _HotelListState extends State<HotelList> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        element['hotel'],
+                                        element['habitacion'],
                                         style: TextStyle(
                                           fontFamily: 'Outfit',
                                           color: Color(0xFF090F13),
@@ -251,7 +246,7 @@ class _HotelListState extends State<HotelList> {
                                             ),
                                           ),
                                           child: Text(
-                                            'Reservar',
+                                            'Ver detalles',
                                             style: TextStyle(
                                               fontFamily: 'Outfit',
                                               color: Colors.white,
@@ -260,7 +255,7 @@ class _HotelListState extends State<HotelList> {
                                             ),
                                           ),
                                           onPressed: () {
-                                            FindHotel(element['id'],
+                                            FindRooms(element['id'],
                                                 widget.userloggeddata);
                                           },
                                         ),
@@ -344,78 +339,119 @@ class _HotelListState extends State<HotelList> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    //GetListHotels(widget.Ciudad,widget.userloggeddata);
+    ListaHoteles = getHoteles();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width;
+    changeStatusColor(appStore.appBarColor);
     return MaterialApp(
-      title: 'Flutter layout demo',
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color.fromRGBO(101, 45, 143, 1),
-          title: Row(
-            children: <Widget>[
-              Expanded(
-                flex: 1,
-                child: Text(
-                  '           ',
-                ),
-              ),
-              Expanded(
-                flex: 5,
-                child: Center(
-                  child: Text(
-                    'Reservaciones',
-                    style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
+        title: 'Flutter layout demo',
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Color(0xFF652D8F),
+            automaticallyImplyLeading: false,
+            title: Row(children: <Widget>[
+              Material(
+                color: Color.fromRGBO(101, 45, 143, 1), // button color
+                child: InkWell(
+                  splashColor: Color.fromRGBO(101, 45, 143, 1), // splash color
+                  onTap: () {}, // button pressed
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      IconButton(
+                        icon: const Icon(
+                          Icons.arrow_back,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                    ],
                   ),
                 ),
               ),
-              Expanded(
-                flex: 1,
-                child: Align(
-                  alignment: Alignment.topRight,
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(75, 0, 0, 0),
+                child: Text("Habitaciones"),
+              ),
+            ]),
+            actions: [
+              Align(
+                alignment: AlignmentDirectional(-0.05, 0.05),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
                   child: Image.asset(
                     'assets/images/logo-AHM-Fondo-Morao.png',
+                    width: 50,
                     height: 50,
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),
             ],
+            centerTitle: false,
+            elevation: 2,
+          ),
+          body: SingleChildScrollView(
+
+              // color:
+              //     HotelAppTheme.buildLightTheme().backgroundColor,
+              child: Column(
+            children: [
+              FutureBuilder<dynamic>(
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Wrap(
+                        spacing: 8,
+                        runSpacing: 4,
+                        alignment: WrapAlignment.start,
+                        crossAxisAlignment: WrapCrossAlignment.start,
+                        direction: Axis.horizontal,
+                        runAlignment: WrapAlignment.start,
+                        verticalDirection: VerticalDirection.down,
+                        clipBehavior: Clip.none,
+                        children: ListHotels(snapshot.data, context));
+                  } else {
+                    return Center(
+                        child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
+                      child: CircularProgressIndicator(
+                          color: Color.fromARGB(255, 101, 45, 144)),
+                    ));
+                  }
+                },
+                future: GetListRooms(widget.Hotel, widget.userloggeddata),
+              ),
+            ],
+          )),
+        ));
+  }
+
+  Column _buildButtonColumn(Color color, IconData icon, String label) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Icon(icon, color: color),
+        Container(
+          margin: const EdgeInsets.only(top: 8),
+          child: Text(
+            label,
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+              color: color,
+            ),
           ),
         ),
-        body: SingleChildScrollView(
-            child: Column(
-          children: [
-            FutureBuilder<dynamic>(
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Wrap(
-                      spacing: 8,
-                      runSpacing: 4,
-                      alignment: WrapAlignment.start,
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      direction: Axis.horizontal,
-                      runAlignment: WrapAlignment.start,
-                      verticalDirection: VerticalDirection.down,
-                      clipBehavior: Clip.none,
-                      children: ListHotels(snapshot.data, context));
-                } else {
-                  return Center(
-                      child: Padding(
-                    padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
-                    child: CircularProgressIndicator(
-                        color: Color.fromARGB(255, 101, 45, 144)),
-                  ));
-                }
-              },
-              future: GetListHotels(
-                  widget.ciudad, widget.userloggeddata, null, true),
-            ),
-          ],
-        )),
-      ),
+      ],
     );
   }
 }

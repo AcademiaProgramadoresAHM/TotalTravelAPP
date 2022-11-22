@@ -18,13 +18,21 @@ class EditReserv extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final List<dynamic> Reservacion;
   final ReservEdit? reservacionEditado;
+  List<dynamic> Actividadespaquete;
   String? PaqueteDescrip;
   double Precio;
   int idpaquete;
   String HotelNombre;
 
-  EditReserv(this.userloggeddata, this.Reservacion, this.reservacionEditado,
-      this.PaqueteDescrip, this.Precio, this.idpaquete, this.HotelNombre);
+  EditReserv(
+      this.userloggeddata,
+      this.Reservacion,
+      this.reservacionEditado,
+      this.PaqueteDescrip,
+      this.Precio,
+      this.idpaquete,
+      this.HotelNombre,
+      this.Actividadespaquete);
   @override
   State<EditReserv> createState() => _EditReservState();
 }
@@ -83,7 +91,8 @@ class _EditReservState extends State<EditReserv> {
                 widget.PaqueteDescrip,
                 widget.Precio,
                 widget.idpaquete,
-                widget.HotelNombre)),
+                widget.HotelNombre,
+                widget.Actividadespaquete)),
       );
     } else {
       print("Error " + response.statusCode.toString());
@@ -111,6 +120,192 @@ class _EditReservState extends State<EditReserv> {
       dateRange = newDataRange;
       final difference = dateRange.duration.inDays;
     });
+  }
+
+  List<Padding> ResumeActivitiesExtra(
+      List<dynamic>? data, BuildContext context) {
+    List<Padding> list = [];
+    final _controller = PageController();
+
+    data?.forEach((element) {
+      list.add(Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+        child: Container(
+          height: 160,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(0),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 0,
+                color: Color(0x32000000),
+                offset: Offset(0, 2),
+              )
+            ],
+          ),
+          child: Column(
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 10, 0, 0),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: 0,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(0),
+                          bottomRight: Radius.circular(0),
+                          topLeft: Radius.circular(12),
+                          topRight: Radius.circular(12),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 16, 12),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Container(
+                          width: 4,
+                          height: 100,
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(101, 45, 143, 1),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 6,
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          10, 0, 0, 0),
+                                      child: Text(
+                                        element.acEx_Descripcion.toString(),
+                                        style: TextStyle(
+                                          fontFamily: 'Outfit',
+                                          color: Color(0xFF090F13),
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10, 10, 10, 0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Text(
+                                        'Fecha',
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            120, 0, 0, 0),
+                                        child: Text(
+                                          'Hora',
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10, 10, 10, 2),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Text(
+                                        element.reAE_FechaReservacion
+                                            .toString(),
+                                        style: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          color: Color(0xFF95A1AC),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            95, 0, 0, 0),
+                                        child: Text(
+                                          element.reAE_HoraReservacion
+                                              .toString(),
+                                          style: TextStyle(
+                                            fontFamily: 'Poppins',
+                                            color: Color(0xFF95A1AC),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Divider(
+                                  thickness: 2,
+                                  color: Color(0xFF95A1AC),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10, 10, 10, 2),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      Text(
+                                        element.acEx_numeroPersonas.toString() +
+                                            " personas",
+                                        style: TextStyle(
+                                          fontFamily: 'Poppins',
+                                          color: Color(0xFF95A1AC),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            80, 0, 0, 0),
+                                        child: Text(
+                                          "HNL. " +
+                                              element.reAE_Precios.toString() +
+                                              '0',
+                                          style: TextStyle(
+                                              fontFamily: 'Poppins',
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 15),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ));
+    });
+
+    return list;
   }
 
   List<Padding> ReservationDetails(List<dynamic> data, BuildContext context) {
@@ -298,7 +493,9 @@ class _EditReservState extends State<EditReserv> {
                                                                   .PaqueteDescrip,
                                                               widget.Precio,
                                                               widget
-                                                                  .HotelNombre)),
+                                                                  .HotelNombre,
+                                                              widget
+                                                                  .Actividadespaquete)),
                                                     );
                                                   },
                                                 ),
@@ -468,7 +665,7 @@ class _EditReservState extends State<EditReserv> {
                                         )),
                                     Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 10, 0, 10),
+                                            0, 20, 0, 0),
                                         child: Text(
                                           'Hotel de Hospedaje',
                                           style: TextStyle(
@@ -477,7 +674,7 @@ class _EditReservState extends State<EditReserv> {
                                         )),
                                     Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 10, 0, 0),
+                                            0, 5, 0, 0),
                                         child: Container(
                                           width: double.infinity,
                                           height: 80,
@@ -535,30 +732,20 @@ class _EditReservState extends State<EditReserv> {
                                             ],
                                           ),
                                         )),
-                                    Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Flexible(
-                                          child: Text('Restaurante Incluido:',
-                                              style: TextStyle(
-                                                  fontSize: 18,
-                                                  color: Colors.black)),
-                                        ),
-                                        Flexible(
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    10, 0, 0, 0),
-                                            child: Text(
-                                                element['telefono'] ??
-                                                    'No Incluye Restaurentes',
-                                                style: TextStyle(
-                                                    fontSize: 18,
-                                                    color: Colors.black)),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                    Wrap(
+                                        spacing: 8,
+                                        runSpacing: 4,
+                                        alignment: WrapAlignment.start,
+                                        crossAxisAlignment:
+                                            WrapCrossAlignment.start,
+                                        direction: Axis.horizontal,
+                                        runAlignment: WrapAlignment.start,
+                                        verticalDirection:
+                                            VerticalDirection.down,
+                                        clipBehavior: Clip.none,
+                                        children: ResumeActivitiesExtra(
+                                            widget.Actividadespaquete,
+                                            context)),
                                   ],
                                 ),
                               ),

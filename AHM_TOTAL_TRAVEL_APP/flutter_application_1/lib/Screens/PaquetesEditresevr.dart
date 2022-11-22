@@ -13,6 +13,7 @@ class PaquetesEleccion extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final List<dynamic> Reservacion;
   final ReservEdit? reservacionEditado;
+  final List<dynamic> Actividadespaquete;
   String? PaqueteDescrip;
   double Precio;
   String HotelNombre;
@@ -22,7 +23,8 @@ class PaquetesEleccion extends StatefulWidget {
       this.reservacionEditado,
       this.PaqueteDescrip,
       this.Precio,
-      this.HotelNombre);
+      this.HotelNombre,
+      this.Actividadespaquete);
   @override
   State<PaquetesEleccion> createState() => _PaquetesEleccionState();
 }
@@ -73,7 +75,8 @@ class _PaquetesEleccionState extends State<PaquetesEleccion> {
               widget.Reservacion,
               widget.PaqueteDescrip,
               widget.Precio,
-              widget.HotelNombre),
+              widget.HotelNombre,
+              widget.Actividadespaquete),
         ),
       );
     } else {

@@ -8,12 +8,14 @@ import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
 import '../Screens/EditReservation.dart';
 import '../navigation_home_screen.dart';
+import 'habitacionesEdit.dart';
 
 class HotelDetailsEdit extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final List<dynamic> Hotel;
   final ReservEdit? reservacionEditado;
   final List<dynamic> Reservacion;
+  final List<dynamic> Actividadespaquete;
   String? PaqueteDescrip;
   double Precio;
   int idpaquete;
@@ -27,7 +29,8 @@ class HotelDetailsEdit extends StatefulWidget {
       this.PaqueteDescrip,
       this.Precio,
       this.idpaquete,
-      this.HotelNombre);
+      this.HotelNombre,
+      this.Actividadespaquete);
   @override
   State<HotelDetailsEdit> createState() => _HotelDetailsEditState();
 }
@@ -234,14 +237,16 @@ class _HotelDetailsEditState extends State<HotelDetailsEdit> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => EditReserv(
+                              builder: (context) => RoomsListEdit(
                                   widget.userloggeddata,
+                                  hotelId,
                                   widget.Reservacion,
                                   widget.reservacionEditado,
                                   widget.PaqueteDescrip,
                                   widget.Precio,
                                   widget.idpaquete,
-                                  widget.HotelNombre),
+                                  widget.HotelNombre,
+                                  widget.Actividadespaquete),
                             ),
                           );
                         },
