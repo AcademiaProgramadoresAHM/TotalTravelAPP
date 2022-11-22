@@ -8,6 +8,8 @@ class ReservEdit {
   int? resvId;
   int? usuaId;
   int? paquId;
+  String? NombreCompleto;
+  String? dni;
   bool? resvEsPersonalizado;
   int? resvCantidadPagos;
   int? resvNumeroPersonas;

@@ -19,8 +19,6 @@ import '../Components/Reservation.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:http/http.dart' as http;
 
-import 'EditReservation.dart';
-
 class PersonaliScreen extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
 
@@ -68,36 +66,46 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
     if (response.statusCode == 200) {
       Map<String, dynamic> userMap = jsonDecode(response.body);
       var Json = Decodificador.fromJson(userMap);
+      var data = Json.data;
       dataReservation = Json.data;
+      reservacionEditado.resvId = userMap['id'];
+      reservacionEditado.paquId = userMap["id_Paquete"];
+      reservacionEditado.hoteId = userMap["hotel_ID"];
+      reservacionEditado.usuaId = userMap["id_Cliente"];
+      reservacionEditado.resvPrecio = userMap["precio"];
+      reservacionEditado.resvNumeroPersonas = userMap["numeroPersonas"];
+      reservacionEditado.resvCantidadPagos = userMap["cantidadPagos"];
+      reservacionEditado.reHoFechaEntrada = userMap["fecha_Entrada"];
+      reservacionEditado.reHoFechaSalida = userMap["fecha_Salida"];
+      reservacionEditado.NombreCompleto = userMap['nombrecompleto'];
+      reservacionEditado.dni = userMap["dni"];
       var reservation =
           dataReservation.where((x) => x['id'] == idreservacion).toList();
 
-      url_list =
-          "https://apitotaltravel.azurewebsites.net/API/ReservationActivitiesExtra/List";
-      final responseAct = await http.get(Uri.parse(url_list), headers: headers);
-      if (responseAct.statusCode == 200) {
-        Map<String, dynamic> userMapa = jsonDecode(response.body);
-        var Activ = Decodificador.fromJson(userMapa);
-        Actividadespaquete = Activ.data;
-        var packageAct =
-            Actividadespaquete.where((x) => x['reservacion'] == idreservacion)
-                .toList();
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => EditReserv(
-                widget.userloggeddata,
-                reservation,
-                reservacionEditado,
-                null,
-                userMap['precio'],
-                userMap['id_Paquete'],
-                "",
-                packageAct),
-          ),
-        );
-      }
+      // url_list =
+      //     "https://apitotaltravel.azurewebsites.net/API/ReservationActivitiesExtra/List";
+      // final responseAct = await http.get(Uri.parse(url_list), headers: headers);
+      // if (responseAct.statusCode == 200) {
+      //   Map<String, dynamic> userMapa = jsonDecode(response.body);
+      //   var Activ = Decodificador.fromJson(userMapa);
+      //   Actividadespaquete = Activ.data;
+      //   var packageAct =
+      //       Actividadespaquete.where((x) => x['reservacion'] == idreservacion)
+      //           .toList();
+      // }
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => EditReserv(
+      //         widget.userloggeddata,
+      //         reservation,
+      //         reservacionEditado,
+      //         null,
+      //         userMap["precio"],
+      //         userMap['id_Paquete'],
+      //         "", []),
+      //   ),
+      // );
     } else {
       print("Error" + response.statusCode.toString());
     }
@@ -392,6 +400,17 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
           ),
         ),
       ));
+      reservacionEditado.resvId = element["id"];
+      reservacionEditado.paquId = element["id_Paquete"];
+      reservacionEditado.hoteId = element["hotel_ID"];
+      reservacionEditado.usuaId = element["id_Cliente"];
+      reservacionEditado.resvPrecio = element["precio"];
+      reservacionEditado.resvNumeroPersonas = element["numeroPersonas"];
+      reservacionEditado.resvCantidadPagos = element["cantidadPagos"];
+      reservacionEditado.reHoFechaEntrada = element["fecha_Entrada"];
+      reservacionEditado.reHoFechaSalida = element["fecha_Salida"];
+      reservacionEditado.NombreCompleto = element['nombrecompleto'];
+      reservacionEditado.dni = element["dni"];
     });
 
     return list;
