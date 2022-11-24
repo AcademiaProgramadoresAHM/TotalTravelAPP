@@ -14,9 +14,11 @@ class EditReservationHotel extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final ReservEdit reservacionEditado;
   final List<dynamic> reservationList;
+  final List<dynamic> Actividadesextras;
+
   final int ciudadID;
   EditReservationHotel(this.userloggeddata, this.reservacionEditado,
-      this.reservationList, this.ciudadID);
+      this.reservationList, this.ciudadID, this.Actividadesextras);
   @override
   State<EditReservationHotel> createState() => _EditReservationHotelState();
 }
@@ -63,7 +65,8 @@ class _EditReservationHotelState extends State<EditReservationHotel> {
                 widget.userloggeddata,
                 hotel,
                 widget.reservacionEditado,
-                widget.reservationList)),
+                widget.reservationList,
+                widget.Actividadesextras)),
       );
     } else {
       print("Error" + response.statusCode.toString());

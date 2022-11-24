@@ -71,25 +71,24 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
       var reservation =
           dataReservation.where((x) => x['id'] == idreservacion).toList();
 
-      // url_list =
-      //     "https://apitotaltravel.azurewebsites.net/API/ReservationRestaurant/List";
-      // final response2 = await http.get(Uri.parse(url_list), headers: headers);
-      // if (response2.statusCode == 200) {
-      //   Map<String, dynamic> userMapa = jsonDecode(response2.body);
-      //   var Activ = Decodificador.fromJson(userMapa);
-      //   datarestaurante = Activ.data;
-      //   var restaurante = datarestaurante
-      //       .where((x) => x['resv_ID'] == idreservacion)
-      //       .toList();
-
-      // }
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => EditReservationStart(
-              widget.userloggeddata, reservacionEditado, reservation),
-        ),
-      );
+      url_list =
+          "https://apitotaltravel.azurewebsites.net/API/ReservationActivitiesExtra/List";
+      final response2 = await http.get(Uri.parse(url_list), headers: headers);
+      if (response2.statusCode == 200) {
+        Map<String, dynamic> userMapa = jsonDecode(response2.body);
+        var Activ = Decodificador.fromJson(userMapa);
+        datarestaurante = Activ.data;
+        var Actividades = datarestaurante
+            .where((x) => x['reservacion'] == idreservacion)
+            .toList();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => EditReservationStart(widget.userloggeddata,
+                reservacionEditado, reservation, Actividades),
+          ),
+        );
+      }
     } else {
       print("Error" + response.statusCode.toString());
     }

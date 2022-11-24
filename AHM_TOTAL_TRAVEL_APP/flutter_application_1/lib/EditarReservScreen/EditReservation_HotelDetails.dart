@@ -17,9 +17,10 @@ class EditReservationHotelDetails extends StatefulWidget {
   final List<dynamic> Hotel;
   final ReservEdit reservacionEditado;
   final List<dynamic> reservationList;
+  final List<dynamic> Actividadesextras;
 
   EditReservationHotelDetails(this.userloggeddata, this.Hotel,
-      this.reservacionEditado, this.reservationList);
+      this.reservacionEditado, this.reservationList, this.Actividadesextras);
   @override
   State<EditReservationHotelDetails> createState() =>
       _EditReservationHotelDetailsState();
@@ -264,7 +265,8 @@ class _EditReservationHotelDetailsState
                                         widget.userloggeddata,
                                         widget.reservacionEditado,
                                         widget.reservationList,
-                                        element['id'])),
+                                        element['id'],
+                                        widget.Actividadesextras)),
                           );
                         },
                       ),

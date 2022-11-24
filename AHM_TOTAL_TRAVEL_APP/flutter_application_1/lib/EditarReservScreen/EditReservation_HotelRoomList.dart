@@ -14,9 +14,10 @@ class EditReservationHotelRoomList extends StatefulWidget {
   final int idHotel;
   final ReservEdit reservacionEditado;
   final List<dynamic> reservationList;
+  final List<dynamic> Actividadesextras;
 
   EditReservationHotelRoomList(this.userloggeddata, this.reservacionEditado,
-      this.reservationList, this.idHotel);
+      this.reservationList, this.idHotel, this.Actividadesextras);
   @override
   State<EditReservationHotelRoomList> createState() => _MyAppState();
 }
@@ -73,7 +74,8 @@ class _MyAppState extends State<EditReservationHotelRoomList> {
                 widget.userloggeddata,
                 widget.reservacionEditado,
                 widget.reservationList,
-                Room)),
+                Room,
+                widget.Actividadesextras)),
       );
     } else {}
   }

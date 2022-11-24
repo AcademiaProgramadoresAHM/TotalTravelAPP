@@ -20,9 +20,10 @@ class EditReservationRestaurantDetails extends StatefulWidget {
   final List<dynamic> reservationList;
   final UserLoggedModel? userloggeddata;
   final List<dynamic> restaurante;
+  final List<dynamic> Actividadesextras;
 
   EditReservationRestaurantDetails(this.userloggeddata, this.reservacionEditado,
-      this.reservationList, this.restaurante);
+      this.reservationList, this.restaurante, this.Actividadesextras);
   @override
   State<EditReservationRestaurantDetails> createState() => _MyAppState();
 }
@@ -670,7 +671,8 @@ class _MyAppState extends State<EditReservationRestaurantDetails> {
                             builder: (context) => EditReservationStart(
                                 widget.userloggeddata,
                                 widget.reservacionEditado,
-                                widget.reservationList)),
+                                widget.reservationList,
+                                widget.Actividadesextras)),
                       );
                     },
                     child: Text(

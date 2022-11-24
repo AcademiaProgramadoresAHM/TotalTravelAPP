@@ -16,9 +16,10 @@ class EditReservationPackageDetails extends StatefulWidget {
   final List<dynamic> package;
   final ReservEdit reservacionEditado;
   final List<dynamic> reservationList;
+  final List<dynamic> Actividadesextras;
 
   EditReservationPackageDetails(this.userloggeddata, this.package,
-      this.reservacionEditado, this.reservationList);
+      this.reservacionEditado, this.reservationList, this.Actividadesextras);
   @override
   State<EditReservationPackageDetails> createState() =>
       _EditReservationPackageDetailsState();
@@ -341,7 +342,8 @@ class _EditReservationPackageDetailsState
                                 builder: (context) => EditReservationStart(
                                     widget.userloggeddata,
                                     widget.reservacionEditado,
-                                    widget.reservationList)),
+                                    widget.reservationList,
+                                    widget.Actividadesextras)),
                           );
                         },
                       ),

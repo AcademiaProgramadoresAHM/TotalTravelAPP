@@ -16,10 +16,12 @@ class EditreservationRoomDetails extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final ReservEdit reservationEditado;
   final List<dynamic> room;
+  final List<dynamic> Actividadesextras;
+
   final List<dynamic> reservationList;
 
   EditreservationRoomDetails(this.userloggeddata, this.reservationEditado,
-      this.reservationList, this.room);
+      this.reservationList, this.room, this.Actividadesextras);
   @override
   State<EditreservationRoomDetails> createState() =>
       _EditreservationRoomDetailsState();
@@ -822,7 +824,8 @@ class _EditreservationRoomDetailsState
                           builder: (context) => EditReservationStart(
                               widget.userloggeddata,
                               widget.reservationEditado,
-                              widget.reservationList),
+                              widget.reservationList,
+                              widget.Actividadesextras),
                         ),
                       );
                     },
