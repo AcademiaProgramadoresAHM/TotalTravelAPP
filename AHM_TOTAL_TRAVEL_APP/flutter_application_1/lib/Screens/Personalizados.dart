@@ -54,11 +54,12 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
     }
   }
 
-  Future<dynamic> FindReservationEdit(idreservacion, userloggeddata) async {
-    List<dynamic> dataReservation;
+  Future<dynamic> FindReservationEdit(
+      idreservacion, reservacionedit, userloggeddata) async {
+    dynamic dataReservation;
     List<dynamic> datarestaurante;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Reservation/List";
+        "https://apitotaltravel.azurewebsites.net/API/Reservation/Details?id=${idreservacion.toString()}";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -68,8 +69,8 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
       Map<String, dynamic> userMap = jsonDecode(response.body);
       var Json = Decodificador.fromJson(userMap);
       dataReservation = Json.data;
-      var reservation =
-          dataReservation.where((x) => x['id'] == idreservacion).toList();
+      List<dynamic> Dato = [];
+      Dato.add(dataReservation);
 
       url_list =
           "https://apitotaltravel.azurewebsites.net/API/ReservationActivitiesExtra/List";
@@ -84,8 +85,8 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => EditReservationStart(widget.userloggeddata,
-                reservacionEditado, reservation, Actividades),
+            builder: (context) => EditReservationStart(
+                widget.userloggeddata, reservacionedit, Dato, Actividades),
           ),
         );
       }
@@ -363,7 +364,15 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                           ),
                                         ),
                                         onPressed: () {
-                                          FindReservationEdit(element['id'],
+                                          reservacionEditado.HotelDescrip =
+                                              null;
+                                          reservacionEditado.PaqueteDescrip =
+                                              null;
+                                          reservacionEditado
+                                              .ActividadesExtDescrip = null;
+                                          FindReservationEdit(
+                                              element['id'],
+                                              reservacionEditado,
                                               widget.userloggeddata);
                                         },
                                       ),

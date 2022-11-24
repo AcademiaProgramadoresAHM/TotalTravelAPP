@@ -484,8 +484,6 @@ class _ActivityDetails extends State<EditReservationActivityExtra> {
         activitiesExtraModel.reAE_Precios = element['precio'];
 
         int? precioSuma = element['precio'].toString().toInt();
-
-        widget.reservacionEditado.ActividadesExtDescrip = element['actividad'];
         widget.activityExtra!
             .insert(widget.ActivitiesAdd, activitiesExtraModel);
       }

@@ -287,6 +287,9 @@ class _EditReservationActivityExtrasState
                                                 padding: EdgeInsets.zero,
                                               ),
                                               onPressed: () {
+                                                widget.reservacionEditado
+                                                        .ActividadesExtDescrip =
+                                                    element['actividad'];
                                                 GetListActivitiesExtras(
                                                     widget.reservacionEditado
                                                         .ciudadID,

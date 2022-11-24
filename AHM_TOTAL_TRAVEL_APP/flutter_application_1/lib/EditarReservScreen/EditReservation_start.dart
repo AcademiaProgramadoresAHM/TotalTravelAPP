@@ -57,16 +57,19 @@ class _EditReservationStartState extends State<EditReservationStart> {
     List<String> items = [];
     final _controller = PageController();
     data.forEach((element) {
-      String paquetedescrip = element['descripcionPaquete'];
-      String HotelNombre = element['nombre_Hotel'];
-      String RestauranteWord = "Agregar/Cambiar Restaurante";
-      String ActividadesNambe = element[''];
-      if (widget.reservacionEditado.PaqueteDescrip != null) {
-        paquetedescrip = widget.reservacionEditado.PaqueteDescrip.toString();
-      }
-      if (widget.reservacionEditado.HotelDescrip != null) {
-        HotelNombre = widget.reservacionEditado.HotelDescrip.toString();
-      }
+      List<dynamic> listadoActiv = element['actividadesExtras'];
+      List<dynamic> Listadorestaurante = element["restaurantes"];
+      List<dynamic> ListadoTransportes = element["transportes"];
+      // String paquetedescrip = element['descripcionPaquete'];
+      // String HotelNombre = element['nombre_Hotel'];
+      // String RestauranteWord = "Agregar/Cambiar Restaurante";
+      // String ActividadesNambe = element[''];
+      // if (widget.reservacionEditado.PaqueteDescrip != null) {
+      //   paquetedescrip = widget.reservacionEditado.PaqueteDescrip.toString();
+      // }
+      // if (widget.reservacionEditado.HotelDescrip != null) {
+      //   HotelNombre = widget.reservacionEditado.HotelDescrip.toString();
+      // }
       String? selectedValue;
       list.add(
         Padding(
@@ -110,7 +113,8 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            element['nombrecompleto'],
+                                            element['reservacionDetalle']
+                                                ['nombrecompleto'],
                                             style: TextStyle(
                                               fontFamily: 'Outfit',
                                               color: Color(0xFF090F13),
@@ -124,7 +128,7 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 20, 40, 0),
                                         child: Text(
-                                          element['dni'],
+                                          element['reservacionDetalle']['dni'],
                                           style: TextStyle(
                                             fontFamily: 'Outfit',
                                             color: Color(0xFF7C8791),
@@ -154,7 +158,8 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                           Flexible(
                                             flex: 6,
                                             child: Text(
-                                              paquetedescrip,
+                                              element['reservacionDetalle']
+                                                  ['descripcionPaquete'],
                                               style: TextStyle(
                                                 fontFamily: 'Outfit',
                                                 color: Color(0xFF090F13),
@@ -217,7 +222,8 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                           Flexible(
                                             flex: 6,
                                             child: Text(
-                                              HotelNombre,
+                                              element['reservacionDetalle']
+                                                  ['nombre_Hotel'],
                                               style: TextStyle(
                                                 fontFamily: 'Outfit',
                                                 color: Color(0xFF090F13),
@@ -241,7 +247,8 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                                         widget
                                                             .reservacionEditado,
                                                         widget.reservationList,
-                                                        element['ciudad_ID'],
+                                                        element['reservacionDetalle']
+                                                            ['ciudad_ID'],
                                                         widget
                                                             .Actividadesextras),
                                               ),
@@ -281,7 +288,9 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                           Flexible(
                                             flex: 6,
                                             child: Text(
-                                              RestauranteWord,
+                                              Listadorestaurante[0]["details"]
+                                                      ["restaurante"] ??
+                                                  "No Tiene Restaurante Reservado",
                                               style: TextStyle(
                                                 fontFamily: 'Outfit',
                                                 color: Color(0xFF090F13),
@@ -305,14 +314,15 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                                         widget
                                                             .reservacionEditado,
                                                         widget.reservationList,
-                                                        element['ciudad_ID'],
+                                                        element['reservacionDetalle']
+                                                            ['ciudad_ID'],
                                                         widget
                                                             .Actividadesextras),
                                               ),
                                             )
                                           },
                                           child: Text(
-                                            'Cambiar Restaurnate',
+                                            'Cambiar Restaurante',
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 color: Color(0xFF652D8F)),
@@ -329,7 +339,8 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                         child: Text(
                                           "Total:     "
                                                   'HNL ' +
-                                              element['precio']
+                                              element['reservacionDetalle']
+                                                      ['precio']
                                                   .toInt()
                                                   .toString() +
                                               '.00',
@@ -354,7 +365,8 @@ class _EditReservationStartState extends State<EditReservationStart> {
           ),
         ),
       );
-      widget.reservacionEditado.ciudadID = element['ciudad_ID'];
+      widget.reservacionEditado.ciudadID =
+          element['reservacionDetalle']['ciudad_ID'];
     });
     return list;
   }

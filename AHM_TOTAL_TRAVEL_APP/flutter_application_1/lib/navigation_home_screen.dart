@@ -38,7 +38,6 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   DrawerIndex? drawerIndex;
   UserLoggedModel? userloggeddata;
   Map<String, dynamic> userEdit = {};
-        
 
   Future<dynamic> FindReservation(userloggeddata) async {
     List<dynamic> datapackage;
@@ -53,8 +52,9 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
       Map<String, dynamic> userMap = jsonDecode(response.body);
       var Json = Decodificador.fromJson(userMap);
       datapackage = Json.data;
-      var package =
-          datapackage.where((x) => x['id'] == userloggeddata.id).toList();
+      var package = datapackage
+          .where((x) => x['id_Cliente'] == userloggeddata.id)
+          .toList();
 
       print(package);
       Navigator.push(
@@ -125,7 +125,8 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   void dataUserEdit(userloggeddata) async {
     //List<dynamic> userEdit;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Users/Find?id=" +widget.userloggeddata!.ID.toString();
+        "https://apitotaltravel.azurewebsites.net/API/Users/Find?id=" +
+            widget.userloggeddata!.ID.toString();
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -136,10 +137,9 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
       Map<String, dynamic> userMap = jsonDecode(respuesta.body);
       var Json = Decodificador.fromJson(userMap);
       setState(() {
-         print("Entro");
-           userEdit = Json.data;
+        print("Entro");
+        userEdit = Json.data;
       });
-         
 
       //var dataUserEdit =
       //userEdit.where((x) => x['id'] == userloggeddata.id).toList();
@@ -242,8 +242,8 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
           break;
 
         case DrawerIndex.Account:
-          setState((){
-           screenView = AccountInfo(widget.userloggeddata, userEdit);
+          setState(() {
+            screenView = AccountInfo(widget.userloggeddata, userEdit);
           });
           break;
 
