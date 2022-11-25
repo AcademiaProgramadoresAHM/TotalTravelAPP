@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:nb_utils/nb_utils.dart';
 
 import '../Components/Decodificador.dart';
 import '../Models/ReservationViewModel.dart';
@@ -50,7 +52,7 @@ class _EditReservacionTRansportState extends State<EditReservacionTRansport> {
     }
   }
 
-  List<Padding> Listrestaurante(List<dynamic> data, BuildContext context) {
+  List<Padding> ListTransportes(List<dynamic> data, BuildContext context) {
     List<Padding> list = [];
     final _controller = PageController();
     List<String> imageUrl;
@@ -129,7 +131,7 @@ class _EditReservacionTRansportState extends State<EditReservacionTRansport> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      element['restaurante'],
+                                      element['nombre'],
                                       style: TextStyle(
                                         fontFamily: 'Outfit',
                                         color: Color(0xFF090F13),
@@ -140,30 +142,12 @@ class _EditReservacionTRansportState extends State<EditReservacionTRansport> {
                                   ],
                                 ),
                                 Text(
-                                  " ",
+                                  element["tipoTransporte"],
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color.fromRGBO(101, 45, 143, 1),
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 4, 0, 0),
-                                  child: Text(
-                                    "Col. " +
-                                        element['colonia'] +
-                                        ", Calle " +
-                                        element['calle'] +
-                                        ", Ave. " +
-                                        element['avenida'],
-                                    style: TextStyle(
-                                      fontFamily: 'Outfit',
-                                      color: Color(0xFF7C8791),
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.normal,
-                                    ),
                                   ),
                                 ),
                                 Padding(
@@ -232,17 +216,199 @@ class _EditReservacionTRansportState extends State<EditReservacionTRansport> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Material App Bar'),
-        ),
-        body: Center(
-          child: Container(
-            child: Text('Hello World'),
-          ),
-        ),
-      ),
-    );
+        title: 'Flutter layout demo',
+        debugShowCheckedModeBanner: false,
+        home: Scaffold(
+            appBar: PreferredSize(
+              preferredSize: Size.fromHeight(65.0), // here the desired height
+              child: AppBar(
+                backgroundColor: Color.fromRGBO(101, 45, 143, 1),
+                title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(125, 10, 0, 0),
+                        child: Text("Restaurantes"),
+                      ),
+                    ]),
+              ),
+            ),
+            body: SingleChildScrollView(
+
+                // color:
+                //     HotelAppTheme.buildLightTheme().backgroundColor,
+                child: Column(
+              children: [
+                FutureBuilder<dynamic>(
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Wrap(
+                          spacing: 8,
+                          runSpacing: 4,
+                          alignment: WrapAlignment.start,
+                          crossAxisAlignment: WrapCrossAlignment.start,
+                          direction: Axis.horizontal,
+                          runAlignment: WrapAlignment.start,
+                          verticalDirection: VerticalDirection.down,
+                          clipBehavior: Clip.none,
+                          children: ListTransportes(snapshot.data, context));
+                    } else {
+                      return Center(
+                          child: Padding(
+                        padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
+                        child: CircularProgressIndicator(
+                            color: Color.fromARGB(255, 101, 45, 144)),
+                      ));
+                    }
+                  },
+                  future: FindTransport(
+                      widget.idciudad, widget.userloggeddata, context),
+                ),
+              ],
+            )),
+            bottomNavigationBar: Row(
+              children: [
+                Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(20, 0, 0, 0),
+                    child: SizedBox(
+                      width: 175,
+                      height: 35,
+                      child: ElevatedButton(
+                        onPressed: () => showCupertinoDialog(
+                            context: context,
+                            builder: (BuildContext context) => Theme(
+                                  data: ThemeData.light(),
+                                  child: CupertinoAlertDialog(
+                                    title: Text(
+                                      'Advertencia',
+                                      style: boldTextStyle(
+                                          color: Colors.black, size: 18),
+                                    ),
+                                    content: Text(
+                                      '¿Está seguro de continuar?',
+                                      style: secondaryTextStyle(
+                                          color: Colors.black, size: 16),
+                                    ),
+                                    actions: [
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          'Cancelar',
+                                          style: primaryTextStyle(
+                                              color: dodgerBlue, size: 18),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                      ),
+                                      CupertinoDialogAction(
+                                        child: Text(
+                                          'Aceptar',
+                                          style: primaryTextStyle(
+                                              color: redColor, size: 18),
+                                        ),
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                          Navigator.pop(context);
+                                        },
+                                      )
+                                    ],
+                                  ),
+                                )),
+                        child: Text(
+                          'Regresar',
+                          style:
+                              TextStyle(fontSize: 18, color: Color(0xFF652D8F)),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Color.fromARGB(255, 234, 234, 234),
+                        ),
+                      ),
+                    )),
+                Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: SizedBox(
+                      width: 170,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (widget.reservationList.isEmpty) {
+                            showCupertinoDialog(
+                                context: context,
+                                builder: (BuildContext context) => Theme(
+                                      data: ThemeData.light(),
+                                      child: CupertinoAlertDialog(
+                                        title: Text(
+                                          'Advertencia\n',
+                                          style: boldTextStyle(
+                                              color: Colors.black, size: 18),
+                                        ),
+                                        content: Text(
+                                          'No ha seleccionado ningún restaurante \n¿Está seguro de continuar?',
+                                          style: secondaryTextStyle(
+                                              color: Colors.black, size: 16),
+                                        ),
+                                        actions: [
+                                          CupertinoDialogAction(
+                                            child: Text(
+                                              'Cancelar',
+                                              style: primaryTextStyle(
+                                                  color: dodgerBlue, size: 18),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                          ),
+                                          CupertinoDialogAction(
+                                            child: Text(
+                                              'Aceptar',
+                                              style: primaryTextStyle(
+                                                  color: redColor, size: 18),
+                                            ),
+                                            onPressed: () {
+                                              // Navigator.push(
+                                              //   context,
+                                              //   MaterialPageRoute(
+                                              //       builder: (context) =>
+                                              //           NavigationHomeScreen(
+                                              //               createCustomPackage(
+                                              //                   widget.Ciudad,
+                                              //                   widget
+                                              //                       .userloggeddata,
+                                              //                   4,
+                                              //                   widget
+                                              //                       .customPackage,
+                                              //                   widget
+                                              //                       .CitiesDictionary),
+                                              //               widget
+                                              //                   .userloggeddata)),
+                                              // );
+                                            },
+                                          )
+                                        ],
+                                      ),
+                                    ));
+                          } else {
+                            // widget.reservacionEditado.Restaurante =
+                            //     widget.Restaurante;
+                            // Navigator.push(
+                            //   context,
+                            //   MaterialPageRoute(
+                            //       builder: (context) => EditReservationStart(
+                            //           widget.userloggeddata,
+                            //           widget.reservacionEditado,
+                            //           widget.reservationList)),
+                            // );
+                          }
+                        },
+                        child: Text(
+                          'Confirmar',
+                          style: TextStyle(fontSize: 18),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Color(0xFF652D8F),
+                        ),
+                      ),
+                    )),
+              ],
+            )));
   }
 }
