@@ -57,8 +57,7 @@ Future<void> PostCustomPackages(customPackageViewModel customPackage, UserLogged
       "Authorization": "bearer " + widget.userloggeddata!.Token!
     };
   final json = jsonEncode(customPackage);
-  print(json);
- /* final response = await post(url, headers: headers, body: json);
+  final response = await post(url, headers: headers, body: json);
    print(response.body);
   int idPackage;
   if (response.body != " ") {
@@ -100,7 +99,7 @@ Future<void> PostCustomPackages(customPackageViewModel customPackage, UserLogged
         ),
       ));
     }
-  }*/
+  }
 }
 
 
