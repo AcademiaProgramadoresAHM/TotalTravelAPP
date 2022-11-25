@@ -8,6 +8,7 @@ import 'package:nb_utils/nb_utils.dart';
 import '../Components/Decodificador.dart';
 import '../Components/Reservation.dart';
 import '../Models/CitiesViewModel.dart';
+import '../Models/DefaultPackageViewModel.dart';
 import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
 import 'package:http/http.dart' as http;
@@ -43,20 +44,25 @@ class _EditReservationStartState extends State<EditReservationStart> {
     List<String> items = [];
     final _controller = PageController();
     data.forEach((element) {
+      String HotelNombre = element["reservacionDetalle"]["nombre_Hotel"];
       String Transporte = "No hay Transportes Reservados";
       String restaurante = "No hay restaurantes Reservados";
       List<dynamic> listadoActiv = element['actividadesExtras'];
       List<dynamic> Listadorestaurante = element["restaurantes"];
       List<dynamic> ListadoTransportes = element["transportes"];
 
+      if (widget.reservacionEditado.HotelDescrip != null) {
+        HotelNombre = widget.reservacionEditado.HotelDescrip.toString();
+      }
       if (ListadoTransportes.isNotEmpty) {
         Transporte = ListadoTransportes[0]["details"]["nombre_Transporte"];
       }
       if (Listadorestaurante.isNotEmpty) {
-        restaurante = Listadorestaurante[element["actividadesExtras"]
-            .toString()
-            .length
-            .toInt()]["details"]["restaurante"];
+        restaurante = Listadorestaurante[0]["details"]["restaurante"];
+      }
+      if (widget.reservacionEditado.hoteId == null) {
+        widget.reservacionEditado.hoteId =
+            element["reservacionDetalle"]["hotel_ID"];
       }
       if (widget.reservacionEditado.usuaId == null) {
         widget.reservacionEditado.usuaId =
@@ -69,6 +75,7 @@ class _EditReservationStartState extends State<EditReservationStart> {
       if (widget.reservacionEditado.resvId == null) {
         widget.reservacionEditado.resvId = element["reservacionDetalle"]["id"];
       }
+
       // String paquetedescrip = element['descripcionPaquete'];
       // String HotelNombre = element['nombre_Hotel'];
       // String RestauranteWord = "Agregar/Cambiar Restaurante";
@@ -229,8 +236,7 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                           Flexible(
                                             flex: 6,
                                             child: Text(
-                                              element['reservacionDetalle']
-                                                  ['nombre_Hotel'],
+                                              HotelNombre,
                                               style: TextStyle(
                                                 fontFamily: 'Outfit',
                                                 color: Color(0xFF090F13),
@@ -491,8 +497,34 @@ class _EditReservationStartState extends State<EditReservationStart> {
           ),
         ),
       );
-      widget.reservacionEditado.ciudadID =
-          element['reservacionDetalle']['ciudad_ID'];
+      // widget.reservacionEditado.ciudadID =
+      //     element['reservacionDetalle']['ciudad_ID'];
+      // widget.reservacionEditado.resvId = element['reservacionDetalle']["id"];
+      // widget.reservacionEditado.paquId =
+      //     element['reservacionDetalle']["id_Paquete"];
+      // widget.reservacionEditado.hoteId =
+      //     element['reservacionDetalle']["hotel_ID"];
+      // widget.reservacionEditado.usuaId =
+      //     element['reservacionDetalle']["id_Cliente"];
+      // widget.reservacionEditado.resvPrecio =
+      //     element['reservacionDetalle']["precio"];
+      // widget.reservacionEditado.resvNumeroPersonas =
+      //     element['reservacionDetalle']["numeroPersonas"];
+      // widget.reservacionEditado.resvCantidadPagos =
+      //     element['reservacionDetalle']["cantidadPagos"];
+      // widget.reservacionEditado.reHoFechaEntrada =
+      //     element['reservacionDetalle']["fecha_Entrada"];
+      // widget.reservacionEditado.reHoFechaSalida =
+      //     element['reservacionDetalle']["fecha_Salida"];
+      // widget.reservacionEditado.NombreCompleto =
+      //     element['reservacionDetalle']['nombrecompleto'];
+      // widget.reservacionEditado.dni = element['reservacionDetalle']["dni"];
+      // widget.reservacionEditado.resvConfirmacionPago = false;
+      // widget.reservacionEditado.resvConfirmacionHotel = false;
+      // widget.reservacionEditado.resvConfirmacionRestaurante = false;
+      // widget.reservacionEditado.resvConfirmacionTrans = false;
+      // widget.reservacionEditado.resvUsuarioModifica =
+      //     element['reservacionDetalle']["id_Cliente"];
     });
     return list;
   }

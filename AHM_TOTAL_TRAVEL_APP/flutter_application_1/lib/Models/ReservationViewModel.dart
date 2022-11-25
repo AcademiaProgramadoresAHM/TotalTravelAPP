@@ -21,8 +21,8 @@ class ReservEdit {
   int? habi_ID;
   int? habi_Cantidad;
   String? habitacionreserv;
-  String? resvUsuarioCreacion;
-  String? resvUsuarioModifica;
+  int? resvUsuarioCreacion;
+  int? resvUsuarioModifica;
   String? reHoFechaEntrada;
   String? reHoFechaSalida;
   int? hoteId;
@@ -44,6 +44,8 @@ class ReservEdit {
         "resv_ConfirmacionHotel": resvConfirmacionHotel,
         "resv_ConfirmacionRestaurante": resvConfirmacionRestaurante,
         "resv_ConfirmacionTrans": resvConfirmacionTrans,
+        "resv_ConfirmacionActividades": false,
+        "justConfirmation": true,
         "resv_Precio": resvPrecio,
         "resv_UsuarioCreacion": resvUsuarioCreacion,
         "resv_UsuarioModifica": resvUsuarioModifica,

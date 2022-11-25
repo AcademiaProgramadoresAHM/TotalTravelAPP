@@ -370,6 +370,26 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                               null;
                                           reservacionEditado
                                               .ActividadesExtDescrip = null;
+                                          reservacionEditado.resvId =
+                                              element["id"];
+                                          reservacionEditado.resvPrecio =
+                                              element["precio"];
+                                          reservacionEditado
+                                                  .resvNumeroPersonas =
+                                              element["numeroPersonas"];
+                                          reservacionEditado.resvCantidadPagos =
+                                              element["cantidadPagos"];
+                                          reservacionEditado.reHoFechaEntrada =
+                                              element["fecha_Entrada"];
+                                          reservacionEditado.reHoFechaSalida =
+                                              element["fecha_Salida"];
+                                          reservacionEditado.NombreCompleto =
+                                              element['nombrecompleto'];
+                                          reservacionEditado.dni =
+                                              element["dni"];
+                                          reservacionEditado
+                                                  .resvUsuarioModifica =
+                                              element["id_Cliente"];
                                           FindReservationEdit(
                                               element['id'],
                                               reservacionEditado,
@@ -392,17 +412,6 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
           ),
         ),
       ));
-      reservacionEditado.resvId = element["id"];
-      reservacionEditado.paquId = element["id_Paquete"];
-      reservacionEditado.hoteId = element["hotel_ID"];
-      reservacionEditado.usuaId = element["id_Cliente"];
-      reservacionEditado.resvPrecio = element["precio"];
-      reservacionEditado.resvNumeroPersonas = element["numeroPersonas"];
-      reservacionEditado.resvCantidadPagos = element["cantidadPagos"];
-      reservacionEditado.reHoFechaEntrada = element["fecha_Entrada"];
-      reservacionEditado.reHoFechaSalida = element["fecha_Salida"];
-      reservacionEditado.NombreCompleto = element['nombrecompleto'];
-      reservacionEditado.dni = element["dni"];
     });
 
     return list;

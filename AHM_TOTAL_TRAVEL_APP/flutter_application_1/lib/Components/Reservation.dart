@@ -298,4 +298,5 @@ Future<void> UpdateReservation(ReservEdit reservacionEditado,
   final json = jsonEncode(reservacionEditado);
   final response = await http.put(uri, headers: headers, body: json);
   print(response.body);
+  print(json);
 }
