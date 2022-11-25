@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_application_1/Components/Packages.dart';
 import 'package:flutter_application_1/ComponentsLogin/Decoder.dart';
 import 'package:flutter_application_1/Models/customPackageViewModel.dart';
@@ -56,7 +57,8 @@ Future<void> PostCustomPackages(customPackageViewModel customPackage, UserLogged
       "Authorization": "bearer " + widget.userloggeddata!.Token!
     };
   final json = jsonEncode(customPackage);
-  final response = await post(url, headers: headers, body: json);
+  print(json);
+ /* final response = await post(url, headers: headers, body: json);
    print(response.body);
   int idPackage;
   if (response.body != " ") {
@@ -64,7 +66,6 @@ Future<void> PostCustomPackages(customPackageViewModel customPackage, UserLogged
     Map<String, dynamic> userMap = jsonDecode(response.body);
     var data = DecoderAPI.fromJson(userMap);
     var codeStatus = ServiceDecoder.fromJson(data.data);
-    print(codeStatus.codeStatus);
     if (data.data != null) {
         var jsonRecordPayment = {
               "resv_ID": codeStatus.codeStatus,
@@ -82,10 +83,8 @@ Future<void> PostCustomPackages(customPackageViewModel customPackage, UserLogged
           "Authorization": "bearer " + widget.userloggeddata!.Token!
         };
       final responseRecordPayment = await post(urlRecordPayment, headers: headers, body: jsonRePayment);
-      print("response" + responseRecordPayment.body);
       Map<String, dynamic> responseMap = jsonDecode(responseRecordPayment.body);
       var dataRecordPayment = DecoderAPI.fromJson(responseMap);
-      print(dataRecordPayment.data);
       if(dataRecordPayment.data != null){
         Navigator.push( context,MaterialPageRoute(builder: (context) =>   SuccessCustomPackage(widget.userloggeddata,widget.customPackage)));
       }
@@ -101,7 +100,7 @@ Future<void> PostCustomPackages(customPackageViewModel customPackage, UserLogged
         ),
       ));
     }
-  }
+  }*/
 }
 
 
@@ -261,6 +260,7 @@ Future<void> PostCustomPackages(customPackageViewModel customPackage, UserLogged
                                                             keyboardType:
                                                                 TextInputType
                                                                     .phone,
+                                                                inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'^[1-9][0-9]*'))],
                                                             decoration:
                                                                 const InputDecoration(
                                                               prefixIcon: Icon(Icons

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_application_1/ComponentsLogin/Recover.dart';
 
 import 'package:get/get.dart';
@@ -113,6 +114,7 @@ class _codeVerificationScreenState extends State<codeVerificationScreen> {
               children: [
                 TextFormField(
                   style: kTextFormFieldStyle(),
+                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'^[1-9][0-9]*'))],
                    keyboardType: TextInputType.phone,
                   controller: codeController,
                   decoration: const InputDecoration(

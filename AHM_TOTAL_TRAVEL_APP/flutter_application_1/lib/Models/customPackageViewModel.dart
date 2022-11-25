@@ -34,7 +34,7 @@ class customPackageViewModel {
   int? MontoPago;
   List<reservacionTransporte>? transporteReservacion;
   Map<String, dynamic> toJson() => {
-        'resv_ID': 0,
+        /*'resv_ID': 0,
         'usua_ID': usua_ID,
         'paqu_ID': 1,
         'resv_esPersonalizado': true,
@@ -49,12 +49,11 @@ class customPackageViewModel {
         'resv_UsuarioModifica': 0,
         'reHo_FechaEntrada': reHo_FechaEntrada.toString(),
         'reHo_FechaSalida': reHo_FechaSalida.toString(),
-        'hote_ID': hote_ID,
+        'hote_ID': hote_ID,*/
         'actividadesExtras': actividadesExtra,
         'restaurantes': Restaurant,
-        'ReHo_PrecioTotal': reHo_PrecioTotal,
-        'Hote_numNoches': hote_numNoches,
         'actividadesHoteles': [],
+        'resv_Habitaciones': [],
         'tipoPago': tipoPago,
         'habi_ID': habi_ID,
         'habi_Cantidad': habi_Cantidad,

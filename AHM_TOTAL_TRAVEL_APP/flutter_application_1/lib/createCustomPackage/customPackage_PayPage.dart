@@ -366,8 +366,6 @@ List<Padding> ResumeActivities(List<ActivitiesExtra>? data, BuildContext context
                                         fontWeight: FontWeight.w500,
                                       ),
                                     ),)
-                                   
-                                  
                                   ],
                                 ),
                                Padding(
@@ -758,7 +756,8 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
 
   List<Padding> ResumeTransport(customPackageViewModel data, BuildContext context) {
     List<Padding> list = [];
-    final _controller = PageController();
+    if(data.partner != null){
+         final _controller = PageController();
     List<String> imageUrl;
        setState(() {
         SubTotal = SubTotal + num.parse(data.tprt_Total.toString());
@@ -967,6 +966,66 @@ List<Padding> ResumeRestaurant(List<Restaurants>? data, BuildContext context) {
           ),
         ),
       ));
+    }else{
+        list.add(Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(8),
+            color: Colors.white,
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 4,
+                color: Color(0x32000000),
+                offset: Offset(0, 2),
+              )
+            ],
+          ),
+          child: Column(
+            children: [
+              Column(
+                mainAxisSize: MainAxisSize.max,
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(10, 10, 16, 12),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                      
+                        Expanded(
+                          flex: 6,
+                          child: Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(80, 0, 0, 0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "No hay transportes incluidos",
+                                  style: TextStyle(
+                                    fontFamily: 'Outfit',
+                                    color: Colors.grey,
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )
+            ],
+          ),
+        ),
+      ));
+    }
+ 
     return list;
   }
 

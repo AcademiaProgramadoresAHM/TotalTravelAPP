@@ -203,7 +203,7 @@ class _changePasswordScreen extends State<changePasswordScreen> {
   // SignUp Button
   Widget codeVerificationButton(ThemeData theme) {
     return Padding(
-      padding: const EdgeInsets.only(top: 115.0, left: 20, right: 20),
+      padding: const EdgeInsets.only(top: 75.0, left: 20, right: 20),
       child: SizedBox(
         width: double.infinity,
         height: 55,

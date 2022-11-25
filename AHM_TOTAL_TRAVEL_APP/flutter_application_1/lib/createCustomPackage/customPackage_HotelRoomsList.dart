@@ -291,14 +291,14 @@ List<Padding> ListHotels(List<dynamic> data, BuildContext context) {
                           flex: 6,
                           child: Padding(
                             padding:
-                                EdgeInsetsDirectional.fromSTEB(80, 0, 0, 0),
+                                EdgeInsetsDirectional.fromSTEB(35, 0, 0, 0),
                             child: Column(
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  "No existen registros.",
+                                  "Habitaciones no disponibles",
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Colors.grey,

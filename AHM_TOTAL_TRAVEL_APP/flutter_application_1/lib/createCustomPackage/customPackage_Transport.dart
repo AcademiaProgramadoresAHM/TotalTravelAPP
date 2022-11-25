@@ -506,39 +506,50 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
                                     ],
                                   ),
                                 )),
-                        child: Text(
-                          'Regresar',
-                          style:
-                              TextStyle(fontSize: 18, color: Color(0xFF652D8F)),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          primary: Color.fromARGB(255, 234, 234, 234),
-                        ),
-                      ),
-                    )),
-                Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: SizedBox(
-                      width: 170,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          if (widget.customPackage.partner == null) {
-                            showCupertinoDialog(
+          child: Text(
+            'Regresar',
+            style: TextStyle(fontSize: 18,color: Color(0xFF652D8F)),
+          ),
+          style: ElevatedButton.styleFrom(
+            primary: Color.fromARGB(255, 234, 234, 234),
+          ),
+        ),)
+     
+      ),
+      Padding(
+        padding: EdgeInsets.all(8.0),
+        child:
+        SizedBox( 
+          width: 170,
+          child:     ElevatedButton(
+          onPressed: () {
+        if(widget.customPackage.partner ==  null){
+                showCupertinoDialog(
                                 context: context,
                                 builder: (BuildContext context) => Theme(
                                       data: ThemeData.light(),
                                       child: CupertinoAlertDialog(
                                         title: Text(
-                                          'Advertencia',
+                                          'Advertencia\n',
                                           style: boldTextStyle(
                                               color: Colors.black, size: 18),
                                         ),
                                         content: Text(
-                                          'Seleccione un servicio de transporte',
+                                          'No ha seleccionado ningún transporte \n¿Está seguro de continuar?',
                                           style: secondaryTextStyle(
                                               color: Colors.black, size: 16),
                                         ),
                                         actions: [
+                                          CupertinoDialogAction(
+                                            child: Text(
+                                              'Cancelar',
+                                              style: primaryTextStyle(
+                                                  color: dodgerBlue, size: 18),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                          ),
                                           CupertinoDialogAction(
                                             child: Text(
                                               'Aceptar',
@@ -546,38 +557,31 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
                                                   color: redColor, size: 18),
                                             ),
                                             onPressed: () {
-                                              Navigator.pop(context);
+                                                  Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen( createCustomPackage(widget.CiudadSalida,widget.userloggeddata,2,widget.customPackage,widget.CitiesDictionary),widget.userloggeddata)),
+                                              );
                                             },
                                           )
                                         ],
                                       ),
                                     ));
-                          } else {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => NavigationHomeScreen(
-                                      createCustomPackage(
-                                          widget.CiudadSalida,
-                                          widget.userloggeddata,
-                                          2,
-                                          widget.customPackage,
-                                          widget.CitiesDictionary),
-                                      widget.userloggeddata)),
-                            );
-                          }
-                        },
-                        child: Text(
-                          'Confirmar',
-                          style: TextStyle(fontSize: 18),
-                        ),
-                        style: ElevatedButton.styleFrom(
-                          primary: Color(0xFF652D8F),
-                        ),
-                      ),
-                    )),
-              ],
-            )));
+      }else{
+         Navigator.push( context,MaterialPageRoute(builder: (context) =>  NavigationHomeScreen( createCustomPackage(widget.CiudadSalida,widget.userloggeddata,2,widget.customPackage,widget.CitiesDictionary),widget.userloggeddata)),);
+      }
+              
+            
+          },
+          child: Text(
+            'Confirmar',
+            style: TextStyle(fontSize: 18),
+          ),
+          style: ElevatedButton.styleFrom(
+            primary: Color(0xFF652D8F),
+          ),
+        ),)
+     
+      ),
+       ],)
+    ));
   }
 
   Column _buildButtonColumn(Color color, IconData icon, String label) {

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_application_1/Models/AdressesViewModel.dart';
 import 'package:flutter_application_1/Models/RequestsViewModel.dart';
 import 'package:flutter_application_1/Models/SuburbsViewModel.dart';
@@ -409,6 +410,7 @@ class _SignUpViewState extends State<SignUpView> {
                                   ///
                                   TextFormField(
                                     style: kTextFormFieldStyle(),
+                                     inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'^[1-9][0-9]*'))],
                                     keyboardType: TextInputType.number,
                                     decoration: const InputDecoration(
                                       prefixIcon: Icon(Icons.badge),
@@ -516,6 +518,7 @@ class _SignUpViewState extends State<SignUpView> {
                                   // Phone
                                   TextFormField(
                                     style: kTextFormFieldStyle(),
+                                     inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'^[1-9][0-9]*'))],
                                     keyboardType: TextInputType.phone,
                                     decoration: const InputDecoration(
                                       prefixIcon: Icon(Icons.phone),
