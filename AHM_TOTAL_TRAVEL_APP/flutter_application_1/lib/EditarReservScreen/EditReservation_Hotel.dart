@@ -14,6 +14,7 @@ class EditReservationHotel extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final ReservEdit reservacionEditado;
   final List<dynamic> reservationList;
+
   final int ciudadID;
   EditReservationHotel(this.userloggeddata, this.reservacionEditado,
       this.reservationList, this.ciudadID);

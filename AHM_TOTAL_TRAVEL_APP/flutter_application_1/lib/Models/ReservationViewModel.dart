@@ -27,8 +27,11 @@ class ReservEdit {
   String? reHoFechaSalida;
   int? hoteId;
   String? HotelDescrip;
+  String? ActividadesExtDescrip;
+  List<ActivitiesExtraDefault>? actividadesExtra;
   String? PaqueteDescrip;
   String? Restaurante;
+  int? ciudadID;
 
   Map<String, dynamic> toJson() => {
         "resv_ID": resvId,

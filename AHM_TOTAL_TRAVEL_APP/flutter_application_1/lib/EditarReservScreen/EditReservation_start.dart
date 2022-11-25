@@ -1,17 +1,23 @@
 import 'dart:convert';
 
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../Components/Decodificador.dart';
 import '../Components/Reservation.dart';
+import '../Models/CitiesViewModel.dart';
 import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
 import 'package:http/http.dart' as http;
 
+import '../Screens/Personalizados.dart';
+import '../navigation_home_screen.dart';
+import 'EditReservation_AcvtivityExtra.dart';
 import 'EditReservation_Hotel.dart';
 import 'EditReservation_Restaurant.dart';
+import 'EditReservation_Transport.dart';
 import 'Editreservation_Package.dart';
 
 class EditReservationStart extends StatefulWidget {
@@ -26,42 +32,53 @@ class EditReservationStart extends StatefulWidget {
 }
 
 class _EditReservationStartState extends State<EditReservationStart> {
-  Future<dynamic> FindReservationEdit(idreservacion, userloggeddata) async {
-    List<dynamic> dataReservation;
-    List<dynamic> datarestaurante;
-    String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/ReservationRestaurant/List";
-    final headers = {
-      "Content-type": "application/json",
-      "Authorization": "bearer " + widget.userloggeddata!.Token!
-    };
-    final response = await http.get(Uri.parse(url_list), headers: headers);
-    if (response.statusCode == 200) {
-      Map<String, dynamic> userMapa = jsonDecode(response.body);
-      var Activ = Decodificador.fromJson(userMapa);
-      datarestaurante = Activ.data;
-      var restaurante =
-          datarestaurante.where((x) => x['resv_ID'] == idreservacion).toList();
-      return restaurante;
-    } else {
-      print("Error" + response.statusCode.toString());
-    }
-  }
+  int? selectedCity;
+  String? selectedValue;
+  int? CitiesDropDownValue;
+
+  Map<int?, String> CitiesDictionary = Map();
 
   List<Padding> ReservationDetails(List<dynamic> data, BuildContext context) {
     List<Padding> list = [];
     List<String> items = [];
     final _controller = PageController();
     data.forEach((element) {
-      String paquetedescrip = element['descripcionPaquete'];
-      String HotelNombre = element['nombre_Hotel'];
-      String RestauranteWord = "Agregar/Cambiar Restaurante";
-      if (widget.reservacionEditado.PaqueteDescrip != null) {
-        paquetedescrip = widget.reservacionEditado.PaqueteDescrip.toString();
+      String Transporte = "No hay Transportes Reservados";
+      String restaurante = "No hay restaurantes Reservados";
+      List<dynamic> listadoActiv = element['actividadesExtras'];
+      List<dynamic> Listadorestaurante = element["restaurantes"];
+      List<dynamic> ListadoTransportes = element["transportes"];
+
+      if (ListadoTransportes.isNotEmpty) {
+        Transporte = ListadoTransportes[0]["details"]["nombre_Transporte"];
       }
-      if (widget.reservacionEditado.HotelDescrip != null) {
-        HotelNombre = widget.reservacionEditado.HotelDescrip.toString();
+      if (Listadorestaurante.isNotEmpty) {
+        restaurante = Listadorestaurante[element["actividadesExtras"]
+            .toString()
+            .length
+            .toInt()]["details"]["restaurante"];
       }
+      if (widget.reservacionEditado.usuaId == null) {
+        widget.reservacionEditado.usuaId =
+            element["reservacionDetalle"]["id_Cliente"];
+      }
+      if (widget.reservacionEditado.paquId == null) {
+        widget.reservacionEditado.paquId =
+            element["reservacionDetalle"]["id_Paquete"];
+      }
+      if (widget.reservacionEditado.resvId == null) {
+        widget.reservacionEditado.resvId = element["reservacionDetalle"]["id"];
+      }
+      // String paquetedescrip = element['descripcionPaquete'];
+      // String HotelNombre = element['nombre_Hotel'];
+      // String RestauranteWord = "Agregar/Cambiar Restaurante";
+      // String ActividadesNambe = element[''];
+      // if (widget.reservacionEditado.PaqueteDescrip != null) {
+      //   paquetedescrip = widget.reservacionEditado.PaqueteDescrip.toString();
+      // }
+      // if (widget.reservacionEditado.HotelDescrip != null) {
+      //   HotelNombre = widget.reservacionEditado.HotelDescrip.toString();
+      // }
       String? selectedValue;
       list.add(
         Padding(
@@ -105,7 +122,8 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            element['nombrecompleto'],
+                                            element['reservacionDetalle']
+                                                ['nombrecompleto'],
                                             style: TextStyle(
                                               fontFamily: 'Outfit',
                                               color: Color(0xFF090F13),
@@ -119,7 +137,7 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0, 20, 40, 0),
                                         child: Text(
-                                          element['dni'],
+                                          element['reservacionDetalle']['dni'],
                                           style: TextStyle(
                                             fontFamily: 'Outfit',
                                             color: Color(0xFF7C8791),
@@ -149,7 +167,8 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                           Flexible(
                                             flex: 6,
                                             child: Text(
-                                              paquetedescrip,
+                                              element['reservacionDetalle']
+                                                  ['descripcionPaquete'],
                                               style: TextStyle(
                                                 fontFamily: 'Outfit',
                                                 color: Color(0xFF090F13),
@@ -210,7 +229,8 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                           Flexible(
                                             flex: 6,
                                             child: Text(
-                                              HotelNombre,
+                                              element['reservacionDetalle']
+                                                  ['nombre_Hotel'],
                                               style: TextStyle(
                                                 fontFamily: 'Outfit',
                                                 color: Color(0xFF090F13),
@@ -234,7 +254,8 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                                         widget
                                                             .reservacionEditado,
                                                         widget.reservationList,
-                                                        element['ciudad_ID']),
+                                                        element['reservacionDetalle']
+                                                            ['ciudad_ID']),
                                               ),
                                             )
                                           },
@@ -272,7 +293,7 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                           Flexible(
                                             flex: 6,
                                             child: Text(
-                                              RestauranteWord,
+                                              restaurante,
                                               style: TextStyle(
                                                 fontFamily: 'Outfit',
                                                 color: Color(0xFF090F13),
@@ -292,16 +313,17 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     EditReservationRestaurante(
-                                                        widget.userloggeddata,
-                                                        widget
-                                                            .reservacionEditado,
-                                                        widget.reservationList,
-                                                        element['ciudad_ID']),
+                                                  widget.userloggeddata,
+                                                  widget.reservacionEditado,
+                                                  widget.reservationList,
+                                                  element['reservacionDetalle']
+                                                      ['ciudad_ID'],
+                                                ),
                                               ),
                                             )
                                           },
                                           child: Text(
-                                            'Cambiar Restaurnate',
+                                            'Cambiar Restaurante',
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 color: Color(0xFF652D8F)),
@@ -312,6 +334,217 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                           ),
                                         ),
                                       ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 20, 40, 0),
+                                        child: Text(
+                                          "Actividades Extras",
+                                          style: TextStyle(
+                                            fontFamily: 'Outfit',
+                                            color: Color(0xFF7C8791),
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Flexible(
+                                            flex: 6,
+                                            child: Text(
+                                              listadoActiv[0]["details"]
+                                                  ["descripcion"],
+                                              style: TextStyle(
+                                                fontFamily: 'Outfit',
+                                                color: Color(0xFF090F13),
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 5, 0, 0),
+                                        child: ElevatedButton(
+                                          onPressed: () => {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditReservationActivityExtras(
+                                                          widget.userloggeddata,
+                                                          widget
+                                                              .reservacionEditado,
+                                                          widget
+                                                              .reservationList,
+                                                          [],
+                                                          0)),
+                                            ),
+                                          },
+                                          child: Text(
+                                            'Cambiar Actividades',
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Color(0xFF652D8F)),
+                                          ),
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Color.fromARGB(
+                                                255, 234, 234, 234),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 20, 40, 0),
+                                        child: Text(
+                                          "Transporte Reservado",
+                                          style: TextStyle(
+                                            fontFamily: 'Outfit',
+                                            color: Color(0xFF7C8791),
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Flexible(
+                                            flex: 6,
+                                            child: Text(
+                                              Transporte,
+                                              style: TextStyle(
+                                                fontFamily: 'Outfit',
+                                                color: Color(0xFF090F13),
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 5, 0, 0),
+                                        child: ElevatedButton(
+                                          onPressed: () => {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditReservacionTRansport(
+                                                          widget.userloggeddata,
+                                                          widget
+                                                              .reservacionEditado,
+                                                          widget
+                                                              .reservationList,
+                                                          element['reservacionDetalle']
+                                                              ['ciudad_ID'])),
+                                            ),
+                                          },
+                                          child: Text(
+                                            'Cambiar Transporte',
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Color(0xFF652D8F)),
+                                          ),
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Color.fromARGB(
+                                                255, 234, 234, 234),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            80, 30, 0, 0),
+                                        child: Text(
+                                          "Total:     "
+                                                  'HNL ' +
+                                              element['reservacionDetalle']
+                                                      ['precio']
+                                                  .toInt()
+                                                  .toString() +
+                                              '.00',
+                                          textAlign: TextAlign.end,
+                                          style: TextStyle(
+                                            fontFamily: 'Lexend Deca',
+                                            color: Color(0xFF090F13),
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  )))
+                        ],
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+      );
+      widget.reservacionEditado.ciudadID =
+          element['reservacionDetalle']['ciudad_ID'];
+    });
+    return list;
+  }
+
+  List<Padding> ActividadesDetails(List<dynamic> data, BuildContext context) {
+    List<Padding> list = [];
+    List<String> items = [];
+    final _controller = PageController();
+    data.forEach((element) {
+      String NombreActividade = element['actividad_Extra'];
+      if (widget.reservacionEditado.ActividadesExtDescrip != null) {
+        NombreActividade =
+            widget.reservacionEditado.ActividadesExtDescrip.toString();
+      }
+
+      String? selectedValue;
+      list.add(
+        Padding(
+          padding: EdgeInsetsDirectional.fromSTEB(18, 14, 18, 0),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(8),
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 4,
+                  color: Color(0x32000000),
+                  offset: Offset(0, 2),
+                )
+              ],
+            ),
+            child: Column(
+              children: [
+                Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(14, 20, 16, 12),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          Expanded(
+                              flex: 6,
+                              child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10, 10, 0, 0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             80, 30, 0, 0),
@@ -420,53 +653,6 @@ class _EditReservationStartState extends State<EditReservationStart> {
                   width: 175,
                   height: 35,
                   child: ElevatedButton(
-                    onPressed: () => showDialog<String>(
-                      context: context,
-                      builder: (BuildContext context) => AlertDialog(
-                        title: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(0, 20, 0, 0),
-                          child: Text(
-                            '¿Esta seguro que desea continuar?',
-                          ),
-                        ),
-                        actions: <Widget>[
-                          ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                primary: Color.fromARGB(255, 234, 234, 234),
-                              ),
-                              child: Text(
-                                "Cancelar",
-                                style: TextStyle(color: Color(0xFF652D8F)),
-                              )),
-                          ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(context);
-                                Navigator.pop(context);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                primary: Color(0xFF652D8F),
-                              ),
-                              child: Text("Aceptar"))
-                        ],
-                      ),
-                    ),
-                    child: Text(
-                      'Cancelar',
-                      style: TextStyle(fontSize: 18, color: Color(0xFF652D8F)),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Color.fromARGB(255, 234, 234, 234),
-                    ),
-                  ),
-                )),
-            Padding(
-                padding: EdgeInsets.all(8.0),
-                child: SizedBox(
-                  width: 170,
-                  child: ElevatedButton(
                     onPressed: () {
                       showCupertinoDialog(
                           context: context,
@@ -487,17 +673,80 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                     CupertinoDialogAction(
                                       child: Text(
                                         'Quedarse',
-                                        style: primaryTextStyle(
+                                        style: secondaryTextStyle(
                                             color: dodgerBlue, size: 18),
                                       ),
                                       onPressed: () {
-                                        // FindPackage(idpackage, false,
-                                        //     widget.userloggeddata);
+                                        finish(context);
                                       },
                                     ),
                                     CupertinoDialogAction(
                                       child: Text(
                                         'Regresar',
+                                        style: primaryTextStyle(
+                                            color: Colors.purple, size: 18),
+                                      ),
+                                      onPressed: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                NavigationHomeScreen(
+                                                    PersonaliScreen(
+                                                        widget.userloggeddata),
+                                                    widget.userloggeddata),
+                                          ),
+                                        );
+                                      },
+                                    )
+                                  ],
+                                ),
+                              ));
+                    },
+                    child: Text(
+                      'Regresar',
+                      style: TextStyle(fontSize: 18, color: Color(0xFF652D8F)),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      primary: Color.fromARGB(255, 207, 202, 210),
+                    ),
+                  ),
+                )),
+            Padding(
+                padding: EdgeInsets.all(8.0),
+                child: SizedBox(
+                  width: 170,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      showCupertinoDialog(
+                          context: context,
+                          builder: (BuildContext context) => Theme(
+                                data: ThemeData.light(),
+                                child: CupertinoAlertDialog(
+                                  title: Text(
+                                    'Esta Seguro de los cambios a realizar?',
+                                    style: boldTextStyle(
+                                        color: Colors.black, size: 18),
+                                  ),
+                                  content: Text(
+                                    'Se actualiza tu plan de viaje',
+                                    style: secondaryTextStyle(
+                                        color: Colors.black, size: 16),
+                                  ),
+                                  actions: [
+                                    CupertinoDialogAction(
+                                      child: Text(
+                                        'Cancelar',
+                                        style: primaryTextStyle(
+                                            color: dodgerBlue, size: 18),
+                                      ),
+                                      onPressed: () {
+                                        finish(context);
+                                      },
+                                    ),
+                                    CupertinoDialogAction(
+                                      child: Text(
+                                        'Confirmar',
                                         style: primaryTextStyle(
                                             color: Colors.purple, size: 18),
                                       ),

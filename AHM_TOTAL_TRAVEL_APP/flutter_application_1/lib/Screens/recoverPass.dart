@@ -188,7 +188,7 @@ class _recoverPassViewState extends State<recoverPassScreen> {
   // SignUp Button
   Widget verificationButton(ThemeData theme) {
     return Padding(
-      padding: const EdgeInsets.only(top: 115.0),
+      padding: const EdgeInsets.only(top: 75.0),
       child: SizedBox(
         width: double.infinity,
         height: 55,

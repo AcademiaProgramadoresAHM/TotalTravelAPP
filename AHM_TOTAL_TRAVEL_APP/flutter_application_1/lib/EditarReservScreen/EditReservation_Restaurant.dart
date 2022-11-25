@@ -16,6 +16,7 @@ import 'EditReservation_start.dart';
 class EditReservationRestaurante extends StatefulWidget {
   final ReservEdit reservacionEditado;
   final List<dynamic> reservationList;
+
   final UserLoggedModel? userloggeddata;
   final int idCiudad;
 

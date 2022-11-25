@@ -151,22 +151,40 @@ if (response.body != " ") {
     var data = DecoderAPI.fromJson(userMap);
     var status = RequestStatus.fromJson(data.data);
     if (status.CodeStatus! >= 0) {
-      if (status.CodeStatus == 0) {
+      if (status.MessageStatus == "El DNI ya existe.") {
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           backgroundColor: white,
           content: Text(
             textAlign: TextAlign.center,
-            'El DNI ya está siendo utilizado.',
+            'El DNI ya existe.',
             style: TextStyle(color: redColor, fontSize: 16),
           ),
         ));
-      } else {
+      } else if (status.MessageStatus == "El EMAIL ya existe.") {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: white,
+          content: Text(
+            textAlign: TextAlign.center,
+            'El correo electrónico ya existe.',
+            style: TextStyle(color: redColor, fontSize: 16),
+          ),
+        ));
+      } else if(status.CodeStatus! > 0) {
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => Login(),
           ),
         );
+      }else{
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          backgroundColor: white,
+          content: Text(
+            textAlign: TextAlign.center,
+             'Ha ocurrido un error.',
+            style: TextStyle(color: redColor, fontSize: 16),
+          ),
+        ));
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

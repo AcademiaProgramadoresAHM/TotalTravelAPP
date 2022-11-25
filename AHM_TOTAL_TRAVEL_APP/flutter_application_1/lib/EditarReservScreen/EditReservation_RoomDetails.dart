@@ -16,6 +16,7 @@ class EditreservationRoomDetails extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final ReservEdit reservationEditado;
   final List<dynamic> room;
+
   final List<dynamic> reservationList;
 
   EditreservationRoomDetails(this.userloggeddata, this.reservationEditado,
