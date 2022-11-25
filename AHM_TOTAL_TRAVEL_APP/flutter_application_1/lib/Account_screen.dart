@@ -194,25 +194,18 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                                 ClipRRect(
                                   borderRadius: const BorderRadius.all(
                                       Radius.circular(60.0)),
-                                  child: Image.network(image),
+                                  child: Image.network(image,
+                                      height: 145, width: 141),
                                 ),
                               ],
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 0),
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(left: 110.0),
-                                  child: Text(
-                                    fullName ?? 'Nombre Completo',
-                                    style: TextStyle(
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                ),
-                              ],
+                            padding: EdgeInsets.only(left: 100.0, right: 100.0),
+                            child: Text(
+                              fullName ?? 'Nombre Completo',
+                              style: TextStyle(
+                                  fontSize: 20.0, fontWeight: FontWeight.bold),
                             ),
                           ),
                           Padding(
@@ -322,7 +315,8 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
                             endIndent: 40.0,
                           ),
                           Padding(
-                            padding: EdgeInsets.only(top: 20.0, right: 70.0),
+                            padding: EdgeInsets.only(
+                                top: 20.0, left: 25.0, right: 85.0),
                             child: Text(
                               email ?? 'Email',
                               //'null',

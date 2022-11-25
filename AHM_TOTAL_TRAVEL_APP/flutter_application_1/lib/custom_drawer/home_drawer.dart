@@ -158,7 +158,8 @@ class _HomeDrawerState extends State<HomeDrawer> {
                             child: ClipRRect(
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(60.0)),
-                              child: Image.network(_userData['image_URL']),
+                              child: Image.network(_userData['image_URL'],
+                                  height: 120, width: 120),
                             ),
                           ),
                         ),

@@ -57,7 +57,7 @@ class _EditAccountState extends State<EditAccount> {
   String? selectedValue;
   String? time;
   String? date;
-  String? name, surname, email, phone, dni, street, avenue;
+  String? name, surname, email, phone, dni, street, avenue, role;
 
   init() async {
     time = 'Please Select Time';
@@ -125,6 +125,22 @@ class _EditAccountState extends State<EditAccount> {
   void showToast4(bool result3) {
     setState(() {
       _isVisibleSuburbs = result3;
+    });
+  }
+
+  var _userData;
+
+  Future<void> GetUserData(data) async {
+    setState(() {
+      _userData = data;
+      name = _userData['nombre'];
+      surname = _userData['apellido'];
+      email = _userData['email'];
+      phone = _userData['telefono'];
+      dni = _userData['dni'];
+      street = _userData['calle'];
+      avenue = _userData['avenida'];
+      role = _userData['role_ID'].toString();
     });
   }
 
@@ -239,7 +255,7 @@ class _EditAccountState extends State<EditAccount> {
     map['usua_Email'] = Email;
     map['dire_ID'] = adressId;
     map['usua_esAdmin'] = "0";
-    map['role_ID'] = "1";
+    map['role_ID'] = role;
     map['part_ID'] = "0";
     map['usua_UsuarioModifica'] = "1";
     map['file'] = "string";
@@ -283,21 +299,6 @@ class _EditAccountState extends State<EditAccount> {
         ));
       }
     }
-  }
-
-  var _userData;
-
-  Future<void> GetUserData(data) async {
-    setState(() {
-      _userData = data;
-      name = _userData['nombre'];
-      surname = _userData['apellido'];
-      email = _userData['email'];
-      phone = _userData['telefono'];
-      dni = _userData['dni'];
-      street = _userData['calle'];
-      avenue = _userData['avenida'];
-    });
   }
 
   @override

@@ -24,7 +24,7 @@ class UserLoggedModel {
         apellido = json['apellido'],
         Email = json['email'],
         Rol = json['rol'],
-        Role_ID = json['rol_ID'],
+        Role_ID = json['role_ID'],
         Partner = json['partner'],
         PartnerID = json['partnerID'],
         Token = json['token'];
@@ -113,7 +113,7 @@ class UserListViewModel {
         Avenida = json['avenida'],
         DireccionID = json['direccionID'],
         Rol = json['rol'],
-        Role_ID = json['rol_ID'],
+        Role_ID = json['role_ID'],
         Partner = json['partner'],
         PartnerID = json['partnerID'],
         ID_Crea = json['iD_Crea'],
