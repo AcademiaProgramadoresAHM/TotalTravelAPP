@@ -1,11 +1,13 @@
 import 'dart:convert';
 
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nb_utils/nb_utils.dart';
 
 import '../Components/Decodificador.dart';
 import '../Components/Reservation.dart';
+import '../Models/CitiesViewModel.dart';
 import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
 import 'package:http/http.dart' as http;
@@ -15,40 +17,62 @@ import '../navigation_home_screen.dart';
 import 'EditReservation_AcvtivityExtra.dart';
 import 'EditReservation_Hotel.dart';
 import 'EditReservation_Restaurant.dart';
+import 'EditReservation_Transport.dart';
 import 'Editreservation_Package.dart';
 
 class EditReservationStart extends StatefulWidget {
   final ReservEdit reservacionEditado;
   final List<dynamic> reservationList;
-  final List<dynamic> Actividadesextras;
   final UserLoggedModel? userloggeddata;
 
-  EditReservationStart(this.userloggeddata, this.reservacionEditado,
-      this.reservationList, this.Actividadesextras);
+  EditReservationStart(
+      this.userloggeddata, this.reservacionEditado, this.reservationList);
   @override
   State<EditReservationStart> createState() => _EditReservationStartState();
 }
 
 class _EditReservationStartState extends State<EditReservationStart> {
-  Future<dynamic> FindReservationEdit(idreservacion, userloggeddata) async {
-    List<dynamic> dataReservation;
-    List<dynamic> datarestaurante;
+  int? selectedCity;
+  String? selectedValue;
+  int? CitiesDropDownValue;
+
+  Map<int?, String> CitiesDictionary = Map();
+
+  Future<dynamic> FindTransport(idciudad, userloggeddata, context) async {
+    List<dynamic> dataTransport;
+    var data;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/ReservationRestaurant/List";
+        "https://apitotaltravel.azurewebsites.net/API/Transports/List";
     final headers = {
       "Content-type": "application/json",
-      "Authorization": "bearer " + widget.userloggeddata!.Token!
+      "Authorization": "bearer " + userloggeddata!.Token!
     };
-    final response = await http.get(Uri.parse(url_list), headers: headers);
-    if (response.statusCode == 200) {
-      Map<String, dynamic> userMapa = jsonDecode(response.body);
-      var Activ = Decodificador.fromJson(userMapa);
-      datarestaurante = Activ.data;
-      var restaurante =
-          datarestaurante.where((x) => x['resv_ID'] == idreservacion).toList();
-      return restaurante;
+    var respuesta = await http.get(Uri.parse(url_list), headers: headers);
+    if (respuesta.statusCode == 200) {
+      Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
+      var Json = Decodificador.fromJson(ServerResponse);
+      dataTransport = Json.data;
+      var transport =
+          dataTransport.where((x) => x["ciudad_ID"] == idciudad).toList();
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => EditReservacionTRansport(
+                widget.userloggeddata,
+                widget.reservacionEditado,
+                widget.reservationList,
+                idciudad,
+                transport)),
+      );
+      // rellena diccionario de datos
+      // data.forEach((x) {
+      //   CiudadesViewModel element = CiudadesViewModel.fromJson(x);
+      //   var descripcion = element.Ciudad!;
+      //   CitiesDictionary[element.ID] = descripcion;
+      // });
     } else {
-      print("Error" + response.statusCode.toString());
+      print("Error: " + respuesta.statusCode.toString());
     }
   }
 
@@ -57,9 +81,32 @@ class _EditReservationStartState extends State<EditReservationStart> {
     List<String> items = [];
     final _controller = PageController();
     data.forEach((element) {
+      String Transporte = "No hay Transportes Reservados";
+      String restaurante = "No hay restaurantes Reservados";
       List<dynamic> listadoActiv = element['actividadesExtras'];
       List<dynamic> Listadorestaurante = element["restaurantes"];
       List<dynamic> ListadoTransportes = element["transportes"];
+
+      if (ListadoTransportes.isNotEmpty) {
+        Transporte = ListadoTransportes[0]["details"]["nombre_Transporte"];
+      }
+      if (Listadorestaurante.isNotEmpty) {
+        restaurante = Listadorestaurante[element["actividadesExtras"]
+            .toString()
+            .length
+            .toInt()]["details"]["restaurante"];
+      }
+      if (widget.reservacionEditado.usuaId == null) {
+        widget.reservacionEditado.usuaId =
+            element["reservacionDetalle"]["id_Cliente"];
+      }
+      if (widget.reservacionEditado.paquId == null) {
+        widget.reservacionEditado.paquId =
+            element["reservacionDetalle"]["id_Paquete"];
+      }
+      if (widget.reservacionEditado.resvId == null) {
+        widget.reservacionEditado.resvId = element["reservacionDetalle"]["id"];
+      }
       // String paquetedescrip = element['descripcionPaquete'];
       // String HotelNombre = element['nombre_Hotel'];
       // String RestauranteWord = "Agregar/Cambiar Restaurante";
@@ -182,9 +229,7 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                                         widget.userloggeddata,
                                                         widget
                                                             .reservacionEditado,
-                                                        widget.reservationList,
-                                                        widget
-                                                            .Actividadesextras),
+                                                        widget.reservationList),
                                               ),
                                             )
                                           },
@@ -248,9 +293,7 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                                             .reservacionEditado,
                                                         widget.reservationList,
                                                         element['reservacionDetalle']
-                                                            ['ciudad_ID'],
-                                                        widget
-                                                            .Actividadesextras),
+                                                            ['ciudad_ID']),
                                               ),
                                             )
                                           },
@@ -288,9 +331,7 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                           Flexible(
                                             flex: 6,
                                             child: Text(
-                                              Listadorestaurante[0]["details"]
-                                                      ["restaurante"] ??
-                                                  "No Tiene Restaurante Reservado",
+                                              restaurante,
                                               style: TextStyle(
                                                 fontFamily: 'Outfit',
                                                 color: Color(0xFF090F13),
@@ -310,19 +351,328 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     EditReservationRestaurante(
-                                                        widget.userloggeddata,
-                                                        widget
-                                                            .reservacionEditado,
-                                                        widget.reservationList,
-                                                        element['reservacionDetalle']
-                                                            ['ciudad_ID'],
-                                                        widget
-                                                            .Actividadesextras),
+                                                  widget.userloggeddata,
+                                                  widget.reservacionEditado,
+                                                  widget.reservationList,
+                                                  element['reservacionDetalle']
+                                                      ['ciudad_ID'],
+                                                ),
                                               ),
                                             )
                                           },
                                           child: Text(
                                             'Cambiar Restaurante',
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Color(0xFF652D8F)),
+                                          ),
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Color.fromARGB(
+                                                255, 234, 234, 234),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 20, 40, 0),
+                                        child: Text(
+                                          "Actividades Extras",
+                                          style: TextStyle(
+                                            fontFamily: 'Outfit',
+                                            color: Color(0xFF7C8791),
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Flexible(
+                                            flex: 6,
+                                            child: Text(
+                                              listadoActiv[0]["details"]
+                                                  ["descripcion"],
+                                              style: TextStyle(
+                                                fontFamily: 'Outfit',
+                                                color: Color(0xFF090F13),
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 5, 0, 0),
+                                        child: ElevatedButton(
+                                          onPressed: () => {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      EditReservationActivityExtras(
+                                                          widget.userloggeddata,
+                                                          widget
+                                                              .reservacionEditado,
+                                                          widget
+                                                              .reservationList,
+                                                          [],
+                                                          0)),
+                                            ),
+                                          },
+                                          child: Text(
+                                            'Cambiar Actividades',
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Color(0xFF652D8F)),
+                                          ),
+                                          style: ElevatedButton.styleFrom(
+                                            primary: Color.fromARGB(
+                                                255, 234, 234, 234),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 20, 40, 0),
+                                        child: Text(
+                                          "Transporte Reservado",
+                                          style: TextStyle(
+                                            fontFamily: 'Outfit',
+                                            color: Color(0xFF7C8791),
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Flexible(
+                                            flex: 6,
+                                            child: Text(
+                                              Transporte,
+                                              style: TextStyle(
+                                                fontFamily: 'Outfit',
+                                                color: Color(0xFF090F13),
+                                                fontSize: 18,
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0, 5, 0, 0),
+                                        child: ElevatedButton(
+                                          onPressed: () => {
+                                            FindTransport(
+                                                ListadoTransportes[0]["details"]
+                                                    ["ciudad_Salida_ID"],
+                                                widget.userloggeddata,
+                                                context),
+                                            // showModalBottomSheet<void>(
+                                            //   context: context,
+                                            //   builder: (BuildContext context) {
+                                            //     return Container(
+                                            //       height: 180,
+                                            //       color: Colors.white,
+                                            //       child: Center(
+                                            //         child: Column(
+                                            //           children: <Widget>[
+                                            //             Padding(
+                                            //                 padding:
+                                            //                     const EdgeInsets
+                                            //                             .only(
+                                            //                         top: 10),
+                                            //                 child: Container(
+                                            //                   width: 350,
+                                            //                   height: 50,
+                                            //                   decoration:
+                                            //                       BoxDecoration(
+                                            //                           color: Colors
+                                            //                               .transparent),
+                                            //                   child:
+                                            //                       DropdownButtonHideUnderline(
+                                            //                           child:
+                                            //                               DropdownButton2(
+                                            //                     isExpanded:
+                                            //                         true,
+                                            //                     hint: Row(
+                                            //                       children: const [
+                                            //                         SizedBox(
+                                            //                           width: 4,
+                                            //                         ),
+                                            //                         Expanded(
+                                            //                           child:
+                                            //                               Text(
+                                            //                             'Selecciona una ciudad de salida',
+                                            //                             style:
+                                            //                                 TextStyle(
+                                            //                               fontSize:
+                                            //                                   14,
+                                            //                               fontWeight:
+                                            //                                   FontWeight.bold,
+                                            //                               color: Color.fromRGBO(
+                                            //                                   101,
+                                            //                                   45,
+                                            //                                   143,
+                                            //                                   1),
+                                            //                             ),
+                                            //                             overflow:
+                                            //                                 TextOverflow.ellipsis,
+                                            //                           ),
+                                            //                         ),
+                                            //                       ],
+                                            //                     ),
+                                            //                     items:
+                                            //                         CitiesDictionary
+                                            //                             .keys
+                                            //                             .map(
+                                            //                                 (id) {
+                                            //                       return DropdownMenuItem(
+                                            //                           value: id,
+                                            //                           child:
+                                            //                               Padding(
+                                            //                             padding: EdgeInsetsDirectional.fromSTEB(
+                                            //                                 30,
+                                            //                                 0,
+                                            //                                 0,
+                                            //                                 0),
+                                            //                             child:
+                                            //                                 Text(
+                                            //                               "klk",
+                                            //                               style:
+                                            //                                   const TextStyle(
+                                            //                                 fontSize:
+                                            //                                     14,
+                                            //                                 fontWeight:
+                                            //                                     FontWeight.bold,
+                                            //                                 color:
+                                            //                                     Colors.black,
+                                            //                               ),
+                                            //                             ),
+                                            //                           ));
+                                            //                     }).toList(),
+                                            //                     value:
+                                            //                         selectedCity,
+                                            //                     onChanged:
+                                            //                         (value) {
+                                            //                       setState(() {
+                                            //                         selectedCity =
+                                            //                             value
+                                            //                                 as int?;
+                                            //                         CitiesDropDownValue =
+                                            //                             value;
+                                            //                       });
+                                            //                       CiudadesViewModel
+                                            //                           element =
+                                            //                           new CiudadesViewModel(
+                                            //                               CitiesDropDownValue,
+                                            //                               null,
+                                            //                               null,
+                                            //                               null,
+                                            //                               null);
+                                            //                       // Navigator
+                                            //                       //     .push(
+                                            //                       //   context,
+                                            //                       //   MaterialPageRoute(
+                                            //                       //       builder: (context) => ),
+                                            //                       // );
+                                            //                     },
+                                            //                     icon:
+                                            //                         const Icon(
+                                            //                       Icons
+                                            //                           .keyboard_double_arrow_down,
+                                            //                     ),
+                                            //                     iconSize: 20,
+                                            //                     iconEnabledColor:
+                                            //                         Color
+                                            //                             .fromRGBO(
+                                            //                                 101,
+                                            //                                 45,
+                                            //                                 143,
+                                            //                                 1),
+                                            //                     iconDisabledColor:
+                                            //                         Colors.grey,
+                                            //                     buttonHeight:
+                                            //                         70,
+                                            //                     buttonWidth:
+                                            //                         160,
+                                            //                     buttonPadding:
+                                            //                         const EdgeInsets
+                                            //                                 .only(
+                                            //                             left:
+                                            //                                 14,
+                                            //                             right:
+                                            //                                 14),
+                                            //                     buttonDecoration:
+                                            //                         BoxDecoration(
+                                            //                       borderRadius:
+                                            //                           BorderRadius
+                                            //                               .circular(
+                                            //                                   14),
+                                            //                       border: Border
+                                            //                           .all(
+                                            //                         color: Colors
+                                            //                             .black26,
+                                            //                       ),
+                                            //                       color: Colors
+                                            //                           .white,
+                                            //                     ),
+                                            //                     buttonElevation:
+                                            //                         2,
+                                            //                     itemHeight: 40,
+                                            //                     itemPadding:
+                                            //                         const EdgeInsets
+                                            //                                 .only(
+                                            //                             left:
+                                            //                                 14,
+                                            //                             right:
+                                            //                                 14),
+                                            //                     dropdownMaxHeight:
+                                            //                         100,
+                                            //                     dropdownWidth:
+                                            //                         350,
+                                            //                     dropdownPadding:
+                                            //                         null,
+                                            //                     dropdownDecoration:
+                                            //                         BoxDecoration(
+                                            //                       borderRadius:
+                                            //                           BorderRadius
+                                            //                               .circular(
+                                            //                                   14),
+                                            //                       color: Colors
+                                            //                           .white,
+                                            //                     ),
+                                            //                     dropdownElevation:
+                                            //                         8,
+                                            //                     scrollbarRadius:
+                                            //                         const Radius
+                                            //                             .circular(10),
+                                            //                     scrollbarThickness:
+                                            //                         6,
+                                            //                     scrollbarAlwaysShow:
+                                            //                         true,
+                                            //                     offset:
+                                            //                         const Offset(
+                                            //                             0, 0),
+                                            //                   )),
+                                            //                 )),
+                                            //           ],
+                                            //         ),
+                                            //       ),
+                                            //     );
+                                            //   },
+                                            // ),
+                                          },
+                                          child: Text(
+                                            'Cambiar Transporte',
                                             style: TextStyle(
                                                 fontSize: 18,
                                                 color: Color(0xFF652D8F)),
@@ -421,70 +771,6 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                     children: [
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 20, 40, 0),
-                                        child: Text(
-                                          "Actividades Extras",
-                                          style: TextStyle(
-                                            fontFamily: 'Outfit',
-                                            color: Color(0xFF7C8791),
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w500,
-                                          ),
-                                        ),
-                                      ),
-                                      Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Flexible(
-                                            flex: 6,
-                                            child: Text(
-                                              NombreActividade,
-                                              style: TextStyle(
-                                                fontFamily: 'Outfit',
-                                                color: Color(0xFF090F13),
-                                                fontSize: 18,
-                                              ),
-                                            ),
-                                          )
-                                        ],
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 5, 0, 0),
-                                        child: ElevatedButton(
-                                          onPressed: () => {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EditReservationActivityExtras(
-                                                          widget.userloggeddata,
-                                                          widget
-                                                              .reservacionEditado,
-                                                          widget
-                                                              .reservationList,
-                                                          widget
-                                                              .Actividadesextras,
-                                                          [],
-                                                          0)),
-                                            ),
-                                          },
-                                          child: Text(
-                                            'Cambiar Actividades',
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: Color(0xFF652D8F)),
-                                          ),
-                                          style: ElevatedButton.styleFrom(
-                                            primary: Color.fromARGB(
-                                                255, 234, 234, 234),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
                                             80, 30, 0, 0),
                                         child: Text(
                                           "Total:     "
@@ -581,25 +867,6 @@ class _EditReservationStartState extends State<EditReservationStart> {
                 }
               },
             ),
-            FutureBuilder(
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                } else {
-                  return Wrap(
-                      spacing: 8,
-                      runSpacing: 4,
-                      alignment: WrapAlignment.start,
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      direction: Axis.horizontal,
-                      runAlignment: WrapAlignment.start,
-                      verticalDirection: VerticalDirection.down,
-                      clipBehavior: Clip.none,
-                      children: ActividadesDetails(
-                          widget.Actividadesextras, context));
-                }
-              },
-            ),
           ],
         )),
         bottomNavigationBar: Row(
@@ -681,30 +948,29 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                 data: ThemeData.light(),
                                 child: CupertinoAlertDialog(
                                   title: Text(
-                                    'Esta Seguro de Volver?',
+                                    'Esta Seguro de los cambios a realizar?',
                                     style: boldTextStyle(
                                         color: Colors.black, size: 18),
                                   ),
                                   content: Text(
-                                    'Descartar todos los Cambios Hechos',
+                                    'Se actualiza tu plan de viaje',
                                     style: secondaryTextStyle(
                                         color: Colors.black, size: 16),
                                   ),
                                   actions: [
                                     CupertinoDialogAction(
                                       child: Text(
-                                        'Quedarse',
+                                        'Cancelar',
                                         style: primaryTextStyle(
                                             color: dodgerBlue, size: 18),
                                       ),
                                       onPressed: () {
-                                        // FindPackage(idpackage, false,
-                                        //     widget.userloggeddata);
+                                        finish(context);
                                       },
                                     ),
                                     CupertinoDialogAction(
                                       child: Text(
-                                        'Regresar',
+                                        'Confirmar',
                                         style: primaryTextStyle(
                                             color: Colors.purple, size: 18),
                                       ),

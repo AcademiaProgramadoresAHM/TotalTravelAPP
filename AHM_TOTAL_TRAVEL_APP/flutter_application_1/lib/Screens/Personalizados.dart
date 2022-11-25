@@ -86,7 +86,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
           context,
           MaterialPageRoute(
             builder: (context) => EditReservationStart(
-                widget.userloggeddata, reservacionedit, Dato, Actividades),
+                widget.userloggeddata, reservacionedit, Dato),
           ),
         );
       }

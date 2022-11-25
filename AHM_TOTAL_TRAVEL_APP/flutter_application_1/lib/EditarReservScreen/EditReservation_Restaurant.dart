@@ -16,13 +16,12 @@ import 'EditReservation_start.dart';
 class EditReservationRestaurante extends StatefulWidget {
   final ReservEdit reservacionEditado;
   final List<dynamic> reservationList;
-  final List<dynamic> Actividadesextras;
 
   final UserLoggedModel? userloggeddata;
   final int idCiudad;
 
   EditReservationRestaurante(this.userloggeddata, this.reservacionEditado,
-      this.reservationList, this.idCiudad, this.Actividadesextras);
+      this.reservationList, this.idCiudad);
   @override
   State<EditReservationRestaurante> createState() =>
       _EditReservationRestauranteState();
@@ -81,8 +80,7 @@ class _EditReservationRestauranteState
                 widget.userloggeddata,
                 widget.reservacionEditado,
                 widget.reservationList,
-                restaurant,
-                widget.Actividadesextras)),
+                restaurant)),
       );
     } else {
       print("Error" + response.statusCode.toString());
@@ -567,8 +565,7 @@ class _EditReservationRestauranteState
                                   builder: (context) => EditReservationStart(
                                       widget.userloggeddata,
                                       widget.reservacionEditado,
-                                      widget.reservationList,
-                                      widget.Actividadesextras)),
+                                      widget.reservationList)),
                             );
                           }
                         },

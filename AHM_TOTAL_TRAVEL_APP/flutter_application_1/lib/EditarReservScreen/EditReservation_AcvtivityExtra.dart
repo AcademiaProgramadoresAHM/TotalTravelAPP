@@ -17,17 +17,11 @@ class EditReservationActivityExtras extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final ReservEdit reservacionEditado;
   final List<dynamic> reservationList;
-  final List<dynamic> Actividadesextras;
   final List<ActivitiesExtraDefault>? activityExtra;
   final int ActivitiesAdd;
 
-  EditReservationActivityExtras(
-      this.userloggeddata,
-      this.reservacionEditado,
-      this.reservationList,
-      this.Actividadesextras,
-      this.activityExtra,
-      this.ActivitiesAdd);
+  EditReservationActivityExtras(this.userloggeddata, this.reservacionEditado,
+      this.reservationList, this.activityExtra, this.ActivitiesAdd);
   @override
   State<EditReservationActivityExtras> createState() =>
       _EditReservationActivityExtrasState();
@@ -70,7 +64,6 @@ class _EditReservationActivityExtrasState
                   widget.reservacionEditado,
                   widget.reservationList,
                   widget.activityExtra,
-                  widget.Actividadesextras,
                   Activity,
                   widget.ActivitiesAdd)),
         );
@@ -574,9 +567,7 @@ class _EditReservationActivityExtrasState
                                                   EditReservationStart(
                                                       widget.userloggeddata,
                                                       widget.reservacionEditado,
-                                                      widget.reservationList,
-                                                      widget
-                                                          .Actividadesextras)),
+                                                      widget.reservationList)),
                                         );
                                       },
                                       style: ElevatedButton.styleFrom(
@@ -595,8 +586,7 @@ class _EditReservationActivityExtrasState
                                   builder: (context) => EditReservationStart(
                                       widget.userloggeddata,
                                       widget.reservacionEditado,
-                                      widget.reservationList,
-                                      widget.Actividadesextras)),
+                                      widget.reservationList)),
                             );
                           }
                         },

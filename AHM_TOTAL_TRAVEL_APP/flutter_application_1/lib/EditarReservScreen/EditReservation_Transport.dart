@@ -1,58 +1,56 @@
 import 'dart:convert';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
-import 'package:nb_utils/nb_utils.dart';
+
 import '../Components/Decodificador.dart';
-import '../Components/Packages.dart';
 import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
-import 'package:http/http.dart' as http;
 
-import 'EditReservation_PackageDetails.dart';
-
-class EditReservationPackage extends StatefulWidget {
+class EditReservacionTRansport extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final ReservEdit reservacionEditado;
   final List<dynamic> reservationList;
+  final int idciudad;
+  final List<dynamic> transport;
 
-  EditReservationPackage(
-      this.userloggeddata, this.reservacionEditado, this.reservationList);
+  EditReservacionTRansport(this.userloggeddata, this.reservacionEditado,
+      this.reservationList, this.idciudad, this.transport);
   @override
-  State<EditReservationPackage> createState() => _EditReservationPackageState();
+  State<EditReservacionTRansport> createState() =>
+      _EditReservacionTRansportState();
 }
 
-class _EditReservationPackageState extends State<EditReservationPackage> {
-  //Encontrar el Listado de paquetes
-  Future<dynamic> FindPackage(idpackage, userloggeddata) async {
-    List<dynamic> datapackage;
+class _EditReservacionTRansportState extends State<EditReservacionTRansport> {
+  Future<dynamic> FindTransport(idciudad, userloggeddata, context) async {
+    List<dynamic> dataTransport;
+    var data;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/DefaultPackages/List";
+        "https://apitotaltravel.azurewebsites.net/API/Transports/List";
     final headers = {
       "Content-type": "application/json",
-      "Authorization": "bearer " + widget.userloggeddata!.Token!
+      "Authorization": "bearer " + userloggeddata!.Token!
     };
-    final response = await http.get(Uri.parse(url_list), headers: headers);
-    if (response.statusCode == 200) {
-      Map<String, dynamic> userMap = jsonDecode(response.body);
-      var Json = Decodificador.fromJson(userMap);
-      datapackage = Json.data;
-      var package = datapackage.where((x) => x['id'] == idpackage).toList();
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => EditReservationPackageDetails(
-                widget.userloggeddata,
-                package,
-                widget.reservacionEditado,
-                widget.reservationList)),
-      );
+    var respuesta = await http.get(Uri.parse(url_list), headers: headers);
+    if (respuesta.statusCode == 200) {
+      Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
+      var Json = Decodificador.fromJson(ServerResponse);
+      dataTransport = Json.data;
+      var transport =
+          dataTransport.where((x) => x["ciudad_ID"] == idciudad).toList();
+
+      return transport;
+      // rellena diccionario de datos
+      // data.forEach((x) {
+      //   CiudadesViewModel element = CiudadesViewModel.fromJson(x);
+      //   var descripcion = element.Ciudad!;
+      //   CitiesDictionary[element.ID] = descripcion;
+      // });
     } else {
-      print("Error" + response.statusCode.toString());
+      print("Error: " + respuesta.statusCode.toString());
     }
   }
 
-  List<Padding> ListDefaultPackagesEdit(
-      List<dynamic> data, BuildContext context, user) {
+  List<Padding> Listrestaurante(List<dynamic> data, BuildContext context) {
     List<Padding> list = [];
     final _controller = PageController();
     List<String> imageUrl;
@@ -130,35 +128,19 @@ class _EditReservationPackageState extends State<EditReservationPackage> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Flexible(
-                                      flex: 4,
-                                      child: Text(
-                                        element['nombre'],
-                                        style: TextStyle(
-                                          fontFamily: 'Outfit',
-                                          color: Color(0xFF090F13),
-                                          fontSize: 26,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ),
-                                    Flexible(
-                                      flex: 2,
-                                      child: Text(
-                                        '\$' + element['precio'].toString(),
-                                        style: TextStyle(
-                                          fontFamily: 'Outfit',
-                                          color:
-                                              Color.fromRGBO(101, 45, 143, 1),
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.w600,
-                                        ),
+                                    Text(
+                                      element['restaurante'],
+                                      style: TextStyle(
+                                        fontFamily: 'Outfit',
+                                        color: Color(0xFF090F13),
+                                        fontSize: 22,
+                                        fontWeight: FontWeight.w500,
                                       ),
                                     ),
                                   ],
                                 ),
                                 Text(
-                                  element['hotel'],
+                                  " ",
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
                                     color: Color.fromRGBO(101, 45, 143, 1),
@@ -170,7 +152,12 @@ class _EditReservationPackageState extends State<EditReservationPackage> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0, 4, 0, 0),
                                   child: Text(
-                                    element['descripcion_Paquete'],
+                                    "Col. " +
+                                        element['colonia'] +
+                                        ", Calle " +
+                                        element['calle'] +
+                                        ", Ave. " +
+                                        element['avenida'],
                                     style: TextStyle(
                                       fontFamily: 'Outfit',
                                       color: Color(0xFF7C8791),
@@ -189,8 +176,19 @@ class _EditReservationPackageState extends State<EditReservationPackage> {
                                     children: [
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
-                                            2, 12, 24, 12),
-                                        child: Row(),
+                                            0, 0, 20, 0),
+                                        child: SizedBox(
+                                          width: 100,
+                                          child: ElevatedButton(
+                                            child: Text("Ver menú",
+                                                style: TextStyle(
+                                                    color: Color(0xFF652D8F))),
+                                            onPressed: () {},
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.white,
+                                                elevation: 0.0),
+                                          ),
+                                        ),
                                       ),
                                       ElevatedButton(
                                         style: ButtonStyle(
@@ -198,15 +196,9 @@ class _EditReservationPackageState extends State<EditReservationPackage> {
                                               MaterialStateProperty.all(
                                                   Color.fromRGBO(
                                                       101, 45, 143, 1)),
-                                          shape: MaterialStateProperty.all(
-                                            RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                            ),
-                                          ),
                                         ),
                                         child: Text(
-                                          'Ver Detalles',
+                                          'Reservar',
                                           style: TextStyle(
                                             fontFamily: 'Outfit',
                                             color: Colors.white,
@@ -214,9 +206,7 @@ class _EditReservationPackageState extends State<EditReservationPackage> {
                                             fontWeight: FontWeight.normal,
                                           ),
                                         ),
-                                        onPressed: () {
-                                          FindPackage(element['id'], user);
-                                        },
+                                        onPressed: () {},
                                       ),
                                     ],
                                   ),
@@ -241,76 +231,18 @@ class _EditReservationPackageState extends State<EditReservationPackage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xFF652D8F),
-        automaticallyImplyLeading: false,
-        title: Align(
-          alignment: AlignmentDirectional(0.5, -0.05),
-          child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 10, 10, 10),
-            child: Text(
-              'Agencia Total Travel',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontFamily: 'Poppins',
-                color: Colors.white,
-                fontSize: 24,
-              ),
-            ),
+    return MaterialApp(
+      title: 'Material App',
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Material App Bar'),
+        ),
+        body: Center(
+          child: Container(
+            child: Text('Hello World'),
           ),
         ),
-        actions: [
-          Align(
-            alignment: AlignmentDirectional(-0.05, 0.05),
-            child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0, 0, 10, 0),
-              child: Image.asset(
-                'assets/images/logo-AHM-Fondo-Morao.png',
-                width: 50,
-                height: 50,
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-        ],
-        centerTitle: false,
-        elevation: 2,
       ),
-      body: SingleChildScrollView(
-
-          // color:
-          //     HotelAppTheme.buildLightTheme().backgroundColor,
-          child: Column(
-        children: [
-          FutureBuilder<dynamic>(
-            future: GetListadoPackages(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(
-                    child: Padding(
-                  padding: EdgeInsets.only(top: 150),
-                  child: CircularProgressIndicator(
-                    color: purple,
-                  ),
-                ));
-              } else {
-                return Wrap(
-                    spacing: 8,
-                    runSpacing: 4,
-                    alignment: WrapAlignment.start,
-                    crossAxisAlignment: WrapCrossAlignment.start,
-                    direction: Axis.horizontal,
-                    runAlignment: WrapAlignment.start,
-                    verticalDirection: VerticalDirection.down,
-                    clipBehavior: Clip.none,
-                    children: ListDefaultPackagesEdit(
-                        snapshot.data, context, widget.userloggeddata));
-              }
-            },
-          ),
-        ],
-      )),
     );
   }
 }

@@ -19,7 +19,6 @@ class EditReservationActivityExtra extends StatefulWidget {
   final List<dynamic> Activity;
   final List<dynamic> reservationList;
   final ReservEdit reservacionEditado;
-  final List<dynamic> Actividadesextras;
   final List<ActivitiesExtraDefault>? activityExtra;
   final int ActivitiesAdd;
   const EditReservationActivityExtra(
@@ -27,7 +26,6 @@ class EditReservationActivityExtra extends StatefulWidget {
       this.reservacionEditado,
       this.reservationList,
       this.activityExtra,
-      this.Actividadesextras,
       this.Activity,
       this.ActivitiesAdd);
 
@@ -633,8 +631,7 @@ class _ActivityDetails extends State<EditReservationActivityExtra> {
                             builder: (context) => EditReservationStart(
                                 widget.userloggeddata,
                                 widget.reservacionEditado,
-                                widget.reservationList,
-                                widget.Actividadesextras)),
+                                widget.reservationList)),
                       );
                     },
                     child: Text(
