@@ -354,6 +354,7 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                           ),
                                         ),
                                       ),
+
                                       Row(
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
@@ -785,7 +786,7 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                       ),
                                       onPressed: () {
                                         widget.reservacionEditado
-                                            .resvEsPersonalizado = true;
+                                            .resvEsPersonalizado = false;
                                         UpdateReservation(
                                             widget.reservacionEditado,
                                             widget.userloggeddata,
