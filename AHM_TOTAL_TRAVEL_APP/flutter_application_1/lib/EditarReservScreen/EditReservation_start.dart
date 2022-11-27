@@ -46,6 +46,8 @@ class _EditReservationStartState extends State<EditReservationStart> {
     data.forEach((element) {
       String HotelNombre = element["reservacionDetalle"]["nombre_Hotel"];
       String Transporte = "No hay Transportes Reservados";
+      String paquetedescrip =
+          element["reservacionDetalle"]["descripcionPaquete"];
       String restaurante = "No hay restaurantes Reservados";
       List<dynamic> listadoActiv = element['actividadesExtras'];
       List<dynamic> Listadorestaurante = element["restaurantes"];
@@ -75,14 +77,14 @@ class _EditReservationStartState extends State<EditReservationStart> {
       if (widget.reservacionEditado.resvId == null) {
         widget.reservacionEditado.resvId = element["reservacionDetalle"]["id"];
       }
+      if (widget.reservacionEditado.PaqueteDescrip != null) {
+        paquetedescrip = widget.reservacionEditado.PaqueteDescrip.toString();
+      }
 
       // String paquetedescrip = element['descripcionPaquete'];
       // String HotelNombre = element['nombre_Hotel'];
       // String RestauranteWord = "Agregar/Cambiar Restaurante";
       // String ActividadesNambe = element[''];
-      // if (widget.reservacionEditado.PaqueteDescrip != null) {
-      //   paquetedescrip = widget.reservacionEditado.PaqueteDescrip.toString();
-      // }
       // if (widget.reservacionEditado.HotelDescrip != null) {
       //   HotelNombre = widget.reservacionEditado.HotelDescrip.toString();
       // }
@@ -174,8 +176,7 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                           Flexible(
                                             flex: 6,
                                             child: Text(
-                                              element['reservacionDetalle']
-                                                  ['descripcionPaquete'],
+                                              paquetedescrip,
                                               style: TextStyle(
                                                 fontFamily: 'Outfit',
                                                 color: Color(0xFF090F13),
@@ -784,7 +785,7 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                       ),
                                       onPressed: () {
                                         widget.reservacionEditado
-                                            .resvEsPersonalizado = false;
+                                            .resvEsPersonalizado = true;
                                         UpdateReservation(
                                             widget.reservacionEditado,
                                             widget.userloggeddata,

@@ -256,6 +256,9 @@ class _EditReservationHotelDetailsState
                         ),
                         onPressed: () {
                           widget.reservacionEditado.hoteId = element['id'];
+                          widget.reservacionEditado.HotelDescrip =
+                              element["descripcion"];
+                          widget.reservacionEditado.resvEsPersonalizado = true;
                           Navigator.push(
                             context,
                             MaterialPageRoute(
