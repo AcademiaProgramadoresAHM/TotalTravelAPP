@@ -11,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Home_Screen.dart';
 import 'package:flutter_application_1/home_screen.dart';
 import 'package:http/http.dart' as http;
+import '../EditarReservScreen/EditReservation_start.dart';
+import '../Models/ReservationViewModel.dart';
 
 import '../Components/Decodificador.dart';
 import '../Models/UsersViewModel.dart';
@@ -30,6 +32,7 @@ class Personali2Screen extends StatefulWidget {
 }
 
 class _Personali2ScreenState extends State<Personali2Screen> {
+  ReservEdit reservacionEditado = new ReservEdit();
   String? hotel,
       fecha_entrada,
       fecha_salida,
@@ -42,6 +45,47 @@ class _Personali2ScreenState extends State<Personali2Screen> {
       idActividad,
       nombreActividad,
       fechaActividad;
+
+  Future<dynamic> FindReservationEdit(
+      idreservacion, reservacionedit, userloggeddata) async {
+    dynamic dataReservation;
+    List<dynamic> datarestaurante;
+    String url_list =
+        "https://apitotaltravel.azurewebsites.net/API/Reservation/Details?id=${idreservacion.toString()}";
+    final headers = {
+      "Content-type": "application/json",
+      "Authorization": "bearer " + widget.userloggeddata!.Token!
+    };
+    final response = await http.get(Uri.parse(url_list), headers: headers);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> userMap = jsonDecode(response.body);
+      var Json = Decodificador.fromJson(userMap);
+      dataReservation = Json.data;
+      List<dynamic> Dato = [];
+      Dato.add(dataReservation);
+
+      url_list =
+          "https://apitotaltravel.azurewebsites.net/API/ReservationActivitiesExtra/List";
+      final response2 = await http.get(Uri.parse(url_list), headers: headers);
+      if (response2.statusCode == 200) {
+        Map<String, dynamic> userMapa = jsonDecode(response2.body);
+        var Activ = Decodificador.fromJson(userMapa);
+        datarestaurante = Activ.data;
+        var Actividades = datarestaurante
+            .where((x) => x['reservacion'] == idreservacion)
+            .toList();
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => EditReservationStart(
+                widget.userloggeddata, reservacionedit, Dato),
+          ),
+        );
+      }
+    } else {
+      print("Error" + response.statusCode.toString());
+    }
+  }
 
   void GetListTimelineReservation() {
     var i = 0;
@@ -891,7 +935,64 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                     Divider(
                                       thickness: 2,
                                       color: Color.fromARGB(255, 123, 26, 168),
-                                    )
+                                    ),
+                                    Center(
+                                      child: ElevatedButton(
+                                        style: ButtonStyle(
+                                          backgroundColor:
+                                              MaterialStateProperty.all(
+                                                  Color.fromRGBO(
+                                                      101, 45, 143, 1)),
+                                          shape: MaterialStateProperty.all(
+                                            RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(15),
+                                            ),
+                                          ),
+                                        ),
+                                        child: Text(
+                                          'Editar Reservation',
+                                          style: TextStyle(
+                                            fontFamily: 'Outfit',
+                                            color: Colors.white,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          reservacionEditado.HotelDescrip =
+                                              null;
+                                          reservacionEditado.PaqueteDescrip =
+                                              null;
+                                          reservacionEditado
+                                              .ActividadesExtDescrip = null;
+                                          reservacionEditado.resvId =
+                                              element["id"];
+                                          reservacionEditado.resvPrecio =
+                                              element["precio"];
+                                          reservacionEditado
+                                                  .resvNumeroPersonas =
+                                              element["numeroPersonas"];
+                                          reservacionEditado.resvCantidadPagos =
+                                              element["cantidadPagos"];
+                                          reservacionEditado.reHoFechaEntrada =
+                                              element["fecha_Entrada"];
+                                          reservacionEditado.reHoFechaSalida =
+                                              element["fecha_Salida"];
+                                          reservacionEditado.NombreCompleto =
+                                              element['nombrecompleto'];
+                                          reservacionEditado.dni =
+                                              element["dni"];
+                                          reservacionEditado
+                                                  .resvUsuarioModifica =
+                                              element["id_Cliente"];
+                                          FindReservationEdit(
+                                              element['id'],
+                                              reservacionEditado,
+                                              widget.userloggeddata);
+                                        },
+                                      ),
+                                    ),
                                   ],
                                 ),
                               ),

@@ -341,61 +341,61 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                               widget.userloggeddata);
                                         },
                                       ),
-                                      ElevatedButton(
-                                        style: ButtonStyle(
-                                          backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  Color.fromRGBO(
-                                                      101, 45, 143, 1)),
-                                          shape: MaterialStateProperty.all(
-                                            RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                            ),
-                                          ),
-                                        ),
-                                        child: Text(
-                                          'Editar Reservation',
-                                          style: TextStyle(
-                                            fontFamily: 'Outfit',
-                                            color: Colors.white,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                        ),
-                                        onPressed: () {
-                                          reservacionEditado.HotelDescrip =
-                                              null;
-                                          reservacionEditado.PaqueteDescrip =
-                                              null;
-                                          reservacionEditado
-                                              .ActividadesExtDescrip = null;
-                                          reservacionEditado.resvId =
-                                              element["id"];
-                                          reservacionEditado.resvPrecio =
-                                              element["precio"];
-                                          reservacionEditado
-                                                  .resvNumeroPersonas =
-                                              element["numeroPersonas"];
-                                          reservacionEditado.resvCantidadPagos =
-                                              element["cantidadPagos"];
-                                          reservacionEditado.reHoFechaEntrada =
-                                              element["fecha_Entrada"];
-                                          reservacionEditado.reHoFechaSalida =
-                                              element["fecha_Salida"];
-                                          reservacionEditado.NombreCompleto =
-                                              element['nombrecompleto'];
-                                          reservacionEditado.dni =
-                                              element["dni"];
-                                          reservacionEditado
-                                                  .resvUsuarioModifica =
-                                              element["id_Cliente"];
-                                          FindReservationEdit(
-                                              element['id'],
-                                              reservacionEditado,
-                                              widget.userloggeddata);
-                                        },
-                                      ),
+                                      // ElevatedButton(
+                                      //   style: ButtonStyle(
+                                      //     backgroundColor:
+                                      //         MaterialStateProperty.all(
+                                      //             Color.fromRGBO(
+                                      //                 101, 45, 143, 1)),
+                                      //     shape: MaterialStateProperty.all(
+                                      //       RoundedRectangleBorder(
+                                      //         borderRadius:
+                                      //             BorderRadius.circular(15),
+                                      //       ),
+                                      //     ),
+                                      //   ),
+                                      //   child: Text(
+                                      //     'Editar Reservation',
+                                      //     style: TextStyle(
+                                      //       fontFamily: 'Outfit',
+                                      //       color: Colors.white,
+                                      //       fontSize: 16,
+                                      //       fontWeight: FontWeight.normal,
+                                      //     ),
+                                      //   ),
+                                      //   onPressed: () {
+                                      //     reservacionEditado.HotelDescrip =
+                                      //         null;
+                                      //     reservacionEditado.PaqueteDescrip =
+                                      //         null;
+                                      //     reservacionEditado
+                                      //         .ActividadesExtDescrip = null;
+                                      //     reservacionEditado.resvId =
+                                      //         element["id"];
+                                      //     reservacionEditado.resvPrecio =
+                                      //         element["precio"];
+                                      //     reservacionEditado
+                                      //             .resvNumeroPersonas =
+                                      //         element["numeroPersonas"];
+                                      //     reservacionEditado.resvCantidadPagos =
+                                      //         element["cantidadPagos"];
+                                      //     reservacionEditado.reHoFechaEntrada =
+                                      //         element["fecha_Entrada"];
+                                      //     reservacionEditado.reHoFechaSalida =
+                                      //         element["fecha_Salida"];
+                                      //     reservacionEditado.NombreCompleto =
+                                      //         element['nombrecompleto'];
+                                      //     reservacionEditado.dni =
+                                      //         element["dni"];
+                                      //     reservacionEditado
+                                      //             .resvUsuarioModifica =
+                                      //         element["id_Cliente"];
+                                      //     FindReservationEdit(
+                                      //         element['id'],
+                                      //         reservacionEditado,
+                                      //         widget.userloggeddata);
+                                      //   },
+                                      // ),
                                     ],
                                   ),
                                 ),

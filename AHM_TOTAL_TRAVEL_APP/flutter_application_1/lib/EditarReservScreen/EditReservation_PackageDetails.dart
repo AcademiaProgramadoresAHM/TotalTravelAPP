@@ -335,6 +335,8 @@ class _EditReservationPackageDetailsState
                           widget.reservacionEditado.paquId = element['id'];
                           widget.reservacionEditado.PaqueteDescrip =
                               element['descripcion_Paquete'];
+                          widget.reservacionEditado.resvPrecio =
+                              element["precio"];
                           Navigator.push(
                             context,
                             MaterialPageRoute(
