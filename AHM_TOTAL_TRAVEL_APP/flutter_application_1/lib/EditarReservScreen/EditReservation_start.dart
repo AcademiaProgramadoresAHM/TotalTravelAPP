@@ -583,7 +583,9 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                                           widget.userloggeddata,
                                                           widget.reservacionEditado,
                                                           widget.reservationList,
-                                                          element['reservacionDetalle']['ciudad_ID'])));
+                                                          element['reservacionDetalle']['ciudad_ID'],
+                                                          elementCities,
+                                                          widget.CitiesDictionary)));
                                     },
                                     icon: const Icon(
                                          Icons.keyboard_double_arrow_down,
