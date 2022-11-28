@@ -74,6 +74,11 @@ class _ComprashistorialState extends State<Comprashistorial> {
     final _controller = PageController();
 
     data.forEach((element) {
+      var splitFecha = element['fechaPago'].toString().split('T');
+      print(splitFecha);
+
+      var fecha = splitFecha[0];
+      print(fecha);
       list.add(Padding(
         padding: EdgeInsetsDirectional.fromSTEB(16, 8, 16, 4),
         child: Container(
@@ -147,7 +152,7 @@ class _ComprashistorialState extends State<Comprashistorial> {
                                       ),
                                     ),
                                     Text(
-                                      '\$' + element['montoPago'].toString(),
+                                      '\L' + element['montoPago'].toString(),
                                       style: TextStyle(
                                         fontFamily: 'Outfit',
                                         color: Color.fromRGBO(101, 45, 143, 1),
@@ -158,11 +163,11 @@ class _ComprashistorialState extends State<Comprashistorial> {
                                   ],
                                 ),
                                 Text(
-                                  element['fechaPago'],
+                                  fecha,
                                   style: TextStyle(
                                     fontFamily: 'Outfit',
-                                    color: Color.fromRGBO(101, 45, 143, 1),
-                                    fontSize: 20,
+                                    color: Color.fromARGB(100, 0, 0, 0),
+                                    fontSize: 15,
                                     fontWeight: FontWeight.w500,
                                   ),
                                 ),
