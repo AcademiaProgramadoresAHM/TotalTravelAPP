@@ -14,9 +14,9 @@ class EditReservationPackage extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final ReservEdit reservacionEditado;
   final List<dynamic> reservationList;
-
+    final Map<int?, String> CitiesDictionary;
   EditReservationPackage(
-      this.userloggeddata, this.reservacionEditado, this.reservationList);
+      this.userloggeddata, this.reservacionEditado, this.reservationList, this.CitiesDictionary);
   @override
   State<EditReservationPackage> createState() => _EditReservationPackageState();
 }
@@ -44,7 +44,8 @@ class _EditReservationPackageState extends State<EditReservationPackage> {
                 widget.userloggeddata,
                 package,
                 widget.reservacionEditado,
-                widget.reservationList)),
+                widget.reservationList,
+                widget.CitiesDictionary)),
       );
     } else {
       print("Error" + response.statusCode.toString());

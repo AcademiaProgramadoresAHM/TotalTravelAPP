@@ -3,6 +3,7 @@
 import 'dart:convert';
 
 import 'package:flutter_application_1/Account_screen.dart';
+import 'package:flutter_application_1/Models/CitiesViewModel.dart';
 import 'package:flutter_application_1/Models/TimelineViewModel.dart';
 import 'package:flutter_application_1/Screens/Personalizados.dart';
 import 'package:flutter_application_1/Screens/Timeline.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/Home_Screen.dart';
 import 'package:flutter_application_1/home_screen.dart';
 import 'package:http/http.dart' as http;
+import '../ComponentsLogin/Decoder.dart';
 import '../EditarReservScreen/EditReservation_start.dart';
 import '../Models/ReservationViewModel.dart';
 
@@ -46,6 +48,30 @@ class _Personali2ScreenState extends State<Personali2Screen> {
       nombreActividad,
       fechaActividad;
 
+  Map<int?, String> CitiesDictionary = Map();
+
+  Future<dynamic> GetCities() async {
+    var data;
+    String url_list =
+        "https://apitotaltravel.azurewebsites.net/API/Cities/List";
+    var respuesta = await http.get(Uri.parse(url_list));
+    if (respuesta.statusCode == 200) {
+      Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
+      var Json = DecoderAPI.fromJson(ServerResponse);
+      data = Json.data;
+      // rellena diccionario de datos
+      data.forEach((x) {
+        CiudadesViewModel element = CiudadesViewModel.fromJson(x);
+        var descripcion = element.Ciudad!;
+        CitiesDictionary[element.ID] = descripcion;
+      });
+
+      return Json.data;
+    } else {
+      print("Error: " + respuesta.statusCode.toString());
+    }
+  }
+
   Future<dynamic> FindReservationEdit(
       idreservacion, reservacionedit, userloggeddata) async {
     dynamic dataReservation;
@@ -77,8 +103,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => EditReservationStart(
-                widget.userloggeddata, reservacionedit, Dato),
+            builder: (context) => EditReservationStart(widget.userloggeddata, reservacionedit, Dato,CitiesDictionary),
           ),
         );
       }
@@ -951,7 +976,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                           ),
                                         ),
                                         child: Text(
-                                          'Editar Reservation',
+                                          'Editar Reservación',
                                           style: TextStyle(
                                             fontFamily: 'Outfit',
                                             color: Colors.white,
@@ -1115,6 +1140,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
   void initState() {
     GetListTimelineReservation();
     super.initState();
+     GetCities();
   }
 
   @override

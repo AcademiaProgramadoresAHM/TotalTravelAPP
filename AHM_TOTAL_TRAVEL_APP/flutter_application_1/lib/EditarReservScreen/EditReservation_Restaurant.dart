@@ -18,12 +18,12 @@ class EditReservationRestaurante extends StatefulWidget {
   final ReservEdit reservacionEditado;
   final List<dynamic> reservationList;
   final List<Restaurants> Restaurante;
-
+    final Map<int?, String> CitiesDictionary;
   final UserLoggedModel? userloggeddata;
   final int idCiudad;
 
   EditReservationRestaurante(this.userloggeddata, this.reservacionEditado,
-      this.reservationList, this.idCiudad, this.Restaurante);
+      this.reservationList, this.idCiudad, this.Restaurante, this.CitiesDictionary);
   @override
   State<EditReservationRestaurante> createState() =>
       _EditReservationRestauranteState();
@@ -84,7 +84,8 @@ class _EditReservationRestauranteState
                 widget.reservationList,
                 restaurant,
                 [],
-                widget.idCiudad)),
+                widget.idCiudad,
+                widget.CitiesDictionary)),
       );
     } else {
       print("Error" + response.statusCode.toString());
@@ -548,7 +549,8 @@ class _EditReservationRestauranteState
                                                             widget
                                                                 .reservacionEditado,
                                                             widget
-                                                                .reservationList)),
+                                                                .reservationList,
+                                                                widget.CitiesDictionary)),
                                               );
                                             },
                                           )
@@ -564,7 +566,8 @@ class _EditReservationRestauranteState
                                   builder: (context) => EditReservationStart(
                                       widget.userloggeddata,
                                       widget.reservacionEditado,
-                                      widget.reservationList)),
+                                      widget.reservationList,
+                                      widget.CitiesDictionary)),
                             );
                           }
                         },

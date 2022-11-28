@@ -23,9 +23,9 @@ class EditReservationRestaurantDetails extends StatefulWidget {
   final int idCiudad;
   final List<dynamic> restaurante;
   final List<Restaurants> Restaurante;
-
+      final Map<int?, String> CitiesDictionary;
   EditReservationRestaurantDetails(this.userloggeddata, this.reservacionEditado,
-      this.reservationList, this.restaurante, this.Restaurante, this.idCiudad);
+      this.reservationList, this.restaurante, this.Restaurante, this.idCiudad, this.CitiesDictionary);
   @override
   State<EditReservationRestaurantDetails> createState() => _MyAppState();
 }
@@ -669,7 +669,8 @@ class _MyAppState extends State<EditReservationRestaurantDetails> {
                                 widget.reservacionEditado,
                                 widget.reservationList,
                                 widget.idCiudad,
-                                widget.Restaurante)),
+                                widget.Restaurante,
+                                widget.CitiesDictionary)),
                       );
                     },
                     child: Text(

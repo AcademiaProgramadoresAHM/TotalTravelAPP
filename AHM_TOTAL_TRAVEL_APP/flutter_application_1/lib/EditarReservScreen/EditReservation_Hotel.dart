@@ -14,10 +14,10 @@ class EditReservationHotel extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final ReservEdit reservacionEditado;
   final List<dynamic> reservationList;
-
+      final Map<int?, String> CitiesDictionary;
   final int ciudadID;
   EditReservationHotel(this.userloggeddata, this.reservacionEditado,
-      this.reservationList, this.ciudadID);
+      this.reservationList, this.ciudadID, this.CitiesDictionary);
   @override
   State<EditReservationHotel> createState() => _EditReservationHotelState();
 }
@@ -64,7 +64,8 @@ class _EditReservationHotelState extends State<EditReservationHotel> {
                 widget.userloggeddata,
                 hotel,
                 widget.reservacionEditado,
-                widget.reservationList)),
+                widget.reservationList,
+                widget.CitiesDictionary)),
       );
     } else {
       print("Error" + response.statusCode.toString());

@@ -19,9 +19,10 @@ class EditReservationActivityExtras extends StatefulWidget {
   final List<dynamic> reservationList;
   final List<ActivitiesExtraDefault>? activityExtra;
   final int ActivitiesAdd;
+    final Map<int?, String> CitiesDictionary;
 
   EditReservationActivityExtras(this.userloggeddata, this.reservacionEditado,
-      this.reservationList, this.activityExtra, this.ActivitiesAdd);
+      this.reservationList, this.activityExtra, this.ActivitiesAdd,this.CitiesDictionary);
   @override
   State<EditReservationActivityExtras> createState() =>
       _EditReservationActivityExtrasState();
@@ -65,7 +66,8 @@ class _EditReservationActivityExtrasState
                   widget.reservationList,
                   widget.activityExtra,
                   Activity,
-                  widget.ActivitiesAdd)),
+                  widget.ActivitiesAdd,
+                  widget.CitiesDictionary)),
         );
       }
     } else {
@@ -567,7 +569,8 @@ class _EditReservationActivityExtrasState
                                                   EditReservationStart(
                                                       widget.userloggeddata,
                                                       widget.reservacionEditado,
-                                                      widget.reservationList)),
+                                                      widget.reservationList,
+                                                      widget.CitiesDictionary)),
                                         );
                                       },
                                       style: ElevatedButton.styleFrom(
@@ -586,7 +589,8 @@ class _EditReservationActivityExtrasState
                                   builder: (context) => EditReservationStart(
                                       widget.userloggeddata,
                                       widget.reservacionEditado,
-                                      widget.reservationList)),
+                                      widget.reservationList,
+                                      widget.CitiesDictionary)),
                             );
                           }
                         },

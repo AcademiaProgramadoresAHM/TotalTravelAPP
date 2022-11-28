@@ -54,7 +54,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
     }
   }
 
-  Future<dynamic> FindReservationEdit(
+  /*Future<dynamic> FindReservationEdit(
       idreservacion, reservacionedit, userloggeddata) async {
     dynamic dataReservation;
     List<dynamic> datarestaurante;
@@ -93,7 +93,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
     } else {
       print("Error" + response.statusCode.toString());
     }
-  }
+  }*/
 
   Future<dynamic> FindReservation(idReservation, userloggeddata) async {
     List<dynamic> dataReservation;
