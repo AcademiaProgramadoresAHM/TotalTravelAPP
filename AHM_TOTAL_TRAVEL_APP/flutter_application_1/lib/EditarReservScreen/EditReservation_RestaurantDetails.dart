@@ -13,22 +13,26 @@ import 'package:http/http.dart' as http;
 
 import '../Models/customPackageViewModel.dart';
 import '../createCustomPackage/customPackage_ActivityDetails.dart';
+import 'EditReservation_Restaurant.dart';
 import 'EditReservation_start.dart';
 
 class EditReservationRestaurantDetails extends StatefulWidget {
   final ReservEdit reservacionEditado;
   final List<dynamic> reservationList;
   final UserLoggedModel? userloggeddata;
+  final int idCiudad;
   final List<dynamic> restaurante;
+  final List<Restaurants> Restaurante;
 
   EditReservationRestaurantDetails(this.userloggeddata, this.reservacionEditado,
-      this.reservationList, this.restaurante);
+      this.reservationList, this.restaurante, this.Restaurante, this.idCiudad);
   @override
   State<EditReservationRestaurantDetails> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<EditReservationRestaurantDetails> {
   var peopleFinal = 1;
+  int contador = 0;
   DateTime date =
       DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
@@ -497,17 +501,7 @@ class _MyAppState extends State<EditReservationRestaurantDetails> {
                           ),
                         ),
                         onPressed: () {
-                          // widget.reservacionEditado.hoteId = element['id'];
-                          // Navigator.push(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //       builder: (context) =>
-                          //           EditReservationHotelRoomList(
-                          //               widget.userloggeddata,
-                          //               widget.reservacionEditado,
-                          //               widget.reservationList,
-                          //               element['id'])),
-                          // );
+                          contador += 1;
                         },
                       ),
                     ],
@@ -520,11 +514,14 @@ class _MyAppState extends State<EditReservationRestaurantDetails> {
       );
       String hour = hours + minutes;
       Restaurants Restaurant = new Restaurants();
+      Restaurant.index = contador;
       Restaurant.rest_ID = element['id'];
       Restaurant.restaurante = element['restaurante'];
       Restaurant.rest_numeroPersonas = peopleFinal.toInt();
       Restaurant.rest_FechaReservacion = DateFormat('yyyy-MM-dd').format(date);
       Restaurant.rest_HoraReservacion = hour;
+
+      widget.Restaurante.insert(contador, Restaurant);
     });
 
     return list;
@@ -667,10 +664,12 @@ class _MyAppState extends State<EditReservationRestaurantDetails> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => EditReservationStart(
+                            builder: (context) => EditReservationRestaurante(
                                 widget.userloggeddata,
                                 widget.reservacionEditado,
-                                widget.reservationList)),
+                                widget.reservationList,
+                                widget.idCiudad,
+                                widget.Restaurante)),
                       );
                     },
                     child: Text(

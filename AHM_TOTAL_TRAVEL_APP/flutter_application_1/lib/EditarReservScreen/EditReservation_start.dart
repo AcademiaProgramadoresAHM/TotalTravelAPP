@@ -252,19 +252,71 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                             0, 5, 0, 0),
                                         child: ElevatedButton(
                                           onPressed: () => {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    EditReservationHotel(
-                                                        widget.userloggeddata,
-                                                        widget
-                                                            .reservacionEditado,
-                                                        widget.reservationList,
-                                                        element['reservacionDetalle']
-                                                            ['ciudad_ID']),
-                                              ),
-                                            )
+                                            showCupertinoDialog(
+                                                context: context,
+                                                builder: (BuildContext
+                                                        context) =>
+                                                    Theme(
+                                                      data: ThemeData.light(),
+                                                      child:
+                                                          CupertinoAlertDialog(
+                                                        title: Text(
+                                                          'Seguro de Cambiar el Hotel de Hospedaje?',
+                                                          style: boldTextStyle(
+                                                              color:
+                                                                  Colors.black,
+                                                              size: 18),
+                                                        ),
+                                                        content: Text(
+                                                          'Al cambiar este registro esta modificando grandemente su reservacion, esto afectara en los precios y actividades que ya tiene reservados',
+                                                          style:
+                                                              secondaryTextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  size: 16),
+                                                        ),
+                                                        actions: [
+                                                          CupertinoDialogAction(
+                                                            child: Text(
+                                                              'Regresar',
+                                                              style: secondaryTextStyle(
+                                                                  color:
+                                                                      dodgerBlue,
+                                                                  size: 18),
+                                                            ),
+                                                            onPressed: () {
+                                                              finish(context);
+                                                            },
+                                                          ),
+                                                          CupertinoDialogAction(
+                                                            child: Text(
+                                                              'Continuar',
+                                                              style: primaryTextStyle(
+                                                                  color: Colors
+                                                                      .purple,
+                                                                  size: 18),
+                                                            ),
+                                                            onPressed: () {
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                  builder: (context) => EditReservationHotel(
+                                                                      widget
+                                                                          .userloggeddata,
+                                                                      widget
+                                                                          .reservacionEditado,
+                                                                      widget
+                                                                          .reservationList,
+                                                                      element['reservacionDetalle']
+                                                                          [
+                                                                          'ciudad_ID']),
+                                                                ),
+                                                              );
+                                                            },
+                                                          )
+                                                        ],
+                                                      ),
+                                                    )),
                                           },
                                           child: Text(
                                             'Cambiar Hotel',
@@ -325,6 +377,7 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                                   widget.reservationList,
                                                   element['reservacionDetalle']
                                                       ['ciudad_ID'],
+                                                  [],
                                                 ),
                                               ),
                                             )
@@ -785,8 +838,6 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                             color: Colors.purple, size: 18),
                                       ),
                                       onPressed: () {
-                                        widget.reservacionEditado
-                                            .resvEsPersonalizado = false;
                                         UpdateReservation(
                                             widget.reservacionEditado,
                                             widget.userloggeddata,

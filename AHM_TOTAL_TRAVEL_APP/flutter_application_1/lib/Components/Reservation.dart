@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
+import '../SuccessOrErrorScreens/SuccesEditReservation.dart';
 import 'Decodificador.dart';
 import 'package:http/http.dart' as http;
 
@@ -299,4 +300,10 @@ Future<void> UpdateReservation(ReservEdit reservacionEditado,
   final response = await http.put(uri, headers: headers, body: json);
   print(response.body);
   print(json);
+  if (response.statusCode == 200) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => SuccesEditReservation(userloggeddata)));
+  }
 }

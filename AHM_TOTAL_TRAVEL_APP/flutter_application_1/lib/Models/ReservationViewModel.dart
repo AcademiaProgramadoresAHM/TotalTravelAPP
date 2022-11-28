@@ -29,6 +29,7 @@ class ReservEdit {
   String? HotelDescrip;
   String? ActividadesExtDescrip;
   List<ActivitiesExtraDefault>? actividadesExtra;
+  List<Restaurants>? Restaurant;
   String? PaqueteDescrip;
   String? Restaurante;
   int? ciudadID;
@@ -52,6 +53,7 @@ class ReservEdit {
         "reHo_FechaEntrada": reHoFechaEntrada,
         "reHo_FechaSalida": reHoFechaSalida,
         "hote_ID": hoteId,
+        "restaurantes": Restaurant
       };
 }
 

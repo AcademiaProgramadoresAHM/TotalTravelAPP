@@ -9,6 +9,7 @@ import '../Components/Decodificador.dart';
 import '../ComponentsLogin/Decoder.dart';
 import '../Models/ReservationViewModel.dart';
 import '../Models/UsersViewModel.dart';
+import '../Models/customPackageViewModel.dart';
 import 'EditReservation_MenuList.dart';
 import 'EditReservation_RestaurantDetails.dart';
 import 'EditReservation_start.dart';
@@ -16,12 +17,13 @@ import 'EditReservation_start.dart';
 class EditReservationRestaurante extends StatefulWidget {
   final ReservEdit reservacionEditado;
   final List<dynamic> reservationList;
+  final List<Restaurants> Restaurante;
 
   final UserLoggedModel? userloggeddata;
   final int idCiudad;
 
   EditReservationRestaurante(this.userloggeddata, this.reservacionEditado,
-      this.reservationList, this.idCiudad);
+      this.reservationList, this.idCiudad, this.Restaurante);
   @override
   State<EditReservationRestaurante> createState() =>
       _EditReservationRestauranteState();
@@ -80,7 +82,9 @@ class _EditReservationRestauranteState
                 widget.userloggeddata,
                 widget.reservacionEditado,
                 widget.reservationList,
-                restaurant)),
+                restaurant,
+                [],
+                widget.idCiudad)),
       );
     } else {
       print("Error" + response.statusCode.toString());
@@ -500,7 +504,7 @@ class _EditReservationRestauranteState
                       width: 170,
                       child: ElevatedButton(
                         onPressed: () {
-                          if (widget.reservationList.isEmpty) {
+                          if (widget.Restaurante.isEmpty) {
                             showCupertinoDialog(
                                 context: context,
                                 builder: (BuildContext context) => Theme(
@@ -534,31 +538,26 @@ class _EditReservationRestauranteState
                                                   color: redColor, size: 18),
                                             ),
                                             onPressed: () {
-                                              // Navigator.push(
-                                              //   context,
-                                              //   MaterialPageRoute(
-                                              //       builder: (context) =>
-                                              //           NavigationHomeScreen(
-                                              //               createCustomPackage(
-                                              //                   widget.Ciudad,
-                                              //                   widget
-                                              //                       .userloggeddata,
-                                              //                   4,
-                                              //                   widget
-                                              //                       .customPackage,
-                                              //                   widget
-                                              //                       .CitiesDictionary),
-                                              //               widget
-                                              //                   .userloggeddata)),
-                                              // );
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        EditReservationStart(
+                                                            widget
+                                                                .userloggeddata,
+                                                            widget
+                                                                .reservacionEditado,
+                                                            widget
+                                                                .reservationList)),
+                                              );
                                             },
                                           )
                                         ],
                                       ),
                                     ));
                           } else {
-                            // widget.reservacionEditado.Restaurante =
-                            //     widget.Restaurante;
+                            widget.reservacionEditado.Restaurant =
+                                widget.Restaurante;
                             Navigator.push(
                               context,
                               MaterialPageRoute(

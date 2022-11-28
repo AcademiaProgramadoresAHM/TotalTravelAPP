@@ -215,6 +215,8 @@ class _EditReservationPackageState extends State<EditReservationPackage> {
                                           ),
                                         ),
                                         onPressed: () {
+                                          widget.reservacionEditado
+                                              .resvEsPersonalizado = false;
                                           FindPackage(element['id'], user);
                                         },
                                       ),
