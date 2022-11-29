@@ -27,7 +27,11 @@ class EditReservationStart extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
   final Map<int?, String> CitiesDictionary;
   EditReservationStart(
-      this.userloggeddata, this.reservacionEditado, this.reservationList,this.CitiesDictionary,);
+    this.userloggeddata,
+    this.reservacionEditado,
+    this.reservationList,
+    this.CitiesDictionary,
+  );
   @override
   State<EditReservationStart> createState() => _EditReservationStartState();
 }
@@ -59,7 +63,8 @@ class _EditReservationStartState extends State<EditReservationStart> {
       if (ListadoTransportes.isNotEmpty) {
         Transporte = ListadoTransportes[0]["details"]["nombre_Transporte"];
       }
-      if (Listadorestaurante.isNotEmpty) {
+      if (Listadorestaurante.isNotEmpty ||
+          widget.reservacionEditado.Restaurante != null) {
         restaurante = Listadorestaurante[0]["details"]["restaurante"];
       }
       if (widget.reservacionEditado.hoteId == null) {
@@ -200,7 +205,8 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                                         widget
                                                             .reservacionEditado,
                                                         widget.reservationList,
-                                                        widget.CitiesDictionary),
+                                                        widget
+                                                            .CitiesDictionary),
                                               ),
                                             )
                                           },
@@ -311,7 +317,8 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                                                       element['reservacionDetalle']
                                                                           [
                                                                           'ciudad_ID'],
-                                                                          widget.CitiesDictionary),
+                                                                      widget
+                                                                          .CitiesDictionary),
                                                                 ),
                                                               );
                                                             },
@@ -374,14 +381,15 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                               MaterialPageRoute(
                                                 builder: (context) =>
                                                     EditReservationRestaurante(
-                                                  widget.userloggeddata,
-                                                  widget.reservacionEditado,
-                                                  widget.reservationList,
-                                                  element['reservacionDetalle']
-                                                      ['ciudad_ID'],
-                                                  [],
-                                                  widget.CitiesDictionary
-                                                ),
+                                                        widget.userloggeddata,
+                                                        widget
+                                                            .reservacionEditado,
+                                                        widget.reservationList,
+                                                        element['reservacionDetalle']
+                                                            ['ciudad_ID'],
+                                                        [],
+                                                        widget
+                                                            .CitiesDictionary),
                                               ),
                                             )
                                           },
@@ -447,7 +455,8 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                                               .reservationList,
                                                           [],
                                                           0,
-                                                          widget.CitiesDictionary)),
+                                                          widget
+                                                              .CitiesDictionary)),
                                             ),
                                           },
                                           child: Text(
@@ -498,7 +507,7 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                             0, 5, 0, 0),
                                         child: ElevatedButton(
                                           onPressed: () => {
-                                           /* Navigator.push(
+                                            /* Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
@@ -509,125 +518,204 @@ class _EditReservationStartState extends State<EditReservationStart> {
                                                           element['reservacionDetalle']['ciudad_ID'])),
                                             ),*/
                                             showModalBottomSheet<void>(
-                                                  context: context,
-                                                  builder:
-                                                      (BuildContext context) {
-                                                    return Container(
-                                                      height: 180,
-                                                      color: Colors.white,
-                                                      child: Center(
-                                                        child: Column(
-                                                          children: <Widget>[
-                                  
-
-                                                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                        top: 10),
-                                    child: 
-                                    Container(
-                                      width: 350,
-                                      height: 50,
-                                    decoration: BoxDecoration(color: Colors.transparent),
-                                    child:
-                                    DropdownButtonHideUnderline(
-                                      child:  DropdownButton2(
-                                              isExpanded: true,
-                                              hint: Row(
-                                                children: const [
-                                                  
-                                                  SizedBox(
-                                                    width: 4,
-                                                  ),
-                                                  Expanded(
-                                                    child: Text(
-                                                      'Selecciona una ciudad de salida',
-                                                      style: TextStyle(
-                                                        fontSize: 14,
-                                                        fontWeight: FontWeight.bold,
-                                                        color: Color.fromRGBO(101, 45, 143, 1),
-                                                      ),
-                                                      overflow: TextOverflow.ellipsis,
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return Container(
+                                                  height: 180,
+                                                  color: Colors.white,
+                                                  child: Center(
+                                                    child: Column(
+                                                      children: <Widget>[
+                                                        Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    top: 10),
+                                                            child: Container(
+                                                              width: 350,
+                                                              height: 50,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                      color: Colors
+                                                                          .transparent),
+                                                              child:
+                                                                  DropdownButtonHideUnderline(
+                                                                      child:
+                                                                          DropdownButton2(
+                                                                isExpanded:
+                                                                    true,
+                                                                hint: Row(
+                                                                  children: const [
+                                                                    SizedBox(
+                                                                      width: 4,
+                                                                    ),
+                                                                    Expanded(
+                                                                      child:
+                                                                          Text(
+                                                                        'Selecciona una ciudad de salida',
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              14,
+                                                                          fontWeight:
+                                                                              FontWeight.bold,
+                                                                          color: Color.fromRGBO(
+                                                                              101,
+                                                                              45,
+                                                                              143,
+                                                                              1),
+                                                                        ),
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ),
+                                                                items: widget
+                                                                    .CitiesDictionary
+                                                                    .keys
+                                                                    .map((id) {
+                                                                  return DropdownMenuItem(
+                                                                      value: id,
+                                                                      child:
+                                                                          Padding(
+                                                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                                                            30,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                        child:
+                                                                            Text(
+                                                                          widget
+                                                                              .CitiesDictionary[id]
+                                                                              .toString(),
+                                                                          style:
+                                                                              const TextStyle(
+                                                                            fontSize:
+                                                                                14,
+                                                                            fontWeight:
+                                                                                FontWeight.bold,
+                                                                            color:
+                                                                                Colors.black,
+                                                                          ),
+                                                                        ),
+                                                                      ));
+                                                                }).toList(),
+                                                                value:
+                                                                    selectedCity,
+                                                                onChanged:
+                                                                    (value) {
+                                                                  setState(() {
+                                                                    selectedCity =
+                                                                        value
+                                                                            as int?;
+                                                                    CitiesDropDownValue =
+                                                                        value;
+                                                                  });
+                                                                  CiudadesViewModel
+                                                                      elementCities =
+                                                                      new CiudadesViewModel(
+                                                                          CitiesDropDownValue,
+                                                                          null,
+                                                                          null,
+                                                                          null,
+                                                                          null);
+                                                                  Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                          builder: (context) => EditReservacionTRansport(
+                                                                              widget.userloggeddata,
+                                                                              widget.reservacionEditado,
+                                                                              widget.reservationList,
+                                                                              element['reservacionDetalle']['ciudad_ID'],
+                                                                              elementCities,
+                                                                              widget.CitiesDictionary)));
+                                                                },
+                                                                icon:
+                                                                    const Icon(
+                                                                  Icons
+                                                                      .keyboard_double_arrow_down,
+                                                                ),
+                                                                iconSize: 20,
+                                                                iconEnabledColor:
+                                                                    Color
+                                                                        .fromRGBO(
+                                                                            101,
+                                                                            45,
+                                                                            143,
+                                                                            1),
+                                                                iconDisabledColor:
+                                                                    Colors.grey,
+                                                                buttonHeight:
+                                                                    70,
+                                                                buttonWidth:
+                                                                    160,
+                                                                buttonPadding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        left:
+                                                                            14,
+                                                                        right:
+                                                                            14),
+                                                                buttonDecoration:
+                                                                    BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              14),
+                                                                  border: Border
+                                                                      .all(
+                                                                    color: Colors
+                                                                        .black26,
+                                                                  ),
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                                buttonElevation:
+                                                                    2,
+                                                                itemHeight: 40,
+                                                                itemPadding:
+                                                                    const EdgeInsets
+                                                                            .only(
+                                                                        left:
+                                                                            14,
+                                                                        right:
+                                                                            14),
+                                                                dropdownMaxHeight:
+                                                                    100,
+                                                                dropdownWidth:
+                                                                    350,
+                                                                dropdownPadding:
+                                                                    null,
+                                                                dropdownDecoration:
+                                                                    BoxDecoration(
+                                                                  borderRadius:
+                                                                      BorderRadius
+                                                                          .circular(
+                                                                              14),
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                                dropdownElevation:
+                                                                    8,
+                                                                scrollbarRadius:
+                                                                    const Radius
+                                                                        .circular(10),
+                                                                scrollbarThickness:
+                                                                    6,
+                                                                scrollbarAlwaysShow:
+                                                                    true,
+                                                                offset:
+                                                                    const Offset(
+                                                                        0, 0),
+                                                              )),
+                                                            )),
+                                                      ],
                                                     ),
                                                   ),
-                                                ],
-                                              ),
-                                    items: widget.CitiesDictionary.keys.map((id) {
-                                      return DropdownMenuItem(
-                                          value: id,
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    30, 0, 0, 0),
-                                            child: Text(
-                                              widget.CitiesDictionary[id].toString(),
-                                              style: const TextStyle(
-                                              fontSize: 14,
-                                              fontWeight: FontWeight.bold,
-                                              color: Colors.black,
+                                                );
+                                              },
                                             ),
-                                            ),
-                                          ));
-                                    }).toList(),
-                                  value: selectedCity,
-                                      onChanged: (value) {
-                                                setState(() {
-                                              selectedCity = value as int?;
-                                             CitiesDropDownValue = value;
-                                      });
-                                       CiudadesViewModel elementCities = new CiudadesViewModel(CitiesDropDownValue, null, null, null, null);
-                                      Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      EditReservacionTRansport(
-                                                          widget.userloggeddata,
-                                                          widget.reservacionEditado,
-                                                          widget.reservationList,
-                                                          element['reservacionDetalle']['ciudad_ID'],
-                                                          elementCities,
-                                                          widget.CitiesDictionary)));
-                                    },
-                                    icon: const Icon(
-                                         Icons.keyboard_double_arrow_down,
-                                      ),
-                                      iconSize: 20,
-                                      iconEnabledColor: Color.fromRGBO(101, 45, 143, 1),
-                                      iconDisabledColor: Colors.grey,
-                                      buttonHeight: 70,
-                                      buttonWidth: 160,
-                                      buttonPadding: const EdgeInsets.only(left: 14, right: 14),
-                                      buttonDecoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(14),
-                                        border: Border.all(
-                                          color: Colors.black26,
-                                        ),
-                                        color: Colors.white,
-                                      ),
-                                      buttonElevation: 2,
-                                        itemHeight: 40,
-                                        itemPadding: const EdgeInsets.only(left: 14, right: 14),
-                                        dropdownMaxHeight: 100,
-                                        dropdownWidth: 350,
-                                        dropdownPadding: null,
-                                        dropdownDecoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(14),
-                                          color: Colors.white,
-                                        ),
-                                        dropdownElevation: 8,
-                                        scrollbarRadius: const Radius.circular(10),
-                                        scrollbarThickness: 6,
-                                        scrollbarAlwaysShow: true,
-                                        offset: const Offset(0, 0),
-                                  )),
-
-                                  )),
-                                                       
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    );
-                                                  },
-                                                ),
                                           },
                                           child: Text(
                                             'Cambiar Transporte',
