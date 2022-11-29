@@ -63,6 +63,7 @@ class _EditReservationStartState extends State<EditReservationStart> {
       if (ListadoTransportes.isNotEmpty) {
         Transporte = ListadoTransportes[0]["details"]["nombre_Transporte"];
       }
+      
       if (Listadorestaurante.isNotEmpty ||
           widget.reservacionEditado.Restaurante != null) {
         restaurante = Listadorestaurante[0]["details"]["restaurante"];

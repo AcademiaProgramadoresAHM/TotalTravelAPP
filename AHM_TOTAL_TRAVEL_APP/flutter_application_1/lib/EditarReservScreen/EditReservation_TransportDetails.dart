@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/EditarReservScreen/EditReservation_start.dart';
+import 'package:flutter_application_1/navigation_home_screen.dart';
 import 'package:flutter_spinbox/flutter_spinbox.dart';
 import 'package:nb_utils/nb_utils.dart';
 
@@ -11,9 +13,9 @@ class EditReservacionTransportDetails extends StatefulWidget {
   final ReservEdit reservacionEditado;
   final List<dynamic> reservationList;
   final List<dynamic> transport;
-
+  final Map<int?, String> CitiesDictionary;
   EditReservacionTransportDetails(this.userloggeddata, this.reservacionEditado,
-      this.reservationList, this.transport);
+      this.reservationList, this.transport,this.CitiesDictionary);
   @override
   State<EditReservacionTransportDetails> createState() => _MyAppState();
 }
@@ -374,13 +376,12 @@ class _MyAppState extends State<EditReservacionTransportDetails> {
           ),
         ));
       }
-
-      if (confirm == true) {
         reservacionTransporte transporte = new reservacionTransporte();
 
         transporte.detr_ID = element['id'];
         transporte.reTr_CantidadAsientos = peopleFinal.toInt();
-
+        widget.reservacionEditado.Transporte = element['parter'].toString();
+        widget.reservacionEditado.ReservacionTransporte = transporte;
         // widget.customPackage.partner = element['parter'];
         // widget.customPackage.ciudadSalida_ID = element['ciudad_Salida_ID'];
         // widget.customPackage.ciudadSalida = element['ciudad_Salida'];
@@ -392,7 +393,6 @@ class _MyAppState extends State<EditReservacionTransportDetails> {
 
         // widget.transportList.insert(0, transporte);
         // widget.customPackage.transporteReservacion = widget.transportList;
-      }
     });
     return list;
   }
@@ -520,22 +520,20 @@ class _MyAppState extends State<EditReservacionTransportDetails> {
                   width: 170,
                   child: ElevatedButton(
                     onPressed: () {
-                      setState(() {
-                        confirm = true;
-                      });
+    
 
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //       builder: (context) => NavigationHomeScreen(
-                      //           createCustomPackage(
-                      //               widget.Ciudad,
-                      //               widget.userloggeddata,
-                      //               2,
-                      //               widget.customPackage,
-                      //               widget.CitiesDictionary),
-                      //           widget.userloggeddata)),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => NavigationHomeScreen(
+                                EditReservationStart(
+                                  widget.userloggeddata,
+                                  widget.reservacionEditado,
+                                  widget.reservationList,
+                                  widget.CitiesDictionary,
+                                    ),
+                                widget.userloggeddata)),
+                      );
                     },
                     child: Text(
                       'Confirmar',

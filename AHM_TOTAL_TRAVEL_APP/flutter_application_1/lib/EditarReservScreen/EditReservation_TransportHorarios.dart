@@ -13,8 +13,9 @@ class EditReservationHoraros extends StatefulWidget {
   final ReservEdit reservacionEditado;
   final List<dynamic> reservationList;
   final List<dynamic> transport;
+    final Map<int?, String> CitiesDictionary;
   EditReservationHoraros(this.userloggeddata, this.reservacionEditado,
-      this.reservationList, this.transport);
+      this.reservationList, this.transport, this.CitiesDictionary);
   @override
   State<EditReservationHoraros> createState() => _EditReservationHorarosState();
 }
@@ -49,7 +50,8 @@ class _EditReservationHorarosState extends State<EditReservationHoraros> {
                 widget.userloggeddata,
                 widget.reservacionEditado,
                 widget.reservationList,
-                Transport)),
+                Transport,
+                widget.CitiesDictionary)),
       );
     }
   }

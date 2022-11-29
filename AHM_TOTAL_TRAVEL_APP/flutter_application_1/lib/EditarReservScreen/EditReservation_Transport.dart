@@ -74,7 +74,8 @@ class _EditReservacionTRansportState extends State<EditReservacionTRansport> {
                   widget.userloggeddata,
                   widget.reservacionEditado,
                   widget.reservationList,
-                  Transport)),
+                  Transport,
+                  widget.CitiesDictionary)),
         );
       }
     } else {

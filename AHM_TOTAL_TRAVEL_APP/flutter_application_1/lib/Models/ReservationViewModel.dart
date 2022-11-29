@@ -33,6 +33,8 @@ class ReservEdit {
   String? PaqueteDescrip;
   String? Restaurante;
   int? ciudadID;
+  String? Transporte;
+  reservacionTransporte? ReservacionTransporte;
 
   Map<String, dynamic> toJson() => {
         "resv_ID": resvId,
@@ -53,7 +55,8 @@ class ReservEdit {
         "reHo_FechaEntrada": reHoFechaEntrada,
         "reHo_FechaSalida": reHoFechaSalida,
         "hote_ID": hoteId,
-        "restaurantes": Restaurant
+        "restaurantes": Restaurant,
+        "reservacionTransporte": ReservacionTransporte
       };
 }
 
