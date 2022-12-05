@@ -60,7 +60,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
   // Future<dynamic> dataUserEdit(userloggeddata) async {
   //   //List<dynamic> userEdit;
   //   String url_list =
-  //       "https://apitotaltravel.azurewebsites.net/API/Users/Find?id=" +
+  //       "https://totaltravelapi.azurewebsites.net/API/Users/Find?id=" +
   //           widget.userloggeddata!.ID.toString();
   //   final headers = {
   //     "Content-type": "application/json",
@@ -87,7 +87,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
 
   Future<void> GetUserData(data) async {
     // String url_list =
-    //     "https://apitotaltravel.azurewebsites.net/API/Users/Find?id=" +
+    //     "https://totaltravelapi.azurewebsites.net/API/Users/Find?id=" +
     //         widget.userloggeddata!.ID.toString();
     // final headers = {
     //   "Content-type": "application/json",
@@ -124,7 +124,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
   Future<dynamic> GetCountries() async {
     var data;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Countries/List";
+        "https://totaltravelapi.azurewebsites.net/API/Countries/List";
     var respuesta = await http.get(Uri.parse(url_list));
     if (respuesta.statusCode == 200) {
       Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
@@ -434,7 +434,7 @@ class _AccountInfo extends State<AccountInfo> with TickerProviderStateMixin {
 
 // Future<void> GetUserData() async {
 //   String url_list =
-//       "https://apitotaltravel.azurewebsites.net/API/Users/Find?id=" +
+//       "https://totaltravelapi.azurewebsites.net/API/Users/Find?id=" +
 //           userloggeddata!.ID.toString();
 //   final headers = {
 //     "Content-type": "application/json",

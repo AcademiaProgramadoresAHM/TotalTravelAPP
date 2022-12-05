@@ -17,7 +17,7 @@ Future<void> PostLogin(
   loginData.Email = email;
   loginData.Password = password;
 
-  final url = Uri.parse("https://apitotaltravel.azurewebsites.net/API/Login");
+  final url = Uri.parse("https://totaltravelapi.azurewebsites.net/API/Login");
   final headers = {"Content-type": "application/json", "Accept": "text/plain"};
   final json = jsonEncode(loginData);
   final response = await post(url, headers: headers, body: json);

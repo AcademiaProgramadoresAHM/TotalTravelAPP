@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 
 Future<dynamic> GetListadoShoppingHistory() async {
   String url_list =
-      "https://apitotaltravel.azurewebsites.net/API/RecordPayment/List";
+      "https://totaltravelapi.azurewebsites.net/API/RecordPayment/List";
 
   final response = await http.get(Uri.parse(url_list));
   if (response.statusCode == 200) {

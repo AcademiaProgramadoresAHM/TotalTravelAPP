@@ -26,7 +26,7 @@ class _EditReservationHotelState extends State<EditReservationHotel> {
   Future<dynamic> GetListHotels(idCiudad, userloggeddata) async {
     List<dynamic> dataHotels;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Hotels/List";
+        "https://totaltravelapi.azurewebsites.net/API/Hotels/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -46,7 +46,7 @@ class _EditReservationHotelState extends State<EditReservationHotel> {
   Future<dynamic> FindPackage(idhotel, userloggeddata) async {
     List<dynamic> datahotel;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Hotels/List";
+        "https://totaltravelapi.azurewebsites.net/API/Hotels/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!

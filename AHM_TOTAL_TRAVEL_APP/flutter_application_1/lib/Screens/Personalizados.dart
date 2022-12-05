@@ -34,7 +34,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
   Future<dynamic> GetListReservation(userloggeddata) async {
     List<dynamic> dataReservation;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Reservation/List";
+        "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -59,7 +59,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
     dynamic dataReservation;
     List<dynamic> datarestaurante;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Reservation/Details?id=${idreservacion.toString()}";
+        "https://totaltravelapi.azurewebsites.net/API/Reservation/Details?id=${idreservacion.toString()}";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -73,7 +73,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
       Dato.add(dataReservation);
 
       url_list =
-          "https://apitotaltravel.azurewebsites.net/API/ReservationActivitiesExtra/List";
+          "https://totaltravelapi.azurewebsites.net/API/ReservationActivitiesExtra/List";
       final response2 = await http.get(Uri.parse(url_list), headers: headers);
       if (response2.statusCode == 200) {
         Map<String, dynamic> userMapa = jsonDecode(response2.body);
@@ -98,7 +98,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
   Future<dynamic> FindReservation(idReservation, userloggeddata) async {
     List<dynamic> dataReservation;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Reservation/List";
+        "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -118,7 +118,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
         id_reservation = x['id'];
       });
       String url_list =
-          "https://apitotaltravel.azurewebsites.net/API/Reservation/Find/Timeline?id=" +
+          "https://totaltravelapi.azurewebsites.net/API/Reservation/Find/Timeline?id=" +
               id_reservation.toString();
       final headers = {
         "Content-type": "application/json",

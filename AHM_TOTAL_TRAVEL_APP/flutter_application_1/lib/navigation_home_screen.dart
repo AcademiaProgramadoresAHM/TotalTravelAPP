@@ -42,7 +42,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   Future<dynamic> FindReservation(userloggeddata) async {
     List<dynamic> datapackage;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Reservation/List";
+        "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -70,7 +70,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   Future<dynamic> FindShoppingHistory(userloggeddata) async {
     List<dynamic> dataShoppingHistory;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/RecordPayment/List";
+        "https://totaltravelapi.azurewebsites.net/API/RecordPayment/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -97,7 +97,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   Future<dynamic> FindPaymentHistory(idPaymentHistory, userloggeddata) async {
     List<dynamic> dataShoppingHistory;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/RecordPayment/List";
+        "https://totaltravelapi.azurewebsites.net/API/RecordPayment/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -125,7 +125,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   void dataUserEdit(userloggeddata) async {
     //List<dynamic> userEdit;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Users/Find?id=" +
+        "https://totaltravelapi.azurewebsites.net/API/Users/Find?id=" +
             widget.userloggeddata!.ID.toString();
     final headers = {
       "Content-type": "application/json",
@@ -158,7 +158,7 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
   Future<dynamic> GetCities() async {
     var data;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Cities/List";
+        "https://totaltravelapi.azurewebsites.net/API/Cities/List";
     var respuesta = await http.get(Uri.parse(url_list));
     if (respuesta.statusCode == 200) {
       Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);

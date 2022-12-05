@@ -42,7 +42,7 @@ class _HistorydetailScreenState extends State<HistorydetailScreen> {
 
   Future<dynamic> GetListadoHistorydetail() async {
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/RecordPayment/List";
+        "https://totaltravelapi.azurewebsites.net/API/RecordPayment/List";
     final response = await http.get(Uri.parse(url_list));
     if (response.statusCode == 200) {
       Map<String, dynamic> userMap = jsonDecode(response.body);

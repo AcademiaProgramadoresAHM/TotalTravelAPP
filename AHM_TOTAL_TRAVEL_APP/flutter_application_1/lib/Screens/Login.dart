@@ -36,7 +36,7 @@ Map<int?, String> CountriesDictionary = Map();
 //COUNTRIES
   Future<dynamic> GetCountries() async {
     var data;
-    String url_list = "https://apitotaltravel.azurewebsites.net/API/Countries/List";
+    String url_list = "https://totaltravelapi.azurewebsites.net/API/Countries/List";
     var respuesta = await http.get(Uri.parse(url_list));
     if (respuesta.statusCode == 200) {
       Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);

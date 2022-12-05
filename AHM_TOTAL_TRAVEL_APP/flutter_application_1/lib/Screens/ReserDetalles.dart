@@ -53,7 +53,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
   Future<dynamic> GetCities() async {
     var data;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Cities/List";
+        "https://totaltravelapi.azurewebsites.net/API/Cities/List";
     var respuesta = await http.get(Uri.parse(url_list));
     if (respuesta.statusCode == 200) {
       Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
@@ -77,7 +77,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
     dynamic dataReservation;
     List<dynamic> datarestaurante;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Reservation/Details?id=${idreservacion.toString()}";
+        "https://totaltravelapi.azurewebsites.net/API/Reservation/Details?id=${idreservacion.toString()}";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -91,7 +91,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
       Dato.add(dataReservation);
 
       url_list =
-          "https://apitotaltravel.azurewebsites.net/API/ReservationActivitiesExtra/List";
+          "https://totaltravelapi.azurewebsites.net/API/ReservationActivitiesExtra/List";
       final response2 = await http.get(Uri.parse(url_list), headers: headers);
       if (response2.statusCode == 200) {
         Map<String, dynamic> userMapa = jsonDecode(response2.body);
@@ -159,7 +159,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
   Future<dynamic> GetListReservationDetails(userloggeddata) async {
     List<dynamic> dataReservation;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Reservation/List";
+        "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!

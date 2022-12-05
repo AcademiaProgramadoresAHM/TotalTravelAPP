@@ -73,7 +73,7 @@ Future<void> PostRegister(
   });
   var formData = parts.join('&');*/
 
- /* final url = Uri.parse("https://apitotaltravel.azurewebsites.net/API/Users/Insert");
+ /* final url = Uri.parse("https://totaltravelapi.azurewebsites.net/API/Users/Insert");
   final headers = {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'};
   final response = await post(url, headers: headers, body: data);
 
@@ -123,7 +123,7 @@ Future<void> PostRegister(
                 'usua_UsuarioCreacion' : "1", 'file' : "null"};
 */
 final headers = {'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'};
-final uri = Uri.parse("https://apitotaltravel.azurewebsites.net/API/Users/Insert");
+final uri = Uri.parse("https://totaltravelapi.azurewebsites.net/API/Users/Insert");
 var map = new Map<String, dynamic>();
 map['usua_DNI'] = DNI;
 map['usua_Nombre'] = Nombre;

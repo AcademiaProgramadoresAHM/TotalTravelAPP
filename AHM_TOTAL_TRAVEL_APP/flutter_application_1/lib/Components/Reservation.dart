@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 
 Future<dynamic> GetListadoReservation() async {
   String url_list =
-      "https://apitotaltravel.azurewebsites.net/API/Reservation/List";
+      "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
 
   final response = await http.get(Uri.parse(url_list));
   if (response.statusCode == 200) {
@@ -293,7 +293,7 @@ Future<void> UpdateReservation(ReservEdit reservacionEditado,
   };
 
   final uri = Uri.parse(
-      "https://apitotaltravel.azurewebsites.net/API/Reservation/Update?id=" +
+      "https://totaltravelapi.azurewebsites.net/API/Reservation/Update?id=" +
           reservacionEditado.resvId.toString());
 
   final json = jsonEncode(reservacionEditado);

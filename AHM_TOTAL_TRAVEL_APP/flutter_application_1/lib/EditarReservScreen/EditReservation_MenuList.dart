@@ -21,7 +21,7 @@ class EditReservationMenuList extends StatefulWidget {
 class _MyAppState extends State<EditReservationMenuList> {
   Future<dynamic> GetListadoRestauranteEdit() async {
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Restaurants/List";
+        "https://totaltravelapi.azurewebsites.net/API/Restaurants/List";
     final response = await http.get(Uri.parse(url_list));
     if (response.statusCode == 200) {
       Map<String, dynamic> userMap = jsonDecode(response.body);

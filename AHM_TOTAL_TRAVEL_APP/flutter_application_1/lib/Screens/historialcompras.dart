@@ -20,7 +20,7 @@ class _ComprashistorialState extends State<Comprashistorial> {
   Future<dynamic> GetListShoppingHistoryr(userloggeddata) async {
     List<dynamic> dataHistorial;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/RecordPayment/List";
+        "https://totaltravelapi.azurewebsites.net/API/RecordPayment/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -43,7 +43,7 @@ class _ComprashistorialState extends State<Comprashistorial> {
   Future<dynamic> FindShoppingHistory(idShoppingHistory, userloggeddata) async {
     List<dynamic> dataShoppingHistory;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/RecordPayment/List";
+        "https://totaltravelapi.azurewebsites.net/API/RecordPayment/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!

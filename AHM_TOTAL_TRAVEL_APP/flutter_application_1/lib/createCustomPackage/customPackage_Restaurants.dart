@@ -50,7 +50,7 @@ class _RestaurantcustomPackage extends State<RestaurantcustomPackage> {
   Future<dynamic> GetListMenus(
       userloggeddata, idRestaurant, restaurante) async {
     List<dynamic> dataMenus;
-    String url_list = "https://apitotaltravel.azurewebsites.net/API/Menus/List";
+    String url_list = "https://totaltravelapi.azurewebsites.net/API/Menus/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -75,7 +75,7 @@ class _RestaurantcustomPackage extends State<RestaurantcustomPackage> {
       Ciudad, userloggeddata, idRestaurant, bool) async {
     List<dynamic> dataActivities;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Restaurants/List";
+        "https://totaltravelapi.azurewebsites.net/API/Restaurants/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -113,7 +113,7 @@ class _RestaurantcustomPackage extends State<RestaurantcustomPackage> {
       }
     } else {
       final url_list = Uri.parse(
-          "https://apitotaltravel.azurewebsites.net/API/Authentication/Refresh-token");
+          "https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
       final headers = {
         "Content-type": "application/json",
         "Authorization": "bearer " + widget.userloggeddata!.Token!

@@ -33,7 +33,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
   Future<dynamic> GetListadoPackageshome(userloggeddata) async {
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/DefaultPackages/List";
+        "https://totaltravelapi.azurewebsites.net/API/DefaultPackages/List";
     final response = await http.get(Uri.parse(url_list));
     final headers = {
       "Content-type": "application/json",
@@ -54,7 +54,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
   Future<dynamic> FindPackage(idPackage, userloggeddata) async {
     List<dynamic> datapackage;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/DefaultPackages/List";
+        "https://totaltravelapi.azurewebsites.net/API/DefaultPackages/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!

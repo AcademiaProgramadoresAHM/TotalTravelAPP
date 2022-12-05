@@ -48,7 +48,7 @@ class _ReservTransportState extends State<ReservTransport> {
     var Transport;
     if (bool == true) {
       String url_list =
-          "https://apitotaltravel.azurewebsites.net/API/Transports/List";
+          "https://totaltravelapi.azurewebsites.net/API/Transports/List";
       final headers = {
         "Content-type": "application/json",
         "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -65,7 +65,7 @@ class _ReservTransportState extends State<ReservTransport> {
       }
     } else if (bool == false) {
       String url_list =
-          "https://apitotaltravel.azurewebsites.net/API/DetailsTransportation/List";
+          "https://totaltravelapi.azurewebsites.net/API/DetailsTransportation/List";
       final headers = {
         "Content-type": "application/json",
         "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -99,7 +99,7 @@ class _ReservTransportState extends State<ReservTransport> {
       }
     } else {
       final url_list = Uri.parse(
-          "https://apitotaltravel.azurewebsites.net/API/Authentication/Refresh-token");
+          "https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
       final headers = {
         "Content-type": "application/json",
         "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -157,7 +157,7 @@ class _ReservTransportState extends State<ReservTransport> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(12),
                           child: Image.network(
-                            "https://apitotaltravel.azurewebsites.net/Images/" +
+                            "https://totaltravelapi.azurewebsites.net/Images/" +
                                 imageUrl[0].toString(),
                             width: 100,
                             height: 100,

@@ -144,7 +144,7 @@ class _ReservTransportDetailsState extends State<ReservTransportDetails> {
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(2),
                             child: Image.network(
-                              "https://apitotaltravel.azurewebsites.net/Images/" +
+                              "https://totaltravelapi.azurewebsites.net/Images/" +
                                   imageUrl[0].toString(),
                               width: 100,
                               height: 300,

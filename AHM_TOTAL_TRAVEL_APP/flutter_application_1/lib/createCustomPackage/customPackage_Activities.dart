@@ -48,7 +48,7 @@ class _customActivities extends State<customActivities> {
       Ciudad, userloggeddata, idActivity, bool, ActivitiesCount) async {
     List<dynamic> dataActivities;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/ActivitiesExtra/List";
+        "https://totaltravelapi.azurewebsites.net/API/ActivitiesExtra/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -86,7 +86,7 @@ class _customActivities extends State<customActivities> {
       }
     } else {
       final url_list = Uri.parse(
-          "https://apitotaltravel.azurewebsites.net/API/Authentication/Refresh-token");
+          "https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
       final headers = {
         "Content-type": "application/json",
         "Authorization": "bearer " + widget.userloggeddata!.Token!

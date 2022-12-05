@@ -178,7 +178,7 @@ class _SignUpViewState extends State<SignUpView> {
   Future<dynamic> GetCities(CountryId) async {
     List<dynamic> dataCities;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Cities/List";
+        "https://totaltravelapi.azurewebsites.net/API/Cities/List";
     var respuesta = await http.get(Uri.parse(url_list));
     if (respuesta.statusCode == 200) {
       Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
@@ -204,7 +204,7 @@ class _SignUpViewState extends State<SignUpView> {
   Future<dynamic> GetSuburbs(CityId) async {
     List<dynamic> dataSuburbs;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Suburbs/List";
+        "https://totaltravelapi.azurewebsites.net/API/Suburbs/List";
     var respuesta = await http.get(Uri.parse(url_list));
     if (respuesta.statusCode == 200) {
       Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
@@ -235,7 +235,7 @@ class _SignUpViewState extends State<SignUpView> {
     adressView.Dire_UsuarioCreacion = 1;
 
     final url = Uri.parse(
-        "https://apitotaltravel.azurewebsites.net/API/Address/Insert");
+        "https://totaltravelapi.azurewebsites.net/API/Address/Insert");
     final headers = {
       "Content-type": "application/json",
       "Accept": "text/plain"

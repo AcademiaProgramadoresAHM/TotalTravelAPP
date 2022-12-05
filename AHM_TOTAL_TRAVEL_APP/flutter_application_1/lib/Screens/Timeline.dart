@@ -32,7 +32,7 @@ class _TimelineState extends State<Timeline> {
     List<dynamic> dataReservation;
     TimelineViewModel timelineViewModel;
     String url_list =
-        "https://apitotaltravel.azurewebsites.net/API/Reservation/Find/Timeline?id=" + idReservation.toString();
+        "https://totaltravelapi.azurewebsites.net/API/Reservation/Find/Timeline?id=" + idReservation.toString();
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
