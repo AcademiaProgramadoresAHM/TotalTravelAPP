@@ -630,10 +630,12 @@ class _ActivityDetails extends State<EditReservationActivityExtra> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => EditReservationStart(
+                            builder: (context) => EditReservationActivityExtras(
                                 widget.userloggeddata,
                                 widget.reservacionEditado,
                                 widget.reservationList,
+                                widget.activityExtra,
+                                widget.ActivitiesAdd,
                                 widget.CitiesDictionary)),
                       );
                     },
