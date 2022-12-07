@@ -53,10 +53,8 @@ class _NavigationHomeScreenState extends State<NavigationHomeScreen> {
       var Json = Decodificador.fromJson(userMap);
       datapackage = Json.data;
       var package = datapackage
-          .where((x) => x['id_Cliente'] == userloggeddata.id)
+          .where((x) => x['id_Cliente'] == userloggeddata.ID)
           .toList();
-
-      print(package);
       Navigator.push(
         context,
         MaterialPageRoute(

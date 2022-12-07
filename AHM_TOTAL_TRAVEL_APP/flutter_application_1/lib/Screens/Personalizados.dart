@@ -23,7 +23,7 @@ import 'package:http/http.dart' as http;
 class PersonaliScreen extends StatefulWidget {
   final UserLoggedModel? userloggeddata;
 
-  const PersonaliScreen(this.userloggeddata, {super.key});
+  const PersonaliScreen(this.userloggeddata);
 
   @override
   _PersonaliScreenState createState() => _PersonaliScreenState();
@@ -37,7 +37,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
         "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
     final headers = {
       "Content-type": "application/json",
-      "Authorization": "bearer " + widget.userloggeddata!.Token!
+      "Authorization": "bearer " + userloggeddata!.Token!
     };
     final response = await http.get(Uri.parse(url_list), headers: headers);
     if (response.statusCode == 200) {
@@ -181,6 +181,10 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
     final _controller = PageController();
 
     data.forEach((element) {
+      String descrippaquete = "Sexo";
+      if (element["descripcionPaquete"] != null) {
+        descrippaquete = element["descripcionPaquete"];
+      }
       var splitFecha = element['fecha_Entrada'].toString().split('T');
 
       var fechaentrada = splitFecha[0];
@@ -254,7 +258,7 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                               EdgeInsetsDirectional.fromSTEB(
                                                   26, 0, 0, 0),
                                           child: Text(
-                                            element['descripcionPaquete'],
+                                            descrippaquete,
                                             textAlign: TextAlign.justify,
                                             style: TextStyle(
                                               fontFamily: 'Outfit',
@@ -476,24 +480,34 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
           children: [
             FutureBuilder<dynamic>(
               builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Wrap(
-                      spacing: 8,
-                      runSpacing: 4,
-                      alignment: WrapAlignment.start,
-                      crossAxisAlignment: WrapCrossAlignment.start,
-                      direction: Axis.horizontal,
-                      runAlignment: WrapAlignment.start,
-                      verticalDirection: VerticalDirection.down,
-                      clipBehavior: Clip.none,
-                      children: ListDefaultReservation(snapshot.data, context));
-                } else {
+                if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(
                       child: Padding(
                     padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
                     child: CircularProgressIndicator(
                         color: Color.fromARGB(255, 101, 45, 144)),
                   ));
+                } else {
+                  if (snapshot.hasData) {
+                    return Wrap(
+                        spacing: 8,
+                        runSpacing: 4,
+                        alignment: WrapAlignment.start,
+                        crossAxisAlignment: WrapCrossAlignment.start,
+                        direction: Axis.horizontal,
+                        runAlignment: WrapAlignment.start,
+                        verticalDirection: VerticalDirection.down,
+                        clipBehavior: Clip.none,
+                        children:
+                            ListDefaultReservation(snapshot.data, context));
+                  } else {
+                    return Center(
+                        child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
+                      child: CircularProgressIndicator(
+                          color: Color.fromARGB(255, 101, 45, 144)),
+                    ));
+                  }
                 }
               },
               future: GetListReservation(widget.userloggeddata),
