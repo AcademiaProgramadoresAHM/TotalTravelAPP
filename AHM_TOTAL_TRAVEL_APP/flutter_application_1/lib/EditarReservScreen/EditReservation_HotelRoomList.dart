@@ -29,7 +29,7 @@ class EditReservationHotelRoomList extends StatefulWidget {
 class _MyAppState extends State<EditReservationHotelRoomList> {
   Future<dynamic> GetListRooms(Hotel, userloggeddata) async {
     List<dynamic> dataRooms;
-    String url_list = "https://totaltravelapi.azurewebsites.net/API/Rooms/List";
+    String url_list = "https://apitotaltravel.azurewebsites.net/API/Rooms/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -44,7 +44,7 @@ class _MyAppState extends State<EditReservationHotelRoomList> {
       return Room;
     } else {
       final url_list = Uri.parse(
-          "https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
+          "https://apitotaltravel.azurewebsites.net/API/Authentication/Refresh-token");
       final headers = {
         "Content-type": "application/json",
         "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -60,7 +60,7 @@ class _MyAppState extends State<EditReservationHotelRoomList> {
 
   Future<dynamic> FindRooms(idRoom, userloggeddata) async {
     List<dynamic> dataRoom;
-    String url_list = "https://totaltravelapi.azurewebsites.net/API/Rooms/List";
+    String url_list = "https://apitotaltravel.azurewebsites.net/API/Rooms/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!

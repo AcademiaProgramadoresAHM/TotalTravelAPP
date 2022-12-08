@@ -148,7 +148,7 @@ class _EditAccountState extends State<EditAccount> {
   Future<dynamic> GetCities(CountryId) async {
     List<dynamic> dataCities;
     String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/Cities/List";
+        "https://apitotaltravel.azurewebsites.net/API/Cities/List";
     var respuesta = await http.get(Uri.parse(url_list));
     if (respuesta.statusCode == 200) {
       Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
@@ -174,7 +174,7 @@ class _EditAccountState extends State<EditAccount> {
   Future<dynamic> GetSuburbs(CityId) async {
     List<dynamic> dataSuburbs;
     String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/Suburbs/List";
+        "https://apitotaltravel.azurewebsites.net/API/Suburbs/List";
     var respuesta = await http.get(Uri.parse(url_list));
     if (respuesta.statusCode == 200) {
       Map<String, dynamic> ServerResponse = jsonDecode(respuesta.body);
@@ -205,7 +205,7 @@ class _EditAccountState extends State<EditAccount> {
     adressView.Dire_UsuarioCreacion = 1;
 
     final url = Uri.parse(
-        "https://totaltravelapi.azurewebsites.net/API/Address/Insert");
+        "https://apitotaltravel.azurewebsites.net/API/Address/Insert");
     final headers = {
       "Content-type": "application/json",
       "Accept": "text/plain"
@@ -245,7 +245,7 @@ class _EditAccountState extends State<EditAccount> {
       'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
     };
     final uri = Uri.parse(
-        "https://totaltravelapi.azurewebsites.net/API/Users/Update?id=" +
+        "https://apitotaltravel.azurewebsites.net/API/Users/Update?id=" +
             widget.userloggeddata!.ID.toString());
     var map = new Map<String, dynamic>();
     map['usua_DNI'] = DNI;

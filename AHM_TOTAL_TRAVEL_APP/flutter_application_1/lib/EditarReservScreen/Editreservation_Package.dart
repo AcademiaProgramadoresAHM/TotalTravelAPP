@@ -26,7 +26,7 @@ class _EditReservationPackageState extends State<EditReservationPackage> {
   Future<dynamic> FindPackage(idpackage, userloggeddata) async {
     List<dynamic> datapackage;
     String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/DefaultPackages/List";
+        "https://apitotaltravel.azurewebsites.net/API/DefaultPackages/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!

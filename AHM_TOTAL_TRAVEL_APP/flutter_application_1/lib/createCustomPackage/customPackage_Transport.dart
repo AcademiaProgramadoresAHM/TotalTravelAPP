@@ -37,7 +37,7 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
     var Transport;
     if (bool == true) {
       String url_list =
-          "https://totaltravelapi.azurewebsites.net/API/Transports/List";
+          "https://apitotaltravel.azurewebsites.net/API/Transports/List";
       final headers = {
         "Content-type": "application/json",
         "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -54,7 +54,7 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
       }
     } else if (bool == false) {
       String url_list =
-          "https://totaltravelapi.azurewebsites.net/API/DetailsTransportation/List";
+          "https://apitotaltravel.azurewebsites.net/API/DetailsTransportation/List";
       final headers = {
         "Content-type": "application/json",
         "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -84,7 +84,7 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
       }
     } else {
       final url_list = Uri.parse(
-          "https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
+          "https://apitotaltravel.azurewebsites.net/API/Authentication/Refresh-token");
       final headers = {
         "Content-type": "application/json",
         "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -142,7 +142,7 @@ class _TransportcustomPackage extends State<TransportcustomPackage> {
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(12),
                           child: Image.network(
-                            "https://totaltravelapi.azurewebsites.net/Images/" +
+                            "https://apitotaltravel.azurewebsites.net/Images/" +
                                 imageUrl[0].toString(),
                             width: 100,
                             height: 100,

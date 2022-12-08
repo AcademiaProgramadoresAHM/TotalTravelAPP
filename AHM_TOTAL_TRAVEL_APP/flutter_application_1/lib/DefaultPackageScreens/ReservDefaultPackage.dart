@@ -75,7 +75,7 @@ class _ReservDefaultPackageState extends State<ReservDefaultPackage> {
   Future<dynamic> FindPackage(idpackage, bool, userloggeddata) async {
     List<dynamic> datapackage;
     String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/DefaultPackagesDetails/List";
+        "https://apitotaltravel.azurewebsites.net/API/DefaultPackagesDetails/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!

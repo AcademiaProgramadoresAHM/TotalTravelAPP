@@ -39,7 +39,7 @@ Future<void> EditRegister(
   editData.Usua_esAdmin = 0;
 
   final url = Uri.parse(
-      "https://totaltravelapi.azurewebsites.net/API/Users/Update?id=" +
+      "https://apitotaltravel.azurewebsites.net/API/Users/Update?id=" +
           userloggeddata!.ID.toString());
   final headers = {"Content-type": "application/json", "Accept": "text/plain"};
   final json = jsonEncode(editData);

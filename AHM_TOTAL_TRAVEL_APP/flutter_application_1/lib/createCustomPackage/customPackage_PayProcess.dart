@@ -35,7 +35,7 @@ class _PayProcess extends State<PayProcess> {
  
   Future<dynamic> GetPaymentType() async {
     String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/PaymentTypes/List";
+        "https://apitotaltravel.azurewebsites.net/API/PaymentTypes/List";
     final response = await http.get(Uri.parse(url_list));
     if (response.statusCode == 200) {
       Map<String, dynamic> userMap = jsonDecode(response.body);
@@ -51,7 +51,7 @@ class _PayProcess extends State<PayProcess> {
 
 Future<void> PostCustomPackages(customPackageViewModel customPackage, UserLoggedModel userloggeddata)async {
 
-  final url = Uri.parse("https://totaltravelapi.azurewebsites.net/API/Reservation/Insert");
+  final url = Uri.parse("https://apitotaltravel.azurewebsites.net/API/Reservation/Insert");
   final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -76,7 +76,7 @@ Future<void> PostCustomPackages(customPackageViewModel customPackage, UserLogged
             };
           final jsonRePayment = jsonEncode(jsonRecordPayment);
 
-      final urlRecordPayment = Uri.parse("https://totaltravelapi.azurewebsites.net/API/RecordPayment/Insert");
+      final urlRecordPayment = Uri.parse("https://apitotaltravel.azurewebsites.net/API/RecordPayment/Insert");
       final headers = {
           "Content-type": "application/json",
           "Authorization": "bearer " + widget.userloggeddata!.Token!

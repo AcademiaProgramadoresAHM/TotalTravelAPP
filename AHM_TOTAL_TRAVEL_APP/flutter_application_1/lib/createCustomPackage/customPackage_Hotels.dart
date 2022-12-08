@@ -28,7 +28,7 @@ class _HotelcustomPackage extends State<HotelcustomPackage> {
   Future<dynamic> GetListHotels(Ciudad, userloggeddata,idHotel, bool) async {
     List<dynamic> dataHotels;
     String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/Hotels/List";
+        "https://apitotaltravel.azurewebsites.net/API/Hotels/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -61,7 +61,7 @@ class _HotelcustomPackage extends State<HotelcustomPackage> {
       }
       else{
 
-          final url_list =Uri.parse("https://totaltravelapi.azurewebsites.net/API/Authentication/Refresh-token");
+          final url_list =Uri.parse("https://apitotaltravel.azurewebsites.net/API/Authentication/Refresh-token");
           final headers = {
             "Content-type": "application/json",
             "Authorization": "bearer " + widget.userloggeddata!.Token!

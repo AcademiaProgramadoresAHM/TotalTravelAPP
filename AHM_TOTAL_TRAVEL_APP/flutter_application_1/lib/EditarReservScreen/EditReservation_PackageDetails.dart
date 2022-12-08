@@ -29,7 +29,7 @@ class _EditReservationPackageDetailsState
   //obtener la info del paquete
   Future<dynamic> GetListadoPackagesEdit() async {
     String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/DefaultPackages/List";
+        "https://apitotaltravel.azurewebsites.net/API/DefaultPackages/List";
     final response = await http.get(Uri.parse(url_list));
     if (response.statusCode == 200) {
       Map<String, dynamic> userMap = jsonDecode(response.body);

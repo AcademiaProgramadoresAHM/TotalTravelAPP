@@ -18,7 +18,7 @@ class _HistorialScreenState extends State<HistorialScreen> {
   Future<dynamic> GetListPaymentHistory(userloggeddata) async {
     List<dynamic> dataHistorialpagos;
     String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/RecordPayment/List";
+        "https://apitotaltravel.azurewebsites.net/API/RecordPayment/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
@@ -41,7 +41,7 @@ class _HistorialScreenState extends State<HistorialScreen> {
   Future<dynamic> FindPaymentHistory(idPaymentHistory, userloggeddata) async {
     List<dynamic> dataShoppingHistory;
     String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/RecordPayment/List";
+        "https://apitotaltravel.azurewebsites.net/API/RecordPayment/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!

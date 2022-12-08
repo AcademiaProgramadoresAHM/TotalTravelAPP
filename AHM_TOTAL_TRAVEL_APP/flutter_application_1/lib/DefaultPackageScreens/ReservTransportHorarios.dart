@@ -55,7 +55,7 @@ class _ReservTransportHorarioState extends State<ReservTransportHorario> {
   Future<dynamic> GetTransports(userloggeddata, idDetail) async {
     List<dynamic> dataTransport;
     String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/DetailsTransportation/List";
+        "https://apitotaltravel.azurewebsites.net/API/DetailsTransportation/List";
     final headers = {
       "Content-type": "application/json",
       "Authorization": "bearer " + widget.userloggeddata!.Token!
