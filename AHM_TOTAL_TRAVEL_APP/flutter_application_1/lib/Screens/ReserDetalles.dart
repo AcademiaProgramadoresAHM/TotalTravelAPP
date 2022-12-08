@@ -103,7 +103,8 @@ class _Personali2ScreenState extends State<Personali2Screen> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => EditReservationStart(widget.userloggeddata, reservacionedit, Dato,CitiesDictionary),
+            builder: (context) => EditReservationStart(
+                widget.userloggeddata, reservacionedit, Dato, CitiesDictionary),
           ),
         );
       }
@@ -302,8 +303,8 @@ class _Personali2ScreenState extends State<Personali2Screen> {
                                                                 .fromSTEB(
                                                                     0, 0, 0, 0),
                                                         child: Text(
-                                                            element[
-                                                                'descripcionPaquete'],
+                                                            element['descripcionPaquete'] ??
+                                                                "Paquete de Viaje Seleccionado",
                                                             style: TextStyle(
                                                                 fontFamily:
                                                                     'Poppins',
@@ -1140,7 +1141,7 @@ class _Personali2ScreenState extends State<Personali2Screen> {
   void initState() {
     GetListTimelineReservation();
     super.initState();
-     GetCities();
+    GetCities();
   }
 
   @override
