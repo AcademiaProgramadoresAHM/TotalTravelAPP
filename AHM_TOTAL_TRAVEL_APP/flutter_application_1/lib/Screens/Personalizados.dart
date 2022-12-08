@@ -32,25 +32,31 @@ class PersonaliScreen extends StatefulWidget {
 class _PersonaliScreenState extends State<PersonaliScreen> {
   ReservEdit reservacionEditado = new ReservEdit();
   Future<dynamic> GetListReservation(userloggeddata) async {
-    List<dynamic> dataReservation;
-    String url_list =
-        "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
-    final headers = {
-      "Content-type": "application/json",
-      "Authorization": "bearer " + userloggeddata!.Token!
-    };
-    final response = await http.get(Uri.parse(url_list), headers: headers);
-    if (response.statusCode == 200) {
-      Map<String, dynamic> userMap = jsonDecode(response.body);
-      var Json = Decodificador.fromJson(userMap);
-      dataReservation = Json.data;
-      var Reservation = dataReservation
-          .where((x) => x['id_Cliente'] == userloggeddata.ID)
-          .toList();
+    try {
+      List<dynamic> dataReservation;
+      String url_list =
+          "https://totaltravelapi.azurewebsites.net/API/Reservation/List";
+      final headers = {
+        "Content-type": "application/json",
+        "Authorization": "bearer " + userloggeddata!.Token!
+      };
+      final response = await http.get(Uri.parse(url_list), headers: headers);
+      if (response.statusCode == 200) {
+        Map<String, dynamic> userMap = jsonDecode(response.body);
+        var Json = Decodificador.fromJson(userMap);
+        dataReservation = Json.data;
+        var Reservation = dataReservation
+            .where((x) => x['id_Cliente'] == userloggeddata.ID)
+            .toList();
 
-      return Reservation;
-    } else {
-      print("Error " + response.statusCode.toString());
+        return Reservation;
+      } else {
+        print("Error " + response.statusCode.toString());
+      }
+    } catch (e) {
+      return Center(
+        child: Text("No hay Reservaciones Hechas de Momento..."),
+      );
     }
   }
 
@@ -181,10 +187,6 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
     final _controller = PageController();
 
     data.forEach((element) {
-      String descrippaquete = "Sexo";
-      if (element["descripcionPaquete"] != null) {
-        descrippaquete = element["descripcionPaquete"];
-      }
       var splitFecha = element['fecha_Entrada'].toString().split('T');
 
       var fechaentrada = splitFecha[0];
@@ -258,7 +260,8 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                                               EdgeInsetsDirectional.fromSTEB(
                                                   26, 0, 0, 0),
                                           child: Text(
-                                            descrippaquete,
+                                            element["descripcionPaquete"] ??
+                                                "Paquete de Viaje Seleccionado",
                                             textAlign: TextAlign.justify,
                                             style: TextStyle(
                                               fontFamily: 'Outfit',
@@ -502,11 +505,8 @@ class _PersonaliScreenState extends State<PersonaliScreen> {
                             ListDefaultReservation(snapshot.data, context));
                   } else {
                     return Center(
-                        child: Padding(
-                      padding: EdgeInsetsDirectional.fromSTEB(0, 350, 0, 0),
-                      child: CircularProgressIndicator(
-                          color: Color.fromARGB(255, 101, 45, 144)),
-                    ));
+                      child: Text("keloke"),
+                    );
                   }
                 }
               },
