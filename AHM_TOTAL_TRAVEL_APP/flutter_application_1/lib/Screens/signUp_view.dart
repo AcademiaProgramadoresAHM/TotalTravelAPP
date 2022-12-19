@@ -59,6 +59,15 @@ class _SignUpViewState extends State<SignUpView> {
   String? selectedValue;
   String? time;
   String? date;
+  final List<String> estadoCivil = [
+  'Soltero(a)',
+  'Casado(a)',
+  'Divorciado(a)',
+  'Viudo(a)',
+  'Unión Libre',
+];
+String estadoCivilID = "1";
+String? selectedValueEstadoCivil;
 
   init() async {
     time = 'Please Select Time';
@@ -260,6 +269,7 @@ class _SignUpViewState extends State<SignUpView> {
               _sexo,
               password2Controller.text,
               adressId!,
+              estadoCivilID,
               context);
         }
       }
@@ -410,7 +420,7 @@ class _SignUpViewState extends State<SignUpView> {
                                   ///
                                   TextFormField(
                                     style: kTextFormFieldStyle(),
-                                     inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'^[1-9][0-9]*'))],
+                                     inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'^[0-9]*'))],
                                     keyboardType: TextInputType.number,
                                     decoration: const InputDecoration(
                                       prefixIcon: Icon(Icons.badge),
@@ -540,6 +550,78 @@ class _SignUpViewState extends State<SignUpView> {
                                       return null;
                                     },
                                   ),
+                                   SizedBox(
+                                    height: size.height * 0.01,
+                                  ),
+                                  Padding(
+                                      padding: const EdgeInsets.only(top: 0),
+                                      child: Container(
+                                        width: 350,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                            /*color: Colors.transparent*/),
+                                        child: DropdownButtonHideUnderline(
+                                                  child: DropdownButton2(
+                                                    hint: Text(
+                                                      'Seleccione un estado civil',
+                                                      style: TextStyle(
+                                                        fontSize: 14,
+                                                        color: Theme
+                                                                .of(context)
+                                                                .hintColor,
+                                                      ),
+                                                    ),
+                                                    items: estadoCivil
+                                                            .map((item) =>
+                                                            DropdownMenuItem<String>(
+                                                              value: item,
+                                                              child: Text(
+                                                                item,
+                                                                style: const TextStyle(
+                                                                  fontSize: 14,
+                                                                ),
+                                                              ),
+                                                            ))
+                                                            .toList(),
+                                                    value: selectedValueEstadoCivil,
+                                                    onChanged: (value) {
+                                                      setState(() {
+                                                        selectedValueEstadoCivil = value as String;
+                                                        switch (selectedValueEstadoCivil) {
+                                                          case "Soltero(a)":
+                                                                setState(() {
+                                                                  estadoCivilID = "1";
+                                                                });
+                                                            break;
+                                                             case "Casado(a)":
+                                                                setState(() {
+                                                                  estadoCivilID = "2";
+                                                                });
+                                                            break;
+                                                               case "Divorciado(a)":
+                                                                setState(() {
+                                                                  estadoCivilID = "3";
+                                                                });
+                                                            break;
+                                                               case "Viudo(a)":
+                                                                setState(() {
+                                                                  estadoCivilID = "4";
+                                                                });
+                                                            break;
+                                                              case "Union Libre":
+                                                                setState(() {
+                                                                  estadoCivilID = "5";
+                                                                });
+                                                            break;
+                                                          default:
+                                                          estadoCivilID = "1";
+                                                        }
+                                                      });
+                                                    },
+                                                    buttonHeight: 40,
+                                                    buttonWidth: 140,
+                                                    itemHeight: 40,
+                                                  ),)),),
                                   SizedBox(
                                     height: size.height * 0.02,
                                   ),

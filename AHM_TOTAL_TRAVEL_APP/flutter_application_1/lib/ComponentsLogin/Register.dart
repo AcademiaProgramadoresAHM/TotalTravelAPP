@@ -23,6 +23,7 @@ Future<void> PostRegister(
     String Sexo,
     String Password,
     String adressId,
+    String estadoCivil,
     BuildContext context) async {
       
   /*UserRegisterModel registerData = new UserRegisterModel();
@@ -139,6 +140,7 @@ map['role_ID'] = "2";
 map['part_ID'] = "0";
 map['usua_UsuarioCreacion'] = "1";
 map['file'] = "string";
+map['esCi_ID'] = estadoCivil;
 
 http.Response response = await http.post(
     uri,
@@ -196,5 +198,7 @@ if (response.body != " ") {
         ),
       ));
     }
+  }else{
+    print(response.body);
   }
 }
